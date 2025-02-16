@@ -42,12 +42,12 @@ public class SlotPane extends GridPane implements ReRenderable {
 		return 0 <= gridX && gridX < WIDTH && 0 <= gridY && gridY < HEIGHT;
 	}
 
-	public double getSceneX() {
-		return localToScene(getBoundsInLocal()).getMinX();
+	public double getGameX() {
+		return localToParent(getBoundsInLocal()).getMinX();
 	}
 
-	public double getSceneY() {
-		return localToScene(getBoundsInLocal()).getMinY();
+	public double getGameY() {
+		return localToParent(getBoundsInLocal()).getMinY();
 	}
 
 	public Slot[][] getSlots() {

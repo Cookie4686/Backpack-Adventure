@@ -1,6 +1,7 @@
 package application;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -17,6 +18,12 @@ public class Main extends Application {
 		primaryStage.setScene(new Scene(root));
 		primaryStage.setTitle("Backpack");
 		primaryStage.show();
+	}
+
+	@Override
+	public void stop() throws Exception {
+		Platform.exit();
+		System.exit(0);
 	}
 
 	public static void main(String[] args) {
