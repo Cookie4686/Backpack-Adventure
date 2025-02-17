@@ -3,8 +3,9 @@ package game.item;
 import game.backpack.Slot;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
-public abstract class Item extends ImageView {
+public abstract class Item extends Pane {
 	protected String name;
 	protected int width, height;
 	// rotation ranges from 0-7
@@ -16,17 +17,20 @@ public abstract class Item extends ImageView {
 		this.width = width;
 		this.height = height;
 		rotation = 0;
-	}
-
-	public void initialize(Image image) {
-		setImage(image);
-		setFitWidth(Slot.SIZE * width);
-		setFitHeight(Slot.SIZE * height);
-
+		setMaxSize(width * Slot.SIZE, height * Slot.SIZE);
 		DraggableHandler handler = new DraggableHandler(this);
 		setOnMousePressed(event -> handler.handleItemMousePress(event));
 		setOnMouseDragged(event -> handler.handleItemMouseDrag(event));
 		setOnMouseReleased(event -> handler.handleItemMouseRelease(event));
+	}
+
+	public void initialize(Image image) {
+		ImageView imageView = new ImageView();
+		imageView.setImage(image);
+		imageView.setFitWidth(Slot.SIZE * width);
+		imageView.setFitHeight(Slot.SIZE * height);
+		getChildren().setAll(imageView);
+
 		// TODO: show toolTip on hover
 		// imageView.setOnMouseEntered(event -> {});
 	}
