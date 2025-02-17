@@ -1,5 +1,6 @@
 package application;
 
+import game.item.DraggableHandler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -15,7 +16,9 @@ public class Main extends Application {
 		root = new StackPane();
 		root.setPrefSize(600, 600);
 		MenuScene.useScene();
-		primaryStage.setScene(new Scene(root));
+		Scene scene = new Scene(root);
+		scene.setOnKeyPressed(event -> DraggableHandler.handleSceneKeyPress(event));
+		primaryStage.setScene(scene);
 		primaryStage.setTitle("Backpack");
 		primaryStage.show();
 	}

@@ -3,9 +3,13 @@ package game.item;
 import game.Game;
 import game.backpack.Slot;
 import game.backpack.SlotPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 public class DraggableHandler {
+	public static Item currentItem;
+
 	private double startX, startY;
 	private int gridX, gridY;
 	private Item item;
@@ -15,6 +19,7 @@ public class DraggableHandler {
 	}
 
 	public void handleItemMousePress(MouseEvent event) {
+		currentItem = item;
 		startX = event.getSceneX() - item.getTranslateX();
 		startY = event.getSceneY() - item.getTranslateY();
 	}
@@ -31,12 +36,21 @@ public class DraggableHandler {
 	}
 
 	public void handleItemMouseRelease(MouseEvent event) {
+		currentItem = null;
 		calcGrid();
 		if (SlotPane.getInstance().isPlaceable(gridX, gridY, item)) {
 			setTranslateNoOffScreenX(Slot.SIZE * gridX + SlotPane.getInstance().getGameX());
 			setTranslateNoOffScreenY(Slot.SIZE * gridY + SlotPane.getInstance().getGameY());
 			SlotPane.getInstance().placeItem(item, gridX, gridY);
 			SlotPane.getInstance().render();
+		}
+	}
+
+	public static void handleSceneKeyPress(KeyEvent event) {
+		if (event.getCode() == KeyCode.R) {
+			if (currentItem != null) {
+				currentItem.rotate(true);
+			}
 		}
 	}
 

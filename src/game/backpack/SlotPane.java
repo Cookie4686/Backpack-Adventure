@@ -32,10 +32,6 @@ public class SlotPane extends GridPane implements ReRenderable {
 	}
 
 	public void placeItem(Item item, int gridX, int gridY) {
-		if (item.getRotation() == 0 || item.getRotation() == 4) {
-			System.out.println("vertical");
-			System.out.println("vertical");
-		}
 	}
 
 	public boolean isPlaceable(int gridX, int gridY, Item item) {
