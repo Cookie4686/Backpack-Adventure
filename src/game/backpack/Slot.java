@@ -1,6 +1,6 @@
-package backpack;
+package game.backpack;
 
-import backpack.item.Item;
+import game.item.Item;
 import interfaces.ReRenderable;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;

@@ -1,9 +1,9 @@
-package backpack.item;
+package game.item;
 
-import backpack.Slot;
-import backpack.SlotPane;
+import game.Game;
+import game.backpack.Slot;
+import game.backpack.SlotPane;
 import javafx.scene.input.MouseEvent;
-import scene.Game;
 
 public class DraggableHandler {
 	private double startX, startY;

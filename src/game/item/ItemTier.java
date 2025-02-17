@@ -1,5 +1,5 @@
-package backpack.item;
+package game.item;
 
-public enum Tier {
+public enum ItemTier {
 	COMMON, UNCOMMON, RARE, EPIC, LEGENDARY
 }

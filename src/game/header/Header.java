@@ -1,4 +1,4 @@
-package header;
+package game.header;
 
 import interfaces.ReRenderable;
 import javafx.geometry.Insets;
