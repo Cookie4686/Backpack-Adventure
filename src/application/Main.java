@@ -6,7 +6,7 @@ import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import scene.MenuScene;
+import scene.GameScene;
 
 public class Main extends Application {
 	public static StackPane root;
@@ -15,7 +15,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		root = new StackPane();
 		root.setPrefSize(600, 600);
-		MenuScene.useScene();
+		GameScene.useScene();
 		Scene scene = new Scene(root);
 		scene.setOnKeyPressed(event -> DraggableHandler.handleSceneKeyPress(event));
 		primaryStage.setScene(scene);

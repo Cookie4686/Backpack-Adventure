@@ -39,8 +39,8 @@ public class DraggableHandler {
 		currentItem = null;
 		calcGrid();
 		if (SlotPane.getInstance().isPlaceable(gridX, gridY, item)) {
-			setTranslateNoOffScreenX(Slot.SIZE * gridX + SlotPane.getInstance().getGameX());
-			setTranslateNoOffScreenY(Slot.SIZE * gridY + SlotPane.getInstance().getGameY());
+			setTranslateNoOffScreenX(Slot.SIZE * gridX + Game.getX(SlotPane.getInstance()));
+			setTranslateNoOffScreenY(Slot.SIZE * gridY + Game.getY(SlotPane.getInstance()));
 			SlotPane.getInstance().placeItem(item, gridX, gridY);
 			SlotPane.getInstance().render();
 		}
@@ -55,17 +55,20 @@ public class DraggableHandler {
 	}
 
 	private void calcGrid() {
-		gridX = (int) ((item.getTranslateX() + Slot.SIZE / 2) - SlotPane.getInstance().getGameX()) / Slot.SIZE;
-		gridY = (int) ((item.getTranslateY() + Slot.SIZE / 2.5) - SlotPane.getInstance().getGameY()) / Slot.SIZE;
+		// TODO : Fix this calculating wrong grid
+		gridX = (int) ((item.getTranslateX() + Slot.SIZE / 2) - Game.getX(SlotPane.getInstance())) / Slot.SIZE;
+		gridY = (int) ((item.getTranslateY() + Slot.SIZE / 2.5) - Game.getY(SlotPane.getInstance())) / Slot.SIZE;
+		System.out.println(gridX + " : " + gridY);
 	}
 
+	// TODO : Might still be buggy after fixing calcGrid
 	private void setTranslateNoOffScreenX(double val) {
-		double maxWidth = Game.getGamePane().getWidth() - Slot.SIZE;
+		double maxWidth = Game.getGamePane().getWidth() - item.getItemWidth() * Slot.SIZE;
 		item.setTranslateX(val < 0 ? 0 : (val > maxWidth ? maxWidth : val));
 	}
 
 	private void setTranslateNoOffScreenY(double val) {
-		double maxHeight = Game.getGamePane().getHeight() - Slot.SIZE;
+		double maxHeight = Game.getGamePane().getHeight() - item.getItemHeight() * Slot.SIZE;
 		item.setTranslateY(val < 0 ? 0 : (val > maxHeight ? maxHeight : val));
 	}
 }
