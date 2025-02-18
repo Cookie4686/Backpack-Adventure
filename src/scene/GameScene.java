@@ -9,7 +9,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class GameScene {
-	public static void useScene() {
+	public static void use() {
 		VBox root = new VBox();
 		Game.getGamePane().getChildren().addAll(Backpack.getInstance(), ResourceLoader.newItem("apple"),
 				ResourceLoader.newItem("apple"), ResourceLoader.newItem("temp"));

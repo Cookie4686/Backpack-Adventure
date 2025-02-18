@@ -15,7 +15,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		root = new StackPane();
 		root.setPrefSize(600, 600);
-		MenuScene.useScene();
+		MenuScene.use();
 		Scene scene = new Scene(root);
 		scene.setOnKeyPressed(event -> DraggableHandler.handleSceneKeyPress(event));
 		primaryStage.setScene(scene);

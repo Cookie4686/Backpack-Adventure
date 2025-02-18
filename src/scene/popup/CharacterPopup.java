@@ -12,7 +12,7 @@ public class CharacterPopup {
 		Button characterButton = new Button("Character 1");
 		Button closeButton = new Button("Back");
 		Popup popup = new Popup(Color.LIGHTGREEN, headingText, characterButton, closeButton);
-		characterButton.setOnAction(event -> GameScene.useScene());
+		characterButton.setOnAction(event -> GameScene.use());
 		closeButton.setOnAction(event -> Main.root.getChildren().remove(popup));
 		Main.root.getChildren().add(popup);
 	}
