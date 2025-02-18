@@ -7,13 +7,15 @@ import javafx.scene.layout.Pane;
 
 public abstract class Item extends Pane {
 	protected String name;
+	protected String detail;
 	protected int width, height;
 	protected boolean isDiagonal;
 	// rotation {0, 90, 180, 270} or {45, 135, 225, 315}
 	private ImageView imageView;
 
-	public Item(String name, int height) {
+	public Item(String name, String detail, int height) {
 		super();
+		this.detail = detail;
 		this.name = name;
 		this.width = 1;
 		this.height = height;
@@ -22,8 +24,9 @@ public abstract class Item extends Pane {
 		setMaxSize(height * Slot.SIZE, height * Slot.SIZE);
 	}
 
-	public Item(String name, int width, int height) {
+	public Item(String name, String detail, int width, int height) {
 		super();
+		this.detail = detail;
 		this.name = name;
 		this.width = width;
 		this.height = height;
