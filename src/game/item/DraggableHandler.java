@@ -112,6 +112,7 @@ public class DraggableHandler {
 		if (event.getCode() == KeyCode.R) {
 			if (currentItem != null) {
 				currentItem.rotate(true);
+				calcValues(currentItem);
 				currentItem.handler.setTranslateNoOffScreenX(currentItem.getTranslateX());
 				currentItem.handler.setTranslateNoOffScreenY(currentItem.getTranslateY());
 				currentItem.handler.hightlightGrid();
