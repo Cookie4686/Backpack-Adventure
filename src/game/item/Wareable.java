@@ -1,33 +1,32 @@
 package game.item;
 
-import interfaces.Adjacency;
 
-public class Armor extends Item implements Adjacency{
+public abstract class Wareable extends Item{
 	final private int initialShield;
 	private int shield;
-	private int costEnergy;
 	private int increaseShield;
 	
-	public Armor(String name, String detail, int initialShield, int increaseShield, int costEnergy, int width, int height) {
+	public Wareable(String name, String detail, int initialShield, int increaseShield, int width, int height) {
 		super(name, detail, width, height);
-		this.shield = initialShield;
-		this.costEnergy = costEnergy;
-		this.initialShield = initialShield;
-		this.increaseShield = increaseShield;
+		this.initialShield = (initialShield<0)? 0 : initialShield;
+		setShield(initialShield);
+		setIncreaseShield(increaseShield);
 	}
 	
-	public Armor(String name, String detail, int initialShield, int increaseShield, int costEnergy, int width) {
+	public Wareable(String name, String detail, int initialShield, int increaseShield, int width) {
 		super(name, detail, width);
-		this.shield = initialShield;
-		this.costEnergy = costEnergy;
-		this.initialShield = initialShield;
-		this.increaseShield = increaseShield;
+		this.initialShield = (initialShield<0)? 0 : initialShield;
+		setShield(initialShield);
+		setIncreaseShield(increaseShield);
 	}
 
+	public abstract void activateStart();
 	
-	public void increaseCauseAdjacent() {
-		//TODO: increase shield per adjacency
+	protected int increasePerAdjacent() {
 		
+		//TODO: return increaseShield * each Wareable type adjacent to this
+		
+		return increaseShield;
 	}
 
 	public int getShield() {
@@ -35,18 +34,16 @@ public class Armor extends Item implements Adjacency{
 	}
 
 	public void setShield(int shield) {
-		this.shield = shield;
-	}
-
-	public int getCostEnergy() {
-		return costEnergy;
-	}
-
-	public void setCostEnergy(int costEnergy) {
-		this.costEnergy = costEnergy;
+		this.shield = (shield<0)? 0 : shield;
 	}
 
 	public int getInitialShield() {
 		return initialShield;
 	}
+
+	public void setIncreaseShield(int increaseShield) {
+		this.increaseShield = (increaseShield<0)? 0 : increaseShield;
+	}
+	
+	
 }

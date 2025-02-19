@@ -1,19 +1,16 @@
 package game.item;
 
-public class Weapon extends Item {
+public abstract class Weapon extends Item {
 	private int damage;
-	private int costEnergy;
 	
 	public Weapon(String name, String detail, int damage, int costEnergy, int width) {
 		super(name, detail, width);
-		this.damage = damage;
-		this.costEnergy = costEnergy;
+		setDamage(damage);
 	}
 
 	public Weapon(String name, String detail, int damage, int costEnergy, int width, int height) {
 		super(name, detail, width, height);
-		this.damage = damage;
-		this.costEnergy = costEnergy;
+		setDamage(damage);
 	}
 
 	public int getDamage() {
@@ -21,14 +18,11 @@ public class Weapon extends Item {
 	}
 
 	public void setDamage(int damage) {
-		this.damage = damage;
+		this.damage = (damage<0)? 0 : damage;
 	}
-
-	public int getCostEnergy() {
-		return costEnergy;
-	}
-
-	public void setCostEnergy(int costEnergy) {
-		this.costEnergy = costEnergy;
-	}
+	
+	
+//	if (getEffectType() == EffectType.FIRE || getEffectType() == EffectType.POISON || getEffectType() == EffectType.STUNTED) {
+//		// TODO: Fill effectType and effectPower to Enemy
+//	}
 }
