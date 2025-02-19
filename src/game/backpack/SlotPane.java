@@ -1,6 +1,7 @@
 package game.backpack;
 
 import game.item.Item;
+import game.item.ItemRotation;
 import interfaces.ReRenderable;
 import javafx.scene.layout.GridPane;
 
@@ -31,11 +32,51 @@ public class SlotPane extends GridPane implements ReRenderable {
 		}
 	}
 
-	public void placeItem(Item item, int gridX, int gridY) {
+	// might need to modify later to account for locked slots
+	public boolean isPlaceable(int gridX, int gridY, Item item) {
+		if (item.isDiagonal()) {
+			return (item.getRotation() == ItemRotation.DIAGONAL_LEFT
+					? 0 <= gridX && gridX + item.getItemHeight() <= WIDTH
+					: -1 <= gridX - item.getItemHeight() && gridX < WIDTH)
+					&& (0 <= gridY && gridY + item.getItemHeight() <= HEIGHT);
+		}
+		return 0 <= gridX && gridX + item.getItemWidth() <= WIDTH && 0 <= gridY
+				&& gridY + item.getItemHeight() <= HEIGHT;
 	}
 
-	public boolean isPlaceable(int gridX, int gridY, Item item) {
-		return 0 <= gridX && gridX < WIDTH && 0 <= gridY && gridY < HEIGHT;
+	// might need to modify later to account for already placed slots
+	public void placeItem(int gridX, int gridY, Item item) {
+		if (isPlaceable(gridX, gridY, item)) {
+			if (item.isDiagonal()) {
+				boolean isLeft = item.getRotation() == ItemRotation.DIAGONAL_LEFT;
+				for (int i = 0; i < item.getItemHeight(); i++) {
+					slots[gridY + i][gridX + (isLeft ? i : -i)].setItem(item);
+				}
+			} else {
+				for (int y = gridY; y < gridY + item.getItemHeight(); y++) {
+					for (int x = gridX; x < gridX + item.getItemWidth(); x++) {
+						slots[y][x].setItem(item);
+					}
+				}
+			}
+		}
+	}
+
+	public void hightlight(int gridX, int gridY, Item item) {
+		if (isPlaceable(gridX, gridY, item)) {
+			if (item.isDiagonal()) {
+				boolean isLeft = item.getRotation() == ItemRotation.DIAGONAL_LEFT;
+				for (int i = 0; i < item.getItemHeight(); i++) {
+					slots[gridY + i][gridX + (isLeft ? i : -i)].highlight();
+				}
+			} else {
+				for (int y = gridY; y < gridY + item.getItemHeight(); y++) {
+					for (int x = gridX; x < gridX + item.getItemWidth(); x++) {
+						slots[y][x].highlight();
+					}
+				}
+			}
+		}
 	}
 
 	public Slot[][] getSlots() {

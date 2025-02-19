@@ -3,13 +3,7 @@ package game.item;
 import game.backpack.Slot;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 public abstract class Item extends Pane {
 	protected String name;
@@ -42,8 +36,6 @@ public abstract class Item extends Pane {
 	public void initialize(Image image) {
 		setMaxSize(Math.max(width, height) * Slot.SIZE, Math.max(width, height) * Slot.SIZE);
 		setPickOnBounds(false);
-		setBorder(new Border(
-				new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 		imageView = new ImageView(image);
 		imageView.setFitWidth(Slot.SIZE * width);
@@ -91,6 +83,10 @@ public abstract class Item extends Pane {
 
 	public int getItemHeight() {
 		return height;
+	}
+
+	public boolean isDiagonal() {
+		return isDiagonal;
 	}
 
 	public ItemRotation getRotation() {

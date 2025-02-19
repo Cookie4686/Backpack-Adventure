@@ -38,9 +38,7 @@ public class DraggableHandler {
 	private void hightlightGrid() {
 		calcGrid();
 		SlotPane.getInstance().render();
-		if (SlotPane.getInstance().isPlaceable(gridX, gridY, item)) {
-			SlotPane.getInstance().getSlots()[gridY][gridX].highlight();
-		}
+		SlotPane.getInstance().hightlight(gridX, gridY, currentItem);
 	}
 
 	private void placeItem() {
@@ -53,7 +51,7 @@ public class DraggableHandler {
 			}
 			setTranslateNoOffScreenX(x + Game.getX(SlotPane.getInstance()));
 			setTranslateNoOffScreenY(y + Game.getY(SlotPane.getInstance()));
-			SlotPane.getInstance().placeItem(item, gridX, gridY);
+			SlotPane.getInstance().placeItem(gridX, gridY, item);
 			SlotPane.getInstance().render();
 		}
 	}
@@ -64,8 +62,10 @@ public class DraggableHandler {
 		if (item.getRotation() == ItemRotation.DIAGONAL_RIGHT) {
 			x += item.getWidth() - Slot.SIZE;
 		}
-		gridX = (int) (x - Game.getX(SlotPane.getInstance())) / Slot.SIZE;
-		gridY = (int) (y - Game.getY(SlotPane.getInstance())) / Slot.SIZE;
+		x -= Game.getX(SlotPane.getInstance());
+		y -= Game.getY(SlotPane.getInstance());
+		gridX = (int) (x < 0 ? -1 : x / Slot.SIZE);
+		gridY = (int) (y < 0 ? -1 : y / Slot.SIZE);
 	}
 
 	public void setTranslateNoOffScreenX(double val) {
