@@ -25,8 +25,8 @@ public class DraggableHandler {
 	}
 
 	public void handleItemMouseDrag(MouseEvent event) {
-		setTranslateNoOffScreenX(event.getSceneX() - startX);
-		setTranslateNoOffScreenY(event.getSceneY() - startY);
+		setTranslateNoOffScreenX(event.getSceneX() - startX, item);
+		setTranslateNoOffScreenY(event.getSceneY() - startY, item);
 		SlotPane.getInstance().render();
 
 		calcGrid();
@@ -39,8 +39,8 @@ public class DraggableHandler {
 		currentItem = null;
 		calcGrid();
 		if (SlotPane.getInstance().isPlaceable(gridX, gridY, item)) {
-			setTranslateNoOffScreenX(Slot.SIZE * gridX + Game.getX(SlotPane.getInstance()));
-			setTranslateNoOffScreenY(Slot.SIZE * gridY + Game.getY(SlotPane.getInstance()));
+			setTranslateNoOffScreenX(Slot.SIZE * gridX + Game.getX(SlotPane.getInstance()), item);
+			setTranslateNoOffScreenY(Slot.SIZE * gridY + Game.getY(SlotPane.getInstance()), item);
 			SlotPane.getInstance().placeItem(item, gridX, gridY);
 			SlotPane.getInstance().render();
 		}
@@ -50,25 +50,34 @@ public class DraggableHandler {
 		if (event.getCode() == KeyCode.R) {
 			if (currentItem != null) {
 				currentItem.rotate(true);
+				DraggableHandler.setTranslateNoOffScreenX(currentItem.getTranslateX(), currentItem);
+				DraggableHandler.setTranslateNoOffScreenY(currentItem.getTranslateY(), currentItem);
 			}
 		}
 	}
 
 	private void calcGrid() {
-		// TODO : Fix this calculating wrong grid
-		gridX = (int) ((item.getTranslateX() + Slot.SIZE / 2) - Game.getX(SlotPane.getInstance())) / Slot.SIZE;
-		gridY = (int) ((item.getTranslateY() + Slot.SIZE / 2.5) - Game.getY(SlotPane.getInstance())) / Slot.SIZE;
-		System.out.println(gridX + " : " + gridY);
+		gridX = (int) (item.getTranslateX() - Game.getX(SlotPane.getInstance())) / Slot.SIZE;
+		gridY = (int) (item.getTranslateY() - Game.getY(SlotPane.getInstance())) / Slot.SIZE;
 	}
 
-	// TODO : Might still be buggy after fixing calcGrid
-	private void setTranslateNoOffScreenX(double val) {
-		double maxWidth = Game.getGamePane().getWidth() - item.getItemWidth() * Slot.SIZE;
-		item.setTranslateX(val < 0 ? 0 : (val > maxWidth ? maxWidth : val));
+	public static void setTranslateNoOffScreenX(double val, Item item) {
+		double maxWidth = Game.getGamePane().getWidth() - item.getWidth();
+		double diff = 0;
+		if (item.getRotation() == ItemRotation.VERTICAL) {
+			diff = item.getDiff();
+			maxWidth += diff;
+		}
+		item.setTranslateX(val < -diff ? -diff : (val > maxWidth ? maxWidth : val));
 	}
 
-	private void setTranslateNoOffScreenY(double val) {
-		double maxHeight = Game.getGamePane().getHeight() - item.getItemHeight() * Slot.SIZE;
-		item.setTranslateY(val < 0 ? 0 : (val > maxHeight ? maxHeight : val));
+	public static void setTranslateNoOffScreenY(double val, Item item) {
+		double maxHeight = Game.getGamePane().getHeight() - item.getHeight();
+		double diff = 0;
+		if (item.getRotation() == ItemRotation.HORIZONTAL) {
+			diff = item.getDiff();
+			maxHeight += diff;
+		}
+		item.setTranslateY(val < -diff ? -diff : (val > maxHeight ? maxHeight : val));
 	}
 }

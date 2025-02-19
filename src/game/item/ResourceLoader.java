@@ -14,7 +14,7 @@ public class ResourceLoader {
 		itemMap.put("temp", new Resource(() -> new Weapon("temp", 2), "debug.png"));
 		itemMap.put("temp2", new Resource(() -> new Weapon("temp", 3), "debug.png"));
 		itemMap.put("temp3", new Resource(() -> new Weapon("temp", 1, 3), "debug.png"));
-		itemMap.put("temp4", new Resource(() -> new Weapon("temp", 3, 1), "debug.png"));
+		itemMap.put("temp4", new Resource(() -> new Weapon("temp", 1, 2), "debug.png"));
 	}
 
 	public static Item newItem(String name) {

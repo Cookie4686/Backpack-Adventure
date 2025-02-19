@@ -3,7 +3,13 @@ package game.item;
 import game.backpack.Slot;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 public abstract class Item extends Pane {
 	protected String name;
@@ -11,6 +17,7 @@ public abstract class Item extends Pane {
 	protected boolean isDiagonal;
 	// rotation {0, 90, 180, 270} or {45, 135, 225, 315}
 	private ImageView imageView;
+	private double diff;
 
 	public Item(String name, int height) {
 		super();
@@ -20,6 +27,8 @@ public abstract class Item extends Pane {
 		isDiagonal = true;
 		setPickOnBounds(false);
 		setMaxSize(height * Slot.SIZE, height * Slot.SIZE);
+		setBorder(new Border(
+				new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 	}
 
 	public Item(String name, int width, int height) {
@@ -28,7 +37,10 @@ public abstract class Item extends Pane {
 		this.width = width;
 		this.height = height;
 		isDiagonal = false;
-		setMaxSize(width * Slot.SIZE, height * Slot.SIZE);
+		setPickOnBounds(false);
+		setMaxSize(Math.max(width, height) * Slot.SIZE, Math.max(width, height) * Slot.SIZE);
+		setBorder(new Border(
+				new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 	}
 
 	public void initialize(Image image) {
@@ -37,10 +49,9 @@ public abstract class Item extends Pane {
 		imageView.setFitWidth(Slot.SIZE * width);
 		imageView.setFitHeight(Slot.SIZE * height);
 		imageView.setPickOnBounds(true);
-		if (isDiagonal) {
-			imageView.setX((Slot.SIZE * height - Slot.SIZE) / 2);
-			imageView.setRotate(45);
-		}
+		diff = (Slot.SIZE * height - Slot.SIZE) / 2;
+		imageView.setX(diff);
+		imageView.setRotate(isDiagonal ? 45 : 0);
 		DraggableHandler handler = new DraggableHandler(this);
 		imageView.setOnMousePressed(event -> handler.handleItemMousePress(event));
 		imageView.setOnMouseDragged(event -> handler.handleItemMouseDrag(event));
@@ -76,5 +87,9 @@ public abstract class Item extends Pane {
 		case 315 -> ItemRotation.DIAGONAL_LEFT;
 		default -> null;
 		};
+	}
+
+	public double getDiff() {
+		return diff;
 	}
 }
