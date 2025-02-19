@@ -1,4 +1,4 @@
-package game.item;
+package game.util;
 
 public enum EffectType {
 	FIRE,

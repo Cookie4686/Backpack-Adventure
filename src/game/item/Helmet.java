@@ -1,5 +1,6 @@
 package game.item;
 
+import game.util.EffectType;
 import interfaces.TurnActivable;
 
 public class Helmet extends Wareable implements TurnActivable {
