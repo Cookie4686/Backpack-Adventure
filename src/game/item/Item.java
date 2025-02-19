@@ -17,40 +17,39 @@ public abstract class Item extends Pane {
 	protected boolean isDiagonal;
 	// rotation {0, 90, 180, 270} or {45, 135, 225, 315}
 	private ImageView imageView;
-	private double diff;
+	private double diff, diffX, diffY;
 
-	public Item(String name, int height) {
-		super();
-		this.name = name;
-		this.width = 1;
-		this.height = height;
-		isDiagonal = true;
-		setPickOnBounds(false);
-		setMaxSize(height * Slot.SIZE, height * Slot.SIZE);
-		setBorder(new Border(
-				new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-	}
-
+	// Non-Diagonal Constructor
 	public Item(String name, int width, int height) {
 		super();
+		isDiagonal = false;
 		this.name = name;
 		this.width = width;
 		this.height = height;
-		isDiagonal = false;
-		setPickOnBounds(false);
 		setMaxSize(Math.max(width, height) * Slot.SIZE, Math.max(width, height) * Slot.SIZE);
-		setBorder(new Border(
-				new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+	}
+
+	// Diagonal Constructor
+	public Item(String name, int height) {
+		super();
+		isDiagonal = true;
+		this.name = name;
+		this.width = 1;
+		this.height = height;
+		setMaxSize(height * Slot.SIZE, height * Slot.SIZE);
 	}
 
 	public void initialize(Image image) {
-		imageView = new ImageView();
-		imageView.setImage(image);
+		setPickOnBounds(false);
+		setBorder(new Border(
+				new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		imageView = new ImageView(image);
 		imageView.setFitWidth(Slot.SIZE * width);
 		imageView.setFitHeight(Slot.SIZE * height);
 		imageView.setPickOnBounds(true);
-		diff = (Slot.SIZE * height - Slot.SIZE) / 2;
-		imageView.setX(diff);
+		normalizeDiffToCenter();
+		imageView.setX(diffX);
+		imageView.setY(diffY);
 		imageView.setRotate(isDiagonal ? 45 : 0);
 		DraggableHandler handler = new DraggableHandler(this);
 		imageView.setOnMousePressed(event -> handler.handleItemMousePress(event));
@@ -62,9 +61,22 @@ public abstract class Item extends Pane {
 		// imageView.setOnMouseEntered(event -> {});
 	}
 
+	private void normalizeDiffToCenter() {
+		diffX = height > width ? (Slot.SIZE * height - Slot.SIZE * width) / 2 : 0;
+		diffY = width > height ? (Slot.SIZE * width - Slot.SIZE * height) / 2 : 0;
+	}
+
 	public void rotate(boolean right) {
 		double val = imageView.getRotate() + (right ? 90 : -90);
 		imageView.setRotate(val < 0 ? 360 + val : (val >= 360 ? val - 360 : val));
+		if (!isDiagonal) {
+			int temp = width;
+			width = height;
+			height = temp;
+			double temp2 = diffX;
+			diffX = diffY;
+			diffY = temp2;
+		}
 	}
 
 	public int getItemWidth() {
@@ -76,20 +88,19 @@ public abstract class Item extends Pane {
 	}
 
 	public ItemRotation getRotation() {
-		return switch ((int) imageView.getRotate()) {
-		case 0 -> ItemRotation.VERTICAL;
-		case 180 -> ItemRotation.VERTICAL;
-		case 90 -> ItemRotation.HORIZONTAL;
-		case 270 -> ItemRotation.HORIZONTAL;
-		case 45 -> ItemRotation.DIAGONAL_RIGHT;
-		case 225 -> ItemRotation.DIAGONAL_RIGHT;
-		case 135 -> ItemRotation.DIAGONAL_LEFT;
-		case 315 -> ItemRotation.DIAGONAL_LEFT;
-		default -> null;
-		};
+		if (!isDiagonal) {
+			return width > height ? ItemRotation.HORIZONTAL : ItemRotation.VERTICAL;
+		} else {
+			return imageView.getRotate() == 45 || imageView.getRotate() == 135 ? ItemRotation.DIAGONAL_RIGHT
+					: ItemRotation.DIAGONAL_LEFT;
+		}
 	}
 
-	public double getDiff() {
-		return diff;
+	public double getDiffX() {
+		return diffX;
+	}
+
+	public double getDiffY() {
+		return diffY;
 	}
 }

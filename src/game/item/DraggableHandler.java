@@ -65,7 +65,7 @@ public class DraggableHandler {
 		double maxWidth = Game.getGamePane().getWidth() - item.getWidth();
 		double diff = 0;
 		if (item.getRotation() == ItemRotation.VERTICAL) {
-			diff = item.getDiff();
+			diff = item.getDiffX();
 			maxWidth += diff;
 		}
 		item.setTranslateX(val < -diff ? -diff : (val > maxWidth ? maxWidth : val));
@@ -75,7 +75,7 @@ public class DraggableHandler {
 		double maxHeight = Game.getGamePane().getHeight() - item.getHeight();
 		double diff = 0;
 		if (item.getRotation() == ItemRotation.HORIZONTAL) {
-			diff = item.getDiff();
+			diff = item.getDiffY();
 			maxHeight += diff;
 		}
 		item.setTranslateY(val < -diff ? -diff : (val > maxHeight ? maxHeight : val));
