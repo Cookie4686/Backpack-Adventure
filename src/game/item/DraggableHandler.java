@@ -58,6 +58,7 @@ public class DraggableHandler {
 		// TODO : Fix this calculating wrong grid
 		gridX = (int) ((item.getTranslateX() + Slot.SIZE / 2) - Game.getX(SlotPane.getInstance())) / Slot.SIZE;
 		gridY = (int) ((item.getTranslateY() + Slot.SIZE / 2.5) - Game.getY(SlotPane.getInstance())) / Slot.SIZE;
+		System.out.println();
 		System.out.println(gridX + " : " + gridY);
 	}
 
