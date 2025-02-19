@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 
 public abstract class Item extends Pane {
 	protected String name;
+	protected String detail;
 	protected int width, height;
 	protected boolean isDiagonal;
 
@@ -15,11 +16,22 @@ public abstract class Item extends Pane {
 	private ImageView imageView;
 	private double diffX, diffY;
 
-	// Non-Diagonal Constructor
-	public Item(String name, int width, int height) {
+	public Item(String name, String detail, int height) {
 		super();
-		isDiagonal = false;
+		this.detail = detail;
 		this.name = name;
+		this.width = 1;
+		this.height = height;
+		isDiagonal = true;
+		setPickOnBounds(false);
+		setMaxSize(height * Slot.SIZE, height * Slot.SIZE);
+	}
+
+	public Item(String name, String detail, int width, int height) {
+		super();
+		this.name = name;
+		this.detail = detail;
+		isDiagonal = false;
 		this.width = width;
 		this.height = height;
 	}
