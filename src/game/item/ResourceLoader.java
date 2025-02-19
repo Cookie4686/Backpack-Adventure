@@ -10,8 +10,15 @@ public class ResourceLoader {
 
 	static {
 		itemMap = new HashMap<String, Resource>();
-		itemMap.put("apple", new Resource(() -> new Weapon("apple", 1, 1, false), "apple.png"));
-		itemMap.put("temp", new Resource(() -> new Weapon("temp", 2, 1, true), ""));
+		itemMap.put("apple", new Resource(() -> new Weapon("apple", "edible", 1, 1, 1, 1), "apple.png"));
+		itemMap.put("temp", new Resource(() -> new Weapon("temp", "temp", 1, 1, 2), "debug.png"));
+		itemMap.put("temp2", new Resource(() -> new Weapon("temp", "temp", 1, 1, 3), "debug.png"));
+		itemMap.put("temp3", new Resource(() -> new Weapon("temp", "temp", 1, 1, 1, 2), "debug.png"));
+		itemMap.put("temp4", new Resource(() -> new Weapon("temp", "temp", 1, 1, 1, 3), "debug.png"));
+		itemMap.put("temp5", new Resource(() -> new Weapon("temp", "temp", 1, 1, 2, 1), "debug.png"));
+		itemMap.put("temp6", new Resource(() -> new Weapon("temp", "temp", 1, 1, 3, 1), "debug.png"));
+		itemMap.put("temp7", new Resource(() -> new Weapon("temp", "temp", 1, 1, 2, 3), "debug.png"));
+		itemMap.put("temp8", new Resource(() -> new Weapon("temp", "temp", 1, 1, 3, 2), "debug.png"));
 	}
 
 	public static Item newItem(String name) {
