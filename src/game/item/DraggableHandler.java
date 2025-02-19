@@ -25,43 +25,50 @@ public class DraggableHandler {
 	}
 
 	public void handleItemMouseDrag(MouseEvent event) {
-		setTranslateNoOffScreenX(event.getSceneX() - startX, item);
-		setTranslateNoOffScreenY(event.getSceneY() - startY, item);
-		SlotPane.getInstance().render();
+		setTranslateNoOffScreenX(event.getSceneX() - startX);
+		setTranslateNoOffScreenY(event.getSceneY() - startY);
+		hightlightGrid();
+	}
 
+	public void handleItemMouseRelease(MouseEvent event) {
+		currentItem = null;
+		placeItem();
+	}
+
+	private void hightlightGrid() {
 		calcGrid();
+		SlotPane.getInstance().render();
 		if (SlotPane.getInstance().isPlaceable(gridX, gridY, item)) {
 			SlotPane.getInstance().getSlots()[gridY][gridX].highlight();
 		}
 	}
 
-	public void handleItemMouseRelease(MouseEvent event) {
-		currentItem = null;
+	private void placeItem() {
 		calcGrid();
 		if (SlotPane.getInstance().isPlaceable(gridX, gridY, item)) {
-			setTranslateNoOffScreenX(Slot.SIZE * gridX + Game.getX(SlotPane.getInstance()), item);
-			setTranslateNoOffScreenY(Slot.SIZE * gridY + Game.getY(SlotPane.getInstance()), item);
+			double x = Slot.SIZE * gridX - item.getDiffX();
+			double y = Slot.SIZE * gridY - item.getDiffY();
+			if (item.getRotation() == ItemRotation.DIAGONAL_RIGHT) {
+				x -= item.getWidth() - Slot.SIZE;
+			}
+			setTranslateNoOffScreenX(x + Game.getX(SlotPane.getInstance()));
+			setTranslateNoOffScreenY(y + Game.getY(SlotPane.getInstance()));
 			SlotPane.getInstance().placeItem(item, gridX, gridY);
 			SlotPane.getInstance().render();
 		}
 	}
 
-	public static void handleSceneKeyPress(KeyEvent event) {
-		if (event.getCode() == KeyCode.R) {
-			if (currentItem != null) {
-				currentItem.rotate(true);
-				DraggableHandler.setTranslateNoOffScreenX(currentItem.getTranslateX(), currentItem);
-				DraggableHandler.setTranslateNoOffScreenY(currentItem.getTranslateY(), currentItem);
-			}
-		}
-	}
-
 	private void calcGrid() {
-		gridX = (int) (item.getTranslateX() - Game.getX(SlotPane.getInstance())) / Slot.SIZE;
-		gridY = (int) (item.getTranslateY() - Game.getY(SlotPane.getInstance())) / Slot.SIZE;
+		double x = item.getTranslateX() + item.getDiffX() + Slot.SIZE / 2;
+		double y = item.getTranslateY() + item.getDiffY() + Slot.SIZE / 2;
+		if (item.getRotation() == ItemRotation.DIAGONAL_RIGHT) {
+			x += item.getWidth() - Slot.SIZE;
+		}
+		gridX = (int) (x - Game.getX(SlotPane.getInstance())) / Slot.SIZE;
+		gridY = (int) (y - Game.getY(SlotPane.getInstance())) / Slot.SIZE;
 	}
 
-	public static void setTranslateNoOffScreenX(double val, Item item) {
+	public void setTranslateNoOffScreenX(double val) {
 		double maxWidth = Game.getGamePane().getWidth() - item.getWidth();
 		double diff = 0;
 		if (item.getRotation() == ItemRotation.VERTICAL) {
@@ -71,7 +78,7 @@ public class DraggableHandler {
 		item.setTranslateX(val < -diff ? -diff : (val > maxWidth ? maxWidth : val));
 	}
 
-	public static void setTranslateNoOffScreenY(double val, Item item) {
+	public void setTranslateNoOffScreenY(double val) {
 		double maxHeight = Game.getGamePane().getHeight() - item.getHeight();
 		double diff = 0;
 		if (item.getRotation() == ItemRotation.HORIZONTAL) {
@@ -79,5 +86,16 @@ public class DraggableHandler {
 			maxHeight += diff;
 		}
 		item.setTranslateY(val < -diff ? -diff : (val > maxHeight ? maxHeight : val));
+	}
+
+	public static void handleSceneKeyPress(KeyEvent event) {
+		if (event.getCode() == KeyCode.R) {
+			if (currentItem != null) {
+				currentItem.rotate(true);
+				currentItem.handler.setTranslateNoOffScreenX(currentItem.getTranslateX());
+				currentItem.handler.setTranslateNoOffScreenY(currentItem.getTranslateY());
+				currentItem.handler.hightlightGrid();
+			}
+		}
 	}
 }
