@@ -34,7 +34,7 @@ public class DraggableHandler {
 			SlotPane.getInstance().getSlots()[gridY][gridX].highlight();
 		}
 	}
-
+	
 	public void handleItemMouseRelease(MouseEvent event) {
 		currentItem = null;
 		calcGrid();
