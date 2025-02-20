@@ -6,81 +6,87 @@ import game.util.Effect;
 
 public class Player {
 	private static String name;
+	private static int hp, maxHp, shield, xp, maxXp, energy, maxEnergy;
 	private static ArrayList<String> pic;
-	private static int hp;
-	private static int maxHp;
-	private static int shield;
-	private static int xp;
-	private static int maxXp;
-	private static int energy;
-	private static int maxEnergy;
 	private static ArrayList<Effect> allEffect;
-	
+
 	public static int getHp() {
 		return hp;
 	}
+
 	public static void setHp(int hp) {
-		if(hp < 0) hp = 0;
-		Player.hp = hp;
+		Player.hp = hp < 0 ? 0 : (hp > maxHp ? maxHp : hp);
 	}
+
 	public static String getName() {
 		return name;
 	}
+
 	public static void setName(String name) {
 		Player.name = name;
 	}
+
 	public static ArrayList<String> getPic() {
 		return pic;
 	}
+
 	public static void setPic(ArrayList<String> pic) {
 		Player.pic = pic;
 	}
+
 	public static int getShield() {
 		return shield;
 	}
+
 	public static void setShield(int shield) {
-		if(shield < 0) shield = 0;
-		Player.shield = shield;
+		Player.shield = shield < 0 ? 0 : shield;
 	}
+
 	public static int getXp() {
 		return xp;
 	}
+
 	public static void setXp(int xp) {
-		if(xp < 0) xp = 0;
-		Player.xp = xp;
+		Player.xp = xp < 0 ? 0 : xp;
 	}
+
 	public static int getMaxHp() {
 		return maxHp;
 	}
+
 	public static void setMaxHp(int maxHp) {
-		if(maxHp < 0) maxHp = 0;
-		Player.maxHp = maxHp;
+		Player.maxHp = maxHp < 0 ? 0 : maxHp;
 	}
+
 	public static int getMaxXp() {
 		return maxXp;
 	}
+
 	public static void setMaxXp(int maxXp) {
 		Player.maxXp = maxXp;
 	}
+
 	public static ArrayList<Effect> getAllEffect() {
 		return allEffect;
 	}
+
 	public static void setAllEffect(ArrayList<Effect> allEffect) {
 		Player.allEffect = allEffect;
 	}
+
 	public static int getEnergy() {
 		return energy;
 	}
+
 	public static void setEnergy(int energy) {
-		if(energy < 0) energy = 0;
-		Player.energy = energy;
+		Player.energy = energy < 0 ? 0 : energy;
 	}
+
 	public static int getMaxEnergy() {
 		return maxEnergy;
 	}
+
 	public static void setMaxEnergy(int maxEnergy) {
-		if(maxEnergy < 0) maxEnergy = 0;
-		Player.maxEnergy = maxEnergy;
+		Player.maxEnergy = maxEnergy < 0 ? 0 : maxEnergy;
 	}
-	
 }
