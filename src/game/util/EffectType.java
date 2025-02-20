@@ -12,5 +12,6 @@ public enum EffectType {
 	SUMMONER,
 	ANGER,
 	HEAL,
-	DAMAGE
+	DAMAGE,
+	ENERGY
 }

@@ -5,32 +5,40 @@ import game.util.EffectType;
 import interfaces.Clickable;
 
 public abstract class Consumable extends Item implements Clickable {
-	private int durability;
 	private EffectType effectType;
 	private int effectPower;
 
-	public Consumable(String name, String detail, int durability, EffectType effectType, int effectPower, int width, int height) {
+	public Consumable(String name, String detail, EffectType effectType, int effectPower, int width, int height) {
 		super(name, detail, width, height);
-		setDurability(durability);
 		setEffectType(effectType);
 		setEffectPower(effectPower);
 	}
 
-	public Consumable(String name, String detail, int durability, EffectType effectType, int effectPower, int height) {
+	public Consumable(String name, String detail, EffectType effectType, int effectPower, int height) {
 		super(name, detail, height);
-		setDurability(durability);
 		setEffectType(effectType);
 		setEffectPower(effectPower);
 	}
-
-	public int getDurability() {
-		return durability;
+	
+	
+	@Override
+	public void activatePerClick() {
+		if (effectType==EffectType.DAMAGE) {
+			//TODO: damage enemy by effectPower
+		}
+		else if (effectType==EffectType.HEAL) {
+			//TODO: heal self by effectPower
+		}
+		else if (effectType==EffectType.ENERGY) {
+			//TODO: increase enegy by effectPower
+		}
+		else if (effectType==EffectType.FIRE || effectType==EffectType.POISON || effectType==EffectType.STUNTED) {
+			//TODO: add effectType to enemy by effectPower amount
+		}
 	}
 
-	public void setDurability(int durability) {
-		this.durability = durability;
-	}
-
+	
+	//Getter & Setter
 	public EffectType getEffectType() {
 		return effectType;
 	}
@@ -44,6 +52,6 @@ public abstract class Consumable extends Item implements Clickable {
 	}
 
 	public void setEffectPower(int effectPower) {
-		this.effectPower = effectPower;
+		this.effectPower = (effectPower<0)? 0 : effectPower;
 	}
 }
