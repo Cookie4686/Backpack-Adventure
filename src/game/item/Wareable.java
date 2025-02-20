@@ -1,34 +1,37 @@
 package game.item;
 
+import game.util.EffectType;
+import interfaces.TurnActivable;
 
-public abstract class Wareable extends Item{
+public abstract class Wareable extends Item implements TurnActivable{
 	final private int initialShield;
 	private int shield;
 	private int increaseShield;
+	private EffectType effectType;
+	private int effectPower;
 	
-	public Wareable(String name, String detail, int initialShield, int increaseShield, int width, int height) {
+	public Wareable(String name, String detail, int initialShield, int increaseShield, EffectType effectType, int effectPower, int width, int height) {
 		super(name, detail, width, height);
 		this.initialShield = (initialShield<0)? 0 : initialShield;
 		setShield(initialShield);
 		setIncreaseShield(increaseShield);
+		setEffectType(effectType);
+		setEffectPower(effectPower);
 	}
 	
-	public Wareable(String name, String detail, int initialShield, int increaseShield, int width) {
+	public Wareable(String name, String detail, int initialShield, int increaseShield,  EffectType effectType, int effectPower, int width) {
 		super(name, detail, width);
 		this.initialShield = (initialShield<0)? 0 : initialShield;
 		setShield(initialShield);
 		setIncreaseShield(increaseShield);
+		setEffectType(effectType);
+		setEffectPower(effectPower);
 	}
-
+	
+	
 	public abstract void activateStart();
 	
-	protected int increasePerAdjacent() {
-		
-		//TODO: return increaseShield * each Wareable type adjacent to this
-		
-		return increaseShield;
-	}
-
+	//Getter & Setter
 	public int getShield() {
 		return shield;
 	}
@@ -45,5 +48,20 @@ public abstract class Wareable extends Item{
 		this.increaseShield = (increaseShield<0)? 0 : increaseShield;
 	}
 	
+	public EffectType getEffectType() {
+		return effectType;
+	}
+
+	public int getEffectPower() {
+		return effectPower;
+	}
+
+	public void setEffectType(EffectType effectType) {
+		this.effectType = effectType;
+	}
+
+	public void setEffectPower(int effectPower) {
+		this.effectPower = (effectPower < 0) ? 0 : effectPower;
+	}
 	
 }

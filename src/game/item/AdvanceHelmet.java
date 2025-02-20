@@ -6,13 +6,13 @@ public class AdvanceHelmet extends Helmet {
 	private EffectType initEffectType;
 	private int initEffectPower;
 	
-	public AdvanceHelmet(String name, String detail, int startShield, int increase, EffectType initEffectType, int initEffectPower, EffectType effectType, int effectPower,  int width, int height) {
-		super(name, detail, startShield, increase, effectType, effectPower, width, height);
+	public AdvanceHelmet(String name, String detail, int initialShield, int increase, EffectType initEffectType, int initEffectPower, EffectType effectType, int effectPower,  int width, int height) {
+		super(name, detail, initialShield, increase, effectType, effectPower, width, height);
 		setInitEffectType(initEffectType);
 		setInitEffectPower(initEffectPower);
 	}
-	public AdvanceHelmet(String name, String detail, int startShield, int increase, EffectType initEffectType, int initEffectPower, EffectType effectType, int effectPower, int width) {
-		super(name, detail, startShield, increase, effectType, effectPower, width);
+	public AdvanceHelmet(String name, String detail, int initialShield, int increase, EffectType initEffectType, int initEffectPower, EffectType effectType, int effectPower, int width) {
+		super(name, detail, initialShield, increase, effectType, effectPower, width);
 		setInitEffectType(initEffectType);
 		setInitEffectPower(initEffectPower);
 	}

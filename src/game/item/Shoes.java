@@ -2,26 +2,28 @@ package game.item;
 
 import game.util.EffectType;
 
-public class Helmet extends Wareable {
+public class Shoes extends Wareable {
 
-	public Helmet(String name, String detail, int initialShield, int increaseShield, EffectType effectType, int effectPower, int width, int height) {
+	public Shoes(String name, String detail, int initialShield, int increaseShield, EffectType effectType, int effectPower, int width, int height) {
 		super(name, detail, initialShield, increaseShield, effectType, effectPower, width, height);
 	}
 
-	public Helmet(String name, String detail, int initialShield, int increaseShield, EffectType effectType, int effectPower, int width) {
+	public Shoes(String name, String detail, int initialShield, int increaseShield, EffectType effectType, int effectPower, int width) {
 		super(name, detail, initialShield, increaseShield, effectType, effectPower, width);
 	}
 	
-	private int underSlot() {	
-		//return number of row under
+	private int emptySpace() {	
+		//return number of empty space above
 		return 0;
 	}
-
+	
 	@Override
 	public void activateStart() {
-		//setShield(getInitialShield() + (underSlot() * increaseShield));
+		//need to be lowest otherwise no bonus shield
+		//setShield(getInitialShield() + (emptyspace()  * increaseShield));
 		
 		// TODO: add Shield to Player
+		
 	}
 	
 	@Override
@@ -32,5 +34,4 @@ public class Helmet extends Wareable {
 		
 		// TODO: add Shield to Player
 	}
-	
 }
