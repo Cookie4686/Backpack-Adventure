@@ -36,7 +36,7 @@ public class AdvanceArmor extends Armor {
 	}
 
 	public void setInitEffectPower(int initEffectPower) {
-		this.initEffectPower = initEffectPower;
+		this.initEffectPower = (initEffectPower<0)? 0 : initEffectPower;
 	}
 	
 	

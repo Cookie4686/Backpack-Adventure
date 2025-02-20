@@ -3,7 +3,11 @@ package game.item;
 import java.util.HashMap;
 import java.util.function.Supplier;
 
-import game.item.*;
+import game.item.consumable.Food;
+import game.item.wareable.Armor;
+import game.item.weapon.ElementalSword;
+import game.item.weapon.Weapon;
+import game.util.EffectType;
 import javafx.scene.image.Image;
 
 public class ResourceLoader {
@@ -11,9 +15,9 @@ public class ResourceLoader {
 
 	static {
 		itemMap = new HashMap<String, Resource>();
-		itemMap.put("apple", new Resource(() -> new Food("apple", "edible", 1, 1, 1, 1), "apple.png"));
-		itemMap.put("temp", new Resource(() -> new Weapon("temp", "temp", 1, 1, 2), "debug.png"));
-		itemMap.put("temp2", new Resource(() -> new Weapon("temp", "temp", 1, 1, 3), "debug.png"));
+		itemMap.put("apple", new Resource(() -> new Food("apple", "edible", 1, null, 0, 1, 1), "apple.png"));
+		itemMap.put("temp", new Resource(() -> new Armor("Armor", "Strong!", 2, 2, null, 0, 1, 2), "debug.png"));
+		itemMap.put("temp2", new Resource(() -> new ElementalSword("ElementalSword", "So COOL!!!", EffectType.FIRE, 2, 2, 2, 2), "debug.png"));
 		itemMap.put("temp3", new Resource(() -> new Weapon("temp", "temp", 1, 1, 1, 2), "debug.png"));
 		itemMap.put("temp4", new Resource(() -> new Weapon("temp", "temp", 1, 1, 1, 3), "debug.png"));
 		itemMap.put("temp5", new Resource(() -> new Weapon("temp", "temp", 1, 1, 2, 1), "debug.png"));
