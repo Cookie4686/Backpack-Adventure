@@ -1,5 +1,7 @@
 package game.item;
 
+import java.util.Random;
+
 import game.Game;
 import game.backpack.Slot;
 import game.backpack.SlotPane;
@@ -9,8 +11,9 @@ import javafx.scene.input.MouseEvent;
 
 public class DraggableHandler {
 	public static Item currentItem;
+	private static double startX, startY;
+	private static double diffX, diffY, maxWidth, maxHeight, slotPaneX, slotPaneY;
 
-	private double startX, startY;
 	private int gridX, gridY;
 	private Item item;
 
@@ -22,6 +25,7 @@ public class DraggableHandler {
 		currentItem = item;
 		startX = event.getSceneX() - item.getTranslateX();
 		startY = event.getSceneY() - item.getTranslateY();
+		calcValues(currentItem);
 	}
 
 	public void handleItemMouseDrag(MouseEvent event) {
@@ -49,8 +53,8 @@ public class DraggableHandler {
 			if (item.getRotation() == ItemRotation.DIAGONAL_RIGHT) {
 				x -= item.getWidth() - Slot.SIZE;
 			}
-			setTranslateNoOffScreenX(x + Game.getX(SlotPane.getInstance()));
-			setTranslateNoOffScreenY(y + Game.getY(SlotPane.getInstance()));
+			setTranslateNoOffScreenX(x + slotPaneX);
+			setTranslateNoOffScreenY(y + slotPaneY);
 			SlotPane.getInstance().placeItem(gridX, gridY, item);
 			SlotPane.getInstance().render();
 		}
@@ -62,36 +66,53 @@ public class DraggableHandler {
 		if (item.getRotation() == ItemRotation.DIAGONAL_RIGHT) {
 			x += item.getWidth() - Slot.SIZE;
 		}
-		x -= Game.getX(SlotPane.getInstance());
-		y -= Game.getY(SlotPane.getInstance());
+		x -= slotPaneX;
+		y -= slotPaneY;
 		gridX = (int) (x < 0 ? -1 : x / Slot.SIZE);
 		gridY = (int) (y < 0 ? -1 : y / Slot.SIZE);
 	}
 
 	public void setTranslateNoOffScreenX(double val) {
-		double maxWidth = Game.getGamePane().getWidth() - item.getWidth();
-		double diff = 0;
-		if (item.getRotation() == ItemRotation.VERTICAL) {
-			diff = item.getDiffX();
-			maxWidth += diff;
-		}
-		item.setTranslateX(val < -diff ? -diff : (val > maxWidth ? maxWidth : val));
+		item.setTranslateX(val < -diffX ? -diffX : (val > maxWidth ? maxWidth : val));
 	}
 
 	public void setTranslateNoOffScreenY(double val) {
-		double maxHeight = Game.getGamePane().getHeight() - item.getHeight();
-		double diff = 0;
-		if (item.getRotation() == ItemRotation.HORIZONTAL) {
-			diff = item.getDiffY();
-			maxHeight += diff;
+		item.setTranslateY(val < -diffY ? -diffY : (val > maxHeight ? maxHeight : val));
+	}
+
+	public static void setRandomOffGridLocation(Item item) {
+		calcValues(item);
+		Random random = new Random();
+		double x = 0, y = 0;
+		for (int i = 0; i < 10; i++) {
+			x = random.nextDouble(-SlotPane.getInstance().getWidth() / 2, SlotPane.getInstance().getWidth() / 2)
+					+ item.getTranslateX();
+			y = random.nextDouble(0, SlotPane.getInstance().getHeight() / 2) + item.getTranslateY();
+			if (!(slotPaneX <= x && x <= slotPaneX + SlotPane.getInstance().getWidth() && slotPaneY <= y
+					&& y <= slotPaneY + SlotPane.getInstance().getHeight())) {
+				break;
+			}
 		}
-		item.setTranslateY(val < -diff ? -diff : (val > maxHeight ? maxHeight : val));
+		item.handler.setTranslateNoOffScreenX(x);
+		item.handler.setTranslateNoOffScreenY(y);
+	}
+
+	private static void calcValues(Item item) {
+		diffX = item.getRotation() == ItemRotation.VERTICAL ? diffX = item.getDiffX() : 0;
+		maxWidth = Game.getGamePane().getWidth() - item.getWidth();
+		maxWidth += diffX;
+		diffY = item.getRotation() == ItemRotation.HORIZONTAL ? diffY = item.getDiffY() : 0;
+		maxHeight = Game.getGamePane().getHeight() - item.getHeight();
+		maxHeight += diffY;
+		slotPaneX = Game.getX(SlotPane.getInstance());
+		slotPaneY = Game.getY(SlotPane.getInstance());
 	}
 
 	public static void handleSceneKeyPress(KeyEvent event) {
 		if (event.getCode() == KeyCode.R) {
 			if (currentItem != null) {
 				currentItem.rotate(true);
+				calcValues(currentItem);
 				currentItem.handler.setTranslateNoOffScreenX(currentItem.getTranslateX());
 				currentItem.handler.setTranslateNoOffScreenY(currentItem.getTranslateY());
 				currentItem.handler.hightlightGrid();

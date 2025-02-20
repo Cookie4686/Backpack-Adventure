@@ -20,6 +20,10 @@ public class Slot extends Pane implements ReRenderable {
 		setMaxSize(SIZE, SIZE);
 		isUnlocked = false;
 		item = null;
+		setOnMouseClicked(event -> {
+			isUnlocked = !isUnlocked;
+			render();
+		});
 	}
 
 	@Override
