@@ -1,5 +1,6 @@
-package game.item;
+package game.item.wareable;
 
+import game.item.Item;
 import game.util.EffectType;
 import interfaces.TurnActivable;
 

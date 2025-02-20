@@ -1,4 +1,4 @@
-package game.item;
+package game.item.wareable;
 
 import game.util.EffectType;
 

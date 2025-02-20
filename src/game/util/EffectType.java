@@ -10,5 +10,7 @@ public enum EffectType {
 	DODGE,
 	VAMPIRIC,
 	SUMMONER,
-	ANGER
+	ANGER,
+	HEAL,
+	DAMAGE
 }
