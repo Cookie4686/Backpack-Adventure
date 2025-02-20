@@ -29,7 +29,11 @@ public class Slot extends Pane implements ReRenderable {
 	@Override
 	public void render() {
 		if (isUnlocked) {
-			setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+			if (item != null) {
+				setBackground(new Background(new BackgroundFill(Color.BLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+			} else {
+				setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+			}
 		} else {
 			setBackground(new Background(new BackgroundFill(Color.LIGHTCORAL, CornerRadii.EMPTY, Insets.EMPTY)));
 		}

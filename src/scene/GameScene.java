@@ -4,7 +4,7 @@ import application.Main;
 import game.Game;
 import game.backpack.Backpack;
 import game.header.Header;
-import game.item.ResourceLoader;
+import game.util.ResourceLoader;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 

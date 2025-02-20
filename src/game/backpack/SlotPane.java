@@ -1,8 +1,8 @@
 package game.backpack;
 
-import game.item.DraggableHandler;
 import game.item.Item;
-import game.item.ItemRotation;
+import game.util.DraggableHandler;
+import game.util.ItemRotation;
 import interfaces.ReRenderable;
 import javafx.scene.layout.GridPane;
 
@@ -55,8 +55,10 @@ public class SlotPane extends GridPane implements ReRenderable {
 		}
 	}
 
-	public void placeItem(int gridX, int gridY, Item item) {
-		if (isPlaceable(gridX, gridY, item)) {
+	public boolean placeItem(int gridX, int gridY, Item item) {
+		removeItem(item);
+		boolean isPlaceable = isPlaceable(gridX, gridY, item);
+		if (isPlaceable) {
 			if (item.isDiagonal()) {
 				boolean isLeft = item.getRotation() == ItemRotation.DIAGONAL_LEFT;
 				for (int i = 0; i < item.getItemHeight(); i++) {
@@ -70,10 +72,15 @@ public class SlotPane extends GridPane implements ReRenderable {
 				}
 			}
 		}
+		render();
+		return isPlaceable;
 	}
 
 	private void placeItem(Slot slot, Item item) {
 		if (slot.getItem() != null) {
+			if (slot.getItem() != item) {
+				DraggableHandler.setRandomOffGridLocation(slot.getItem());
+			}
 			removeItem(slot.getItem());
 		}
 		slot.setItem(item);
@@ -86,7 +93,6 @@ public class SlotPane extends GridPane implements ReRenderable {
 					slot.setItem(null);
 			}
 		}
-		DraggableHandler.setRandomOffGridLocation(item);
 	}
 
 	public void hightlight(int gridX, int gridY, Item item) {

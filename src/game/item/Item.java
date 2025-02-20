@@ -1,58 +1,45 @@
 package game.item;
 
 import game.backpack.Slot;
+import game.util.DraggableHandler;
+import game.util.ItemRotation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public abstract class Item extends Pane {
-	protected String name;
-	protected String detail;
+	protected String name, detail;
 	protected int width, height;
 	protected boolean isDiagonal;
 
 	// used for dragging, rotating
-	protected DraggableHandler handler;
-	private ImageView imageView;
 	private double diffX, diffY;
+	private ImageView imageView;
 
 	public Item(String name, String detail, int height) {
 		super();
-		this.detail = detail;
 		this.name = name;
+		this.detail = detail;
 		this.width = 1;
 		this.height = height;
 		isDiagonal = true;
-		setPickOnBounds(false);
-		setMaxSize(height * Slot.SIZE, height * Slot.SIZE);
 	}
 
 	public Item(String name, String detail, int width, int height) {
 		super();
 		this.name = name;
 		this.detail = detail;
-		isDiagonal = false;
 		this.width = width;
 		this.height = height;
-	}
-
-	// Diagonal Constructor
-	public Item(String name, int height) {
-		super();
-		isDiagonal = true;
-		this.name = name;
-		this.width = 1;
-		this.height = height;
+		isDiagonal = false;
 	}
 
 	public void initialize(Image image) {
 		setMaxSize(Math.max(width, height) * Slot.SIZE, Math.max(width, height) * Slot.SIZE);
-		setPickOnBounds(false);
 
 		imageView = new ImageView(image);
 		imageView.setFitWidth(Slot.SIZE * width);
 		imageView.setFitHeight(Slot.SIZE * height);
-		imageView.setPickOnBounds(true);
 		calculateDiff();
 		imageView.setX(diffX);
 		imageView.setY(diffY);
@@ -61,10 +48,11 @@ public abstract class Item extends Pane {
 			imageView.setRotate(45);
 		}
 
-		handler = new DraggableHandler(this);
-		imageView.setOnMousePressed(event -> handler.handleItemMousePress(event));
-		imageView.setOnMouseDragged(event -> handler.handleItemMouseDrag(event));
-		imageView.setOnMouseReleased(event -> handler.handleItemMouseRelease(event));
+		this.setPickOnBounds(false);
+		imageView.setPickOnBounds(true);
+		imageView.setOnMousePressed(event -> DraggableHandler.handleItemMousePress(event, this));
+		imageView.setOnMouseDragged(event -> DraggableHandler.handleItemMouseDrag(event));
+		imageView.setOnMouseReleased(event -> DraggableHandler.handleItemMouseRelease());
 		getChildren().setAll(imageView);
 
 		// TODO: show toolTip on hover
@@ -101,19 +89,19 @@ public abstract class Item extends Pane {
 		return isDiagonal;
 	}
 
-	public ItemRotation getRotation() {
-		if (isDiagonal) {
-			return (imageView.getRotate() == 45 || imageView.getRotate() == 225) ? ItemRotation.DIAGONAL_RIGHT
-					: ItemRotation.DIAGONAL_LEFT;
-		}
-		return width > height ? ItemRotation.HORIZONTAL : ItemRotation.VERTICAL;
-	}
-
 	public double getDiffX() {
 		return diffX;
 	}
 
 	public double getDiffY() {
 		return diffY;
+	}
+
+	public ItemRotation getRotation() {
+		if (isDiagonal) {
+			return (imageView.getRotate() == 45 || imageView.getRotate() == 225) ? ItemRotation.DIAGONAL_RIGHT
+					: ItemRotation.DIAGONAL_LEFT;
+		}
+		return width > height ? ItemRotation.HORIZONTAL : ItemRotation.VERTICAL;
 	}
 }

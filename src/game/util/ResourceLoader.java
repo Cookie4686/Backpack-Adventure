@@ -1,8 +1,10 @@
-package game.item;
+package game.util;
 
 import java.util.HashMap;
 import java.util.function.Supplier;
 
+import game.item.Item;
+import game.item.Weapon;
 import javafx.scene.image.Image;
 
 public class ResourceLoader {
