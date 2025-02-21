@@ -1,15 +1,16 @@
 package game.item.wareable;
 
-import game.util.EffectType;
+import java.util.ArrayList;
+
+import game.util.Effect;
 
 public class Shoes extends Wareable {
-
-	public Shoes(String name, String detail, int initialShield, int increaseShield, EffectType effectType, int effectPower, int width, int height) {
-		super(name, detail, initialShield, increaseShield, effectType, effectPower, width, height);
+	public Shoes(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height) {
+		super(name, detail, initialShield, increaseShield, effects, width, height);
 	}
 
-	public Shoes(String name, String detail, int initialShield, int increaseShield, EffectType effectType, int effectPower, int width) {
-		super(name, detail, initialShield, increaseShield, effectType, effectPower, width);
+	public Shoes(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width) {
+		super(name, detail, initialShield, increaseShield, effects, width);
 	}
 	
 	private int emptySpace() {	
@@ -18,20 +19,10 @@ public class Shoes extends Wareable {
 	}
 	
 	@Override
-	public void activateStart() {
+	public void StatUpdate() {
+		super.StatUpdate();
+		
 		//need to be lowest otherwise no bonus shield
 		//setShield(getInitialShield() + (emptyspace()  * increaseShield));
-		
-		// TODO: add Shield to Player
-		
-	}
-	
-	@Override
-	public void activatePerTurn() {
-		if (getEffectType() != null) {
-			// TODO: add effectType and effectPower to PLAYER
-		}
-		
-		// TODO: add Shield to Player
 	}
 }
