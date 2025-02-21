@@ -1,4 +1,4 @@
-package game.header;
+package game;
 
 import interfaces.ReRenderable;
 import javafx.geometry.Insets;
@@ -8,27 +8,32 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
-import scene.popup.SettingPopup;
 
-public class Header extends HBox implements ReRenderable {
-	public static Header instance;
+public class GameHeader extends HBox implements ReRenderable {
+	private static GameHeader instance;
 	private Text floorText, experienceText, coinText;
-	private Button settingButton;
+	private Button backpackButton;
 
-	public Header() {
+	public GameHeader() {
 		super();
 		floorText = new Text("Floor: -");
 		experienceText = new Text("Exp: -/-");
 		coinText = new Text("Coins: -/-");
 		Region region = new Region();
-		settingButton = new Button("Setting");
-		settingButton.setOnAction(event -> SettingPopup.show());
+		backpackButton = new Button("Toggle Backpack");
+		backpackButton.setOnAction(event -> {
+			if (Game.getInstance().isBackpack()) {
+				Game.getInstance().useMap();
+			} else {
+				Game.getInstance().useBackpack();
+			}
+		});
 		setPadding(new Insets(5, 10, 5, 10));
 		setSpacing(10);
 		setHgrow(region, Priority.ALWAYS);
 		region.setMaxWidth(Double.MAX_VALUE);
 		setAlignment(Pos.CENTER);
-		getChildren().addAll(floorText, experienceText, coinText, region, settingButton);
+		getChildren().addAll(floorText, experienceText, coinText, region, backpackButton);
 	}
 
 	@Override
@@ -36,9 +41,9 @@ public class Header extends HBox implements ReRenderable {
 		// TODO Auto-generated method stub
 	}
 
-	public static Header getInstance() {
+	public static GameHeader getInstance() {
 		if (instance == null) {
-			instance = new Header();
+			instance = new GameHeader();
 		}
 		return instance;
 	}

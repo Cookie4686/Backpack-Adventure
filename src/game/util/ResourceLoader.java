@@ -24,7 +24,8 @@ public class ResourceLoader {
 	}
 
 	public static Item newItem(String name) {
-		return itemMap.get(name).newItem();
+		Resource resource = itemMap.get(name);
+		return resource == null ? null : resource.newItem();
 	}
 }
 
@@ -41,7 +42,6 @@ class Resource {
 	public Item newItem() {
 		if (image == null) {
 			image = new Image(ClassLoader.getSystemResource(path).toString());
-			System.out.println("New image");
 		}
 		Item item = supplier.get();
 		item.initialize(image);
