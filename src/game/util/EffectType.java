@@ -9,4 +9,5 @@ public enum EffectType {
     SHIELD,
     DODGE,
     VAMPIRIC,
+    SUMMONER,
 }
