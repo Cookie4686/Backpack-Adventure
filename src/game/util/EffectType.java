@@ -1,12 +1,5 @@
 package game.util;
 
 public enum EffectType {
-    FIRE,
-    POISON,
-    REGEN,
-    STUNTED,
-    THORN,
-    SHIELD,
-    DODGE,
-    VAMPIRIC,
+	FIRE, POISON, REGEN, STUNTED, THORN, SHIELD, DODGE, VAMPIRIC, SUMMONER, ANGER, HEAL, DAMAGE, ENERGY
 }
