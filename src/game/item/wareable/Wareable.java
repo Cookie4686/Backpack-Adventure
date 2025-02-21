@@ -9,7 +9,7 @@ import interfaces.StatUpdatable;
 import interfaces.TurnActivable;
 
 public abstract class Wareable extends Item implements TurnActivable, StatUpdatable{
-	ArrayList<Effect> effects;
+	final private ArrayList<Effect> effects;
 	final private int initialShield;
 	private int shield;
 	private int increaseShield;
@@ -42,18 +42,21 @@ public abstract class Wareable extends Item implements TurnActivable, StatUpdata
 			else if (effect.getType()==EffectType.HEAL) {
 				//TODO: increase health in player by effect power
 			}
+			else if (effect.getType()==EffectType.ENERGY) {
+				//TODO: increase energy in player by effect power
+			}
 		}
 	}
 	
 	@Override
 	public void activatePerTurn() {
 		for (Effect effect:effects) {
-			if (effect.getType()!=null) {
+			if (effect.getType()!=EffectType.LUCK && effect.getType()!=EffectType.DODGE && effect.getType()!=EffectType.HEAL && effect.getType()!=EffectType.ENERGY) {
 				// TODO: add effectType and effectPower to PLAYER
 			}
 			
-			// TODO: add Shield to Player
 		}
+		// TODO: add Shield to Player
 	}
 	
 	
