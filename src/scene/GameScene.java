@@ -4,12 +4,12 @@ import application.Main;
 import game.Game;
 import game.backpack.Backpack;
 import game.header.Header;
-import game.item.ResourceLoader;
+import game.util.ResourceLoader;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class GameScene {
-	public static void useScene() {
+	public static void use() {
 		VBox root = new VBox();
 		Game.getGamePane().getChildren().addAll(Backpack.getInstance(), ResourceLoader.newItem("apple"),
 				ResourceLoader.newItem("temp"), ResourceLoader.newItem("temp2"), ResourceLoader.newItem("temp3"),

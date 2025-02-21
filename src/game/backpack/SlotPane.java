@@ -1,7 +1,8 @@
 package game.backpack;
 
 import game.item.Item;
-import game.item.ItemRotation;
+import game.util.DraggableHandler;
+import game.util.ItemRotation;
 import interfaces.ReRenderable;
 import javafx.scene.layout.GridPane;
 
@@ -32,32 +33,64 @@ public class SlotPane extends GridPane implements ReRenderable {
 		}
 	}
 
-	// might need to modify later to account for locked slots
 	public boolean isPlaceable(int gridX, int gridY, Item item) {
-		if (item.isDiagonal()) {
-			return (item.getRotation() == ItemRotation.DIAGONAL_LEFT
-					? 0 <= gridX && gridX + item.getItemHeight() <= WIDTH
-					: -1 <= gridX - item.getItemHeight() && gridX < WIDTH)
-					&& (0 <= gridY && gridY + item.getItemHeight() <= HEIGHT);
-		}
-		return 0 <= gridX && gridX + item.getItemWidth() <= WIDTH && 0 <= gridY
-				&& gridY + item.getItemHeight() <= HEIGHT;
-	}
-
-	// might need to modify later to account for already placed slots
-	public void placeItem(int gridX, int gridY, Item item) {
-		if (isPlaceable(gridX, gridY, item)) {
+		try {
 			if (item.isDiagonal()) {
 				boolean isLeft = item.getRotation() == ItemRotation.DIAGONAL_LEFT;
 				for (int i = 0; i < item.getItemHeight(); i++) {
-					slots[gridY + i][gridX + (isLeft ? i : -i)].setItem(item);
+					if (!slots[gridY + i][gridX + (isLeft ? i : -i)].isUnlocked())
+						return false;
 				}
 			} else {
 				for (int y = gridY; y < gridY + item.getItemHeight(); y++) {
 					for (int x = gridX; x < gridX + item.getItemWidth(); x++) {
-						slots[y][x].setItem(item);
+						if (!slots[y][x].isUnlocked())
+							return false;
 					}
 				}
+			}
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	public boolean placeItem(int gridX, int gridY, Item item) {
+		removeItem(item);
+		boolean isPlaceable = isPlaceable(gridX, gridY, item);
+		if (isPlaceable) {
+			if (item.isDiagonal()) {
+				boolean isLeft = item.getRotation() == ItemRotation.DIAGONAL_LEFT;
+				for (int i = 0; i < item.getItemHeight(); i++) {
+					placeItem(slots[gridY + i][gridX + (isLeft ? i : -i)], item);
+				}
+			} else {
+				for (int y = gridY; y < gridY + item.getItemHeight(); y++) {
+					for (int x = gridX; x < gridX + item.getItemWidth(); x++) {
+						placeItem(slots[y][x], item);
+					}
+				}
+			}
+		}
+		render();
+		return isPlaceable;
+	}
+
+	private void placeItem(Slot slot, Item item) {
+		if (slot.getItem() != null) {
+			if (slot.getItem() != item) {
+				DraggableHandler.setRandomOffGridLocation(slot.getItem());
+			}
+			removeItem(slot.getItem());
+		}
+		slot.setItem(item);
+	}
+
+	private void removeItem(Item item) {
+		for (Slot[] row : slots) {
+			for (Slot slot : row) {
+				if (slot.getItem() == item)
+					slot.setItem(null);
 			}
 		}
 	}

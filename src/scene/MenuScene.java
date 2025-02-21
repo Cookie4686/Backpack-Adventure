@@ -9,7 +9,7 @@ import scene.popup.CharacterPopup;
 import scene.popup.SettingPopup;
 
 public class MenuScene {
-	public static void useScene() {
+	public static void use() {
 		VBox root = new VBox();
 		Text titleText = new Text("Cool game");
 
