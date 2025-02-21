@@ -8,7 +8,7 @@ import javafx.scene.layout.GridPane;
 
 public class Backpack extends GridPane implements ReRenderable {
 	private static Backpack instance;
-	public static final int WIDTH = 7, HEIGHT = 5;
+	private static final int WIDTH = 7, HEIGHT = 5;
 
 	private Slot[][] slots;
 
@@ -17,7 +17,7 @@ public class Backpack extends GridPane implements ReRenderable {
 		slots = new Slot[HEIGHT][WIDTH];
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
-				slots[y][x] = new Slot(x, y);
+				slots[y][x] = new Slot();
 				this.add(slots[y][x], x, y);
 			}
 		}
@@ -59,6 +59,7 @@ public class Backpack extends GridPane implements ReRenderable {
 		removeItem(item);
 		boolean isPlaceable = isPlaceable(gridX, gridY, item);
 		if (isPlaceable) {
+			item.setInBackpack(true);
 			if (item.isDiagonal()) {
 				boolean isLeft = item.getRotation() == ItemRotation.DIAGONAL_LEFT;
 				for (int i = 0; i < item.getItemHeight(); i++) {
@@ -78,19 +79,19 @@ public class Backpack extends GridPane implements ReRenderable {
 
 	private void placeItem(Slot slot, Item item) {
 		if (slot.getItem() != null) {
-			if (slot.getItem() != item) {
-				DraggableHandler.setRandomOffGridLocation(slot.getItem());
-			}
+			DraggableHandler.setRandomOffGridLocation(slot.getItem());
 			removeItem(slot.getItem());
 		}
 		slot.setItem(item);
 	}
 
 	private void removeItem(Item item) {
+		item.setInBackpack(false);
 		for (Slot[] row : slots) {
 			for (Slot slot : row) {
-				if (slot.getItem() == item)
+				if (slot.getItem() == item) {
 					slot.setItem(null);
+				}
 			}
 		}
 	}

@@ -1,6 +1,10 @@
 package game;
 
+import java.util.Collections;
+import java.util.HashSet;
+
 import game.backpack.Backpack;
+import game.item.Item;
 import game.map.Map;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -14,10 +18,13 @@ public class Game extends VBox {
 
 	private StackPane gamePane;
 	private HBox TopHBox, bottomHBox;
-	boolean isBackpack;
+	private boolean isBackpack;
+	private HashSet<Item> itemsInGame;
 
 	public Game() {
 		super();
+		itemsInGame = new HashSet<Item>();
+
 		gamePane = new StackPane();
 		gamePane.setAlignment(Pos.TOP_LEFT);
 		setVgrow(gamePane, Priority.ALWAYS);
@@ -43,12 +50,23 @@ public class Game extends VBox {
 
 	public void useBackpack() {
 		isBackpack = true;
+		for (Item item : itemsInGame) {
+			item.setVisible(true);
+		}
 		TopHBox.getChildren().setAll(Backpack.getInstance());
 	}
 
 	public void useMap() {
 		isBackpack = false;
+		for (Item item : itemsInGame) {
+			item.setVisible(false);
+		}
 		TopHBox.getChildren().setAll(Map.getInstance());
+	}
+
+	public void addItem(Item... items) {
+		Collections.addAll(itemsInGame, items);
+		gamePane.getChildren().addAll(items);
 	}
 
 	public static Game getInstance() {
