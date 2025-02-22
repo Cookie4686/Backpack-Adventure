@@ -1,7 +1,7 @@
 package game.map;
 
 import game.backpack.Slot;
-import game.util.MapHandler;
+import game.handler.MapHandler;
 import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;

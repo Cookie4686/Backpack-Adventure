@@ -1,6 +1,6 @@
 package application;
 
-import game.util.ItemHandler;
+import game.handler.ItemHandler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;

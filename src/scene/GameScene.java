@@ -5,7 +5,7 @@ import game.Game;
 import game.GameHeader;
 import game.GameLogic;
 import game.GameTop;
-import game.util.ResourceLoader;
+import game.item.ResourceLoader;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 

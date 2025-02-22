@@ -1,9 +1,11 @@
 package game;
 
+import entities.Entity;
 import entities.Player;
 
 public class GameLogic {
 	private static boolean isFighting;
+	private static Entity selectedEntity;
 
 	public static void initialize() {
 		isFighting = false;
@@ -19,9 +21,20 @@ public class GameLogic {
 		isFighting = true;
 		Game.getInstance().clearFloatingItem();
 		GameTop.getInstance().useBackpack();
+		GameBottom.getInstance().addAllEntity(new Entity("Enemy1", null, 10, 20, 10, 20, 10, 20, null),
+				new Entity("Enemy2", null, 15, 25, 15, 25, 15, 25, null));
 	}
 
 	public static boolean isFighting() {
 		return isFighting;
+	}
+
+	public static Entity getSelectedEntity() {
+		return selectedEntity;
+	}
+
+	public static void setSelectedEntity(Entity selectedEntity) {
+		GameLogic.selectedEntity = selectedEntity;
+		GameBottom.getInstance().render();
 	}
 }

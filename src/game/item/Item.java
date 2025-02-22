@@ -1,7 +1,7 @@
 package game.item;
 
 import game.backpack.Slot;
-import game.util.ItemHandler;
+import game.handler.ItemHandler;
 import game.util.ItemRotation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

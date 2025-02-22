@@ -1,7 +1,7 @@
 package game.backpack;
 
+import game.handler.ItemHandler;
 import game.item.Item;
-import game.util.ItemHandler;
 import game.util.ItemRotation;
 import interfaces.ReRenderable;
 import javafx.scene.layout.GridPane;

@@ -1,13 +1,13 @@
-package game.util;
+package game.item;
 
 import java.util.HashMap;
 import java.util.function.Supplier;
 
-import game.item.Item;
 import game.item.consumable.Consumable;
 import game.item.wareable.Armor;
 import game.item.weapon.SpecialWeapon;
 import game.item.weapon.Weapon;
+import game.util.EffectType;
 import javafx.scene.image.Image;
 
 public class ResourceLoader {

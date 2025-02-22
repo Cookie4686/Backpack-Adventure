@@ -1,4 +1,4 @@
-package game.util;
+package game.handler;
 
 import java.util.Random;
 
@@ -7,6 +7,7 @@ import game.GameLogic;
 import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.item.Item;
+import game.util.ItemRotation;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;

@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 
 public class GameHeader extends HBox implements ReRenderable {
 	private static GameHeader instance;
-	private Text floorText, experienceText, coinText;
+	private Text floorText, experienceText;
 	private Button backpackButton;
 
 	public GameHeader() {

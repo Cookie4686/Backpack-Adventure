@@ -3,16 +3,29 @@ package entities;
 import java.util.ArrayList;
 import java.util.Random;
 
+import game.GameLogic;
+import game.handler.EntityHandler;
 import game.util.Effect;
+import interfaces.ReRenderable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
-public class Entity {
+public class Entity extends GridPane implements ReRenderable {
 	protected String name;
 	protected int hp, maxHp, atk, shield, xp;
 	protected ArrayList<String> pic;
 	protected ArrayList<Effect> allAttributes, allEffect;
 
+	// will change later
+	private Text text;
+
 	public Entity(String name, ArrayList<String> pic, int maxHpLb, int maxHpUb, int atkLb, int atkUb, int xpLb,
 			int xpUb, ArrayList<Effect> allAttributes) {
+		super();
 		this.name = name;
 		Random rand = new Random();
 		this.hp = this.maxHp = rand.nextInt((maxHpUb - maxHpLb) + 1) + maxHpLb;
@@ -21,6 +34,25 @@ public class Entity {
 		this.xp = rand.nextInt((xpUb - xpLb) + 1) + xpLb;
 		this.pic = pic;
 		this.allAttributes = allAttributes;
+
+		setAlignment(Pos.BOTTOM_CENTER);
+
+		text = new Text();
+		Button button = new Button("Select");
+		button.setOnMouseClicked(event -> EntityHandler.handleMouseClicked(this));
+		add(text, 0, 0);
+		add(button, 0, 1);
+		render();
+	}
+
+	@Override
+	public void render() {
+		text.setText(String.format("Hp: %s/%s, Df: %s, Atk: %s", hp, maxHp, shield, atk));
+		if (GameLogic.getSelectedEntity() != null && GameLogic.getSelectedEntity() == this) {
+			text.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+		} else {
+			text.setFont(Font.font("Arial", FontWeight.NORMAL, 16));
+		}
 	}
 
 	public int attack() {

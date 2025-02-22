@@ -1,4 +1,4 @@
-package game.util;
+package game.handler;
 
 import game.GameLogic;
 import game.map.MapMarker;
@@ -8,6 +8,7 @@ public class MapHandler {
 	public static void handleMouseClicked(MapSquare square) {
 		if (square.getMarker() == MapMarker.MONSTER) {
 			square.setMarker(null);
+			square.getChildren().clear();
 			GameLogic.fight();
 		}
 	}
