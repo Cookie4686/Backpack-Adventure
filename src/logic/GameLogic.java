@@ -10,7 +10,7 @@ import game.item.Item;
 
 public class GameLogic {
 	private static GameLogic instance;
-	private ArrayList<Item> inventory;
+	private ArrayList<Item> inventory = new ArrayList<Item>();
 
 	public void initializeFight() {
 		FightLogic.getInstance().setInFight(true);

@@ -1,7 +1,9 @@
 package game.backpack;
 
+import game.Game;
 import game.handler.ItemHandler;
 import game.item.Item;
+import game.item.consumable.Potion;
 import game.util.ItemRotation;
 import interfaces.ReRenderable;
 import javafx.scene.layout.GridPane;
@@ -77,15 +79,24 @@ public class Backpack extends GridPane implements ReRenderable {
 		return isPlaceable;
 	}
 
-	private void placeItem(Slot slot, Item item) {
+	public void placeItem(Slot slot, Item item) {
 		if (slot.getItem() != null) {
+			if (slot.getItem() instanceof Potion) {
+				if (((Potion)item).isStackable(slot.getItem())) {
+					((Potion)item).setDurability(((Potion)item).getDurability() + ((Potion)slot.getItem()).getDurability());
+					
+					removeItem(slot.getItem());
+					Game.getInstance().getChildren().remove(slot.getItem());
+				}
+			}
+			
 			ItemHandler.setRandomOffGridLocation(slot.getItem());
 			removeItem(slot.getItem());
 		}
 		slot.setItem(item);
 	}
 
-	private void removeItem(Item item) {
+	public void removeItem(Item item) {
 		GameLogic.getInstance().getInventory().remove(item);
 		for (Slot[] row : slots) {
 			for (Slot slot : row) {

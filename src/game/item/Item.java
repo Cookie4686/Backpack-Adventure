@@ -1,5 +1,7 @@
 package game.item;
 
+import game.Game;
+import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.handler.ItemHandler;
 import game.item.consumable.FoodWithContainer;
@@ -61,11 +63,8 @@ public abstract class Item extends Pane {
 	}
 
 	public void delete() {
-		// TODO: Delete this item
-
-		if (this instanceof FoodWithContainer) {
-			// TODO: replace this item with item container
-		}
+		Backpack.getInstance().removeItem(this);
+		Game.getInstance().getChildren().remove(this);
 	}
 
 	private void calculateDiff() {

@@ -1,6 +1,9 @@
 package game.item.consumable;
 
+import entities.Player;
 import game.util.Effect;
+import game.util.EffectType;
+import logic.FightLogic;
 
 public class FoodWithContainer extends Consumable {
 	String container;
@@ -17,7 +20,25 @@ public class FoodWithContainer extends Consumable {
 	
 	@Override
 	public void activatePerClick() {
-		// TODO Replace this with new container item
+		if (!isEnoughEnergy()) return;
+		
+		setDurability(getDurability()-1);
+		
+		if (getEffectType()==EffectType.HEAL) {
+			Player.getInstance().setHp(Player.getInstance().getHp()+getEffectAmount());
+		}
+		else if (getEffectType()==EffectType.ENERGY) {
+			Player.getInstance().setEnergy(Player.getInstance().getEnergy()+getEffectAmount());
+		}
+		else if (getEffectType()==EffectType.THORN || getEffectType()==EffectType.ANGER || getEffectType()==EffectType.DODGE) {
+			FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), getEffectType(), getEffectAmount());
+		}
+		
+
+		if (getDurability()<=0) {
+			//TODO : replace item
+			delete();
+		}
 	}
 
 	public String getContainer() {

@@ -26,7 +26,8 @@ public class ActiveRelic extends Relic implements Clickable {
 	public void activatePerClick() {
 		if (!isEnoughEnergy()) return;
 		
-		//TODO: decrease player Energy by costActivate
+		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
+		
 		super.activate();
 	}
 
