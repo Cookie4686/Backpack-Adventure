@@ -38,6 +38,6 @@ public abstract class Relic extends Item {
 	}
 
 	public int getEffectAmount() {
-		return effect.getDuration();
+		return effect.getAmount();
 	}
 }

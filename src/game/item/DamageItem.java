@@ -61,7 +61,7 @@ public class DamageItem extends Item implements Clickable {
 	}
 	
 	public int getEffectAmount() {
-		return effect.getDuration();
+		return effect.getAmount();
 	}
 
 	public int getCostActivate() {

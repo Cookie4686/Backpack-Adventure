@@ -3,16 +3,11 @@ package entities;
 import java.util.ArrayList;
 import java.util.Random;
 
-import game.GameLogic;
-import game.handler.EntityHandler;
 import game.util.Effect;
-import game.util.EffectType;
-import interfaces.Clickable;
 import interfaces.TurnActivable;
 import javafx.application.Platform;
-import logic.GameLogic;
 
-public class Entity extends Being implements TurnActivable, Clickable{
+public class Entity extends Being implements TurnActivable{
 	protected int xp, dangerLV;
 	protected boolean stunned;
 	protected ArrayList<String> pic;
@@ -89,7 +84,6 @@ public class Entity extends Being implements TurnActivable, Clickable{
 		shield = 0;
 	}
 
-	@Override
 	public void activatePerClick() {
 		// TODO Auto-generated method stub
 		Platform.runLater(()->{

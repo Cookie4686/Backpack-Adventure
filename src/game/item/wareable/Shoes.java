@@ -19,8 +19,8 @@ public class Shoes extends Wareable {
 	}
 	
 	@Override
-	public void StatUpdate() {
-		super.StatUpdate();
+	public void statUpdate() {
+		super.statUpdate();
 		
 		//need to be lowest otherwise no bonus shield
 		//setShield(getInitialShield() + (emptyspace()  * increaseShield));

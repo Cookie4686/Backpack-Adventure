@@ -13,7 +13,7 @@ public class PassiveRelic extends Relic implements StatUpdatable {
 	}
 	
 	@Override
-	public void StatUpdate() {
+	public void statUpdate() {
 		super.activate();
 	}
 }

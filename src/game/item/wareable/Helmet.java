@@ -19,8 +19,8 @@ public class Helmet extends Wareable {
 	}
 	
 	@Override
-	public void StatUpdate() {
-		super.StatUpdate();
+	public void statUpdate() {
+		super.statUpdate();
 		//setShield(getInitialShield() + (underSlot() * increaseShield));
 	}
 }
