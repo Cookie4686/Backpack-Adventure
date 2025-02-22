@@ -2,17 +2,17 @@ package game.item.weapon;
 
 import game.util.EffectType;
 
-public class ElementalSword extends Weapon {
+public class SpecialWeapon extends Weapon {
 	private EffectType effectType;
 	private int effectPower;
 
-	public ElementalSword(String name, String detail, EffectType effectType, int effectPower, int damage, int costActivate, int width, int height) {
+	public SpecialWeapon(String name, String detail, EffectType effectType, int effectPower, int damage, int costActivate, int width, int height) {
 		super(name, detail, damage, costActivate, width, height);
 		setEffectPower(effectPower);
 		setEffectType(effectType);
 	}
 
-	public ElementalSword(String name, String detail, EffectType effectType, int effectPower, int damage, int costActivate, int width) {
+	public SpecialWeapon(String name, String detail, EffectType effectType, int effectPower, int damage, int costActivate, int width) {
 		super(name, detail, damage, costActivate, width);
 		setEffectPower(effectPower);
 		setEffectType(effectType);

@@ -1,38 +1,70 @@
 package game.item.wareable;
 
+import java.util.ArrayList;
+
 import game.item.Item;
+import game.util.Effect;
 import game.util.EffectType;
+import interfaces.StatUpdatable;
 import interfaces.TurnActivable;
 
-public abstract class Wareable extends Item implements TurnActivable{
+public abstract class Wareable extends Item implements TurnActivable, StatUpdatable{
+	final private ArrayList<Effect> effects;
 	final private int initialShield;
 	private int shield;
 	private int increaseShield;
-	private EffectType effectType;
-	private int effectPower;
 	
-	public Wareable(String name, String detail, int initialShield, int increaseShield, EffectType effectType, int effectPower, int width, int height) {
+	public Wareable(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height) {
 		super(name, detail, width, height);
 		this.initialShield = (initialShield<0)? 0 : initialShield;
 		setShield(initialShield);
 		setIncreaseShield(increaseShield);
-		setEffectType(effectType);
-		setEffectPower(effectPower);
+		this.effects = effects;
 	}
 	
-	public Wareable(String name, String detail, int initialShield, int increaseShield,  EffectType effectType, int effectPower, int width) {
+	public Wareable(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width) {
 		super(name, detail, width);
 		this.initialShield = (initialShield<0)? 0 : initialShield;
 		setShield(initialShield);
 		setIncreaseShield(increaseShield);
-		setEffectType(effectType);
-		setEffectPower(effectPower);
+		this.effects = effects;
+	}
+	
+	@Override
+	public void StatUpdate() {
+		for (Effect effect:effects) {
+			if (effect.getType()==EffectType.LUCK) {
+				//TODO: increase luck in player by effect power
+			}
+			else if (effect.getType()==EffectType.DODGE) {
+				//TODO: increase dodge in player by effect power
+			}
+			else if (effect.getType()==EffectType.HEAL) {
+				//TODO: increase health in player by effect power
+			}
+			else if (effect.getType()==EffectType.ENERGY) {
+				//TODO: increase energy in player by effect power
+			}
+		}
+	}
+	
+	@Override
+	public void activatePerTurn() {
+		for (Effect effect:effects) {
+			if (effect.getType()!=EffectType.LUCK && effect.getType()!=EffectType.DODGE && effect.getType()!=EffectType.HEAL && effect.getType()!=EffectType.ENERGY) {
+				// TODO: add effectType and effectPower to PLAYER
+			}
+			
+		}
+		// TODO: add Shield to Player
 	}
 	
 	
-	public abstract void activateStart();
-	
 	//Getter & Setter
+	public ArrayList<Effect> getEffects() {
+		return effects;
+	}
+	
 	public int getShield() {
 		return shield;
 	}
@@ -48,21 +80,9 @@ public abstract class Wareable extends Item implements TurnActivable{
 	public void setIncreaseShield(int increaseShield) {
 		this.increaseShield = (increaseShield<0)? 0 : increaseShield;
 	}
-	
-	public EffectType getEffectType() {
-		return effectType;
-	}
 
-	public int getEffectPower() {
-		return effectPower;
-	}
 
-	public void setEffectType(EffectType effectType) {
-		this.effectType = effectType;
+	public int getIncreaseShield() {
+		return increaseShield;
 	}
-
-	public void setEffectPower(int effectPower) {
-		this.effectPower = (effectPower < 0) ? 0 : effectPower;
-	}
-	
 }

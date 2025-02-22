@@ -19,6 +19,7 @@ public class Weapon extends Item implements Clickable{
 
 	@Override
 	public void activatePerClick() {
+		//TODO: decrease player energy by costActivate
 		//TODO: damage enemy getDamage() amount
 	}
 	
