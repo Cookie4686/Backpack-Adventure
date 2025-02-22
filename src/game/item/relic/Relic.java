@@ -17,7 +17,20 @@ public abstract class Relic extends Item {
 		this.effect = effect;
 	}
 	
-	
+	public void activate() {
+		switch (getEffectType()) {
+		case SHIELD:
+			// TODO: Find adjacent shield & wareable 
+			// add them shield
+			break;
+		case DAMAGE:
+			// TODO: Find adjacent weapon
+			// add them damage
+			break;
+		default:
+			break;
+		}
+	}
 	
 	//Getter & Setter
 	public EffectType getEffectType() {

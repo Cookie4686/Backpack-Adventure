@@ -16,9 +16,17 @@ public class Weapon extends Item implements Clickable{
 		super(name, detail, width, height);
 		setDamage(damage);
 	}
+	
+	@Override
+	public boolean isEnoughEnergy() {
+		//TODO: if Player dont have enough energy return false
+		return true;
+	}
 
 	@Override
 	public void activatePerClick() {
+		if (!isEnoughEnergy()) return;
+		
 		//TODO: decrease player energy by costActivate
 		//TODO: damage enemy getDamage() amount
 	}

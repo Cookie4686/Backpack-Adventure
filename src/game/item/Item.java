@@ -2,6 +2,7 @@ package game.item;
 
 import game.backpack.Slot;
 import game.handler.ItemHandler;
+import game.item.consumable.FoodWithContainer;
 import game.util.ItemRotation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -60,6 +61,14 @@ public abstract class Item extends Pane {
 		// TODO: show toolTip on hover
 		// imageView.setOnMouseEntered(event -> {});
 	}
+	
+	public void delete() {
+		//TODO: Delete this item
+			
+		if (this instanceof FoodWithContainer) {
+			//TODO: replace this item with item container
+		}
+	}
 
 	private void calculateDiff() {
 		diffX = height > width ? (Slot.SIZE * height - Slot.SIZE * width) / 2 : 0;
@@ -113,5 +122,9 @@ public abstract class Item extends Pane {
 
 	public void setInBackpack(boolean isInBackpack) {
 		this.isInBackpack = isInBackpack;
+	}
+
+	public String getName() {
+		return name;
 	}
 }
