@@ -1,5 +1,7 @@
 package game.backpack;
 
+import java.util.ArrayList;
+
 import game.handler.ItemHandler;
 import game.item.Item;
 import game.util.ItemRotation;
@@ -59,6 +61,7 @@ public class Backpack extends GridPane implements ReRenderable {
 		removeItem(item);
 		boolean isPlaceable = isPlaceable(gridX, gridY, item);
 		if (isPlaceable) {
+			item.getClass()
 			GameLogic.getInstance().getInventory().add(item);
 			if (item.isDiagonal()) {
 				boolean isLeft = item.getRotation() == ItemRotation.DIAGONAL_LEFT;
@@ -113,6 +116,17 @@ public class Backpack extends GridPane implements ReRenderable {
 		}
 	}
 
+	public ArrayList<ItemPostion> getItemPostion(Item item) {
+		ArrayList<ItemPostion> itemPostions = new ArrayList<ItemPostion>();
+		for (int y = 0; y < HEIGHT; y++) {
+			for (int x = 0; x < WIDTH; x++) {
+				if (slots[y][x].getItem() == item)
+					itemPostions.add(new ItemPostion(x, y));
+			}
+		}
+		return itemPostions;
+	}
+
 	public Slot[][] getSlots() {
 		return slots;
 	}
@@ -122,5 +136,23 @@ public class Backpack extends GridPane implements ReRenderable {
 			instance = new Backpack();
 		}
 		return instance;
+	}
+}
+
+class ItemPostion {
+	private int x, y;
+
+	public ItemPostion(int x, int y) {
+		super();
+		this.x = x;
+		this.y = y;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
 	}
 }
