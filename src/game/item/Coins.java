@@ -13,6 +13,7 @@ public class Coins extends Item implements TurnActivable{
 	public void activatePerTurn() {
 		// TODO : set Player isMoney true;
 		// TODO : set Player Money = amount;
+		
 	}
 
 	public int getAmount() {
