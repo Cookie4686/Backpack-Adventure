@@ -10,12 +10,12 @@ public class Effect {
 		this.type = type;
 	}
 
-	public int getDuration() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setDuration(int amount) {
-		this.amount = amount;
+	public void setAmount(int amount) {
+		this.amount = (amount < 0? 0 : amount);
 	}
 
 	public EffectType getType() {

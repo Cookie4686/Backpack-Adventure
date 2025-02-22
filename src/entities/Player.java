@@ -2,91 +2,142 @@ package entities;
 
 import java.util.ArrayList;
 
+import game.item.Item;
 import game.util.Effect;
+import interfaces.TurnActivable;
 
-public class Player {
-	private static String name;
-	private static int hp, maxHp, shield, xp, maxXp, energy, maxEnergy;
-	private static ArrayList<String> pic;
-	private static ArrayList<Effect> allEffect;
-
-	public static int getHp() {
-		return hp;
+public class Player extends Being implements TurnActivable{
+	private static Player instance = null;
+	private String name;
+	private int xp, maxXp, energy, maxEnergy, mana, maxMana, money;
+	private ArrayList<String> pic;
+	private ArrayList<Item> inventory;
+	
+	public Player() {
+		super();
+		this.name = "Player";
+		this.hp = 100;
+		this.maxHp = 100;
+		this.shield = 0;
+		this.xp = 0;
+		this.maxXp = 100;
+		this.energy = 3;
+		this.maxEnergy = 3;
+		this.mana = 0;
+		this.maxMana = 0;
+		this.dodge = 0;
+		this.money = 0;
+		this.pic = null;
+		this.allEffect = new ArrayList<Effect>();
+		this.inventory = new ArrayList<Item>();
+	}
+	public static Player getInstance() {
+		if(instance == null) {
+			instance = new Player();
+		}
+		return instance;
+	}
+	
+	public int takeDamage(int damaged) {
+		if (Player.getInstance().getShield() >= damaged) {
+			Player.getInstance().setShield(Player.getInstance().getShield() - damaged);
+			damaged = 0;
+		} else {
+			damaged -= Player.getInstance().getShield();
+			Player.getInstance().setShield(0);
+			if (Player.getInstance().getHp() - damaged < 0) {
+				damaged = Player.getInstance().getHp();
+			}
+			Player.getInstance().setHp(Player.getInstance().getHp() - damaged);
+		}
+		
+		new Thread(()->{
+			
+		}).start();
+		return damaged;
+	}
+	public int getMaxMana() {
+		return maxMana;
 	}
 
-	public static void setHp(int hp) {
-		Player.hp = hp < 0 ? 0 : (hp > maxHp ? maxHp : hp);
+	public void setMaxMana(int maxMana) {
+		this.maxMana = maxMana;
 	}
 
-	public static String getName() {
+	public int getMana() {
+		return mana;
+	}
+
+	public void setMana(int mana) {
+		this.mana = mana;
+	}
+
+	public String getName() {
 		return name;
 	}
 
-	public static void setName(String name) {
-		Player.name = name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public static ArrayList<String> getPic() {
+	public ArrayList<String> getPic() {
 		return pic;
 	}
 
-	public static void setPic(ArrayList<String> pic) {
-		Player.pic = pic;
+	public void setPic(ArrayList<String> pic) {
+		this.pic = pic;
 	}
 
-	public static int getShield() {
-		return shield;
-	}
-
-	public static void setShield(int shield) {
-		Player.shield = shield < 0 ? 0 : shield;
-	}
-
-	public static int getXp() {
+	public int getXp() {
 		return xp;
 	}
 
-	public static void setXp(int xp) {
-		Player.xp = xp < 0 ? 0 : xp;
+	public void setXp(int xp) {
+		this.xp = xp < 0 ? 0 : xp;
 	}
 
-	public static int getMaxHp() {
-		return maxHp;
-	}
-
-	public static void setMaxHp(int maxHp) {
-		Player.maxHp = maxHp < 0 ? 0 : maxHp;
-	}
-
-	public static int getMaxXp() {
+	public int getMaxXp() {
 		return maxXp;
 	}
 
-	public static void setMaxXp(int maxXp) {
-		Player.maxXp = maxXp;
+	public void setMaxXp(int maxXp) {
+		this.maxXp = maxXp;
 	}
 
-	public static ArrayList<Effect> getAllEffect() {
-		return allEffect;
-	}
-
-	public static void setAllEffect(ArrayList<Effect> allEffect) {
-		Player.allEffect = allEffect;
-	}
-
-	public static int getEnergy() {
+	public int getEnergy() {
 		return energy;
 	}
 
-	public static void setEnergy(int energy) {
-		Player.energy = energy < 0 ? 0 : energy;
+	public void setEnergy(int energy) {
+		this.energy = energy < 0 ? 0 : energy;
 	}
 
-	public static int getMaxEnergy() {
+	public int getMaxEnergy() {
 		return maxEnergy;
 	}
 
-	public static void setMaxEnergy(int maxEnergy) {
-		Player.maxEnergy = maxEnergy < 0 ? 0 : maxEnergy;
+	public void setMaxEnergy(int maxEnergy) {
+		this.maxEnergy = maxEnergy < 0 ? 0 : maxEnergy;
 	}
+
+	public ArrayList<Item> getInventory() {
+		return inventory;
+	}
+
+	public void setInventory(ArrayList<Item> inventory) {
+		this.inventory = inventory;
+	}
+	
+	public int getMoney() {
+		return money;
+	}
+	public void setMoney(int money) {
+		this.money = money;
+	}
+	@Override
+	public void activatePerTurn() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
