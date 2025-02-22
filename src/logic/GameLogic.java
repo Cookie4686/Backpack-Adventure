@@ -90,7 +90,7 @@ public class GameLogic {
 			findEffectAndAdd(Player.getInstance().getAllEffect(),ef.getType(),ef.getAmount());
 			break;
 		case DAMAGE:
-			doDamage(ef, e);
+			doDamage(ef, e, Player.getInstance());
 			break;
 		case THORN:
 			findEffectAndAdd(e.getAllEffect(),ef.getType(),ef.getAmount());
@@ -121,12 +121,12 @@ public class GameLogic {
 		}
 	}
 	
-	public static void doDamage(Effect ef,Being e) {
+	public static void doDamage(Effect ef,Being e,Being p) {
 		Effect rage = findEffect(e.getAllEffect(),EffectType.ANGER);
-		Effect thorn = findEffect(Player.getInstance().getAllEffect(),EffectType.THORN);
+		Effect thorn = findEffect(p.getAllEffect(),EffectType.THORN);
 		int extra = (rage == null ? 0 : rage.getAmount());
 		int retaliate = (thorn == null ? 0 : thorn.getAmount());
-		Player.getInstance().takeDamage(ef.getAmount() + extra);
+		p.takeDamage(ef.getAmount() + extra);
 		e.takeDamage(retaliate);
 	}
 	

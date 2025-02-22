@@ -8,8 +8,7 @@ import interfaces.TurnActivable;
 
 public class Player extends Being implements TurnActivable{
 	private static Player instance = null;
-	private String name;
-	private int xp, maxXp, energy, maxEnergy, mana, maxMana, money;
+	private int xp, maxXp, energy, maxEnergy, mana, maxMana, money, luck;
 	private ArrayList<String> pic;
 	private ArrayList<Item> inventory;
 	
@@ -38,24 +37,6 @@ public class Player extends Being implements TurnActivable{
 		return instance;
 	}
 	
-	public int takeDamage(int damaged) {
-		if (Player.getInstance().getShield() >= damaged) {
-			Player.getInstance().setShield(Player.getInstance().getShield() - damaged);
-			damaged = 0;
-		} else {
-			damaged -= Player.getInstance().getShield();
-			Player.getInstance().setShield(0);
-			if (Player.getInstance().getHp() - damaged < 0) {
-				damaged = Player.getInstance().getHp();
-			}
-			Player.getInstance().setHp(Player.getInstance().getHp() - damaged);
-		}
-		
-		new Thread(()->{
-			
-		}).start();
-		return damaged;
-	}
 	public int getMaxMana() {
 		return maxMana;
 	}
@@ -69,15 +50,8 @@ public class Player extends Being implements TurnActivable{
 	}
 
 	public void setMana(int mana) {
-		this.mana = mana;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		int pos = (mana < 0 ? 0 : mana);
+		this.mana = pos > maxMana ? maxMana : pos;
 	}
 
 	public ArrayList<String> getPic() {
@@ -133,6 +107,13 @@ public class Player extends Being implements TurnActivable{
 	}
 	public void setMoney(int money) {
 		this.money = money;
+	}
+	
+	public int getLuck() {
+		return luck;
+	}
+	public void setLuck(int luck) {
+		this.luck = luck;
 	}
 	@Override
 	public void activatePerTurn() {
