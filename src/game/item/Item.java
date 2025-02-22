@@ -1,7 +1,7 @@
 package game.item;
 
 import game.backpack.Slot;
-import game.util.DraggableHandler;
+import game.util.ItemHandler;
 import game.util.ItemRotation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -52,9 +52,9 @@ public abstract class Item extends Pane {
 
 		this.setPickOnBounds(false);
 		imageView.setPickOnBounds(true);
-		imageView.setOnMousePressed(event -> DraggableHandler.handleItemMousePress(event, this));
-		imageView.setOnMouseDragged(event -> DraggableHandler.handleItemMouseDrag(event));
-		imageView.setOnMouseReleased(event -> DraggableHandler.handleItemMouseRelease());
+		imageView.setOnMousePressed(event -> ItemHandler.handleMousePress(event, this));
+		imageView.setOnMouseDragged(event -> ItemHandler.handleMouseDrag(event));
+		imageView.setOnMouseReleased(event -> ItemHandler.handleMouseRelease());
 		getChildren().setAll(imageView);
 
 		// TODO: show toolTip on hover

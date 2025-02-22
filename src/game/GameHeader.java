@@ -1,5 +1,6 @@
 package game;
 
+import entities.Player;
 import interfaces.ReRenderable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,9 +17,12 @@ public class GameHeader extends HBox implements ReRenderable {
 
 	public GameHeader() {
 		super();
-		floorText = new Text("Floor: -");
-		experienceText = new Text("Exp: -/-");
-		coinText = new Text("Coins: -/-");
+		setAlignment(Pos.CENTER);
+		setPadding(new Insets(5, 10, 5, 10));
+		setSpacing(10);
+
+		floorText = new Text();
+		experienceText = new Text();
 		Region region = new Region();
 		backpackButton = new Button("Toggle Backpack");
 		backpackButton.setOnAction(event -> {
@@ -30,17 +34,17 @@ public class GameHeader extends HBox implements ReRenderable {
 				}
 			}
 		});
-		setPadding(new Insets(5, 10, 5, 10));
-		setSpacing(10);
+
 		setHgrow(region, Priority.ALWAYS);
-		region.setMaxWidth(Double.MAX_VALUE);
-		setAlignment(Pos.CENTER);
-		getChildren().addAll(floorText, experienceText, coinText, region, backpackButton);
+
+		getChildren().addAll(floorText, experienceText, region, backpackButton);
+		render();
 	}
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
+		floorText.setText("Floor: -");
+		experienceText.setText(String.format("Exp: %s/%s", Player.getXp(), Player.getMaxXp()));
 	}
 
 	public static GameHeader getInstance() {

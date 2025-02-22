@@ -1,6 +1,6 @@
 package application;
 
-import game.util.DraggableHandler;
+import game.util.ItemHandler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Rectangle2D;
@@ -27,7 +27,7 @@ public class Main extends Application {
 		// root.setPrefSize(600, 600);
 		MenuScene.use();
 		Scene scene = new Scene(root, 800, 600);
-		scene.setOnKeyPressed(event -> DraggableHandler.handleSceneKeyPress(event));
+		scene.setOnKeyPressed(event -> ItemHandler.handleSceneKeyPress(event));
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Backpack");
 		// primaryStage.setMaximized(true);

@@ -18,15 +18,19 @@ public class Map extends GridPane {
 		squares = new MapSquare[height][width];
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				squares[y][x] = new MapSquare(MapMarker.PATH);
+				squares[y][x] = new MapSquare();
 				add(squares[y][x], x, y);
 			}
 		}
-		squares[0][0].setMarker(null);
-		squares[0][1].setMarker(null);
+		squares[0][0].setMarker(MapMarker.PATH);
+		squares[0][1].setMarker(MapMarker.PATH);
 		squares[0][2].setMarker(MapMarker.DOOR);
-		squares[0][3].setMarker(null);
-		squares[0][4].setMarker(null);
+		squares[0][3].setMarker(MapMarker.PATH);
+		squares[0][4].setMarker(MapMarker.PATH);
+		squares[0][5].setMarker(MapMarker.MONSTER);
+		squares[0][6].setMarker(MapMarker.PATH);
+		squares[0][7].setMarker(MapMarker.PATH);
+		squares[0][8].setMarker(MapMarker.PLAYER);
 		render();
 	}
 

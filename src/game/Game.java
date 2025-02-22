@@ -1,7 +1,7 @@
 package game;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Iterator;
 
 import game.item.Item;
 import javafx.geometry.Pos;
@@ -10,40 +10,53 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
-public class Game extends VBox {
+public class Game extends StackPane {
 	private static Game instance;
-	private StackPane gamePane;
-
-	private ArrayList<Item> itemsInGame;
 
 	public Game() {
 		super();
-		itemsInGame = new ArrayList<Item>();
-
-		gamePane = new StackPane();
-		gamePane.setAlignment(Pos.TOP_LEFT);
-		setVgrow(gamePane, Priority.ALWAYS);
+		setAlignment(Pos.TOP_LEFT);
 
 		VBox vBox = new VBox();
 		vBox.setSpacing(16);
-		setVgrow(GameBottom.getInstance(), Priority.ALWAYS);
+		VBox.setVgrow(GameBottom.getInstance(), Priority.ALWAYS);
 		vBox.getChildren().setAll(GameTop.getInstance(), GameBottom.getInstance());
 
-		gamePane.getChildren().setAll(vBox);
-		getChildren().setAll(GameHeader.getInstance(), gamePane);
-	}
-
-	public StackPane getGamePane() {
-		return gamePane;
+		getChildren().setAll(vBox);
 	}
 
 	public void addItem(Item... items) {
-		Collections.addAll(itemsInGame, items);
-		gamePane.getChildren().addAll(items);
+		getChildren().addAll(items);
 	}
 
 	public ArrayList<Item> getItemsInGame() {
-		return itemsInGame;
+		ArrayList<Item> items = new ArrayList<Item>();
+		for (Node node : getChildren()) {
+			if (node instanceof Item) {
+				items.add((Item) node);
+			}
+		}
+		return items;
+	}
+
+	public ArrayList<Item> getItemsInBackpack() {
+		ArrayList<Item> items = new ArrayList<Item>();
+		for (Node node : getChildren()) {
+			if (node instanceof Item && ((Item) node).isInBackpack()) {
+				items.add((Item) node);
+			}
+		}
+		return items;
+	}
+
+	public void clearFloatingItem() {
+		Iterator<Node> iterator = getChildren().iterator();
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+			if (node instanceof Item && !((Item) node).isInBackpack()) {
+				iterator.remove();
+			}
+		}
 	}
 
 	public static Game getInstance() {

@@ -9,6 +9,8 @@ public class MarkerLoader {
 	static {
 		markerMap = new HashMap<MapMarker, Resource>();
 		markerMap.put(MapMarker.DOOR, new Resource("door.png"));
+		markerMap.put(MapMarker.MONSTER, new Resource("skull.png"));
+		markerMap.put(MapMarker.PLAYER, new Resource("apple.png"));
 	}
 
 	public static Image getImage(MapMarker marker) {

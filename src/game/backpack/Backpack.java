@@ -1,7 +1,7 @@
 package game.backpack;
 
 import game.item.Item;
-import game.util.DraggableHandler;
+import game.util.ItemHandler;
 import game.util.ItemRotation;
 import interfaces.ReRenderable;
 import javafx.scene.layout.GridPane;
@@ -79,7 +79,7 @@ public class Backpack extends GridPane implements ReRenderable {
 
 	private void placeItem(Slot slot, Item item) {
 		if (slot.getItem() != null) {
-			DraggableHandler.setRandomOffGridLocation(slot.getItem());
+			ItemHandler.setRandomOffGridLocation(slot.getItem());
 			removeItem(slot.getItem());
 		}
 		slot.setItem(item);

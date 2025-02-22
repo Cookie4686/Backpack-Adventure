@@ -3,6 +3,7 @@ package game.util;
 import java.util.Random;
 
 import game.Game;
+import game.GameLogic;
 import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.item.Item;
@@ -10,34 +11,42 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
-public class DraggableHandler {
+public class ItemHandler {
 	public static Item currentItem;
 	private static double startX, startY;
 	private static double diffX, diffY, maxWidth, maxHeight, slotPaneX, slotPaneY;
 	private static int gridX, gridY;
 
-	public static void handleItemMousePress(MouseEvent event, Item item) {
-		currentItem = item;
-		calcValues();
-		startX = event.getSceneX() - item.getTranslateX();
-		startY = event.getSceneY() - item.getTranslateY();
+	public static void handleMousePress(MouseEvent event, Item item) {
+		if (!GameLogic.isFighting()) {
+			currentItem = item;
+			calcValues();
+			startX = event.getSceneX() - item.getTranslateX();
+			startY = event.getSceneY() - item.getTranslateY();
+		}
 	}
 
-	public static void handleItemMouseDrag(MouseEvent event) {
-		setTranslateNoOffScreenX(event.getSceneX() - startX);
-		setTranslateNoOffScreenY(event.getSceneY() - startY);
-		hightlightGrid();
+	public static void handleMouseDrag(MouseEvent event) {
+		if (!GameLogic.isFighting()) {
+			setTranslateNoOffScreenX(event.getSceneX() - startX);
+			setTranslateNoOffScreenY(event.getSceneY() - startY);
+			hightlightGrid();
+		}
 	}
 
-	public static void handleItemMouseRelease() {
-		placeItem();
-		currentItem = null;
+	public static void handleMouseRelease() {
+		if (!GameLogic.isFighting()) {
+			placeItem();
+			currentItem = null;
+		}
 	}
 
 	public static void handleSceneKeyPress(KeyEvent event) {
-		if (event.getCode() == KeyCode.R) {
-			if (currentItem != null) {
-				rotateItem();
+		if (!GameLogic.isFighting()) {
+			if (event.getCode() == KeyCode.R) {
+				if (currentItem != null) {
+					rotateItem();
+				}
 			}
 		}
 	}
@@ -104,9 +113,9 @@ public class DraggableHandler {
 
 	private static void calcValues() {
 		diffX = currentItem.getRotation() == ItemRotation.VERTICAL ? currentItem.getDiffX() : 0;
-		maxWidth = Game.getInstance().getGamePane().getWidth() - currentItem.getWidth() + diffX;
+		maxWidth = Game.getInstance().getWidth() - currentItem.getWidth() + diffX;
 		diffY = currentItem.getRotation() == ItemRotation.HORIZONTAL ? currentItem.getDiffY() : 0;
-		maxHeight = Game.getInstance().getGamePane().getHeight() - currentItem.getHeight() + diffY;
+		maxHeight = Game.getInstance().getHeight() - currentItem.getHeight() + diffY;
 		slotPaneX = Game.getX(Backpack.getInstance());
 		slotPaneY = Game.getY(Backpack.getInstance());
 	}
