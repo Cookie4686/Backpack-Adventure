@@ -10,11 +10,11 @@ public class Effect {
 		this.type = type;
 	}
 
-	public int getDuration() {
+	public int getAmount() {
 		return amount;
 	}
 
-	public void setDuration(int amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
