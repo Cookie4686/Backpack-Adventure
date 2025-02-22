@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import game.util.Effect;
+import game.util.EffectType;
 import interfaces.Clickable;
 import interfaces.TurnActivable;
 import javafx.application.Platform;
+import logic.GameLogic;
 
 public class Entity extends Being implements TurnActivable, Clickable{
-	protected String name;
 	protected int xp, dangerLV;
 	protected boolean stunned;
 	protected ArrayList<String> pic;
@@ -30,32 +31,6 @@ public class Entity extends Being implements TurnActivable, Clickable{
 		this.dangerLV = dangerLV;
 		this.dodge = 0;
 		this.stunned = false;
-	}
-
-	public int takeDamage(int damaged) {
-		if (Player.getInstance().getShield() >= damaged) {
-			Player.getInstance().setShield(Player.getInstance().getShield() - damaged);
-			damaged = 0;
-		} else {
-			damaged -= Player.getInstance().getShield();
-			Player.getInstance().setShield(0);
-			if (Player.getInstance().getHp() - damaged < 0) {
-				damaged = Player.getInstance().getHp();
-			}
-			Player.getInstance().setHp(Player.getInstance().getHp() - damaged);
-		}
-		
-		new Thread(()->{
-			
-		}).start();
-		return damaged;
-	}
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public ArrayList<String> getPic() {

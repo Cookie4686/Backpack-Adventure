@@ -66,7 +66,7 @@ public class GameLogic {
 	public void ActivateEffect(Effect ef,Being e) {
 		switch(ef.getType()) {
 		case FIRE:
-			e.setHp(e.getHp() - ef.getAmount());
+			e.setHp(e.getHp() - ef.getAmount() - 10);
 			e.setMaxHp(e.getMaxHp() - 10);
 			break;
 		case POISON:
@@ -90,7 +90,7 @@ public class GameLogic {
 			findEffectAndAdd(Player.getInstance().getAllEffect(),ef.getType(),ef.getAmount());
 			break;
 		case DAMAGE:
-			Player.getInstance().takeDamage(ef.getAmount());
+			doDamage(ef, e);
 			break;
 		case THORN:
 			findEffectAndAdd(e.getAllEffect(),ef.getType(),ef.getAmount());
@@ -121,6 +121,15 @@ public class GameLogic {
 		}
 	}
 	
+	public static void doDamage(Effect ef,Being e) {
+		Effect rage = findEffect(e.getAllEffect(),EffectType.ANGER);
+		Effect thorn = findEffect(Player.getInstance().getAllEffect(),EffectType.THORN);
+		int extra = (rage == null ? 0 : rage.getAmount());
+		int retaliate = (thorn == null ? 0 : thorn.getAmount());
+		Player.getInstance().takeDamage(ef.getAmount() + extra);
+		e.takeDamage(retaliate);
+	}
+	
 	public static void findEffectAndAdd(ArrayList<Effect> efs,EffectType target,int amount) {
 		for(Effect ef : efs) {
 			if(ef.getType().equals(target)) {
@@ -129,6 +138,32 @@ public class GameLogic {
 			}
 		}
 		efs.add(new Effect(amount,target));
+	}
+	
+	public static boolean findEffectAndDecrease(ArrayList<Effect> efs,EffectType target,int amount) {
+		int i = 0;
+		for(Effect ef : efs) {
+			if(ef.getType().equals(target)) {
+				int val = ef.getAmount() - amount;
+				if(val <= 0) {
+					efs.remove(i);
+				} else {					
+					ef.setAmount(val);
+				}
+				return true;
+			}
+			i++;
+		}
+		return false;
+	}
+	
+	public static Effect findEffect(ArrayList<Effect> efs,EffectType target) {
+		for(Effect ef : efs) {
+			if(ef.getType().equals(target)) {
+				return ef;
+			}
+		}
+		return null;
 	}
 	
 	public boolean isPTurn() {
