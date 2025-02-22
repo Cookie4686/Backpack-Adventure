@@ -33,6 +33,7 @@ public class FightLogic {
 		isPTurn = true;
 		if(entities.size() == 0) {
 			GameLogic.getInstance().endFight();
+			return;
 		}
 		playerTurn();
 	}
@@ -56,6 +57,7 @@ public class FightLogic {
 			useEffect(e.getNextTurn(), e);
 			if(Player.getInstance().getHp() == 0) {
 				GameLogic.getInstance().gameOver();
+				return;
 			}
 			e.setNextTurn(e.getAllAttributes().get(rand.nextInt(e.getAllAttributes().size())));
 		});
@@ -68,6 +70,7 @@ public class FightLogic {
 				ActivateEffect(ef, (Being) (Player.getInstance()));
 				if(Player.getInstance().getHp() == 0) {
 					GameLogic.getInstance().gameOver();
+					return;
 				}
 			});
 		}
