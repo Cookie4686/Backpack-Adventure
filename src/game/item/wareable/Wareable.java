@@ -31,7 +31,7 @@ public abstract class Wareable extends Item implements TurnActivable, StatUpdata
 	}
 	
 	@Override
-	public void StatUpdate() {
+	public void statUpdate() {
 		for (Effect effect:effects) {
 			if (effect.getType()==EffectType.LUCK) {
 				//TODO: increase luck in player by effect power

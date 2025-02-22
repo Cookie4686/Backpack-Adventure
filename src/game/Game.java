@@ -1,72 +1,53 @@
 package game;
 
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-import game.backpack.Backpack;
 import game.item.Item;
-import game.map.Map;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import logic.GameLogic;
 
-public class Game extends VBox {
+public class Game extends StackPane {
 	private static Game instance;
-
-	private StackPane gamePane;
-	private HBox TopHBox, bottomHBox;
-	private boolean isBackpack;
-	private HashSet<Item> itemsInGame;
 
 	public Game() {
 		super();
-		itemsInGame = new HashSet<Item>();
-
-		gamePane = new StackPane();
-		gamePane.setAlignment(Pos.TOP_LEFT);
-		setVgrow(gamePane, Priority.ALWAYS);
+		setAlignment(Pos.TOP_LEFT);
 
 		VBox vBox = new VBox();
-		TopHBox = new HBox();
-		TopHBox.setAlignment(Pos.TOP_CENTER);
+		vBox.setSpacing(16);
+		VBox.setVgrow(GameBottom.getInstance(), Priority.ALWAYS);
+		vBox.getChildren().setAll(GameTop.getInstance(), GameBottom.getInstance());
 
-		bottomHBox = new HBox();
-		vBox.getChildren().setAll(TopHBox, bottomHBox);
-
-		gamePane.getChildren().setAll(vBox);
-		getChildren().setAll(GameHeader.getInstance(), gamePane);
-	}
-
-	public StackPane getGamePane() {
-		return gamePane;
-	}
-
-	public boolean isBackpack() {
-		return isBackpack;
-	}
-
-	public void useBackpack() {
-		isBackpack = true;
-		for (Item item : itemsInGame) {
-			item.setVisible(true);
-		}
-		TopHBox.getChildren().setAll(Backpack.getInstance());
-	}
-
-	public void useMap() {
-		isBackpack = false;
-		for (Item item : itemsInGame) {
-			item.setVisible(false);
-		}
-		TopHBox.getChildren().setAll(Map.getInstance());
+		getChildren().setAll(vBox);
 	}
 
 	public void addItem(Item... items) {
-		Collections.addAll(itemsInGame, items);
-		gamePane.getChildren().addAll(items);
+		getChildren().addAll(items);
+	}
+
+	public ArrayList<Item> getItemsInGame() {
+		ArrayList<Item> items = new ArrayList<Item>();
+		for (Node node : getChildren()) {
+			if (node instanceof Item) {
+				items.add((Item) node);
+			}
+		}
+		return items;
+	}
+
+	public void clearFloatingItem() {
+		Iterator<Node> iterator = getChildren().iterator();
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+			if (node instanceof Item && !GameLogic.getInstance().getInventory().contains((Item) node)) {
+				iterator.remove();
+			}
+		}
 	}
 
 	public static Game getInstance() {

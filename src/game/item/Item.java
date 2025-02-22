@@ -1,7 +1,8 @@
 package game.item;
 
 import game.backpack.Slot;
-import game.util.DraggableHandler;
+import game.handler.ItemHandler;
+import game.item.consumable.FoodWithContainer;
 import game.util.ItemRotation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,7 +16,6 @@ public abstract class Item extends Pane {
 	// used for dragging, rotating
 	private double diffX, diffY;
 	private ImageView imageView;
-	private boolean isInBackpack;
 
 	public Item(String name, String detail, int height) {
 		super();
@@ -51,13 +51,21 @@ public abstract class Item extends Pane {
 
 		this.setPickOnBounds(false);
 		imageView.setPickOnBounds(true);
-		imageView.setOnMousePressed(event -> DraggableHandler.handleItemMousePress(event, this));
-		imageView.setOnMouseDragged(event -> DraggableHandler.handleItemMouseDrag(event));
-		imageView.setOnMouseReleased(event -> DraggableHandler.handleItemMouseRelease());
+		imageView.setOnMousePressed(event -> ItemHandler.handleMousePress(event, this));
+		imageView.setOnMouseDragged(event -> ItemHandler.handleMouseDrag(event));
+		imageView.setOnMouseReleased(event -> ItemHandler.handleMouseRelease());
 		getChildren().setAll(imageView);
 
 		// TODO: show toolTip on hover
 		// imageView.setOnMouseEntered(event -> {});
+	}
+
+	public void delete() {
+		// TODO: Delete this item
+
+		if (this instanceof FoodWithContainer) {
+			// TODO: replace this item with item container
+		}
 	}
 
 	private void calculateDiff() {
@@ -106,11 +114,7 @@ public abstract class Item extends Pane {
 		return width > height ? ItemRotation.HORIZONTAL : ItemRotation.VERTICAL;
 	}
 
-	public boolean isInBackpack() {
-		return isInBackpack;
-	}
-
-	public void setInBackpack(boolean isInBackpack) {
-		this.isInBackpack = isInBackpack;
+	public String getName() {
+		return name;
 	}
 }

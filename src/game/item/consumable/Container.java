@@ -15,6 +15,13 @@ public class Container extends Item implements Clickable{
 		super(name, detail, height);
 		setDamage(damage);
 	}
+	
+	@Override
+	public boolean isEnoughEnergy() {
+		return true;
+	}
+	
+	
 	@Override
 	public void activatePerClick() {
 		//TODO: damage enemy by damage

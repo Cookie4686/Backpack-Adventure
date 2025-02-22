@@ -1,5 +1,6 @@
 package game;
 
+import entities.Player;
 import interfaces.ReRenderable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,37 +9,44 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import logic.FightLogic;
 
 public class GameHeader extends HBox implements ReRenderable {
 	private static GameHeader instance;
-	private Text floorText, experienceText, coinText;
+	private Text floorText, experienceText;
 	private Button backpackButton;
 
 	public GameHeader() {
 		super();
-		floorText = new Text("Floor: -");
-		experienceText = new Text("Exp: -/-");
-		coinText = new Text("Coins: -/-");
+		setAlignment(Pos.CENTER);
+		setPadding(new Insets(5, 10, 5, 10));
+		setSpacing(10);
+
+		floorText = new Text();
+		experienceText = new Text();
 		Region region = new Region();
 		backpackButton = new Button("Toggle Backpack");
 		backpackButton.setOnAction(event -> {
-			if (Game.getInstance().isBackpack()) {
-				Game.getInstance().useMap();
-			} else {
-				Game.getInstance().useBackpack();
+			if (!FightLogic.getInstance().isInFight()) {
+				if (GameTop.getInstance().isBackpack()) {
+					GameTop.getInstance().useMap();
+				} else {
+					GameTop.getInstance().useBackpack();
+				}
 			}
 		});
-		setPadding(new Insets(5, 10, 5, 10));
-		setSpacing(10);
+
 		setHgrow(region, Priority.ALWAYS);
-		region.setMaxWidth(Double.MAX_VALUE);
-		setAlignment(Pos.CENTER);
-		getChildren().addAll(floorText, experienceText, coinText, region, backpackButton);
+
+		getChildren().addAll(floorText, experienceText, region, backpackButton);
+		render();
 	}
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
+		floorText.setText("Floor: -");
+		experienceText
+				.setText(String.format("Exp: %s/%s", Player.getInstance().getXp(), Player.getInstance().getMaxXp()));
 	}
 
 	public static GameHeader getInstance() {

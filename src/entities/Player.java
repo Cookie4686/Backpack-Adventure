@@ -2,16 +2,18 @@ package entities;
 
 import java.util.ArrayList;
 
-import game.item.Item;
 import game.util.Effect;
+import interfaces.ReRenderable;
 import interfaces.TurnActivable;
+import javafx.scene.text.Text;
 
-public class Player extends Being implements TurnActivable{
+public class Player extends Being implements TurnActivable, ReRenderable{
 	private static Player instance = null;
 	private int xp, maxXp, energy, maxEnergy, mana, maxMana, money, luck;
 	private ArrayList<String> pic;
-	private ArrayList<Item> inventory;
-	
+
+	private Text text;
+
 	public Player() {
 		super();
 		this.name = "Player";
@@ -28,15 +30,23 @@ public class Player extends Being implements TurnActivable{
 		this.money = 0;
 		this.pic = null;
 		this.allEffect = new ArrayList<Effect>();
-		this.inventory = new ArrayList<Item>();
+
+		text = new Text();
+		setCenter(text);
 	}
+
+	@Override
+	public void render() {
+		text.setText(String.format("Hp: %s/%s, Df: %s, Energy: %s", hp, maxHp, shield, energy));
+	}
+
 	public static Player getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new Player();
 		}
 		return instance;
 	}
-	
+
 	public int getMaxMana() {
 		return maxMana;
 	}
@@ -94,17 +104,10 @@ public class Player extends Being implements TurnActivable{
 		this.maxEnergy = maxEnergy < 0 ? 0 : maxEnergy;
 	}
 
-	public ArrayList<Item> getInventory() {
-		return inventory;
-	}
-
-	public void setInventory(ArrayList<Item> inventory) {
-		this.inventory = inventory;
-	}
-	
 	public int getMoney() {
 		return money;
 	}
+
 	public void setMoney(int money) {
 		this.money = money;
 	}
@@ -120,5 +123,4 @@ public class Player extends Being implements TurnActivable{
 		// TODO Auto-generated method stub
 		
 	}
-	
 }

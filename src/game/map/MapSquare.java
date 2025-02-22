@@ -1,6 +1,7 @@
 package game.map;
 
 import game.backpack.Slot;
+import game.handler.MapHandler;
 import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -33,6 +34,7 @@ public class MapSquare extends Pane {
 			ImageView imageView = new ImageView(MarkerLoader.getImage(marker));
 			imageView.setFitWidth(SIZE);
 			imageView.setFitHeight(SIZE);
+			imageView.setOnMouseClicked(event -> MapHandler.handleMouseClicked(this));
 			getChildren().setAll(imageView);
 		}
 		BorderStroke borderStroke = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,

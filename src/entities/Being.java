@@ -4,17 +4,18 @@ import java.util.ArrayList;
 
 import game.util.Effect;
 import game.util.EffectType;
-import logic.GameLogic;
+import javafx.scene.layout.BorderPane;
+import logic.FightLogic;
 
-public class Being {
+public class Being extends BorderPane {
 	protected String name;
 	protected int hp, maxHp, shield, dodge;
 	protected ArrayList<Effect> allEffect;
-	
+
 	public Being() {
 		super();
 	}
-	
+
 	public int getHp() {
 		return hp;
 	}
@@ -23,9 +24,9 @@ public class Being {
 		int pos = (hp < 0 ? 0 : hp);
 		this.hp = pos > maxHp ? maxHp : pos;
 	}
-	
+
 	public int takeDamage(int damaged) {
-		if(GameLogic.findEffectAndDecrease(allEffect,EffectType.DODGE,1)) {
+		if (FightLogic.findEffectAndDecrease(allEffect, EffectType.DODGE, 1)) {
 			return 0;
 		}
 		if (Player.getInstance().getShield() >= damaged) {
@@ -39,13 +40,13 @@ public class Being {
 			}
 			Player.getInstance().setHp(Player.getInstance().getHp() - damaged);
 		}
-		
-		new Thread(()->{
-			
+
+		new Thread(() -> {
+
 		}).start();
 		return damaged;
 	}
-	
+
 	public int getShield() {
 		return shield;
 	}
@@ -53,7 +54,7 @@ public class Being {
 	public void setShield(int shield) {
 		this.shield = shield < 0 ? 0 : shield;
 	}
-	
+
 	public ArrayList<Effect> getAllEffect() {
 		return allEffect;
 	}
@@ -61,15 +62,15 @@ public class Being {
 	public void setAllEffect(ArrayList<Effect> allEffect) {
 		this.allEffect = allEffect;
 	}
-	
+
 	public int getDodge() {
 		return dodge;
 	}
-	
+
 	public void setDodge(int dodge) {
 		this.dodge = dodge;
 	}
-	
+
 	public int getMaxHp() {
 		return maxHp;
 	}
@@ -77,7 +78,7 @@ public class Being {
 	public void setMaxHp(int maxHp) {
 		this.maxHp = maxHp < 0 ? 0 : maxHp;
 	}
-	
+
 	public String getName() {
 		return name;
 	}

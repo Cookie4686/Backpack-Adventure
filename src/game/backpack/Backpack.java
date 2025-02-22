@@ -1,15 +1,15 @@
 package game.backpack;
 
+import game.handler.ItemHandler;
 import game.item.Item;
-import game.util.DraggableHandler;
 import game.util.ItemRotation;
 import interfaces.ReRenderable;
 import javafx.scene.layout.GridPane;
+import logic.GameLogic;
 
 public class Backpack extends GridPane implements ReRenderable {
 	private static Backpack instance;
 	private static final int WIDTH = 7, HEIGHT = 5;
-
 	private Slot[][] slots;
 
 	public Backpack() {
@@ -59,7 +59,7 @@ public class Backpack extends GridPane implements ReRenderable {
 		removeItem(item);
 		boolean isPlaceable = isPlaceable(gridX, gridY, item);
 		if (isPlaceable) {
-			item.setInBackpack(true);
+			GameLogic.getInstance().getInventory().add(item);
 			if (item.isDiagonal()) {
 				boolean isLeft = item.getRotation() == ItemRotation.DIAGONAL_LEFT;
 				for (int i = 0; i < item.getItemHeight(); i++) {
@@ -79,14 +79,14 @@ public class Backpack extends GridPane implements ReRenderable {
 
 	private void placeItem(Slot slot, Item item) {
 		if (slot.getItem() != null) {
-			DraggableHandler.setRandomOffGridLocation(slot.getItem());
+			ItemHandler.setRandomOffGridLocation(slot.getItem());
 			removeItem(slot.getItem());
 		}
 		slot.setItem(item);
 	}
 
 	private void removeItem(Item item) {
-		item.setInBackpack(false);
+		GameLogic.getInstance().getInventory().remove(item);
 		for (Slot[] row : slots) {
 			for (Slot slot : row) {
 				if (slot.getItem() == item) {

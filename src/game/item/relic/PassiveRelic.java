@@ -13,18 +13,7 @@ public class PassiveRelic extends Relic implements StatUpdatable {
 	}
 	
 	@Override
-	public void StatUpdate() {
-		switch (getEffectType()) {
-		case SHIELD:
-			// TODO: Find adjacent shield & wareable 
-			// add them shield
-			break;
-		case DAMAGE:
-			// TODO: Find adjacent weapon
-			// add them damage
-			break;
-		default:
-			break;
-		}
+	public void statUpdate() {
+		super.activate();
 	}
 }
