@@ -1,17 +1,17 @@
 package game.item.consumable;
 
-import game.util.EffectType;
+import game.util.Effect;
 
-public class FoodWithContainer extends Food {
+public class FoodWithContainer extends Consumable {
 	String container;
-
-	public FoodWithContainer(String name, String detail, String container, int durability, EffectType effectType, int effectPower, int width,int height) {
-		super(name, detail, durability, effectType, effectPower, width, height);
+	
+	public FoodWithContainer(String name, String detail, String container, int durability, Effect effect, int width,int height) {
+		super(name, detail, durability, effect, width, height);
 		setContainer(container);
 	}
-
-	public FoodWithContainer(String name, String detail, String container, int durability, EffectType effectType, int effectPower, int height) {
-		super(name, detail, durability, effectType, effectPower, height);
+	
+	public FoodWithContainer(String name, String detail, String container, int durability, Effect effect, int height) {
+		super(name, detail, durability, effect, height);
 		setContainer(container);
 	}
 	

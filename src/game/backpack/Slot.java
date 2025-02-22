@@ -14,7 +14,7 @@ public class Slot extends Pane implements ReRenderable {
 	private boolean isUnlocked;
 	private Item item;
 
-	public Slot(double x, double y) {
+	public Slot() {
 		super();
 		setMinSize(SIZE, SIZE);
 		setMaxSize(SIZE, SIZE);

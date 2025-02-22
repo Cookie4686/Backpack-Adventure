@@ -1,5 +1,6 @@
-package game.item;
+package game.item.consumable;
 
+import game.item.Item;
 import interfaces.Clickable;
 
 public class Container extends Item implements Clickable{
@@ -14,7 +15,6 @@ public class Container extends Item implements Clickable{
 		super(name, detail, height);
 		setDamage(damage);
 	}
-	
 	@Override
 	public void activatePerClick() {
 		//TODO: damage enemy by damage
