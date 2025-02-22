@@ -29,8 +29,12 @@ public class ItemHandler {
 			calcValues();
 			startX = event.getSceneX() - item.getTranslateX();
 			startY = event.getSceneY() - item.getTranslateY();
-		} 
-		
+		} else {
+			if(item instanceof Clickable) {
+				Clickable c = (Clickable) item;
+				c.activatePerClick();
+			}
+		}
 	}
 
 	public static void handleMouseDrag(MouseEvent event) {

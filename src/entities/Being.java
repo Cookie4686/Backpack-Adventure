@@ -3,17 +3,16 @@ package entities;
 import java.util.ArrayList;
 
 import game.util.Effect;
-import game.util.EffectType;
 import javafx.scene.layout.BorderPane;
-import logic.FightLogic;
 
-public class Being extends BorderPane {
+public abstract class Being extends BorderPane {
 	protected String name;
 	protected int hp, maxHp, shield, dodge;
 	protected ArrayList<Effect> allEffect;
 
 	public Being() {
 		super();
+		allEffect = new ArrayList<Effect>();
 	}
 
 	public int getHp() {
@@ -25,29 +24,7 @@ public class Being extends BorderPane {
 		this.hp = pos > maxHp ? maxHp : pos;
 	}
 
-	public int takeDamage(int damaged) {
-		if (damaged==0) return 0;
-		
-		if (FightLogic.findEffectAndDecrease(allEffect, EffectType.DODGE, 1)) {
-			return 0;
-		}
-		if (Player.getInstance().getShield() >= damaged) {
-			Player.getInstance().setShield(Player.getInstance().getShield() - damaged);
-			damaged = 0;
-		} else {
-			damaged -= Player.getInstance().getShield();
-			Player.getInstance().setShield(0);
-			if (Player.getInstance().getHp() - damaged < 0) {
-				damaged = Player.getInstance().getHp();
-			}
-			Player.getInstance().setHp(Player.getInstance().getHp() - damaged);
-		}
-
-		new Thread(() -> {
-
-		}).start();
-		return damaged;
-	}
+	public abstract int takeDamage(int damaged);
 
 	public int getShield() {
 		return shield;

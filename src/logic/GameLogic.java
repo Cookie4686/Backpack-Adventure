@@ -9,8 +9,8 @@ import game.GameTop;
 import game.item.Item;
 
 public class GameLogic {
-	private static GameLogic instance;
-	private ArrayList<Item> inventory = new ArrayList<Item>();
+	private static GameLogic instance = null;
+	private ArrayList<Item> inventory = null;
 
 	public void initializeFight() {
 		FightLogic.getInstance().setInFight(true);
@@ -24,8 +24,20 @@ public class GameLogic {
 		FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		GameBottom.getInstance().render();
 	}
+	
+	public void gameOver() {
+		
+	}
+	
+	public void endFight() {
+		FightLogic.getInstance().setInFight(false);
+		
+	}
 
 	public ArrayList<Item> getInventory() {
+		if (inventory == null) {
+			inventory = new ArrayList<Item>();
+		}
 		return inventory;
 	}
 
