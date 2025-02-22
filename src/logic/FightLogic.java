@@ -84,7 +84,7 @@ public class FightLogic {
 		switch (ef.getType()) {
 		case FIRE		-> findEffectAndAdd(Player.getInstance().getAllEffect(), ef.getType(), ef.getAmount());
 		case POISON		-> findEffectAndAdd(Player.getInstance().getAllEffect(), ef.getType(), ef.getAmount());
-		case DAMAGE		-> doDamage(ef, e);
+		case DAMAGE		-> doDamage(ef, e, Player.getInstance());
 		case THORN		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
 		case SHIELD		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
 		case DODGE		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
@@ -97,12 +97,12 @@ public class FightLogic {
 		}
 	}
 
-	public static void doDamage(Effect ef, Being e) {
-		Effect rage = findEffect(e.getAllEffect(), EffectType.ANGER);
-		Effect thorn = findEffect(Player.getInstance().getAllEffect(), EffectType.THORN);
+	public static void doDamage(Effect ef,Being e,Being p) {
+		Effect rage = findEffect(e.getAllEffect(),EffectType.ANGER);
+		Effect thorn = findEffect(p.getAllEffect(),EffectType.THORN);
 		int extra = (rage == null ? 0 : rage.getAmount());
 		int retaliate = (thorn == null ? 0 : thorn.getAmount());
-		Player.getInstance().takeDamage(ef.getAmount() + extra);
+		p.takeDamage(ef.getAmount() + extra);
 		e.takeDamage(retaliate);
 	}
 
@@ -172,5 +172,8 @@ public class FightLogic {
 	public void setEntities(ArrayList<Entity> entities) {
 		this.entities = entities;
 	}
-
+	
+	public boolean isPTurn() {
+		return isPTurn;
+	}
 }

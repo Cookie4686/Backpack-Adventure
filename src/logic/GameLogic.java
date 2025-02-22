@@ -12,11 +12,6 @@ public class GameLogic {
 	private static GameLogic instance;
 	private ArrayList<Item> inventory;
 
-	public GameLogic() {
-		super();
-		inventory = new ArrayList<Item>();
-	}
-
 	public void initializeFight() {
 		FightLogic.getInstance().setInFight(true);
 		Game.getInstance().clearFloatingItem();
