@@ -14,13 +14,15 @@ public class Helmet extends Wareable {
 	}
 	
 	private int underSlot() {	
-		//return number of row under
+		//TODO return number of row under
 		return 0;
 	}
 	
 	@Override
 	public void statUpdate() {
 		super.statUpdate();
+		
 		//setShield(getInitialShield() + (underSlot() * increaseShield));
+		setShield(getShield() + (underSlot() * getIncreaseShield()));
 	}
 }

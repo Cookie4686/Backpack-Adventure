@@ -1,45 +1,36 @@
 package game.item.weapon;
 
-import game.util.EffectType;
+import java.util.ArrayList;
+
+import game.util.Effect;
+import logic.FightLogic;
 
 public class SpecialWeapon extends Weapon {
-	private EffectType effectType;
-	private int effectPower;
+	final private ArrayList<Effect> effects;
 
-	public SpecialWeapon(String name, String detail, EffectType effectType, int effectPower, int damage, int costActivate, int width, int height) {
+	public SpecialWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int width, int height) {
 		super(name, detail, damage, costActivate, width, height);
-		setEffectPower(effectPower);
-		setEffectType(effectType);
+		this.effects = effects;
 	}
 
-	public SpecialWeapon(String name, String detail, EffectType effectType, int effectPower, int damage, int costActivate, int width) {
+	public SpecialWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int width) {
 		super(name, detail, damage, costActivate, width);
-		setEffectPower(effectPower);
-		setEffectType(effectType);
+		this.effects = effects;
 	}
 
 	@Override
 	public void activatePerClick() {
 		super.activatePerClick();
 		
-		//TODO: add effectType to enemy with effectPower amount;
+		//Add effectType to enemy with effectPower amount;
+		for (Effect effect:effects) {
+			FightLogic.findEffectAndAdd(FightLogic.getInstance().getTarget().getAllEffect(), effect.getType(), effect.getAmount());
+		}
 	}
 	
 	
-	//Getter & Setter
-	public EffectType getEffectType() {
-		return effectType;
-	}
 
-	public int getEffectPower() {
-		return effectPower;
-	}
-
-	public void setEffectType(EffectType effectType) {
-		this.effectType = effectType;
-	}
-
-	public void setEffectPower(int effectPower) {
-		this.effectPower = (effectPower<0)? 0 : effectPower;
+	public ArrayList<Effect> getEffects() {
+		return effects;
 	}
 }

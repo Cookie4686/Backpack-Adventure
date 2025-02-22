@@ -26,6 +26,8 @@ public class Being extends BorderPane {
 	}
 
 	public int takeDamage(int damaged) {
+		if (damaged==0) return 0;
+		
 		if (FightLogic.findEffectAndDecrease(allEffect, EffectType.DODGE, 1)) {
 			return 0;
 		}

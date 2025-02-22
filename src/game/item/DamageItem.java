@@ -1,8 +1,11 @@
 package game.item;
 
+import entities.Entity;
+import entities.Player;
 import game.util.Effect;
 import game.util.EffectType;
 import interfaces.Clickable;
+import logic.FightLogic;
 
 public class DamageItem extends Item implements Clickable {
 	final private boolean AoE;
@@ -25,26 +28,35 @@ public class DamageItem extends Item implements Clickable {
 	
 	@Override
 	public boolean isEnoughEnergy() {
-		//TODO: if Player dont have enough energy return false
+		if (Player.getInstance().getEnergy()<costActivate) return false;
 		return true;
 	}	
 	
 	@Override
 	public void activatePerClick() {
+		if (!isEnoughEnergy()) return;
+		
+		//decrease player energy by costActivate
+		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
+		
 		if (isAoE()) {
 			if (getEffectType()==EffectType.DAMAGE) {
-				//TODO: damage all enemy by effectPower
+				for (Entity enemy:FightLogic.getInstance().getEntities()) {
+					enemy.takeDamage(effect.getAmount());
+				}
 			}
 			else if (getEffectType()==EffectType.FIRE || getEffectType()==EffectType.POISON || getEffectType()==EffectType.STUNTED) {
-				//TODO: add effectType to all enemy by effectPower amount
+				for (Entity enemy:FightLogic.getInstance().getEntities()) {
+					FightLogic.findEffectAndAdd(enemy.getAllEffect(), effect.getType(), effect.getAmount());
+				}
 			}
 		}
 		else {
 			if (getEffectType()==EffectType.DAMAGE) {
-				//TODO: damage select enemy by effectPower
+				FightLogic.getInstance().getTarget().takeDamage(effect.getAmount());
 			}
 			if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNTED) {
-				//TODO: add effectType to enemy by effectPower amount
+				FightLogic.findEffectAndAdd(FightLogic.getInstance().getTarget().getAllEffect(), effect.getType(), effect.getAmount());
 			}
 		}
 			

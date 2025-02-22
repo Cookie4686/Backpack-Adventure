@@ -24,6 +24,7 @@ public class Armor extends Wareable {
 		super.statUpdate();
 		
 		//setShield(getInitialShield() + (numberOfAdjacent() * increaseShield));
+		setShield(getShield() + (numberOfAdjacent() * getIncreaseShield()));
 	}
 	
 	

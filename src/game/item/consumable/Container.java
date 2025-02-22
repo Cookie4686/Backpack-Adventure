@@ -2,6 +2,7 @@ package game.item.consumable;
 
 import game.item.Item;
 import interfaces.Clickable;
+import logic.FightLogic;
 
 public class Container extends Item implements Clickable{
 	private int damage;
@@ -24,8 +25,8 @@ public class Container extends Item implements Clickable{
 	
 	@Override
 	public void activatePerClick() {
-		//TODO: damage enemy by damage
-		// delete this item
+		FightLogic.getInstance().getTarget().takeDamage(damage);
+		delete();
 	}
 
 	public int getDamage() {

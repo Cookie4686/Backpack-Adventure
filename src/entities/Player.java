@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 import game.util.Effect;
 import interfaces.ReRenderable;
+import interfaces.ReStatable;
 import interfaces.TurnActivable;
 import javafx.scene.text.Text;
 
-public class Player extends Being implements TurnActivable, ReRenderable {
+public class Player extends Being implements TurnActivable, ReRenderable, ReStatable {
 	private static Player instance;
 	private String name;
-	private int xp, maxXp, energy, maxEnergy, mana, maxMana, money;
+	private int xp, maxXp, energy, maxEnergy, mana, maxMana, money, luck;
 	private ArrayList<String> pic;
 
 	private Text text;
@@ -30,6 +31,7 @@ public class Player extends Being implements TurnActivable, ReRenderable {
 		this.dodge = 0;
 		this.money = 0;
 		this.pic = null;
+		this.luck = 0;
 		this.allEffect = new ArrayList<Effect>();
 
 		text = new Text();
@@ -62,8 +64,16 @@ public class Player extends Being implements TurnActivable, ReRenderable {
 
 	@Override
 	public void activatePerTurn() {
-		// TODO Auto-generated method stub
-
+		this.shield = 0;
+	}
+	
+	@Override
+	public void reStatBeforeUpdate() {
+		this.maxHp = 100;
+		this.maxEnergy = 3;
+		this.maxMana = 0;
+		this.money = 0;
+		this.luck = 0;
 	}
 
 	public static Player getInstance() {
@@ -144,4 +154,14 @@ public class Player extends Being implements TurnActivable, ReRenderable {
 	public void setMoney(int money) {
 		this.money = money;
 	}
+
+	public int getLuck() {
+		return luck;
+	}
+
+	public void setLuck(int luck) {
+		this.luck = luck;
+	}
+	
+	
 }

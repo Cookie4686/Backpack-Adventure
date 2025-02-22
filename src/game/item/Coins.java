@@ -1,8 +1,9 @@
 package game.item;
 
-import interfaces.TurnActivable;
+import entities.Player;
+import interfaces.StatUpdatable;
 
-public class Coins extends Item implements TurnActivable{
+public class Coins extends Item implements StatUpdatable{
 	private int amount;
 
 	public Coins(String name, String detail, int amount) {
@@ -10,12 +11,11 @@ public class Coins extends Item implements TurnActivable{
 	}
 	
 	@Override
-	public void activatePerTurn() {
-		// TODO : set Player isMoney true;
-		// TODO : set Player Money = amount;
-		
+	public void statUpdate() {
+		Player.getInstance().setMoney(amount);
 	}
-
+	
+	
 	public int getAmount() {
 		return amount;
 	}
