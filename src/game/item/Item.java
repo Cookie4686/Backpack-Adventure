@@ -4,7 +4,6 @@ import game.Game;
 import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.handler.ItemHandler;
-import game.item.consumable.FoodWithContainer;
 import game.util.ItemRotation;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

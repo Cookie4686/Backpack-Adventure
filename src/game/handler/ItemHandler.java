@@ -31,8 +31,7 @@ public class ItemHandler {
 			startY = event.getSceneY() - item.getTranslateY();
 		} else {
 			if(item instanceof Clickable) {
-				Clickable c = (Clickable) item;
-				c.activatePerClick();
+				((Clickable)item).activatePerClick();
 			}
 		}
 	}
