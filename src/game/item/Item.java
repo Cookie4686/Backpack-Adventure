@@ -15,6 +15,7 @@ public abstract class Item extends Pane {
 	// used for dragging, rotating
 	private double diffX, diffY;
 	private ImageView imageView;
+
 	private boolean isInBackpack;
 
 	public Item(String name, String detail, int height) {

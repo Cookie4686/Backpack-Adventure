@@ -22,10 +22,12 @@ public class GameHeader extends HBox implements ReRenderable {
 		Region region = new Region();
 		backpackButton = new Button("Toggle Backpack");
 		backpackButton.setOnAction(event -> {
-			if (Game.getInstance().isBackpack()) {
-				Game.getInstance().useMap();
-			} else {
-				Game.getInstance().useBackpack();
+			if (!GameLogic.isFighting()) {
+				if (GameTop.getInstance().isBackpack()) {
+					GameTop.getInstance().useMap();
+				} else {
+					GameTop.getInstance().useBackpack();
+				}
 			}
 		});
 		setPadding(new Insets(5, 10, 5, 10));

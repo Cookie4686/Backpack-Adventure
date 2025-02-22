@@ -26,7 +26,7 @@ public class Main extends Application {
 		root.prefHeightProperty().bind(primaryStage.heightProperty());
 		// root.setPrefSize(600, 600);
 		MenuScene.use();
-		Scene scene = new Scene(root, 400, 300);
+		Scene scene = new Scene(root, 800, 600);
 		scene.setOnKeyPressed(event -> DraggableHandler.handleSceneKeyPress(event));
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Backpack");

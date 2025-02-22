@@ -103,12 +103,10 @@ public class DraggableHandler {
 	}
 
 	private static void calcValues() {
-		diffX = currentItem.getRotation() == ItemRotation.VERTICAL ? diffX = currentItem.getDiffX() : 0;
-		maxWidth = Game.getInstance().getGamePane().getWidth() - currentItem.getWidth();
-		maxWidth += diffX;
-		diffY = currentItem.getRotation() == ItemRotation.HORIZONTAL ? diffY = currentItem.getDiffY() : 0;
-		maxHeight = Game.getInstance().getGamePane().getHeight() - currentItem.getHeight();
-		maxHeight += diffY;
+		diffX = currentItem.getRotation() == ItemRotation.VERTICAL ? currentItem.getDiffX() : 0;
+		maxWidth = Game.getInstance().getGamePane().getWidth() - currentItem.getWidth() + diffX;
+		diffY = currentItem.getRotation() == ItemRotation.HORIZONTAL ? currentItem.getDiffY() : 0;
+		maxHeight = Game.getInstance().getGamePane().getHeight() - currentItem.getHeight() + diffY;
 		slotPaneX = Game.getX(Backpack.getInstance());
 		slotPaneY = Game.getY(Backpack.getInstance());
 	}
