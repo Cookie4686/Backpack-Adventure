@@ -12,6 +12,7 @@ public abstract class Being extends BorderPane {
 
 	public Being() {
 		super();
+		allEffect = new ArrayList<Effect>();
 	}
 
 	public int getHp() {

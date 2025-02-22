@@ -8,6 +8,7 @@ import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.item.Item;
 import game.util.ItemRotation;
+import interfaces.Clickable;
 import interfaces.ReStatable;
 import interfaces.StatUpdatable;
 import javafx.scene.input.KeyCode;
@@ -28,6 +29,11 @@ public class ItemHandler {
 			calcValues();
 			startX = event.getSceneX() - item.getTranslateX();
 			startY = event.getSceneY() - item.getTranslateY();
+		} else {
+			if(item instanceof Clickable) {
+				Clickable c = (Clickable) item;
+				c.activatePerClick();
+			}
 		}
 	}
 

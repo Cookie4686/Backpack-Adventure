@@ -69,6 +69,7 @@ public class Entity extends Being implements TurnActivable, ReRenderable {
 			if(FightLogic.getInstance().getEntities().size() == 0) {
 				GameLogic.getInstance().endFight();
 			}
+			FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		}
 		return damaged;
 	}
