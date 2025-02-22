@@ -8,6 +8,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import logic.FightLogic;
 
 public class Slot extends Pane implements ReRenderable {
 	public final static int SIZE = 48;
@@ -21,7 +22,7 @@ public class Slot extends Pane implements ReRenderable {
 		isUnlocked = false;
 		item = null;
 		setOnMouseClicked(event -> {
-			isUnlocked = !isUnlocked;
+			if (!FightLogic.getInstance().isInFight()) isUnlocked = !isUnlocked;
 			render();
 		});
 	}

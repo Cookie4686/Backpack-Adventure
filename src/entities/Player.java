@@ -2,10 +2,14 @@ package entities;
 
 import java.util.ArrayList;
 
+import game.GameBottom;
 import game.util.Effect;
+import game.util.EffectType;
 import interfaces.ReRenderable;
 import interfaces.TurnActivable;
 import javafx.scene.text.Text;
+import logic.FightLogic;
+import logic.GameLogic;
 
 public class Player extends Being implements TurnActivable, ReRenderable{
 	private static Player instance = null;
@@ -34,7 +38,29 @@ public class Player extends Being implements TurnActivable, ReRenderable{
 		text = new Text();
 		setCenter(text);
 	}
-
+	
+	public int takeDamage(int damaged) {
+		if (FightLogic.findEffectAndDecrease(allEffect, EffectType.DODGE, 1)) {
+			return 0;
+		}
+		if (Player.getInstance().getShield() >= damaged) {
+			Player.getInstance().setShield(Player.getInstance().getShield() - damaged);
+			damaged = 0;
+		} else {
+			damaged -= Player.getInstance().getShield();
+			Player.getInstance().setShield(0);
+			if (Player.getInstance().getHp() - damaged < 0) {
+				damaged = Player.getInstance().getHp();
+			}
+			Player.getInstance().setHp(Player.getInstance().getHp() - damaged);
+		}
+		if(Player.getInstance().getHp() == 0) {
+			GameLogic.getInstance().gameOver();
+		}
+		
+		return damaged;
+	}
+	
 	@Override
 	public void render() {
 		text.setText(String.format("Hp: %s/%s, Df: %s, Energy: %s", hp, maxHp, shield, energy));

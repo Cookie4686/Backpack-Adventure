@@ -6,6 +6,8 @@ import java.util.Random;
 import entities.Being;
 import entities.Entity;
 import entities.Player;
+import game.Game;
+import game.GameBottom;
 import game.item.Item;
 import game.util.Effect;
 import game.util.EffectType;
@@ -28,8 +30,10 @@ public class FightLogic {
 		for (Entity en : entities) {
 			entityTurn(en);
 		}
-		// check game over
 		isPTurn = true;
+		if(entities.size() == 0) {
+			GameLogic.getInstance().endFight();
+		}
 		playerTurn();
 	}
 
@@ -37,6 +41,11 @@ public class FightLogic {
 		for (Effect ef : e.getAllEffect()) {
 			Platform.runLater(() -> {
 				ActivateEffect(ef, e);
+				if(e.getHp() == 0) {
+					GameBottom.getInstance().getEnemyBox().getChildren().remove(e);
+					entities.remove(e);
+					return;
+				}
 			});
 		}
 		e.activatePerTurn();
@@ -45,6 +54,9 @@ public class FightLogic {
 		Random rand = new Random();
 		Platform.runLater(() -> {
 			useEffect(e.getNextTurn(), e);
+			if(Player.getInstance().getHp() == 0) {
+				GameLogic.getInstance().gameOver();
+			}
 			e.setNextTurn(e.getAllAttributes().get(rand.nextInt(e.getAllAttributes().size())));
 		});
 	}
@@ -54,9 +66,11 @@ public class FightLogic {
 		for (Effect ef : Player.getInstance().getAllEffect()) {
 			Platform.runLater(() -> {
 				ActivateEffect(ef, (Being) (Player.getInstance()));
+				if(Player.getInstance().getHp() == 0) {
+					GameLogic.getInstance().gameOver();
+				}
 			});
 		}
-		// check game over
 		for (Item item : GameLogic.getInstance().getInventory()) {
 			if (item instanceof TurnActivable) {
 				TurnActivable i = (TurnActivable) item;

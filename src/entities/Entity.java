@@ -3,13 +3,17 @@ package entities;
 import java.util.ArrayList;
 import java.util.Random;
 
+import game.GameBottom;
 import game.handler.EntityHandler;
 import game.util.Effect;
+import game.util.EffectType;
 import interfaces.ReRenderable;
 import interfaces.TurnActivable;
 import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import logic.FightLogic;
+import logic.GameLogic;
 
 public class Entity extends Being implements TurnActivable, ReRenderable {
 	protected int xp, dangerLV;
@@ -43,7 +47,32 @@ public class Entity extends Being implements TurnActivable, ReRenderable {
 		setCenter(text);
 		setBottom(button);
 	}
-
+	
+	public int takeDamage(int damaged) {
+		if (FightLogic.findEffectAndDecrease(allEffect, EffectType.DODGE, 1)) {
+			return 0;
+		}
+		if (this.getShield() >= damaged) {
+			this.setShield(this.getShield() - damaged);
+			damaged = 0;
+		} else {
+			damaged -= this.getShield();
+			this.setShield(0);
+			if (this.getHp() - damaged < 0) {
+				damaged = this.getHp();
+			}
+			this.setHp(this.getHp() - damaged);
+		}
+		if(this.getHp() == 0) {
+			GameBottom.getInstance().getEnemyBox().getChildren().remove(this);
+			FightLogic.getInstance().getEntities().remove(this);
+			if(FightLogic.getInstance().getEntities().size() == 0) {
+				GameLogic.getInstance().endFight();
+			}
+		}
+		return damaged;
+	}
+	
 	@Override
 	public void render() {
 		text.setText(String.format("Hp: %s/%s, Df: %s", hp, maxHp, shield));

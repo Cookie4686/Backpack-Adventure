@@ -53,4 +53,9 @@ public class GameBottom extends HBox implements ReRenderable {
 		}
 		return instance;
 	}
+
+	public HBox getEnemyBox() {
+		return enemyBox;
+	}
+	
 }
