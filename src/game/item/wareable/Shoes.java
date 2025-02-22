@@ -22,7 +22,9 @@ public class Shoes extends Wareable {
 	public void statUpdate() {
 		super.statUpdate();
 		
-		//need to be lowest otherwise no bonus shield
-		//setShield(getInitialShield() + (emptyspace()  * increaseShield));
+		//TODO: need to be lowest otherwise no bonus shield
+		
+		//Set bonus shield
+		setShield(getShield() + (emptySpace() * getIncreaseShield()));
 	}
 }

@@ -1,9 +1,11 @@
 package game.item.consumable;
 
+import entities.Player;
 import game.item.Item;
 import game.util.Effect;
 import game.util.EffectType;
 import interfaces.Clickable;
+import logic.FightLogic;
 
 public class Consumable extends Item implements Clickable {
 	final private Effect effect;
@@ -26,9 +28,10 @@ public class Consumable extends Item implements Clickable {
 	
 	@Override
 	public boolean isEnoughEnergy() {
-		//TODO: if Player dont have enough energy return false
+		if (Player.getInstance().getEnergy()<costActivate) return false;
 		return true;
 	}
+	
 	
 	@Override
 	public void activatePerClick() {
@@ -37,13 +40,13 @@ public class Consumable extends Item implements Clickable {
 		setDurability(getDurability()-1);
 		
 		if (effect.getType()==EffectType.HEAL) {
-			//TODO: heal self by effectPower
+			Player.getInstance().setHp(Player.getInstance().getHp()+effect.getAmount());
 		}
 		else if (effect.getType()==EffectType.ENERGY) {
-			//TODO: increase enegy by effectPower
+			Player.getInstance().setEnergy(Player.getInstance().getEnergy()+effect.getAmount());
 		}
 		else if (effect.getType()==EffectType.THORN || effect.getType()==EffectType.ANGER || effect.getType()==EffectType.DODGE) {
-			//TODO: add effectType to self by effectPower amount
+			FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
 		}
 		
 

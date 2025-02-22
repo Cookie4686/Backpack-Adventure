@@ -1,20 +1,48 @@
 package game.item.weapon;
 
+import java.util.ArrayList;
+
+import entities.Player;
+import game.util.Effect;
+import logic.FightLogic;
+
 public class ManaWeapon extends Weapon{
-	public ManaWeapon(String name, String detail, int damage, int costActivate, int width, int height) {
+	final private ArrayList<Effect> effects;
+	
+	public ManaWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int width, int height) {
 		super(name, detail, damage, costActivate, width, height);
+		this.effects = effects;
 	}
 
-	public ManaWeapon(String name, String detail, int damage, int costActivate, int width) {
+	public ManaWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int width) {
 		super(name, detail, damage, costActivate, width);
+		this.effects = effects;
+	}
+	
+	@Override
+	public boolean isEnoughEnergy() {
+		if (Player.getInstance().getMana() < getCostActivate()) return false;
+		return true;
 	}
 	
 	@Override
 	public void activatePerClick() {
-		// TODO: decrease mana point in player by costActivate
+		if (!isEnoughEnergy()) return;
 		
-		//TODO: damage enemy getDamage() amount
-		//TODO: add effectType to enemy with effectPower amount;
+		//decrease mana point in player by costActivate
+		Player.getInstance().setMana(Player.getInstance().getMana() - getCostActivate());
+		
+		//damage enemy getDamage() amount
+		FightLogic.getInstance().getTarget().takeDamage(getDamage());
+		
+		//Add effectType to enemy with effectPower amount;
+		for (Effect effect:effects) {
+			FightLogic.findEffectAndAdd(FightLogic.getInstance().getTarget().getAllEffect(), effect.getType(), effect.getAmount());
+		}
 	}
 	
+	
+	public ArrayList<Effect> getEffects() {
+		return effects;
+	}
 }

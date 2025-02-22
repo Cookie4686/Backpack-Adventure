@@ -1,5 +1,6 @@
 package game.item.relic;
 
+import entities.Player;
 import game.util.Effect;
 import interfaces.Clickable;
 
@@ -17,7 +18,7 @@ public class ActiveRelic extends Relic implements Clickable {
 	
 	@Override
 	public boolean isEnoughEnergy() {
-		//TODO: if Player dont have enough energy return false
+		if (Player.getInstance().getEnergy()<costActivate) return false;
 		return true;
 	}
 	
@@ -25,7 +26,8 @@ public class ActiveRelic extends Relic implements Clickable {
 	public void activatePerClick() {
 		if (!isEnoughEnergy()) return;
 		
-		//TODO: decrease player Energy by costActivate
+		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
+		
 		super.activate();
 	}
 

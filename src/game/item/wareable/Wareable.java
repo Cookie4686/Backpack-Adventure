@@ -2,13 +2,16 @@ package game.item.wareable;
 
 import java.util.ArrayList;
 
+import entities.Player;
 import game.item.Item;
 import game.util.Effect;
 import game.util.EffectType;
+import interfaces.ReStatable;
 import interfaces.StatUpdatable;
 import interfaces.TurnActivable;
+import logic.FightLogic;
 
-public abstract class Wareable extends Item implements TurnActivable, StatUpdatable{
+public abstract class Wareable extends Item implements TurnActivable, StatUpdatable, ReStatable{
 	final private ArrayList<Effect> effects;
 	final private int initialShield;
 	private int shield;
@@ -31,19 +34,24 @@ public abstract class Wareable extends Item implements TurnActivable, StatUpdata
 	}
 	
 	@Override
+	public void reStatBeforeUpdate() {
+		setShield(initialShield);
+	}
+	
+	@Override
 	public void statUpdate() {
 		for (Effect effect:effects) {
 			if (effect.getType()==EffectType.LUCK) {
-				//TODO: increase luck in player by effect power
-			}
-			else if (effect.getType()==EffectType.DODGE) {
-				//TODO: increase dodge in player by effect power
+				Player.getInstance().setLuck(Player.getInstance().getLuck()+effect.getAmount());
 			}
 			else if (effect.getType()==EffectType.HEAL) {
-				//TODO: increase health in player by effect power
+				Player.getInstance().setMaxHp(Player.getInstance().getMaxHp()+effect.getAmount());
 			}
 			else if (effect.getType()==EffectType.ENERGY) {
-				//TODO: increase energy in player by effect power
+				Player.getInstance().setMaxEnergy(Player.getInstance().getMaxEnergy()+effect.getAmount());
+			}
+			else if (effect.getType()==EffectType.DODGE) {
+				Player.getInstance().setDodge(Player.getInstance().getDodge()+effect.getAmount());;
 			}
 		}
 	}
@@ -52,11 +60,11 @@ public abstract class Wareable extends Item implements TurnActivable, StatUpdata
 	public void activatePerTurn() {
 		for (Effect effect:effects) {
 			if (effect.getType()!=EffectType.LUCK && effect.getType()!=EffectType.DODGE && effect.getType()!=EffectType.HEAL && effect.getType()!=EffectType.ENERGY) {
-				// TODO: add effectType and effectPower to PLAYER
+				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
 			}
-			
 		}
-		// TODO: add Shield to Player
+		
+		Player.getInstance().setShield(Player.getInstance().getShield()+getShield());
 	}
 	
 	

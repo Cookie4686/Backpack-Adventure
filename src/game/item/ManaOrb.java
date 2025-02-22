@@ -1,5 +1,6 @@
 package game.item;
 
+import entities.Player;
 import interfaces.TurnActivable;
 
 public class ManaOrb extends Item implements TurnActivable{
@@ -17,7 +18,7 @@ public class ManaOrb extends Item implements TurnActivable{
 	
 	@Override
 	public void activatePerTurn() {
-		// TODO: Add Player max mana by amount
+		Player.getInstance().setMaxMana(Player.getInstance().getMaxMana() + amount);
 	}
 	
 	

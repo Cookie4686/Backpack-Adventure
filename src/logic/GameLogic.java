@@ -30,6 +30,7 @@ public class GameLogic {
 	}
 	
 	public void endFight() {
+		FightLogic.getInstance().setInFight(false);
 		
 	}
 
