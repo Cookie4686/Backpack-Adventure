@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import logic.FightLogic;
 
 public class GameHeader extends HBox implements ReRenderable {
 	private static GameHeader instance;
@@ -26,7 +27,7 @@ public class GameHeader extends HBox implements ReRenderable {
 		Region region = new Region();
 		backpackButton = new Button("Toggle Backpack");
 		backpackButton.setOnAction(event -> {
-			if (!GameLogic.isFighting()) {
+			if (!FightLogic.getInstance().isInFight()) {
 				if (GameTop.getInstance().isBackpack()) {
 					GameTop.getInstance().useMap();
 				} else {
@@ -44,7 +45,8 @@ public class GameHeader extends HBox implements ReRenderable {
 	@Override
 	public void render() {
 		floorText.setText("Floor: -");
-		experienceText.setText(String.format("Exp: %s/%s", Player.getXp(), Player.getMaxXp()));
+		experienceText
+				.setText(String.format("Exp: %s/%s", Player.getInstance().getXp(), Player.getInstance().getMaxXp()));
 	}
 
 	public static GameHeader getInstance() {

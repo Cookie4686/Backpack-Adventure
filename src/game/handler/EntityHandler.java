@@ -1,11 +1,10 @@
 package game.handler;
 
 import entities.Entity;
-import game.GameLogic;
+import logic.FightLogic;
 
 public class EntityHandler {
 	public static void handleMouseClicked(Entity entity) {
-		GameLogic.setSelectedEntity(entity);
-
+		FightLogic.getInstance().setTarget(entity);
 	}
 }

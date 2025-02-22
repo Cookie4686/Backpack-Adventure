@@ -3,21 +3,29 @@ package entities;
 import java.util.ArrayList;
 import java.util.Random;
 
+import game.handler.EntityHandler;
 import game.util.Effect;
+import interfaces.ReRenderable;
 import interfaces.TurnActivable;
 import javafx.application.Platform;
+import javafx.scene.control.Button;
+import javafx.scene.text.Text;
 
-public class Entity extends Being implements TurnActivable{
+public class Entity extends Being implements TurnActivable, ReRenderable {
 	protected int xp, dangerLV;
 	protected boolean stunned;
 	protected ArrayList<String> pic;
 	protected ArrayList<Effect> allAttributes;
 	protected Effect nextTurn;
 
-	public Entity(String name, ArrayList<String> pic, int maxHpLb, int xpLb, int dangerLV, int dodge, ArrayList<Effect> allAttributes) {
+	// will change later
+	private Text text;
+
+	public Entity(String name, ArrayList<String> pic, int maxHpLb, int xpLb, int dangerLV, int dodge,
+			ArrayList<Effect> allAttributes) {
 		super();
-		int maxHpUb = (int) (maxHpLb*1.5);
-		int xpUb = (int) (xpLb*1.5);
+		int maxHpUb = (int) (maxHpLb * 1.5);
+		int xpUb = (int) (xpLb * 1.5);
 		this.name = name;
 		Random rand = new Random();
 		this.hp = this.maxHp = rand.nextInt((maxHpUb - maxHpLb) + 1) + maxHpLb;
@@ -28,6 +36,17 @@ public class Entity extends Being implements TurnActivable{
 		this.dangerLV = dangerLV;
 		this.dodge = 0;
 		this.stunned = false;
+
+		text = new Text();
+		Button button = new Button("Select");
+		button.setOnMouseClicked(event -> EntityHandler.handleMouseClicked(this));
+		setCenter(text);
+		setBottom(button);
+	}
+
+	@Override
+	public void render() {
+		text.setText(String.format("Hp: %s/%s, Df: %s", hp, maxHp, shield));
 	}
 
 	public ArrayList<String> getPic() {
@@ -57,11 +76,11 @@ public class Entity extends Being implements TurnActivable{
 	public int getDangerLV() {
 		return dangerLV;
 	}
-	
+
 	public void setDangerLV(int dangerLV) {
 		this.dangerLV = dangerLV;
 	}
-	
+
 	public Effect getNextTurn() {
 		return nextTurn;
 	}
@@ -69,7 +88,7 @@ public class Entity extends Being implements TurnActivable{
 	public void setNextTurn(Effect nextTurn) {
 		this.nextTurn = nextTurn;
 	}
-	
+
 	public boolean isStunned() {
 		return stunned;
 	}
@@ -86,8 +105,8 @@ public class Entity extends Being implements TurnActivable{
 
 	public void activatePerClick() {
 		// TODO Auto-generated method stub
-		Platform.runLater(()->{
-			//add target frame on top
+		Platform.runLater(() -> {
+			// add target frame on top
 		});
 	}
 }

@@ -17,8 +17,6 @@ public abstract class Item extends Pane {
 	private double diffX, diffY;
 	private ImageView imageView;
 
-	private boolean isInBackpack;
-
 	public Item(String name, String detail, int height) {
 		super();
 		this.name = name;
@@ -61,12 +59,12 @@ public abstract class Item extends Pane {
 		// TODO: show toolTip on hover
 		// imageView.setOnMouseEntered(event -> {});
 	}
-	
+
 	public void delete() {
-		//TODO: Delete this item
-			
+		// TODO: Delete this item
+
 		if (this instanceof FoodWithContainer) {
-			//TODO: replace this item with item container
+			// TODO: replace this item with item container
 		}
 	}
 
@@ -114,14 +112,6 @@ public abstract class Item extends Pane {
 					: ItemRotation.DIAGONAL_LEFT;
 		}
 		return width > height ? ItemRotation.HORIZONTAL : ItemRotation.VERTICAL;
-	}
-
-	public boolean isInBackpack() {
-		return isInBackpack;
-	}
-
-	public void setInBackpack(boolean isInBackpack) {
-		this.isInBackpack = isInBackpack;
 	}
 
 	public String getName() {

@@ -3,7 +3,6 @@ package game.handler;
 import java.util.Random;
 
 import game.Game;
-import game.GameLogic;
 import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.item.Item;
@@ -11,6 +10,7 @@ import game.util.ItemRotation;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import logic.FightLogic;
 
 public class ItemHandler {
 	public static Item currentItem;
@@ -19,7 +19,7 @@ public class ItemHandler {
 	private static int gridX, gridY;
 
 	public static void handleMousePress(MouseEvent event, Item item) {
-		if (!GameLogic.isFighting()) {
+		if (!FightLogic.getInstance().isInFight()) {
 			currentItem = item;
 			calcValues();
 			startX = event.getSceneX() - item.getTranslateX();
@@ -28,7 +28,7 @@ public class ItemHandler {
 	}
 
 	public static void handleMouseDrag(MouseEvent event) {
-		if (!GameLogic.isFighting()) {
+		if (!FightLogic.getInstance().isInFight()) {
 			setTranslateNoOffScreenX(event.getSceneX() - startX);
 			setTranslateNoOffScreenY(event.getSceneY() - startY);
 			hightlightGrid();
@@ -36,14 +36,14 @@ public class ItemHandler {
 	}
 
 	public static void handleMouseRelease() {
-		if (!GameLogic.isFighting()) {
+		if (!FightLogic.getInstance().isInFight()) {
 			placeItem();
 			currentItem = null;
 		}
 	}
 
 	public static void handleSceneKeyPress(KeyEvent event) {
-		if (!GameLogic.isFighting()) {
+		if (!FightLogic.getInstance().isInFight()) {
 			if (event.getCode() == KeyCode.R) {
 				if (currentItem != null) {
 					rotateItem();

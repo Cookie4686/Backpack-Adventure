@@ -13,6 +13,8 @@ public class GameTop extends HBox {
 	public GameTop() {
 		super();
 		setAlignment(Pos.TOP_CENTER);
+		isBackpack = true;
+		getChildren().setAll(Backpack.getInstance());
 	}
 
 	public void useBackpack() {

@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import logic.GameLogic;
 
 public class Game extends StackPane {
 	private static Game instance;
@@ -39,21 +40,11 @@ public class Game extends StackPane {
 		return items;
 	}
 
-	public ArrayList<Item> getItemsInBackpack() {
-		ArrayList<Item> items = new ArrayList<Item>();
-		for (Node node : getChildren()) {
-			if (node instanceof Item && ((Item) node).isInBackpack()) {
-				items.add((Item) node);
-			}
-		}
-		return items;
-	}
-
 	public void clearFloatingItem() {
 		Iterator<Node> iterator = getChildren().iterator();
 		while (iterator.hasNext()) {
 			Node node = iterator.next();
-			if (node instanceof Item && !((Item) node).isInBackpack()) {
+			if (node instanceof Item && !GameLogic.getInstance().getInventory().contains((Item) node)) {
 				iterator.remove();
 			}
 		}
