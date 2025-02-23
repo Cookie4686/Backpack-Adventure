@@ -4,6 +4,7 @@ import entities.Entity;
 import entities.Player;
 import game.util.Effect;
 import game.util.EffectType;
+import game.util.ItemTier;
 import interfaces.Clickable;
 import logic.FightLogic;
 
@@ -12,15 +13,15 @@ public class DamageItem extends Item implements Clickable {
 	final private Effect effect;
 	private int costActivate;
 	
-	public DamageItem(String name, String detail, Effect effect, int costActivate, boolean isAoE, int width, int height) {
-		super(name, detail, width, height);
+	public DamageItem(String name, String detail, Effect effect, int costActivate, boolean isAoE, int width, int height, ItemTier tier) {
+		super(name, detail, width, height, tier);
 		this.effect = effect;
 		this.AoE = isAoE;
 		setCostActivate(costActivate);
 	}
 
-	public DamageItem(String name, String detail, Effect effect, int costActivate, boolean isAoE, int height) {
-		super(name, detail, height);
+	public DamageItem(String name, String detail, Effect effect, int costActivate, boolean isAoE, int height, ItemTier tier) {
+		super(name, detail, height, tier);
 		this.effect = effect;
 		this.AoE = isAoE;
 		setCostActivate(costActivate);

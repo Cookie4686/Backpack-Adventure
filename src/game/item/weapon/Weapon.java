@@ -2,30 +2,31 @@ package game.item.weapon;
 
 import entities.Player;
 import game.item.Item;
+import game.util.ItemTier;
 import interfaces.Clickable;
 import interfaces.ReStatable;
 import logic.FightLogic;
 
 public class Weapon extends Item implements Clickable, ReStatable{
-	final private int initdamage;
+	final private int initDamage;
 	private int damage;
 	private int costActivate;
 	
-	public Weapon(String name, String detail, int initdamage, int costActivate, int width) {
-		super(name, detail, width);
-		setDamage(initdamage);
-		this.initdamage = initdamage;
+	public Weapon(String name, String detail, int initDamage, int costActivate, int width, ItemTier tier) {
+		super(name, detail, width, tier);
+		setDamage(initDamage);
+		this.initDamage = initDamage;
 	}
 
-	public Weapon(String name, String detail, int initdamage, int costActivate, int width, int height) {
-		super(name, detail, width, height);
-		setDamage(initdamage);
-		this.initdamage = initdamage;
+	public Weapon(String name, String detail, int initDamage, int costActivate, int width, int height, ItemTier tier) {
+		super(name, detail, width, height, tier);
+		setDamage(initDamage);
+		this.initDamage = initDamage;
 	}
 	
 	@Override
 	public void reStatBeforeUpdate() {
-		setDamage(initdamage);
+		setDamage(initDamage);
 	}
 	
 	@Override
@@ -45,11 +46,28 @@ public class Weapon extends Item implements Clickable, ReStatable{
 		FightLogic.getInstance().getTarget().takeDamage(damage);
 	}
 	
+	//For print only
+	public String getProvide() {
+		String text=getName()+" is "+getTierName()+" item\n"
+				+ "On use :\n"
+				+ "Damage target : "+initDamage;
+		if (damage>initDamage) text=text+" + "+(damage-initDamage)+"\n";
+		else if (damage<initDamage) text=text+" - "+(initDamage-damage)+"\n";
+		
+		return text;
+	}
+	
+	@Override
+	public String toString() {
+		
+		return getProvide()+"\nCost "+costActivate+" energy per click";
+	}
 	
 	
 	//Getter & Setter
-	public int getInitdamage() {
-		return initdamage;
+
+	public int getInitDamage() {
+		return initDamage;
 	}
 
 	public int getDamage() {

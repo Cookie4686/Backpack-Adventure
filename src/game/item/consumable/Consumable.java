@@ -4,6 +4,7 @@ import entities.Player;
 import game.item.Item;
 import game.util.Effect;
 import game.util.EffectType;
+import game.util.ItemTier;
 import interfaces.Clickable;
 import logic.FightLogic;
 
@@ -12,15 +13,15 @@ public class Consumable extends Item implements Clickable {
 	private int costActivate;
 	private int durability;
 
-	public Consumable(String name, String detail, int durability, Effect effect, int costActivate, int width, int height) {
-		super(name, detail, width, height);
+	public Consumable(String name, String detail, int durability, Effect effect, int costActivate, int width, int height, ItemTier tier) {
+		super(name, detail, width, height, tier);
 		this.effect = effect;
 		setDurability(durability);
 		setCostActivate(costActivate);
 	}
 
-	public Consumable(String name, String detail, int durability, Effect effect, int costActivate, int height) {
-		super(name, detail, height);
+	public Consumable(String name, String detail, int durability, Effect effect, int costActivate, int height, ItemTier tier) {
+		super(name, detail, height, tier);
 		this.effect = effect;
 		setDurability(durability);
 		setCostActivate(costActivate);

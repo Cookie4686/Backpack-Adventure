@@ -31,8 +31,7 @@ public class ItemHandler {
 			startY = event.getSceneY() - item.getTranslateY();
 		} else {
 			if(item instanceof Clickable) {
-				Clickable c = (Clickable) item;
-				c.activatePerClick();
+				((Clickable)item).activatePerClick();
 			}
 		}
 	}
@@ -41,12 +40,14 @@ public class ItemHandler {
 		if (!FightLogic.getInstance().isInFight()) {
 			setTranslateNoOffScreenX(event.getSceneX() - startX);
 			setTranslateNoOffScreenY(event.getSceneY() - startY);
+			calcGrid();
 			hightlightGrid();
 		}
 	}
 
 	public static void handleMouseRelease() {
 		if (!FightLogic.getInstance().isInFight()) {
+			calcGrid();
 			placeItem();
 			currentItem = null;
 		}
@@ -63,21 +64,13 @@ public class ItemHandler {
 	}
 
 	private static void hightlightGrid() {
-		calcGrid();
 		Backpack.getInstance().render();
 		Backpack.getInstance().hightlight(gridX, gridY, currentItem);
 	}
 
 	private static void placeItem() {
-		calcGrid();
-		double x = Slot.SIZE * gridX - currentItem.getDiffX();
-		double y = Slot.SIZE * gridY - currentItem.getDiffY();
-		if (currentItem.getRotation() == ItemRotation.DIAGONAL_RIGHT) {
-			x -= currentItem.getWidth() - Slot.SIZE;
-		}
 		if (Backpack.getInstance().placeItem(gridX, gridY, currentItem)) {
-			setTranslateNoOffScreenX(x + slotPaneX);
-			setTranslateNoOffScreenY(y + slotPaneY);
+			setPlaceItemPostion();
 		}
 		
 		Player.getInstance().reStatBeforeUpdate();
@@ -121,6 +114,16 @@ public class ItemHandler {
 		setTranslateNoOffScreenY(y);
 		currentItem = temp;
 		calcValues();
+	}
+
+	private static void setPlaceItemPostion() {
+		double x = Slot.SIZE * gridX - currentItem.getDiffX();
+		double y = Slot.SIZE * gridY - currentItem.getDiffY();
+		if (currentItem.getRotation() == ItemRotation.DIAGONAL_RIGHT) {
+			x -= currentItem.getWidth() - Slot.SIZE;
+		}
+		setTranslateNoOffScreenX(x + slotPaneX);
+		setTranslateNoOffScreenY(y + slotPaneY);
 	}
 
 	private static void calcGrid() {

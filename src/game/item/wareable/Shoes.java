@@ -3,15 +3,13 @@ package game.item.wareable;
 import java.util.ArrayList;
 
 import game.util.Effect;
+import game.util.ItemTier;
 
 public class Shoes extends Wareable {
-	public Shoes(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height) {
-		super(name, detail, initialShield, increaseShield, effects, width, height);
+	public Shoes(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height, ItemTier tier) {
+		super(name, detail, initialShield, increaseShield, effects, width, height, tier);
 	}
 
-	public Shoes(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width) {
-		super(name, detail, initialShield, increaseShield, effects, width);
-	}
 	
 	private int emptySpace() {	
 		//return number of empty space above

@@ -1,13 +1,14 @@
 package game.item;
 
 import entities.Player;
+import game.util.ItemTier;
 import interfaces.StatUpdatable;
 
 public class Coins extends Item implements StatUpdatable{
 	private int amount;
 
-	public Coins(String name, String detail, int amount) {
-		super(name, detail, 1, 1);
+	public Coins(String name, String detail, int amount, ItemTier tier) {
+		super(name, detail, 1, 1, tier);
 	}
 	
 	@Override
