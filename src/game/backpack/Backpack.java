@@ -2,8 +2,10 @@ package game.backpack;
 
 import java.util.ArrayList;
 
+import game.Game;
 import game.handler.ItemHandler;
 import game.item.Item;
+import game.item.consumable.Potion;
 import game.util.ItemPostion;
 import game.util.ItemRotation;
 import interfaces.ReRenderable;
