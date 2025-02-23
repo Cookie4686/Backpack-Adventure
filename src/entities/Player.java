@@ -15,7 +15,7 @@ import logic.GameLogic;
 
 public class Player extends Being implements TurnActivable, ReRenderable, ReStatable {
 	private static Player instance = null;
-	private int xp, maxXp, energy, maxEnergy, mana, maxMana, money, luck;
+	private int xp, maxXp, energy, maxEnergy, mana, maxMana, coins, luck;
 	private ArrayList<String> pic;
 
 	private Text text;
@@ -33,7 +33,7 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		this.mana = 0;
 		this.maxMana = 0;
 		this.dodge = 0;
-		this.money = 0;
+		this.coins = 0;
 		this.pic = null;
 		this.luck = 0;
 		this.allEffect = new ArrayList<Effect>();
@@ -79,8 +79,7 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		this.maxHp = 100;
 		this.maxEnergy = 3;
 		this.maxMana = 0;
-		this.money = 0;
-		this.luck = 0;
+		this.coins = 0;
 	}
 	
 	public static Player getInstance() {
@@ -147,12 +146,12 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		this.maxEnergy = maxEnergy < 0 ? 0 : maxEnergy;
 	}
 
-	public int getMoney() {
-		return money;
+	public int getCoins() {
+		return coins;
 	}
 
-	public void setMoney(int money) {
-		this.money = money;
+	public void setCoins(int coins) {
+		this.coins = coins;
 	}
 	
 	public int getLuck() {

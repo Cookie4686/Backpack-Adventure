@@ -33,7 +33,7 @@ public class Effect {
 			case DODGE: return "DODGE";
 			case ENERGY: return "ENERGY";
 			case FIRE: return "FIRE";
-			case HEAL: return "HEAL";
+			case HEAL: return "Max";
 			case LUCK: return "LUCK";
 			case POISON: return "POISON";
 			case REGEN: return "REGEN";

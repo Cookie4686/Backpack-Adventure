@@ -24,6 +24,12 @@ public class Potion extends Consumable{
 		return false;
 	}
 
+	@Override
+	public String toString() {
+		return getProvide()+"This item is Stackable! (At most "+limit+")"
+				+ "\nCost "+getCostActivate()+" ENERGY per click";
+	}
+	
 	public int getLimit() {
 		return limit;
 	}

@@ -13,9 +13,18 @@ public class Coins extends Item implements StatUpdatable{
 	
 	@Override
 	public void statUpdate() {
-		Player.getInstance().setMoney(amount);
+		Player.getInstance().setCoins(amount);
 	}
 	
+	
+	@Override
+	public String toString() {
+		return getName()+" is "+getTierName()+" ManaOrb\n"
+				+ "Provide :\n"
+				+ "Add "+amount+" COINS to Player\n"
+				+ "This item is Stackable!"
+				+ "Activate when in backpack";
+	}
 	
 	public int getAmount() {
 		return amount;

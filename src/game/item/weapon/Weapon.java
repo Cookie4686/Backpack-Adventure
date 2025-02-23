@@ -48,18 +48,17 @@ public class Weapon extends Item implements Clickable, ReStatable{
 	
 	//For print only
 	public String getProvide() {
-		String text=getName()+" is "+getTierName()+" item\n"
-				+ "On use :\n"
+		String text=getName()+" is "+getTierName()+" weapon\n"
+				+ "When click :\n"
 				+ "Damage target : "+initDamage;
-		if (damage>initDamage) text=text+" + "+(damage-initDamage)+"\n";
-		else if (damage<initDamage) text=text+" - "+(initDamage-damage)+"\n";
+		if (damage>initDamage) text=text+" + "+(damage-initDamage);
+		else if (damage<initDamage) text=text+" - "+(initDamage-damage);
 		
-		return text;
+		return text+" DAMAGE\n";
 	}
 	
 	@Override
 	public String toString() {
-		
 		return getProvide()+"\nCost "+costActivate+" energy per click";
 	}
 	
