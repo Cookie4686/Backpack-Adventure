@@ -44,7 +44,7 @@ public abstract class Wareable extends Item implements TurnActivable, StatUpdata
 				Player.getInstance().setMaxEnergy(Player.getInstance().getMaxEnergy()+effect.getAmount());
 			}
 			else if (effect.getType()==EffectType.DODGE) {
-				Player.getInstance().setDodge(Player.getInstance().getDodge()+effect.getAmount());;
+				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), EffectType.DODGE, effect.getAmount());
 			}
 		}
 	}

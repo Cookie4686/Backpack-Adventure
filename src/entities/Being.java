@@ -7,7 +7,7 @@ import javafx.scene.layout.BorderPane;
 
 public abstract class Being extends BorderPane {
 	protected String name;
-	protected int hp, maxHp, shield, dodge;
+	protected int hp, maxHp, shield;
 	protected ArrayList<Effect> allEffect;
 
 	public Being() {
@@ -40,14 +40,6 @@ public abstract class Being extends BorderPane {
 
 	public void setAllEffect(ArrayList<Effect> allEffect) {
 		this.allEffect = allEffect;
-	}
-
-	public int getDodge() {
-		return dodge;
-	}
-
-	public void setDodge(int dodge) {
-		this.dodge = dodge;
 	}
 
 	public int getMaxHp() {

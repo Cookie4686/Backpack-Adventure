@@ -8,6 +8,7 @@ import game.util.EffectType;
 import interfaces.ReRenderable;
 import interfaces.ReStatable;
 import interfaces.TurnActivable;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import logic.FightLogic;
 import logic.GameLogic;
@@ -32,7 +33,6 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		this.maxEnergy = 3;
 		this.mana = 0;
 		this.maxMana = 0;
-		this.dodge = 0;
 		this.money = 0;
 		this.pic = null;
 		this.luck = 0;
@@ -64,8 +64,8 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		return damaged;
 	}
 	
-	@Override
-	public void render() {
+	//@Override
+	public void initialize(Image image) {
 		text.setText(String.format("Hp: %s/%s, Df: %s, Energy: %s", hp, maxHp, shield, energy));
 	}
 
@@ -160,5 +160,11 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 	}
 	public void setLuck(int luck) {
 		this.luck = luck;
+	}
+
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
+		text.setText(String.format("Hp: %s/%s, Df: %s, Energy: %s", hp, maxHp, shield, energy));
 	}
 }

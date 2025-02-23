@@ -54,7 +54,7 @@ public class FightLogic {
 			return;
 		Random rand = new Random();
 		Platform.runLater(() -> {
-			useEffect(e.getNextTurn(), e);
+			if(e.getNextTurn() != null) useEffect(e.getNextTurn(), e);
 			if(Player.getInstance().getHp() == 0) {
 				GameLogic.getInstance().gameOver();
 				return;
