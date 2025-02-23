@@ -5,12 +5,14 @@ import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.handler.ItemHandler;
 import game.util.ItemRotation;
+import game.util.ItemTier;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public abstract class Item extends Pane {
-	protected String name, detail;
+	final private ItemTier tier;
+	private String name, detail;
 	protected int width, height;
 	protected boolean isDiagonal;
 
@@ -18,22 +20,24 @@ public abstract class Item extends Pane {
 	private double diffX, diffY;
 	private ImageView imageView;
 
-	public Item(String name, String detail, int height) {
+	public Item(String name, String detail, int height, ItemTier tier) {
 		super();
 		this.name = name;
 		this.detail = detail;
 		this.width = 1;
 		this.height = height;
 		isDiagonal = true;
+		this.tier = tier;
 	}
 
-	public Item(String name, String detail, int width, int height) {
+	public Item(String name, String detail, int width, int height, ItemTier tier) {
 		super();
 		this.name = name;
 		this.detail = detail;
 		this.width = width;
 		this.height = height;
 		isDiagonal = false;
+		this.tier = tier;
 	}
 
 	public void initialize(Image image) {
@@ -114,5 +118,16 @@ public abstract class Item extends Pane {
 
 	public String getName() {
 		return name;
+	}
+
+	public String getTierName() {
+		switch (tier) {
+		case COMMON: return "COMMON";
+		case UNCOMMON: return "UNCOMMON";
+		case RARE: return "RARE";
+		case EPIC: return "EPIC";
+		case LEGENDARY: return "LEGENDARY";
+		default: return "";
+		}
 	}
 }

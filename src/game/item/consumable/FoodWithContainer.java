@@ -3,18 +3,19 @@ package game.item.consumable;
 import entities.Player;
 import game.util.Effect;
 import game.util.EffectType;
+import game.util.ItemTier;
 import logic.FightLogic;
 
 public class FoodWithContainer extends Consumable {
 	String container;
 	
-	public FoodWithContainer(String name, String detail, String container, int costActivate, int durability, Effect effect, int width,int height) {
-		super(name, detail, durability, effect, costActivate, width, height);
+	public FoodWithContainer(String name, String detail, String container, int costActivate, int durability, Effect effect, int width,int height, ItemTier tier) {
+		super(name, detail, durability, effect, costActivate, width, height, tier);
 		setContainer(container);
 	}
 	
-	public FoodWithContainer(String name, String detail, String container, int costActivate, int durability, Effect effect, int height) {
-		super(name, detail, durability, effect, costActivate, height);
+	public FoodWithContainer(String name, String detail, String container, int costActivate, int durability, Effect effect, int height, ItemTier tier) {
+		super(name, detail, durability, effect, costActivate, height, tier);
 		setContainer(container);
 	}
 	

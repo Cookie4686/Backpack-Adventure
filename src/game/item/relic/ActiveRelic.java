@@ -2,17 +2,18 @@ package game.item.relic;
 
 import entities.Player;
 import game.util.Effect;
+import game.util.ItemTier;
 import interfaces.Clickable;
 
 public class ActiveRelic extends Relic implements Clickable {
 	private int costActivate;
 	
-	public ActiveRelic(String name, String detail, Effect effect, int costActivate, int width, int height) {
-		super(name, detail, effect, width, height);
+	public ActiveRelic(String name, String detail, Effect effect, int costActivate, int width, int height, ItemTier tier) {
+		super(name, detail, effect, width, height, tier);
 	}
 
-	public ActiveRelic(String name, String detail, Effect effect, int costActivate, int height) {
-		super(name, detail, effect, height);
+	public ActiveRelic(String name, String detail, Effect effect, int costActivate, int height, ItemTier tier) {
+		super(name, detail, effect, height, tier);
 	}
 	
 	

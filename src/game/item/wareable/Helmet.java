@@ -3,15 +3,13 @@ package game.item.wareable;
 import java.util.ArrayList;
 
 import game.util.Effect;
+import game.util.ItemTier;
 
 public class Helmet extends Wareable {
-	public Helmet(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height) {
-		super(name, detail, initialShield, increaseShield, effects, width, height);
+	public Helmet(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height, ItemTier tier) {
+		super(name, detail, initialShield, increaseShield, effects, width, height, tier);
 	}
 
-	public Helmet(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width) {
-		super(name, detail, initialShield, increaseShield, effects, width);
-	}
 	
 	private int underSlot() {	
 		//TODO return number of row under

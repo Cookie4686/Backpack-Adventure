@@ -6,6 +6,7 @@ import entities.Player;
 import game.item.Item;
 import game.util.Effect;
 import game.util.EffectType;
+import game.util.ItemTier;
 import interfaces.ReStatable;
 import interfaces.StatUpdatable;
 import interfaces.TurnActivable;
@@ -17,16 +18,8 @@ public abstract class Wareable extends Item implements TurnActivable, StatUpdata
 	private int shield;
 	private int increaseShield;
 	
-	public Wareable(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height) {
-		super(name, detail, width, height);
-		this.initialShield = (initialShield<0)? 0 : initialShield;
-		setShield(initialShield);
-		setIncreaseShield(increaseShield);
-		this.effects = effects;
-	}
-	
-	public Wareable(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width) {
-		super(name, detail, width);
+	public Wareable(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height, ItemTier tier) {
+		super(name, detail, width, height, tier);
 		this.initialShield = (initialShield<0)? 0 : initialShield;
 		setShield(initialShield);
 		setIncreaseShield(increaseShield);

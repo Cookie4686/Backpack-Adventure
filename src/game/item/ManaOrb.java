@@ -1,18 +1,19 @@
 package game.item;
 
 import entities.Player;
+import game.util.ItemTier;
 import interfaces.TurnActivable;
 
 public class ManaOrb extends Item implements TurnActivable{
 	private int amount;
 	
-	public ManaOrb(String name, String detail, int amount, int width, int height) {
-		super(name, detail, width, height);
+	public ManaOrb(String name, String detail, int amount, int width, int height, ItemTier tier) {
+		super(name, detail, width, height, tier);
 		setAmount(amount);
 	}
 
-	public ManaOrb(String name, String detail, int amount, int height) {
-		super(name, detail, height);
+	public ManaOrb(String name, String detail, int amount, int height, ItemTier tier) {
+		super(name, detail, height, tier);
 		setAmount(amount);
 	}
 	

@@ -4,18 +4,19 @@ import java.util.ArrayList;
 
 import entities.Player;
 import game.util.Effect;
+import game.util.ItemTier;
 import logic.FightLogic;
 
 public class ManaWeapon extends Weapon{
 	final private ArrayList<Effect> effects;
 	
-	public ManaWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int width, int height) {
-		super(name, detail, damage, costActivate, width, height);
+	public ManaWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int width, int height, ItemTier tier) {
+		super(name, detail, damage, costActivate, width, height, tier);
 		this.effects = effects;
 	}
 
-	public ManaWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int width) {
-		super(name, detail, damage, costActivate, width);
+	public ManaWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int width, ItemTier tier) {
+		super(name, detail, damage, costActivate, width, tier);
 		this.effects = effects;
 	}
 	

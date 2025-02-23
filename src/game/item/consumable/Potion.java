@@ -2,17 +2,18 @@ package game.item.consumable;
 
 import game.item.Item;
 import game.util.Effect;
+import game.util.ItemTier;
 
 public class Potion extends Consumable{
 	private int limit;
 	
-	public Potion(String name, String detail, int durability, Effect effect, int costActivate, int limit, int width, int height) {
-		super(name, detail, durability, effect, costActivate, width, height);
+	public Potion(String name, String detail, int durability, Effect effect, int costActivate, int limit, int width, int height, ItemTier tier) {
+		super(name, detail, durability, effect, costActivate, width, height, tier);
 		setLimit(limit);
 	}
 
-	public Potion(String name, String detail, int durability, Effect effect, int costActivate, int limit, int height) {
-		super(name, detail, durability, effect, costActivate, height);
+	public Potion(String name, String detail, int durability, Effect effect, int costActivate, int limit, int height, ItemTier tier) {
+		super(name, detail, durability, effect, costActivate, height, tier);
 		setLimit(limit);
 	}
 	

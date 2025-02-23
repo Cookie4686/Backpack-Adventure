@@ -1,19 +1,20 @@
 package game.item.consumable;
 
 import game.item.Item;
+import game.util.ItemTier;
 import interfaces.Clickable;
 import logic.FightLogic;
 
 public class Container extends Item implements Clickable{
 	private int damage;
 	
-	public Container(String name, String detail, int damage, int width, int height) {
-		super(name, detail, width, height);
+	public Container(String name, String detail, int damage, int width, int height, ItemTier tier) {
+		super(name, detail, width, height, tier);
 		setDamage(damage);
 	}
 
-	public Container(String name, String detail, int damage, int height) {
-		super(name, detail, height);
+	public Container(String name, String detail, int damage, int height, ItemTier tier) {
+		super(name, detail, height, tier);
 		setDamage(damage);
 	}
 	
