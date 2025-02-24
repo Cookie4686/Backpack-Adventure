@@ -29,6 +29,14 @@ public class Container extends Item implements Clickable{
 		FightLogic.getInstance().getTarget().takeDamage(damage);
 		delete();
 	}
+	
+	@Override
+	public String toString() {
+		return getName()+" is "+getTierName()+" item\n"
+				+ "When click :\n"
+				+ "Damage target : "+damage+" DAMAGE\n"
+				+ "\nCost 0 energy per click";
+	}
 
 	public int getDamage() {
 		return damage;

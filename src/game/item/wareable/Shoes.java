@@ -10,7 +10,6 @@ public class Shoes extends Wareable {
 		super(name, detail, initialShield, increaseShield, effects, width, height, tier);
 	}
 
-	
 	private int emptySpace() {	
 		//return number of empty space above
 		return 0;

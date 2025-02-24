@@ -2,7 +2,6 @@ package entities;
 
 import java.util.ArrayList;
 
-import game.GameBottom;
 import game.util.Effect;
 import game.util.EffectType;
 import interfaces.ReRenderable;
@@ -13,10 +12,9 @@ import javafx.scene.text.Text;
 import logic.FightLogic;
 import logic.GameLogic;
 
-
 public class Player extends Being implements TurnActivable, ReRenderable, ReStatable {
 	private static Player instance = null;
-	private int xp, maxXp, energy, maxEnergy, mana, maxMana, money, luck;
+	private int xp, maxXp, energy, maxEnergy, mana, maxMana, coins, luck;
 	private ArrayList<String> pic;
 
 	private Text text;
@@ -33,7 +31,7 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		this.maxEnergy = 3;
 		this.mana = 0;
 		this.maxMana = 0;
-		this.money = 0;
+		this.coins = 0;
 		this.pic = null;
 		this.luck = 0;
 		this.allEffect = new ArrayList<Effect>();
@@ -41,7 +39,7 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		text = new Text();
 		setCenter(text);
 	}
-	
+
 	public int takeDamage(int damaged) {
 		if (FightLogic.findEffectAndDecrease(allEffect, EffectType.DODGE, 1)) {
 			return 0;
@@ -57,14 +55,14 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 			}
 			Player.getInstance().setHp(Player.getInstance().getHp() - damaged);
 		}
-		if(Player.getInstance().getHp() == 0) {
+		if (Player.getInstance().getHp() == 0) {
 			GameLogic.getInstance().gameOver();
 		}
-		
+
 		return damaged;
 	}
-	
-	//@Override
+
+	// @Override
 	public void initialize(Image image) {
 		text.setText(String.format("Hp: %s/%s, Df: %s, Energy: %s", hp, maxHp, shield, energy));
 	}
@@ -73,16 +71,15 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 	public void activatePerTurn() {
 		this.shield = 0;
 	}
-	
+
 	@Override
 	public void reStatBeforeUpdate() {
 		this.maxHp = 100;
 		this.maxEnergy = 3;
 		this.maxMana = 0;
-		this.money = 0;
-		this.luck = 0;
+		this.coins = 0;
 	}
-	
+
 	public static Player getInstance() {
 		if (instance == null) {
 			instance = new Player();
@@ -147,17 +144,18 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		this.maxEnergy = maxEnergy < 0 ? 0 : maxEnergy;
 	}
 
-	public int getMoney() {
-		return money;
+	public int getCoins() {
+		return coins;
 	}
 
-	public void setMoney(int money) {
-		this.money = money;
+	public void setCoins(int coins) {
+		this.coins = coins;
 	}
-	
+
 	public int getLuck() {
 		return luck;
 	}
+
 	public void setLuck(int luck) {
 		this.luck = luck;
 	}

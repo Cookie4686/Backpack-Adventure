@@ -1,5 +1,7 @@
 package game.item;
 
+import java.util.ArrayList;
+
 import entities.Entity;
 import entities.Player;
 import game.util.Effect;
@@ -10,19 +12,19 @@ import logic.FightLogic;
 
 public class DamageItem extends Item implements Clickable {
 	final private boolean AoE;
-	final private Effect effect;
+	final private ArrayList<Effect> effects;
 	private int costActivate;
 	
-	public DamageItem(String name, String detail, Effect effect, int costActivate, boolean isAoE, int width, int height, ItemTier tier) {
+	public DamageItem(String name, String detail, ArrayList<Effect> effects, int costActivate, boolean isAoE, int width, int height, ItemTier tier) {
 		super(name, detail, width, height, tier);
-		this.effect = effect;
+		this.effects = effects;
 		this.AoE = isAoE;
 		setCostActivate(costActivate);
 	}
 
-	public DamageItem(String name, String detail, Effect effect, int costActivate, boolean isAoE, int height, ItemTier tier) {
+	public DamageItem(String name, String detail, ArrayList<Effect> effects, int costActivate, boolean isAoE, int height, ItemTier tier) {
 		super(name, detail, height, tier);
-		this.effect = effect;
+		this.effects = effects;
 		this.AoE = isAoE;
 		setCostActivate(costActivate);
 	}
@@ -40,41 +42,60 @@ public class DamageItem extends Item implements Clickable {
 		//decrease player energy by costActivate
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
 		
-		if (isAoE()) {
-			if (getEffectType()==EffectType.DAMAGE) {
-				for (Entity enemy:FightLogic.getInstance().getEntities()) {
-					enemy.takeDamage(effect.getAmount());
+		for (Effect effect:effects) {
+			if (isAoE()) {
+				if (effect.getType()==EffectType.DAMAGE) {
+					for (Entity enemy:FightLogic.getInstance().getEntities()) {
+						enemy.takeDamage(effect.getAmount());
+					}
+				}
+				else if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNTED) {
+					for (Entity enemy:FightLogic.getInstance().getEntities()) {
+						FightLogic.findEffectAndAdd(enemy.getAllEffect(), effect.getType(), effect.getAmount());
+					}
 				}
 			}
-			else if (getEffectType()==EffectType.FIRE || getEffectType()==EffectType.POISON || getEffectType()==EffectType.STUNTED) {
-				for (Entity enemy:FightLogic.getInstance().getEntities()) {
-					FightLogic.findEffectAndAdd(enemy.getAllEffect(), effect.getType(), effect.getAmount());
+			else {
+				if (effect.getType()==EffectType.DAMAGE) {
+					FightLogic.getInstance().getTarget().takeDamage(effect.getAmount());
+				}
+				if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNTED) {
+					FightLogic.findEffectAndAdd(FightLogic.getInstance().getTarget().getAllEffect(), effect.getType(), effect.getAmount());
 				}
 			}
 		}
-		else {
-			if (getEffectType()==EffectType.DAMAGE) {
-				FightLogic.getInstance().getTarget().takeDamage(effect.getAmount());
+	}
+
+	
+	@Override
+	public String toString() {
+		String text=getName()+" is "+getTierName()+" weapon\n"
+				+ "When click :\n";
+		
+		for (Effect effect : effects) {
+			if (effect.getType()==EffectType.DAMAGE) {
+				if (isAoE()) {
+					text=text+"Damage all enemy : "+effect.getAmount()+" DAMAGE\n";
+				} else {
+					text=text+"Damage target : "+effect.getAmount()+" DAMAGE\n";
+				}
 			}
-			if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNTED) {
-				FightLogic.findEffectAndAdd(FightLogic.getInstance().getTarget().getAllEffect(), effect.getType(), effect.getAmount());
+			else if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNTED) {
+				if (isAoE()) {
+					text=text+"Add "+effect.getAmount()+" "+effect.getTypeName()+" to all enemy\n";
+				} else {
+					text=text+"Add "+effect.getAmount()+" "+effect.getTypeName()+" to target\n";
+				}
 			}
 		}
-			
+		
+		return text+"\nCost "+costActivate+" energy per click";
 	}
 
 	
 	//Getter & Setter
 	public boolean isAoE() {
 		return AoE;
-	}
-
-	public EffectType getEffectType() {
-		return effect.getType();
-	}
-	
-	public int getEffectAmount() {
-		return effect.getAmount();
 	}
 
 	public int getCostActivate() {

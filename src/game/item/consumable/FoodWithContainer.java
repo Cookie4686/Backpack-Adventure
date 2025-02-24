@@ -42,6 +42,13 @@ public class FoodWithContainer extends Consumable {
 		}
 	}
 
+	
+	@Override
+	public String toString() {
+		return getProvide()+"When out of uses. Will be replace by "+container+
+				"\nCost "+getCostActivate()+" ENERGY per click";
+	}
+	
 	public String getContainer() {
 		return container;
 	}

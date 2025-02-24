@@ -23,7 +23,4 @@ public class Armor extends Wareable {
 		
 		setShield(getShield() + (numberOfAdjacent() * getIncreaseShield()));
 	}
-	
-	
-	
 }
