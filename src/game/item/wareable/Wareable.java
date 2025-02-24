@@ -62,8 +62,7 @@ public abstract class Wareable extends Item implements TurnActivable, StatUpdata
 	
 	
 	//For print only
-	@Override
-	public String toString() {
+	protected String getProvide() {
 		String text=getName()+" is "+getTierName()+" apparel\n"
 				+ "Provide :\n"
 				+ "Add shield : "+initialShield;
@@ -90,7 +89,13 @@ public abstract class Wareable extends Item implements TurnActivable, StatUpdata
 			}
 		}
 		
-		return text+"\nActivate when in backpack";
+		return text;
+	}
+	
+	
+	@Override
+	public String toString() {
+		return getProvide()+"\nActivate when in backpack";
 	}
 	
 	
@@ -101,6 +106,10 @@ public abstract class Wareable extends Item implements TurnActivable, StatUpdata
 	
 	public int getShield() {
 		return shield;
+	}
+	
+	public void addShield(int shield) {
+		setShield(getShield()+shield);
 	}
 
 	public void setShield(int shield) {

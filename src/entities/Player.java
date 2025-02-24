@@ -74,6 +74,7 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 
 	@Override
 	public void reStatBeforeUpdate() {
+		getAllEffect().clear();
 		this.maxHp = 100;
 		this.maxEnergy = 3;
 		this.maxMana = 0;

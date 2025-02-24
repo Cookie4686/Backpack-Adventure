@@ -2,7 +2,9 @@ package game.item.wareable;
 
 import java.util.ArrayList;
 
+import game.backpack.Backpack;
 import game.util.Effect;
+import game.util.ItemPosition;
 import game.util.ItemTier;
 
 public class Helmet extends Wareable {
@@ -12,15 +14,30 @@ public class Helmet extends Wareable {
 
 	
 	private int underSlot() {	
-		//TODO return number of row under
-		return 0;
+		//Find number of row under
+		Backpack backpack = Backpack.getInstance();
+		ArrayList<ItemPosition> itemPostions = backpack.getItemPosition(this);
+		int x=itemPostions.get(0).getX();
+		
+		int count=0;
+		for (int y=itemPostions.get(0).getY() ; y<Backpack.HEIGHT ; y++) {
+			if (backpack.getSlots()[y][x].isUnlocked()) count++;
+		}
+		
+		return count;
 	}
 	
 	@Override
 	public void statUpdate() {
 		super.statUpdate();
 		
-		//setShield(getInitialShield() + (underSlot() * increaseShield));
 		setShield(getShield() + (underSlot() * getIncreaseShield()));
+	}
+	
+	
+	@Override
+	public String toString() {
+		return getProvide()+"\nGet "+getIncreaseShield()+" extra SHIELD per row below\n"
+				+ "Activate when in backpack";
 	}
 }

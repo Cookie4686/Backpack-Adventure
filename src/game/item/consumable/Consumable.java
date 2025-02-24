@@ -49,10 +49,7 @@ public class Consumable extends Item implements Clickable {
 		else if (effect.getType()==EffectType.LUCK) {
 			Player.getInstance().setLuck(Player.getInstance().getLuck()+effect.getAmount());
 		}
-		else if (effect.getType()==EffectType.DODGE) {
-			Player.getInstance().setDodge(Player.getInstance().getDodge()+effect.getAmount());
-		}
-		else if (effect.getType()==EffectType.THORN || effect.getType()==EffectType.ANGER) {
+		else if (effect.getType()==EffectType.THORN || effect.getType()==EffectType.ANGER || effect.getType()==EffectType.DODGE) {
 			FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
 		}
 		
@@ -64,7 +61,7 @@ public class Consumable extends Item implements Clickable {
 	
 	
 	//For print only
-	public String getProvide() {
+	protected String getProvide() {
 		String text = getName()+" is "+getTierName()+" Food\n"
 				+ getDurability()+" use left"
 				+ "When click :\n";
@@ -77,9 +74,6 @@ public class Consumable extends Item implements Clickable {
 		}
 		else if (effect.getType()==EffectType.ENERGY) {
 			text=text+"Add "+effect.getAmount()+" ENEGRY to Player\n";
-		}
-		else if (effect.getType()==EffectType.DODGE) {
-			text=text+"Add "+effect.getAmount()+" DODGE to Player\n";
 		}
 		else {
 			text=text+"Add "+effect.getAmount()+" "+effect.getTypeName()+" to Player\n";

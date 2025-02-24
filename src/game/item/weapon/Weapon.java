@@ -47,7 +47,7 @@ public class Weapon extends Item implements Clickable, ReStatable{
 	}
 	
 	//For print only
-	public String getProvide() {
+	protected String getProvide() {
 		String text=getName()+" is "+getTierName()+" weapon\n"
 				+ "When click :\n"
 				+ "Damage target : "+initDamage;
@@ -64,7 +64,10 @@ public class Weapon extends Item implements Clickable, ReStatable{
 	
 	
 	//Getter & Setter
-
+	public void addDamage(int damage) {
+		setDamage(getDamage()+damage);
+	}
+	
 	public int getInitDamage() {
 		return initDamage;
 	}

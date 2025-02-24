@@ -2,7 +2,9 @@ package game.item.wareable;
 
 import java.util.ArrayList;
 
+import game.backpack.Backpack;
 import game.util.Effect;
+import game.util.ItemPosition;
 import game.util.ItemTier;
 
 public class Shoes extends Wareable {
@@ -11,17 +13,51 @@ public class Shoes extends Wareable {
 	}
 
 	private int emptySpace() {	
-		//return number of empty space above
-		return 0;
+		//Find number of empty space above
+		Backpack backpack = Backpack.getInstance();
+		
+		int freeSpace=0;
+		for (ItemPosition itemPostion : backpack.getItemPosition(this)) {
+			int x = itemPostion.getX();
+			for (int y=itemPostion.getY()-1 ; y>=0 ; y--) {
+				if (backpack.getSlots()[y][x].getItem().equals(this)) break;
+				
+				if (backpack.getSlots()[y][x].isUnlocked()) {
+					if (backpack.getSlots()[y][x].getItem().equals(null)) freeSpace++;
+				}
+			}
+		}
+		
+		return freeSpace;
+	}
+	
+	private boolean isLowest() {
+		Backpack backpack = Backpack.getInstance();
+		
+		for (ItemPosition itemPostion : backpack.getItemPosition(this)) {
+			int y=itemPostion.getY()+1;
+			if (y==Backpack.HEIGHT) return true;
+			for (int x=0 ; x<Backpack.WIDTH ; x++) {
+				if (backpack.getSlots()[y][x].isUnlocked()) break;
+				
+				if (x==Backpack.WIDTH-1) return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	@Override
 	public void statUpdate() {
 		super.statUpdate();
 		
-		//TODO: need to be lowest otherwise no bonus shield
-		
-		//Set bonus shield
-		setShield(getShield() + (emptySpace() * getIncreaseShield()));
+		//Set bonus shield if this item at the lowest row
+		if (isLowest()) setShield(getShield() + (emptySpace() * getIncreaseShield()));
+	}
+	
+	@Override
+	public String toString() {
+		return getProvide()+"\nThis need to be LOWEST for "+getIncreaseShield()+" extra SHIELD per empty space above\n"
+				+ "Activate when in backpack";
 	}
 }
