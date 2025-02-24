@@ -7,6 +7,7 @@ import game.item.Item;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import logic.GameLogic;
@@ -20,14 +21,11 @@ public class Game extends StackPane {
 
 		VBox vBox = new VBox();
 		vBox.setSpacing(16);
-		VBox.setVgrow(GameBottom.getInstance(), Priority.ALWAYS);
-		vBox.getChildren().setAll(GameTop.getInstance(), GameBottom.getInstance());
+		Region region = new Region();
+		VBox.setVgrow(region, Priority.ALWAYS);
+		vBox.getChildren().setAll(GameTop.getInstance(), region, GameBottom.getInstance());
 
 		getChildren().setAll(vBox);
-	}
-
-	public void addItem(Item... items) {
-		getChildren().addAll(items);
 	}
 
 	public ArrayList<Item> getItemsInGame() {

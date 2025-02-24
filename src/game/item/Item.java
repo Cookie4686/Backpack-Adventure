@@ -3,12 +3,12 @@ package game.item;
 import game.Game;
 import game.backpack.Backpack;
 import game.backpack.Slot;
-import game.handler.ItemHandler;
 import game.util.ItemRotation;
 import game.util.ItemTier;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import logic.handler.ItemHandler;
 
 public abstract class Item extends Pane {
 	final private ItemTier tier;
@@ -122,12 +122,18 @@ public abstract class Item extends Pane {
 
 	public String getTierName() {
 		switch (tier) {
-		case COMMON: return "COMMON";
-		case UNCOMMON: return "UNCOMMON";
-		case RARE: return "RARE";
-		case EPIC: return "EPIC";
-		case LEGENDARY: return "LEGENDARY";
-		default: return "";
+		case COMMON:
+			return "COMMON";
+		case UNCOMMON:
+			return "UNCOMMON";
+		case RARE:
+			return "RARE";
+		case EPIC:
+			return "EPIC";
+		case LEGENDARY:
+			return "LEGENDARY";
+		default:
+			return "";
 		}
 	}
 }

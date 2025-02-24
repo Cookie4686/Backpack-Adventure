@@ -4,23 +4,19 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import game.GameBottom;
-import game.handler.EntityHandler;
-import game.handler.ItemHandler;
 import game.util.Effect;
 import game.util.EffectType;
-import interfaces.ReRenderable;
 import interfaces.TurnActivable;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import logic.FightLogic;
 import logic.GameLogic;
+import logic.handler.EntityHandler;
 
-public class Entity extends Being implements TurnActivable, ReRenderable {
+public class Entity extends Being implements TurnActivable {
 	protected int xp, dangerLV;
 	protected boolean stunned;
 	protected ArrayList<String> pic;
@@ -47,12 +43,24 @@ public class Entity extends Being implements TurnActivable, ReRenderable {
 		this.stunned = false;
 
 		text = new Text();
-		setCenter(text);
-//		Button button = new Button("Select");
-//		button.setOnMouseClicked(event -> EntityHandler.handleMouseClicked(this));
-//		setBottom(button);
 	}
-	
+
+	// @Override
+	public void initialize(Image image) {
+		imageView = new ImageView(image);
+		imageView.setCursor(Cursor.CROSSHAIR);
+		imageView.setPickOnBounds(true);
+		imageView.setOnMousePressed(event -> EntityHandler.handleMouseClicked(this));
+		getChildren().setAll(imageView, text);
+
+		render();
+	}
+
+	@Override
+	public void render() {
+		text.setText(String.format("Hp: %s/%s, Df: %s", hp, maxHp, shield));
+	}
+
 	public int takeDamage(int damaged) {
 		if (FightLogic.findEffectAndDecrease(allEffect, EffectType.DODGE, 1)) {
 			return 0;
@@ -68,28 +76,17 @@ public class Entity extends Being implements TurnActivable, ReRenderable {
 			}
 			this.setHp(this.getHp() - damaged);
 		}
-		if(this.getHp() == 0) {
+		if (this.getHp() == 0) {
 			GameBottom.getInstance().getEnemyBox().getChildren().remove(this);
 			FightLogic.getInstance().getEntities().remove(this);
-			if(FightLogic.getInstance().getEntities().size() == 0) {
+			if (FightLogic.getInstance().getEntities().size() == 0) {
 				GameLogic.getInstance().endFight();
 				return damaged;
 			}
-			
+
 			FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		}
 		return damaged;
-	}
-	
-	//@Override
-	public void initialize(Image image) {
-
-		imageView = new ImageView(image);
-		imageView.setOnMousePressed(event -> EntityHandler.handleMouseClicked(this));
-		getChildren().add(imageView);
-
-		
-		
 	}
 
 	public ArrayList<String> getPic() {
@@ -152,11 +149,4 @@ public class Entity extends Being implements TurnActivable, ReRenderable {
 			// add target frame on top
 		});
 	}
-
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		text.setText(String.format("Hp: %s/%s, Df: %s", hp, maxHp, shield));
-	}
-
 }

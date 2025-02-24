@@ -7,59 +7,63 @@ import interfaces.Clickable;
 import interfaces.ReStatable;
 import logic.FightLogic;
 
-public class Weapon extends Item implements Clickable, ReStatable{
+public class Weapon extends Item implements Clickable, ReStatable {
 	final private int initDamage;
-	private int damage;
-	private int costActivate;
-	
+	private int damage, costActivate;
+
 	public Weapon(String name, String detail, int initDamage, int costActivate, int width, ItemTier tier) {
 		super(name, detail, width, tier);
-		setDamage(initDamage);
 		this.initDamage = initDamage;
+		setDamage(initDamage);
+		setCostActivate(costActivate);
 	}
 
 	public Weapon(String name, String detail, int initDamage, int costActivate, int width, int height, ItemTier tier) {
 		super(name, detail, width, height, tier);
-		setDamage(initDamage);
 		this.initDamage = initDamage;
+		setDamage(initDamage);
+		setCostActivate(costActivate);
 	}
-	
+
 	@Override
 	public void reStatBeforeUpdate() {
 		setDamage(initDamage);
 	}
-	
+
 	@Override
 	public boolean isEnoughEnergy() {
-		if (Player.getInstance().getEnergy()<costActivate) return false;
+		if (Player.getInstance().getEnergy() < costActivate)
+			return false;
 		return true;
 	}
 
 	@Override
 	public void activatePerClick() {
-		if (!isEnoughEnergy()) return;
-		
-		//decrease player energy by costActivate
+		if (!isEnoughEnergy())
+			return;
+
+		// decrease player energy by costActivate
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
-		
-		//damage enemy getDamage() amount
+
+		// damage enemy getDamage() amount
 		FightLogic.getInstance().getTarget().takeDamage(damage);
 	}
-	
-	//For print only
-	protected String getProvide() {
-		String text=getName()+" is "+getTierName()+" weapon\n"
-				+ "When click :\n"
-				+ "Damage target : "+initDamage;
-		if (damage>initDamage) text=text+" + "+(damage-initDamage);
-		else if (damage<initDamage) text=text+" - "+(initDamage-damage);
-		
-		return text+" DAMAGE\n";
+
+	// For print only
+	public String getProvide() {
+		String text = getName() + " is " + getTierName() + " weapon\n" + "When click :\n" + "Damage target : "
+				+ initDamage;
+		if (damage > initDamage)
+			text = text + " + " + (damage - initDamage);
+		else if (damage < initDamage)
+			text = text + " - " + (initDamage - damage);
+
+		return text + " DAMAGE\n";
 	}
-	
+
 	@Override
 	public String toString() {
-		return getProvide()+"\nCost "+costActivate+" energy per click";
+		return getProvide() + "\nCost " + costActivate + " energy per click";
 	}
 	
 	
@@ -67,7 +71,7 @@ public class Weapon extends Item implements Clickable, ReStatable{
 	public void addDamage(int damage) {
 		setDamage(getDamage()+damage);
 	}
-	
+
 	public int getInitDamage() {
 		return initDamage;
 	}
@@ -77,7 +81,7 @@ public class Weapon extends Item implements Clickable, ReStatable{
 	}
 
 	public void setDamage(int damage) {
-		this.damage = (damage<0)? 0 : damage;
+		this.damage = damage < 0 ? 0 : damage;
 	}
 
 	public int getCostActivate() {
@@ -85,6 +89,6 @@ public class Weapon extends Item implements Clickable, ReStatable{
 	}
 
 	public void setCostActivate(int costActivate) {
-		this.costActivate = costActivate;
+		this.costActivate = costActivate < 0 ? 0 : costActivate;
 	}
 }

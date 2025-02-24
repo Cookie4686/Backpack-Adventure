@@ -1,7 +1,6 @@
 package game.map;
 
 import game.backpack.Slot;
-import game.handler.MapHandler;
 import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -13,6 +12,7 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import logic.handler.MapHandler;
 
 public class MapSquare extends Pane {
 	public final static int SIZE = Slot.SIZE / 2;

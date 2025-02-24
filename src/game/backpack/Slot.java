@@ -8,7 +8,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import logic.FightLogic;
+import logic.handler.ButtonHandler;
 
 public class Slot extends Pane implements ReRenderable {
 	public final static int SIZE = 48;
@@ -21,10 +21,7 @@ public class Slot extends Pane implements ReRenderable {
 		setMaxSize(SIZE, SIZE);
 		isUnlocked = false;
 		item = null;
-		setOnMouseClicked(event -> {
-			if (!FightLogic.getInstance().isInFight()) isUnlocked = !isUnlocked;
-			render();
-		});
+		setOnMouseClicked(event -> ButtonHandler.handleSlotOnClicked(this));
 	}
 
 	@Override
@@ -50,6 +47,7 @@ public class Slot extends Pane implements ReRenderable {
 
 	public void setUnlocked(boolean isUnlocked) {
 		this.isUnlocked = isUnlocked;
+		render();
 	}
 
 	public Item getItem() {
@@ -57,8 +55,6 @@ public class Slot extends Pane implements ReRenderable {
 	}
 
 	public void setItem(Item item) {
-		if (isUnlocked) {
-			this.item = item;
-		}
+		this.item = item;
 	}
 }

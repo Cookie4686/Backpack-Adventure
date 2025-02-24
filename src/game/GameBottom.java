@@ -33,7 +33,7 @@ public class GameBottom extends HBox implements ReRenderable {
 		enemyBox.setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		setHgrow(enemyBox, Priority.ALWAYS);
-		getChildren().addAll(Player.getInstance(), enemyBox);
+		getChildren().setAll(Player.getInstance(), enemyBox);
 
 		render();
 	}
@@ -47,15 +47,14 @@ public class GameBottom extends HBox implements ReRenderable {
 		}
 	}
 
+	public HBox getEnemyBox() {
+		return enemyBox;
+	}
+
 	public static GameBottom getInstance() {
 		if (instance == null) {
 			instance = new GameBottom();
 		}
 		return instance;
 	}
-
-	public HBox getEnemyBox() {
-		return enemyBox;
-	}
-	
 }

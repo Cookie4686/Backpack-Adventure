@@ -11,21 +11,21 @@ import scene.popup.SettingPopup;
 public class MenuScene {
 	public static void use() {
 		VBox root = new VBox();
-		Text titleText = new Text("Cool game");
+		root.setSpacing(40);
+		root.setAlignment(Pos.CENTER);
 
 		VBox actionBox = new VBox();
+		actionBox.setSpacing(20);
+		actionBox.setAlignment(Pos.CENTER);
+
+		Text titleText = new Text("Cool game");
 		Button startButton = new Button("Start");
 		startButton.setOnAction(event -> CharacterPopup.show());
 		Button settingButton = new Button("Settings");
 		settingButton.setOnAction(event -> SettingPopup.show());
-		actionBox.setSpacing(20);
-		actionBox.setAlignment(Pos.CENTER);
 		actionBox.getChildren().addAll(startButton, settingButton);
 
-		root.setSpacing(40);
-		root.setAlignment(Pos.CENTER);
 		root.getChildren().addAll(titleText, actionBox);
-
 		Main.root.getChildren().setAll(root);
 	}
 }
