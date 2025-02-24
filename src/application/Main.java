@@ -24,6 +24,7 @@ public class Main extends Application {
 		root.prefHeightProperty().bind(primaryStage.heightProperty());
 		MenuScene.use();
 		Scene scene = new Scene(root, 800, 600);
+		scene.getStylesheets().add(ClassLoader.getSystemResource("test.css").toExternalForm());
 		scene.setOnKeyPressed(event -> ItemHandler.handleSceneKeyPress(event));
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Backpack");

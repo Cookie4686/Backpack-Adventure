@@ -3,6 +3,7 @@ package entities;
 import java.util.ArrayList;
 import java.util.Random;
 
+import component.HpBar;
 import game.GameBottom;
 import game.util.Effect;
 import game.util.EffectType;
@@ -43,6 +44,7 @@ public class Entity extends Being implements TurnActivable {
 		this.stunned = false;
 
 		text = new Text();
+		hpBar = new HpBar(this);
 	}
 
 	// @Override
@@ -51,7 +53,7 @@ public class Entity extends Being implements TurnActivable {
 		imageView.setCursor(Cursor.CROSSHAIR);
 		imageView.setPickOnBounds(true);
 		imageView.setOnMousePressed(event -> EntityHandler.handleMouseClicked(this));
-		getChildren().setAll(imageView, text);
+		getChildren().setAll(imageView, text, hpBar);
 
 		render();
 	}
