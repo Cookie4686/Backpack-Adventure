@@ -1,12 +1,12 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import entities.Being;
 import entities.Entity;
 import entities.Player;
-import game.Game;
 import game.GameBottom;
 import game.item.Item;
 import game.util.Effect;
@@ -31,44 +31,46 @@ public class FightLogic {
 			entityTurn(en);
 		}
 		isPTurn = true;
-		if(entities.size() == 0) {
+		if (entities.size() == 0) {
 			GameLogic.getInstance().endFight();
-			return;
+		} else {
+			playerTurn();
 		}
-		playerTurn();
 	}
 
 	public void entityTurn(Entity e) {
 		for (Effect ef : e.getAllEffect()) {
 			Platform.runLater(() -> {
 				ActivateEffect(ef, e);
-				if(e.getHp() == 0) {
-					GameBottom.getInstance().getEnemyBox().getChildren().remove(e);
+				if (e.getHp() == 0) {
 					entities.remove(e);
+					GameBottom.getInstance().render();
 					return;
 				}
 			});
 		}
 		e.activatePerTurn();
-		if (e.isStunned())
-			return;
-		Random rand = new Random();
-		Platform.runLater(() -> {
-			if(e.getNextTurn() != null) useEffect(e.getNextTurn(), e);
-			if(Player.getInstance().getHp() == 0) {
-				GameLogic.getInstance().gameOver();
-				return;
-			}
-			e.setNextTurn(e.getAllAttributes().get(rand.nextInt(e.getAllAttributes().size())));
-		});
+		if (!e.isStunned()) {
+			Random rand = new Random();
+			Platform.runLater(() -> {
+				if (e.getNextTurn() != null) {
+					useEffect(e.getNextTurn(), e);
+				}
+				if (Player.getInstance().getHp() == 0) {
+					GameLogic.getInstance().gameOver();
+				} else {
+					e.setNextTurn(e.getAllAttributes().get(rand.nextInt(e.getAllAttributes().size())));
+				}
+			});
+		}
 	}
 
 	public void playerTurn() {
 		Player.getInstance().setShield(0);
 		for (Effect ef : Player.getInstance().getAllEffect()) {
 			Platform.runLater(() -> {
-				ActivateEffect(ef, (Being) (Player.getInstance()));
-				if(Player.getInstance().getHp() == 0) {
+				ActivateEffect(ef, Player.getInstance());
+				if (Player.getInstance().getHp() == 0) {
 					GameLogic.getInstance().gameOver();
 					return;
 				}
@@ -76,8 +78,7 @@ public class FightLogic {
 		}
 		for (Item item : GameLogic.getInstance().getInventory()) {
 			if (item instanceof TurnActivable) {
-				TurnActivable i = (TurnActivable) item;
-				i.activatePerTurn();
+				((TurnActivable) item).activatePerTurn();
 			}
 		}
 	}
@@ -106,7 +107,7 @@ public class FightLogic {
 		case SHIELD		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
 		case DODGE		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
 		case VAMPIRIC	-> e.setHp(e.getHp() + (int) (Player.getInstance().takeDamage(ef.getAmount()) * 0.5));
-		case SUMMONER	-> {} // implement
+		case SUMMONER	-> {} // TODO: implement
 		case ANGER		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
 		case HEAL		-> e.setHp(e.getHp() + ef.getAmount());
 		case REGEN		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
@@ -114,13 +115,11 @@ public class FightLogic {
 		}
 	}
 
-	public static void doDamage(Effect ef,Being e,Being p) {
-		Effect rage = findEffect(e.getAllEffect(),EffectType.ANGER);
-		Effect thorn = findEffect(p.getAllEffect(),EffectType.THORN);
-		int extra = (rage == null ? 0 : rage.getAmount());
-		int retaliate = (thorn == null ? 0 : thorn.getAmount());
-		p.takeDamage(ef.getAmount() + extra);
-		e.takeDamage(retaliate);
+	public static void doDamage(Effect ef, Being e, Being p) {
+		Effect rage = findEffect(e.getAllEffect(), EffectType.ANGER);
+		Effect thorn = findEffect(p.getAllEffect(), EffectType.THORN);
+		p.takeDamage(ef.getAmount() + (rage == null ? 0 : rage.getAmount()));
+		e.takeDamage(thorn == null ? 0 : thorn.getAmount());
 	}
 
 	public static void findEffectAndAdd(ArrayList<Effect> efs, EffectType target, int amount) {
@@ -134,18 +133,18 @@ public class FightLogic {
 	}
 
 	public static boolean findEffectAndDecrease(ArrayList<Effect> efs, EffectType target, int amount) {
-		int i = 0;
-		for (Effect ef : efs) {
-			if (ef.getType().equals(target)) {
-				int val = ef.getAmount() - amount;
+		Iterator<Effect> iterator = efs.iterator();
+		while (iterator.hasNext()) {
+			Effect effect = iterator.next();
+			if (effect.getType().equals(target)) {
+				int val = effect.getAmount() - amount;
 				if (val <= 0) {
-					efs.remove(i);
+					iterator.remove();
 				} else {
-					ef.setAmount(val);
+					effect.setAmount(val);
 				}
 				return true;
 			}
-			i++;
 		}
 		return false;
 	}
@@ -174,6 +173,10 @@ public class FightLogic {
 		this.isInFight = isInFight;
 	}
 
+	public boolean isPTurn() {
+		return isPTurn;
+	}
+
 	public Entity getTarget() {
 		return target;
 	}
@@ -188,9 +191,5 @@ public class FightLogic {
 
 	public void setEntities(ArrayList<Entity> entities) {
 		this.entities = entities;
-	}
-	
-	public boolean isPTurn() {
-		return isPTurn;
 	}
 }

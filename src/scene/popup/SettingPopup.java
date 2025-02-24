@@ -7,10 +7,13 @@ import javafx.scene.text.Text;
 
 public class SettingPopup {
 	public static void show() {
+		Popup popup = new Popup(Color.AQUA);
+
 		Text headingText = new Text("Settings");
 		Button closeButton = new Button("Close");
-		Popup popup = new Popup(Color.AQUA, headingText, closeButton);
 		closeButton.setOnAction(event -> Main.root.getChildren().remove(popup));
+
+		popup.getChildren().setAll(headingText, closeButton);
 		Main.root.getChildren().add(popup);
 	}
 }

@@ -3,29 +3,41 @@ package game.backpack;
 import java.util.ArrayList;
 
 import game.Game;
-import game.handler.ItemHandler;
 import game.item.Item;
 import game.item.consumable.Potion;
 import game.util.ItemPostion;
 import game.util.ItemRotation;
 import interfaces.ReRenderable;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import logic.FightLogic;
 import logic.GameLogic;
+import logic.handler.ButtonHandler;
 
-public class Backpack extends GridPane implements ReRenderable {
+public class Backpack extends BorderPane implements ReRenderable {
 	private static Backpack instance;
 	private static final int WIDTH = 7, HEIGHT = 5;
 	private Slot[][] slots;
 
+	private GridPane gridPane;
+	private Button endTurnButton;
+
 	public Backpack() {
 		super();
 		slots = new Slot[HEIGHT][WIDTH];
+		gridPane = new GridPane();
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
-				slots[y][x] = new Slot();
-				this.add(slots[y][x], x, y);
+				gridPane.add(slots[y][x] = new Slot(), x, y);
 			}
 		}
+		setCenter(gridPane);
+		endTurnButton = new Button("End Turn");
+		endTurnButton.setOnAction(event -> ButtonHandler.handleEndTurnButtonOnAction());
+		setBottom(endTurnButton);
+		setAlignment(endTurnButton, Pos.CENTER);
 		render();
 	}
 
@@ -36,6 +48,7 @@ public class Backpack extends GridPane implements ReRenderable {
 				slot.render();
 			}
 		}
+		endTurnButton.setVisible(FightLogic.getInstance().isInFight());
 	}
 
 	public boolean isPlaceable(int gridX, int gridY, Item item) {
@@ -100,14 +113,14 @@ public class Backpack extends GridPane implements ReRenderable {
 	private void placeItem(Slot slot, Item item) {
 		if (slot.getItem() != null) {
 			if (slot.getItem() instanceof Potion) {
-				if (((Potion)item).isStackable(slot.getItem())) {
-					((Potion)item).setDurability(((Potion)item).getDurability() + ((Potion)slot.getItem()).getDurability());
-					
-					removeItem(slot.getItem());
+				if (((Potion) item).isStackable(slot.getItem())) {
+					((Potion) item)
+							.setDurability(((Potion) item).getDurability() + ((Potion) slot.getItem()).getDurability());
+
 					Game.getInstance().getChildren().remove(slot.getItem());
 				}
 			}
-			
+
 			ItemHandler.setRandomOffGridLocation(slot.getItem());
 			removeItem(slot.getItem());
 		}
@@ -151,10 +164,6 @@ public class Backpack extends GridPane implements ReRenderable {
 			}
 		}
 		return itemPostions;
-	}
-
-	public void replaceItem(Item item) {
-		removeItem(item);
 	}
 
 	public Slot[][] getSlots() {

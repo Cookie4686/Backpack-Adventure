@@ -1,4 +1,4 @@
-package game.handler;
+package logic.handler;
 
 import game.map.MapMarker;
 import game.map.MapSquare;

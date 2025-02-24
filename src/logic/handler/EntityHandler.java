@@ -1,4 +1,4 @@
-package game.handler;
+package logic.handler;
 
 import entities.Entity;
 import logic.FightLogic;

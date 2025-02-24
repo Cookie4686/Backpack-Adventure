@@ -1,6 +1,7 @@
 package game;
 
 import entities.Player;
+import game.handler.ButtonHandler;
 import interfaces.ReRenderable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
-import logic.FightLogic;
+import logic.GameLogic;
 
 public class GameHeader extends HBox implements ReRenderable {
 	private static GameHeader instance;
@@ -25,18 +26,9 @@ public class GameHeader extends HBox implements ReRenderable {
 		floorText = new Text();
 		experienceText = new Text();
 		Region region = new Region();
-		backpackButton = new Button("Toggle Backpack");
-		backpackButton.setOnAction(event -> {
-			if (!FightLogic.getInstance().isInFight()) {
-				if (GameTop.getInstance().isBackpack()) {
-					GameTop.getInstance().useMap();
-				} else {
-					GameTop.getInstance().useBackpack();
-				}
-			}
-		});
-
 		setHgrow(region, Priority.ALWAYS);
+		backpackButton = new Button("Toggle Backpack");
+		backpackButton.setOnAction(event -> ButtonHandler.handleBackpackButtonOnAction());
 
 		getChildren().addAll(floorText, experienceText, region, backpackButton);
 		render();
@@ -44,7 +36,7 @@ public class GameHeader extends HBox implements ReRenderable {
 
 	@Override
 	public void render() {
-		floorText.setText("Floor: -");
+		floorText.setText(String.format("Floor: %s", GameLogic.getInstance().getCurrentFloor()));
 		experienceText
 				.setText(String.format("Exp: %s/%s", Player.getInstance().getXp(), Player.getInstance().getMaxXp()));
 	}

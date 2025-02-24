@@ -8,12 +8,15 @@ import scene.GameScene;
 
 public class CharacterPopup {
 	public static void show() {
+		Popup popup = new Popup(Color.LIGHTGREEN);
+
 		Text headingText = new Text("Choose Character");
 		Button characterButton = new Button("Character 1");
-		Button closeButton = new Button("Back");
-		Popup popup = new Popup(Color.LIGHTGREEN, headingText, characterButton, closeButton);
 		characterButton.setOnAction(event -> GameScene.use());
+		Button closeButton = new Button("Back");
 		closeButton.setOnAction(event -> Main.root.getChildren().remove(popup));
+
+		popup.getChildren().setAll(headingText, characterButton, closeButton);
 		Main.root.getChildren().add(popup);
 	}
 }

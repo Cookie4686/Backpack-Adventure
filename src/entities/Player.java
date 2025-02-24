@@ -2,9 +2,7 @@ package entities;
 
 import java.util.ArrayList;
 
-import game.util.Effect;
 import game.util.EffectType;
-import interfaces.ReRenderable;
 import interfaces.ReStatable;
 import interfaces.TurnActivable;
 import javafx.scene.image.Image;
@@ -12,7 +10,7 @@ import javafx.scene.text.Text;
 import logic.FightLogic;
 import logic.GameLogic;
 
-public class Player extends Being implements TurnActivable, ReRenderable, ReStatable {
+public class Player extends Being implements TurnActivable, ReStatable {
 	private static Player instance = null;
 	private int xp, maxXp, energy, maxEnergy, mana, maxMana, coins, luck;
 	private ArrayList<String> pic;
@@ -22,24 +20,45 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 	public Player() {
 		super();
 		this.name = "Player";
-		this.hp = 100;
-		this.maxHp = 100;
+		this.hp = this.maxHp = 100;
 		this.shield = 0;
 		this.xp = 0;
 		this.maxXp = 100;
-		this.energy = 3;
-		this.maxEnergy = 3;
-		this.mana = 0;
-		this.maxMana = 0;
+		this.energy = this.maxEnergy = 3;
+		this.mana = this.maxMana = 0;
 		this.coins = 0;
-		this.pic = null;
 		this.luck = 0;
-		this.allEffect = new ArrayList<Effect>();
+		this.pic = null;
 
 		text = new Text();
-		setCenter(text);
+		initialize(null);
 	}
 
+	// @Override
+	public void initialize(Image image) {
+		getChildren().setAll(text);
+		render();
+	}
+
+	@Override
+	public void render() {
+		text.setText(String.format("Hp: %s/%s, Df: %s, Energy: %s", hp, maxHp, shield, energy));
+	}
+
+	@Override
+	public void activatePerTurn() {
+		this.shield = 0;
+	}
+
+	@Override
+	public void reStatBeforeUpdate() {
+		this.maxHp = 100;
+		this.maxEnergy = 3;
+		this.maxMana = 0;
+		this.coins = 0;
+	}
+
+	@Override
 	public int takeDamage(int damaged) {
 		if (FightLogic.findEffectAndDecrease(allEffect, EffectType.DODGE, 1)) {
 			return 0;
@@ -60,56 +79,6 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		}
 
 		return damaged;
-	}
-
-	// @Override
-	public void initialize(Image image) {
-		text.setText(String.format("Hp: %s/%s, Df: %s, Energy: %s", hp, maxHp, shield, energy));
-	}
-
-	@Override
-	public void activatePerTurn() {
-		this.shield = 0;
-	}
-
-	@Override
-	public void reStatBeforeUpdate() {
-		this.maxHp = 100;
-		this.maxEnergy = 3;
-		this.maxMana = 0;
-		this.coins = 0;
-	}
-
-	public static Player getInstance() {
-		if (instance == null) {
-			instance = new Player();
-		}
-		return instance;
-	}
-
-	public int getMaxMana() {
-		return maxMana;
-	}
-
-	public void setMaxMana(int maxMana) {
-		this.maxMana = maxMana;
-	}
-
-	public int getMana() {
-		return mana;
-	}
-
-	public void setMana(int mana) {
-		int pos = (mana < 0 ? 0 : mana);
-		this.mana = pos > maxMana ? maxMana : pos;
-	}
-
-	public ArrayList<String> getPic() {
-		return pic;
-	}
-
-	public void setPic(ArrayList<String> pic) {
-		this.pic = pic;
 	}
 
 	public int getXp() {
@@ -144,6 +113,22 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		this.maxEnergy = maxEnergy < 0 ? 0 : maxEnergy;
 	}
 
+	public int getMaxMana() {
+		return maxMana;
+	}
+
+	public void setMaxMana(int maxMana) {
+		this.maxMana = maxMana;
+	}
+
+	public int getMana() {
+		return mana;
+	}
+
+	public void setMana(int mana) {
+		this.mana = mana < 0 ? 0 : (mana > maxMana ? maxMana : mana);
+	}
+
 	public int getCoins() {
 		return coins;
 	}
@@ -160,9 +145,18 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		this.luck = luck;
 	}
 
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		text.setText(String.format("Hp: %s/%s, Df: %s, Energy: %s", hp, maxHp, shield, energy));
+	public ArrayList<String> getPic() {
+		return pic;
+	}
+
+	public void setPic(ArrayList<String> pic) {
+		this.pic = pic;
+	}
+
+	public static Player getInstance() {
+		if (instance == null) {
+			instance = new Player();
+		}
+		return instance;
 	}
 }

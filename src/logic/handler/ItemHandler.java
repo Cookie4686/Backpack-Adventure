@@ -1,9 +1,10 @@
-package game.handler;
+package logic.handler;
 
 import java.util.Random;
 
 import entities.Player;
 import game.Game;
+import game.GameBottom;
 import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.item.Item;
@@ -24,15 +25,17 @@ public class ItemHandler {
 	private static int gridX, gridY;
 
 	public static void handleMousePress(MouseEvent event, Item item) {
+		currentItem = item;
 		if (!FightLogic.getInstance().isInFight()) {
-			currentItem = item;
 			calcValues();
 			startX = event.getSceneX() - item.getTranslateX();
 			startY = event.getSceneY() - item.getTranslateY();
 		} else {
-			if(item instanceof Clickable) {
-				((Clickable)item).activatePerClick();
+			if (item instanceof Clickable) {
+				((Clickable) item).activatePerClick();
 			}
+			Backpack.getInstance().render();
+			GameBottom.getInstance().render();
 		}
 	}
 
@@ -72,17 +75,18 @@ public class ItemHandler {
 		if (Backpack.getInstance().placeItem(gridX, gridY, currentItem)) {
 			setPlaceItemPostion();
 		}
-		
+
 		Player.getInstance().reStatBeforeUpdate();
 		for (Item item : GameLogic.getInstance().getInventory()) {
 			if (item instanceof ReStatable) {
 				((ReStatable) item).reStatBeforeUpdate();
 			}
 		}
-		
+
 		for (Item item : GameLogic.getInstance().getInventory()) {
 			if (item instanceof StatUpdatable) {
-				((StatUpdatable) item).statUpdate();;
+				((StatUpdatable) item).statUpdate();
+				;
 			}
 		}
 	}
