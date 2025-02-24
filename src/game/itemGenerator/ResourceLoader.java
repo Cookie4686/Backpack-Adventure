@@ -1,7 +1,8 @@
-package game.item;
+package game.itemGenerator;
 
 import java.util.function.Supplier;
 
+import game.item.Item;
 import javafx.scene.image.Image;
 
 public class ResourceLoader {

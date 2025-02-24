@@ -1,4 +1,4 @@
-package game.item;
+package game.itemGenerator;
 
 import java.util.HashMap;
 

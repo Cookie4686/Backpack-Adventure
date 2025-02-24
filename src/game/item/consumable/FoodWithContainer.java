@@ -2,7 +2,7 @@ package game.item.consumable;
 
 import entities.Player;
 import game.backpack.Backpack;
-import game.item.ResourceLoader;
+import game.itemGenerator.ResourceLoader;
 import game.util.Effect;
 import game.util.EffectType;
 import game.util.ItemTier;

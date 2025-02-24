@@ -3,7 +3,7 @@ package scene;
 import application.Main;
 import game.Game;
 import game.GameHeader;
-import game.item.ResourceLoader;
+import game.itemGenerator.ResourceLoader;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
