@@ -1,6 +1,5 @@
 package game.backpack;
 
-import game.handler.ButtonHandler;
 import game.item.Item;
 import interfaces.ReRenderable;
 import javafx.geometry.Insets;
@@ -9,6 +8,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import logic.handler.ButtonHandler;
 
 public class Slot extends Pane implements ReRenderable {
 	public final static int SIZE = 48;

@@ -1,7 +1,6 @@
 package game;
 
 import entities.Player;
-import game.handler.ButtonHandler;
 import interfaces.ReRenderable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,6 +10,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import logic.GameLogic;
+import logic.handler.ButtonHandler;
 
 public class GameHeader extends HBox implements ReRenderable {
 	private static GameHeader instance;

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import game.GameBottom;
-import game.handler.EntityHandler;
 import game.util.Effect;
 import game.util.EffectType;
 import interfaces.TurnActivable;
@@ -15,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import logic.FightLogic;
 import logic.GameLogic;
+import logic.handler.EntityHandler;
 
 public class Entity extends Being implements TurnActivable {
 	protected int xp, dangerLV;

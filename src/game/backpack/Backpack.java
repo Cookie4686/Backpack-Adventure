@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import logic.FightLogic;
 import logic.GameLogic;
 import logic.handler.ButtonHandler;
+import logic.handler.ItemHandler;
 
 public class Backpack extends BorderPane implements ReRenderable {
 	private static Backpack instance;

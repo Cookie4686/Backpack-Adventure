@@ -1,11 +1,11 @@
 package application;
 
-import game.handler.ItemHandler;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import logic.handler.ItemHandler;
 import scene.MenuScene;
 
 public class Main extends Application {
