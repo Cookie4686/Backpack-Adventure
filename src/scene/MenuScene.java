@@ -21,8 +21,8 @@ public class MenuScene {
 		Text titleText = new Text("Cool game");
 		Button startButton = new Button("Start", 128, 32);
 		Button settingButton = new Button("Settings", 128, 32);
-		startButton.setOnAction(_ -> CharacterPopup.show());
-		settingButton.setOnAction(_ -> SettingPopup.show());
+		startButton.setOnAction(_ -> CharacterPopup.getInstance().getPopup().show());
+		settingButton.setOnAction(_ -> SettingPopup.getInstance().getPopup().show());
 		actionBox.getChildren().addAll(startButton, settingButton);
 
 		root.getChildren().addAll(titleText, actionBox);

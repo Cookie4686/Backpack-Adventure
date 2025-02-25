@@ -40,6 +40,14 @@ public class Popup extends BorderPane {
 		setBottom(bottomBox);
 	}
 
+	public void show() {
+		Main.root.getChildren().add(this);
+	}
+
+	public void hide() {
+		Main.root.getChildren().remove(this);
+	}
+
 	public HBox getBottomBox() {
 		return bottomBox;
 	}

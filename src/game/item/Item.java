@@ -5,9 +5,11 @@ import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.util.ItemRotation;
 import game.util.ItemTier;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 import logic.handler.ItemHandler;
 
 public abstract class Item extends Pane {
@@ -58,11 +60,13 @@ public abstract class Item extends Pane {
 		imageView.setPickOnBounds(true);
 		imageView.setOnMousePressed(event -> ItemHandler.handleMousePress(event, this));
 		imageView.setOnMouseDragged(event -> ItemHandler.handleMouseDrag(event));
-		imageView.setOnMouseReleased(event -> ItemHandler.handleMouseRelease());
+		imageView.setOnMouseReleased(_ -> ItemHandler.handleMouseRelease());
 		getChildren().setAll(imageView);
 
-		// TODO: show toolTip on hover
-		// imageView.setOnMouseEntered(event -> {});
+		Tooltip tooltip = new Tooltip(toString());
+		tooltip.setShowDelay(Duration.millis(200));
+		// TODO: highlight related items on toolTip shown
+		Tooltip.install(imageView, tooltip);
 	}
 
 	public void delete() {

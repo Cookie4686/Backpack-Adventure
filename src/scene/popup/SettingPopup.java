@@ -1,16 +1,31 @@
 package scene.popup;
 
-import application.Main;
 import component.Button;
+import javafx.scene.layout.VBox;
 
-public class SettingPopup {
-	public static void show() {
-		Popup popup = new Popup("Settings");
+public class SettingPopup extends VBox {
+	private static SettingPopup instance;
+	private Popup popup;
+
+	public SettingPopup() {
+		super();
+		popup = new Popup("Settings");
+
+		popup.setCenter(this);
 
 		Button closeButton = new Button("Close", 128, 32);
-		closeButton.setOnAction(_ -> Main.root.getChildren().remove(popup));
-
+		closeButton.setOnAction(_ -> popup.hide());
 		popup.getBottomBox().getChildren().setAll(closeButton);
-		Main.root.getChildren().add(popup);
+	}
+
+	public Popup getPopup() {
+		return popup;
+	}
+
+	public static SettingPopup getInstance() {
+		if (instance == null) {
+			instance = new SettingPopup();
+		}
+		return instance;
 	}
 }
