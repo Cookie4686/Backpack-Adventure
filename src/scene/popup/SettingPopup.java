@@ -2,19 +2,15 @@ package scene.popup;
 
 import application.Main;
 import component.Button;
-import component.ButtonSize;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 
 public class SettingPopup {
 	public static void show() {
-		Popup popup = new Popup(Color.AQUA);
+		Popup popup = new Popup("Settings");
 
-		Text headingText = new Text("Settings");
-		Button closeButton = new Button("Close", ButtonSize.LARGE);
+		Button closeButton = new Button("Close", 128, 32);
 		closeButton.setOnAction(_ -> Main.root.getChildren().remove(popup));
 
-		popup.getChildren().setAll(headingText, closeButton);
+		popup.getBottomBox().getChildren().setAll(closeButton);
 		Main.root.getChildren().add(popup);
 	}
 }

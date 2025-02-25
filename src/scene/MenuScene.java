@@ -2,7 +2,6 @@ package scene;
 
 import application.Main;
 import component.Button;
-import component.ButtonSize;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -20,9 +19,9 @@ public class MenuScene {
 		actionBox.setAlignment(Pos.CENTER);
 
 		Text titleText = new Text("Cool game");
-		Button startButton = new Button("Start", ButtonSize.LARGE);
+		Button startButton = new Button("Start", 128, 32);
+		Button settingButton = new Button("Settings", 128, 32);
 		startButton.setOnAction(_ -> CharacterPopup.show());
-		Button settingButton = new Button("Settings", ButtonSize.LARGE);
 		settingButton.setOnAction(_ -> SettingPopup.show());
 		actionBox.getChildren().addAll(startButton, settingButton);
 

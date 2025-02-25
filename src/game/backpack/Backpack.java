@@ -3,7 +3,6 @@ package game.backpack;
 import java.util.ArrayList;
 
 import component.Button;
-import component.ButtonSize;
 import game.Game;
 import game.item.Item;
 import game.item.consumable.Potion;
@@ -35,7 +34,7 @@ public class Backpack extends VBox implements ReRenderable {
 				gridPane.add(slots[y][x] = new Slot(), x, y);
 			}
 		}
-		endTurnButton = new Button("End Turn", ButtonSize.MEDIUM);
+		endTurnButton = new Button("End Turn", 64, 16);
 		endTurnButton.setOnAction(_ -> ButtonHandler.handleEndTurnButtonOnAction());
 		setAlignment(Pos.CENTER);
 		getChildren().setAll(gridPane, endTurnButton);
