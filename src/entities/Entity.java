@@ -12,7 +12,6 @@ import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 import logic.FightLogic;
 import logic.GameLogic;
 import logic.handler.EntityHandler;
@@ -24,9 +23,6 @@ public class Entity extends Being implements TurnActivable {
 	private ImageView imageView;
 	protected ArrayList<Effect> allAttributes;
 	protected Effect nextTurn;
-
-	// will change later
-	private Text text;
 
 	public Entity(String name, ArrayList<String> pic, int maxHpLb, int xpLb, int dangerLV,
 			ArrayList<Effect> allAttributes) {
@@ -42,9 +38,6 @@ public class Entity extends Being implements TurnActivable {
 		this.allAttributes = allAttributes;
 		this.dangerLV = dangerLV;
 		this.stunned = false;
-
-		text = new Text();
-		hpBar = new HpBar(this);
 	}
 
 	// @Override
@@ -53,14 +46,14 @@ public class Entity extends Being implements TurnActivable {
 		imageView.setCursor(Cursor.CROSSHAIR);
 		imageView.setPickOnBounds(true);
 		imageView.setOnMousePressed(event -> EntityHandler.handleMouseClicked(this));
-		getChildren().setAll(imageView, text, hpBar);
-
+		hpBar = new HpBar(this);
+		getChildren().setAll(imageView, hpBar);
 		render();
 	}
 
 	@Override
 	public void render() {
-		text.setText(String.format("Hp: %s/%s, Df: %s", hp, maxHp, shield));
+		hpBar.render();
 	}
 
 	public int takeDamage(int damaged) {

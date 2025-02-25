@@ -2,6 +2,7 @@ package entities;
 
 import java.util.ArrayList;
 
+import component.HpBar;
 import game.util.EffectType;
 import interfaces.ReStatable;
 import interfaces.TurnActivable;
@@ -36,13 +37,15 @@ public class Player extends Being implements TurnActivable, ReStatable {
 
 	// @Override
 	public void initialize(Image image) {
-		getChildren().setAll(text);
+		hpBar = new HpBar(this);
+		getChildren().setAll(text, hpBar);
 		render();
 	}
 
 	@Override
 	public void render() {
-		text.setText(String.format("Hp: %s/%s, Df: %s, Energy: %s", hp, maxHp, shield, energy));
+		text.setText(String.format("Energy: %s", energy));
+		hpBar.render();
 	}
 
 	@Override
