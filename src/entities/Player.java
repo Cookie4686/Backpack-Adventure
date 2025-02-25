@@ -2,6 +2,7 @@ package entities;
 
 import java.util.ArrayList;
 
+import component.EnergyOrb;
 import component.HpBar;
 import game.util.EffectType;
 import interfaces.ReStatable;
@@ -17,6 +18,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	private ArrayList<String> pic;
 
 	private Text text;
+	private EnergyOrb energyOrb;
 
 	public Player() {
 		super();
@@ -31,21 +33,20 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		this.luck = 0;
 		this.pic = null;
 
-		text = new Text();
 		initialize(null);
 	}
 
-	// @Override
 	public void initialize(Image image) {
+		energyOrb = new EnergyOrb(this);
 		hpBar = new HpBar(this);
-		getChildren().setAll(text, hpBar);
+		getChildren().setAll(energyOrb, hpBar);
 		render();
 	}
 
 	@Override
 	public void render() {
-		text.setText(String.format("Energy: %s", energy));
 		hpBar.render();
+		energyOrb.render();
 	}
 
 	@Override

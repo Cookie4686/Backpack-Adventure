@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
 public class HpBar extends StackPane implements ReRenderable {
 	private static Image heartImage;
 	private static ColorAdjust shieldAdjust;
-	private static double SIZE = 12;
+	private static int SIZE = 12;
 	private Being being;
 	private ProgressBar hpBar;
 	private ImageView imageView;
@@ -28,7 +28,7 @@ public class HpBar extends StackPane implements ReRenderable {
 		super();
 		this.being = being;
 		if (heartImage == null) {
-			heartImage = new Image(ClassLoader.getSystemResource("heart.png").toString());
+			heartImage = new Image(ClassLoader.getSystemResource("component/heart.png").toString());
 		}
 		if (shieldAdjust == null) {
 			shieldAdjust = new ColorAdjust();
@@ -44,8 +44,8 @@ public class HpBar extends StackPane implements ReRenderable {
 		hpBar.setMaxWidth(Double.MAX_VALUE);
 
 		hpBarText = new Text();
-		hpBarText.setFont(Font.font("Courier New", FontWeight.NORMAL, SIZE));
-		hpBarText.setStroke(Color.WHITE);
+		hpBarText.setFont(Font.font("Courier New", FontWeight.BOLD, SIZE));
+		hpBarText.setFill(Color.WHITE);
 
 		StackPane heartPane = new StackPane();
 		heartPane.setMinSize(SIZE * 2.5, SIZE * 2.5);
