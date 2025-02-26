@@ -35,7 +35,7 @@ public class Main extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.show();
 
-		BackgroundSongLoader.autoplay();
+//		BackgroundSongLoader.autoplay();
 	}
 
 	@Override
