@@ -9,6 +9,7 @@ import interfaces.ReRenderable;
 import interfaces.ReStatable;
 import interfaces.TurnActivable;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import logic.FightLogic;
 import logic.GameLogic;
@@ -18,7 +19,7 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 	private static Player instance = null;
 	private int xp, maxXp, energy, maxEnergy, mana, maxMana, money, luck;
 	private ArrayList<String> pic;
-
+	private ImageView imageView;
 	private Text text;
 
 	public Player() {
@@ -64,8 +65,9 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		return damaged;
 	}
 	
-	//@Override
-	public void initialize(Image image) {
+	@Override
+	public void render() {
+		// TODO Auto-generated method stub
 		text.setText(String.format("Hp: %s/%s, Df: %s, Energy: %s", hp, maxHp, shield, energy));
 	}
 
@@ -162,9 +164,4 @@ public class Player extends Being implements TurnActivable, ReRenderable, ReStat
 		this.luck = luck;
 	}
 
-	@Override
-	public void render() {
-		// TODO Auto-generated method stub
-		text.setText(String.format("Hp: %s/%s, Df: %s, Energy: %s", hp, maxHp, shield, energy));
-	}
 }

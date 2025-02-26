@@ -10,6 +10,7 @@ import game.util.Effect;
 import game.util.EffectType;
 import interfaces.ReRenderable;
 import interfaces.TurnActivable;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -23,15 +24,16 @@ import logic.GameLogic;
 public class Entity extends Being implements TurnActivable, ReRenderable {
 	protected int xp, dangerLV;
 	protected boolean stunned;
-	protected ArrayList<String> pic;
+	//protected ArrayList<String> pic;
 	private ImageView imageView;
+	private Timeline timeline;
 	protected ArrayList<Effect> allAttributes;
 	protected Effect nextTurn;
 
 	// will change later
 	private Text text;
 
-	public Entity(String name, ArrayList<String> pic, int maxHpLb, int xpLb, int dangerLV,
+	public Entity(String name, int maxHpLb, int xpLb, int dangerLV,
 			ArrayList<Effect> allAttributes) {
 		super();
 		int maxHpUb = (int) (maxHpLb * 1.5);
@@ -41,7 +43,7 @@ public class Entity extends Being implements TurnActivable, ReRenderable {
 		this.hp = this.maxHp = rand.nextInt((maxHpUb - maxHpLb) + 1) + maxHpLb;
 		this.shield = 0;
 		this.xp = rand.nextInt((xpUb - xpLb) + 1) + xpLb;
-		this.pic = pic;
+		//this.pic = pic;
 		this.allAttributes = allAttributes;
 		this.dangerLV = dangerLV;
 		this.stunned = false;
@@ -82,23 +84,23 @@ public class Entity extends Being implements TurnActivable, ReRenderable {
 	}
 	
 	//@Override
-	public void initialize(Image image) {
+//	public void initialize(Image image) {
+//
+//		imageView = new ImageView(image);
+//		imageView.setOnMousePressed(event -> EntityHandler.handleMouseClicked(this));
+//		getChildren().add(imageView);
+//		
+//		
+//		
+//	}
 
-		imageView = new ImageView(image);
-		imageView.setOnMousePressed(event -> EntityHandler.handleMouseClicked(this));
-		getChildren().add(imageView);
-
-		
-		
-	}
-
-	public ArrayList<String> getPic() {
-		return pic;
-	}
-
-	public void setPic(ArrayList<String> pic) {
-		this.pic = pic;
-	}
+//	public ArrayList<String> getPic() {
+//		return pic;
+//	}
+//
+//	public void setPic(ArrayList<String> pic) {
+//		this.pic = pic;
+//	}
 
 	public int getXp() {
 		return xp;
@@ -152,10 +154,30 @@ public class Entity extends Being implements TurnActivable, ReRenderable {
 			// add target frame on top
 		});
 	}
+	
+	public ImageView getImageView() {
+		if(imageView == null) {
+			imageView = new ImageView();
+		}
+		return imageView;
+	}
+
+	public void setImageView(ImageView imageView) {
+		this.imageView = imageView;
+	}
+
+	public Timeline getTimeline() {
+		return timeline;
+	}
+
+	public void setTimeline(Timeline timeline) {
+		this.timeline = timeline;
+	}
 
 	@Override
 	public void render() {
 		// TODO Auto-generated method stub
+		
 		text.setText(String.format("Hp: %s/%s, Df: %s", hp, maxHp, shield));
 	}
 

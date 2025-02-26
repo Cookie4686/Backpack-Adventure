@@ -21,6 +21,7 @@ public class GameLogic {
 
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("werewolf"));
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("werewolf"));
+		
 		FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		GameBottom.getInstance().render();
 	}
@@ -30,7 +31,7 @@ public class GameLogic {
 	}
 	
 	public void endFight() {
-		FightLogic.getInstance().setInFight(false);
+		//FightLogic.getInstance().setInFight(false);
 		
 	}
 
