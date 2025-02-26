@@ -61,6 +61,39 @@ public abstract class Wareable extends Item implements TurnActivable, StatUpdata
 	}
 	
 	
+	//For print only
+	@Override
+	public String toString() {
+		String text=getName()+" is "+getTierName()+" apparel\n"
+				+ "Provide :\n"
+				+ "Add shield : "+initialShield;
+		if (shield>initialShield) text=text+" + "+(shield-initialShield);
+		else if (shield<initialShield) text=text+" - "+(initialShield-shield);
+		
+		text=text+" SHIELD\n";
+		
+		for (Effect effect : getEffects()) {
+			if (effect.getType()==EffectType.HEAL) {
+				text=text+"Add Player "+effect.getAmount()+" MaxHealth\n";
+			}
+			else if (effect.getType()==EffectType.DODGE) {
+				text=text+"Add "+effect.getAmount()+" DODGE to Player\n";
+			}
+			else if (effect.getType()==EffectType.LUCK) {
+				text=text+"Add "+effect.getAmount()+" LUCK to Player\n";
+			}
+			else if (effect.getType()==EffectType.ENERGY) {
+				text=text+"Add "+effect.getAmount()+" MaxEnergy to Player\n";
+			}
+			else {
+				text=text+"Add "+effect.getAmount()+" "+effect.getTypeName()+" to Player\n";
+			}
+		}
+		
+		return text+"\nActivate when in backpack";
+	}
+	
+	
 	//Getter & Setter
 	public ArrayList<Effect> getEffects() {
 		return effects;

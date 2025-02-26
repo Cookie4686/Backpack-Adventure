@@ -23,6 +23,14 @@ public class ManaOrb extends Item implements TurnActivable{
 	}
 	
 	
+	@Override
+	public String toString() {
+		return getName()+" is "+getTierName()+" ManaOrb\n"
+				+ "Provide :\n"
+				+ "Add "+amount+" MANA to Player\n\n"
+				+ "Activate when in backpack";
+	}
+	
 	//Getter & Setter
 	public int getAmount() {
 		return amount;

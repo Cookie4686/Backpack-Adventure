@@ -46,14 +46,51 @@ public class Consumable extends Item implements Clickable {
 		else if (effect.getType()==EffectType.ENERGY) {
 			Player.getInstance().setEnergy(Player.getInstance().getEnergy()+effect.getAmount());
 		}
-		else if (effect.getType()==EffectType.THORN || effect.getType()==EffectType.ANGER || effect.getType()==EffectType.DODGE) {
-			FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
+		else if (effect.getType()==EffectType.LUCK) {
+			Player.getInstance().setLuck(Player.getInstance().getLuck()+effect.getAmount());
+		}
+		else if (effect.getType()==EffectType.DODGE) {
+			FightLogic.getInstance().findEffectAndAdd(Player.getInstance().getAllEffect(), EffectType.DODGE, effect.getAmount());
+		}
+		else if (effect.getType()==EffectType.THORN || effect.getType()==EffectType.ANGER) {
+			FightLogic.getInstance().findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
 		}
 		
 
 		if (getDurability()<=0) {
 			delete();
 		}
+	}
+	
+	
+	//For print only
+	public String getProvide() {
+		String text = getName()+" is "+getTierName()+" Food\n"
+				+ getDurability()+" use left"
+				+ "When click :\n";
+		
+		if (effect.getType()==EffectType.HEAL) {
+			text=text+"Heal Player "+effect.getAmount()+" Health\n";
+		}
+		else if (effect.getType()==EffectType.LUCK) {
+			text=text+"Add "+effect.getAmount()+" LUCK to Player\n";
+		}
+		else if (effect.getType()==EffectType.ENERGY) {
+			text=text+"Add "+effect.getAmount()+" ENEGRY to Player\n";
+		}
+		else if (effect.getType()==EffectType.DODGE) {
+			text=text+"Add "+effect.getAmount()+" DODGE to Player\n";
+		}
+		else {
+			text=text+"Add "+effect.getAmount()+" "+effect.getTypeName()+" to Player\n";
+		}
+		
+		return text;
+	}
+	
+	@Override
+	public String toString() {
+		return getProvide()+"\nCost "+costActivate+" energy per click";
 	}
 	
 	
