@@ -2,6 +2,7 @@ package game.item.relic;
 
 import java.util.ArrayList;
 
+import entities.Player;
 import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.item.Item;
@@ -30,6 +31,11 @@ public abstract class Relic extends Item {
 	
 	
 	private void increaseShield(ArrayList<Item> items) {
+		if (this instanceof ActiveRelic) {
+			Player.getInstance().setShield(Player.getInstance().getShield() + effect.getAmount());
+			return;
+		}
+		
 		for (Item item : items) {
 			if (item instanceof Wareable) {
 				((Wareable)item).addShield(effect.getAmount());
@@ -96,7 +102,7 @@ public abstract class Relic extends Item {
 	
 	
 	protected String getProvide() {	
-		return getName()+" is "+getTierName()+" relic\n";
+		return getName()+" is "+getTierName();
 	}
 	
 	

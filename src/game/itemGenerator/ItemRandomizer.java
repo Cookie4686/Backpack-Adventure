@@ -1,7 +1,6 @@
 package game.itemGenerator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 import game.util.ItemTier;
@@ -15,11 +14,11 @@ public class ItemRandomizer {
 		//TODO: Connect luck and floor system
 		int luckNumber = new Random().nextInt(begin, end);
 		
-		if (luckNumber<=50) return ItemTier.COMMON;		//50%
-		if (luckNumber<=76) return ItemTier.UNCOMMON;	//26%
-		if (luckNumber<=89) return ItemTier.RARE;		//13%
-		if (luckNumber<=96) return ItemTier.EPIC;		//7%
-		return ItemTier.LEGENDARY;						//4%
+		if (luckNumber<=55) return ItemTier.COMMON;		//55%
+		if (luckNumber<=79) return ItemTier.UNCOMMON;	//24%
+		if (luckNumber<=91) return ItemTier.RARE;		//12%
+		if (luckNumber<=97) return ItemTier.EPIC;		//6%
+		return ItemTier.LEGENDARY;						//3%
 	}
 	
 	private static String getNameFromTier(ItemTier itemTier) {

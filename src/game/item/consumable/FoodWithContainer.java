@@ -33,6 +33,12 @@ public class FoodWithContainer extends Consumable {
 		else if (getEffectType()==EffectType.ENERGY) {
 			Player.getInstance().setEnergy(Player.getInstance().getEnergy()+getEffectAmount());
 		}
+		else if (getEffectType()==EffectType.SHIELD) {
+			Player.getInstance().setShield(Player.getInstance().getShield()+getEffectAmount());
+		}
+		else if (getEffectType()==EffectType.LUCK) {
+			Player.getInstance().setLuck(Player.getInstance().getLuck()+getEffectAmount());
+		}
 		else if (getEffectType()==EffectType.THORN || getEffectType()==EffectType.ANGER || getEffectType()==EffectType.DODGE) {
 			FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), getEffectType(), getEffectAmount());
 		}

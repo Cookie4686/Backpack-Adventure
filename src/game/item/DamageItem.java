@@ -69,7 +69,8 @@ public class DamageItem extends Item implements Clickable {
 	
 	@Override
 	public String toString() {
-		String text=getName()+" is "+getTierName()+" weapon\n"
+		String text=getName()+" is "+getTierName()+" throw weapon\n"
+				+ "Will gone after use\n"
 				+ "When click :\n";
 		
 		for (Effect effect : effects) {

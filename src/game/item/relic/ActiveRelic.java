@@ -5,29 +5,33 @@ import game.util.Effect;
 import game.util.EffectType;
 import game.util.ItemTier;
 import interfaces.Clickable;
+import interfaces.TurnActivable;
 
-public class ActiveRelic extends Relic implements Clickable {
+public class ActiveRelic extends Relic implements Clickable, TurnActivable{
 	private int costActivate;
+	private boolean isUsed;
 	
 	public ActiveRelic(String name, String detail, Effect effect, int costActivate, int range, int width, int height, ItemTier tier) {
 		super(name, detail, effect, range, width, height, tier);
+		isUsed=false;
 	}
 
 	public ActiveRelic(String name, String detail, Effect effect, int costActivate, int range, int height, ItemTier tier) {
 		super(name, detail, effect, range, height, tier);
+		isUsed=false;
 	}
 	
 	
 	@Override
 	public boolean isEnoughEnergy() {
-		if (Player.getInstance().getEnergy()<costActivate) return false;
+		if (Player.getInstance().getEnergy()<costActivate || isUsed) return false;
 		return true;
 	}
 	
 	@Override
 	public void activatePerClick() {
 		if (!isEnoughEnergy()) return;
-		
+		isUsed=true;
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
 		
 		super.activate();
@@ -41,20 +45,24 @@ public class ActiveRelic extends Relic implements Clickable {
 		this.costActivate = costActivate < 0 ? 0 : costActivate;
 	}
 	
+	@Override
+	public void activatePerTurn() {
+		isUsed=false;
+	}
 	
 	@Override
 	public String toString() {
-		String text = getProvide()+"Can use once per turn\nOn use :\n";
+		String text = getProvide()+" Active Relic\nCan use once per turn\nOn use :\n";
 		if (isDiagonal) {
 			if (getEffectType()==EffectType.SHIELD) {
-				text=text+"Add "+getEffectAmount()+" SHIELD to apparel at "+getRange()+" diagonal slot away";
+				text=text+"Add "+getEffectAmount()+" SHIELD to player per apparel at "+getRange()+" diagonal slot away";
 			}
 			if (getEffectType()==EffectType.DAMAGE) {
 				text=text+"Add  "+getEffectAmount()+" DAMAGE to weapon at "+getRange()+" diagonal slot away";
 			}
 		} else {
 			if (getEffectType()==EffectType.SHIELD) {
-				text=text+"Add "+getEffectAmount()+" SHIELD to apparel at "+getRange()+" beside slot away";
+				text=text+"Add "+getEffectAmount()+" SHIELD to player per apparel at "+getRange()+" beside slot away";
 			}
 			if (getEffectType()==EffectType.DAMAGE) {
 				text=text+"Add  "+getEffectAmount()+" DAMAGE to weapon at "+getRange()+" beside slot away";
