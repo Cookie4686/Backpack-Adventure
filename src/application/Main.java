@@ -4,12 +4,15 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import logic.handler.ItemHandler;
 import scene.MenuScene;
+import sound.BackgroundSongLoader;
 
 public class Main extends Application {
 	public static StackPane root;
+	public static MediaPlayer mediaPlayer;
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -30,8 +33,9 @@ public class Main extends Application {
 		primaryStage.setTitle("Backpack");
 		// primaryStage.setMaximized(true);
 		primaryStage.setResizable(false);
-
 		primaryStage.show();
+
+		BackgroundSongLoader.autoplay();
 	}
 
 	@Override

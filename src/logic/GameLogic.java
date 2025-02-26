@@ -7,6 +7,7 @@ import game.Game;
 import game.GameBottom;
 import game.GameTop;
 import game.item.Item;
+import sound.ThemeSongLoader;
 
 public class GameLogic {
 	private static GameLogic instance = null;
@@ -22,6 +23,7 @@ public class GameLogic {
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("werewolf"));
 		FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		GameBottom.getInstance().render();
+		ThemeSongLoader.play("boss1");
 	}
 
 	public void gameOver() {
@@ -30,7 +32,7 @@ public class GameLogic {
 
 	public void endFight() {
 		FightLogic.getInstance().setInFight(false);
-
+		ThemeSongLoader.stop();
 	}
 
 	public ArrayList<Item> getInventory() {
