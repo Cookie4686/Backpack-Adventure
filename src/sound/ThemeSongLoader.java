@@ -22,9 +22,8 @@ public class ThemeSongLoader {
 		if (path != null) {
 			BackgroundSongLoader.getCurrentPlayer().pause();
 			currentPlayer = new MediaPlayer(
-					new Media(ClassLoader.getSystemResource(String.format("sound/%s", path)).toString()));
-			currentPlayer.volumeProperty()
-					.bind(SettingPopup.getInstance().getThemeSlider().getSlider().valueProperty());
+					new Media(ClassLoader.getSystemResource(String.format("theme/%s", path)).toString()));
+			currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getThemeSlider().valueProperty());
 			currentPlayer.play();
 			currentPlayer.setOnEndOfMedia(() -> {
 				currentPlayer.seek(Duration.ZERO);
@@ -36,7 +35,6 @@ public class ThemeSongLoader {
 	public static void stop() {
 		if (currentPlayer != null) {
 			currentPlayer.stop();
-			BackgroundSongLoader.getCurrentPlayer().setVolume(1);
 			BackgroundSongLoader.getCurrentPlayer().play();
 		}
 	}
