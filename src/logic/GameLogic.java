@@ -31,7 +31,7 @@ public class GameLogic {
 	}
 	
 	public void endFight() {
-		//FightLogic.getInstance().setInFight(false);
+		FightLogic.getInstance().setInFight(false);
 		
 	}
 
