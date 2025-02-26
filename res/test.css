@@ -1,0 +1,7 @@
+.progress-bar > .bar {
+    -fx-background-insets: 2;
+    -fx-background-radius: 1;
+}
+.progress-bar > .track {
+  -fx-control-inner-background: black;
+}

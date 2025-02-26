@@ -2,6 +2,7 @@ package game.backpack;
 
 import java.util.ArrayList;
 
+import component.Button;
 import game.Game;
 import game.item.Item;
 import game.item.consumable.Potion;
@@ -9,15 +10,14 @@ import game.util.ItemPosition;
 import game.util.ItemRotation;
 import interfaces.ReRenderable;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import logic.FightLogic;
 import logic.GameLogic;
 import logic.handler.ButtonHandler;
 import logic.handler.ItemHandler;
 
-public class Backpack extends BorderPane implements ReRenderable {
+public class Backpack extends VBox implements ReRenderable {
 	private static Backpack instance;
 	public static final int WIDTH = 7, HEIGHT = 5;
 	private Slot[][] slots;
@@ -34,11 +34,11 @@ public class Backpack extends BorderPane implements ReRenderable {
 				gridPane.add(slots[y][x] = new Slot(), x, y);
 			}
 		}
-		setCenter(gridPane);
-		endTurnButton = new Button("End Turn");
-		endTurnButton.setOnAction(event -> ButtonHandler.handleEndTurnButtonOnAction());
-		setBottom(endTurnButton);
-		setAlignment(endTurnButton, Pos.CENTER);
+		endTurnButton = new Button("End Turn", 64, 16);
+		endTurnButton.setOnAction(_ -> ButtonHandler.handleEndTurnButtonOnAction());
+		setAlignment(Pos.CENTER);
+		getChildren().setAll(gridPane, endTurnButton);
+		setSpacing(8);
 		render();
 	}
 
