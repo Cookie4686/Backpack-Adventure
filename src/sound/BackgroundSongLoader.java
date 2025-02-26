@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import scene.popup.SettingPopup;
 
 public class BackgroundSongLoader {
 	private static ArrayList<String> paths;
@@ -22,6 +23,7 @@ public class BackgroundSongLoader {
 	public static void autoplay() {
 		currentPlayer = new MediaPlayer(new Media(
 				ClassLoader.getSystemResource(String.format("sound/%s", paths.get(currentIndex))).toString()));
+		currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getMusicSlider().getSlider().valueProperty());
 		currentPlayer.play();
 		currentPlayer.setOnEndOfMedia(() -> {
 			currentIndex = currentIndex + 1 == paths.size() ? 0 : currentIndex + 1;
