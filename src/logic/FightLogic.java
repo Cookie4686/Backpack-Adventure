@@ -102,7 +102,7 @@ public class FightLogic {
 		switch (ef.getType()) {
 		case FIRE		-> findEffectAndAdd(Player.getInstance().getAllEffect(), ef.getType(), ef.getAmount());
 		case POISON		-> findEffectAndAdd(Player.getInstance().getAllEffect(), ef.getType(), ef.getAmount());
-		case DAMAGE		-> doDamage(ef, e, Player.getInstance());
+		case DAMAGE		-> doDamage(ef.getAmount(), e, (Being) Player.getInstance());
 		case THORN		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
 		case SHIELD		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
 		case DODGE		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
