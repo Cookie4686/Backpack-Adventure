@@ -1,17 +1,19 @@
 package scene.popup;
 
 import component.Button;
+import component.VolumeSlider;
 import javafx.geometry.Pos;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import sound.BackgroundSongPlayer;
 
 public class SettingPopup extends GridPane {
 	private static SettingPopup instance;
 	private Popup popup;
-	private Slider musicSlider, themeSlider, sfxSlider;
+	private VolumeSlider musicSlider, themeSlider, sfxSlider;
 
 	public SettingPopup() {
 		super();
@@ -23,9 +25,10 @@ public class SettingPopup extends GridPane {
 		add(createText("Music Volume"), 0, 0);
 		add(createText("Theme Volume"), 0, 1);
 		add(createText("SFX Volume"), 0, 2);
-		add(musicSlider = new Slider(0, 1, 0.5), 1, 0);
-		add(themeSlider = new Slider(0, 1, 0.5), 1, 1);
-		add(sfxSlider = new Slider(0, 1, 0.5), 1, 2);
+		add(musicSlider = new VolumeSlider(24, true, () -> BackgroundSongPlayer.pause(),
+				() -> BackgroundSongPlayer.play()), 1, 0);
+		add(themeSlider = new VolumeSlider(24), 1, 1);
+		add(sfxSlider = new VolumeSlider(24), 1, 2);
 
 		popup.setCenter(this);
 
@@ -45,15 +48,15 @@ public class SettingPopup extends GridPane {
 	}
 
 	public Slider getMusicSlider() {
-		return musicSlider;
+		return musicSlider.getSlider();
 	}
 
 	public Slider getThemeSlider() {
-		return themeSlider;
+		return themeSlider.getSlider();
 	}
 
 	public Slider getSfxSlider() {
-		return sfxSlider;
+		return sfxSlider.getSlider();
 	}
 
 	public static SettingPopup getInstance() {

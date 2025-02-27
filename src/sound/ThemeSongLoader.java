@@ -20,7 +20,7 @@ public class ThemeSongLoader {
 	public static void play(String name) {
 		String path = themeMap.get(name);
 		if (path != null) {
-			BackgroundSongLoader.getCurrentPlayer().pause();
+			BackgroundSongPlayer.pause();
 			currentPlayer = new MediaPlayer(
 					new Media(ClassLoader.getSystemResource(String.format("theme/%s", path)).toString()));
 			currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getThemeSlider().valueProperty());
@@ -35,7 +35,7 @@ public class ThemeSongLoader {
 	public static void stop() {
 		if (currentPlayer != null) {
 			currentPlayer.stop();
-			BackgroundSongLoader.getCurrentPlayer().play();
+			BackgroundSongPlayer.play();
 		}
 	}
 }

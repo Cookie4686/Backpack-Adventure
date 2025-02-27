@@ -6,7 +6,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import scene.popup.SettingPopup;
 
-public class BackgroundSongLoader {
+public class BackgroundSongPlayer {
 	private static ArrayList<String> paths;
 	private static int currentIndex;
 	private static MediaPlayer currentPlayer;
@@ -29,6 +29,20 @@ public class BackgroundSongLoader {
 			currentIndex = currentIndex + 1 == paths.size() ? 0 : currentIndex + 1;
 			autoplay();
 		});
+	}
+
+	public static void play() {
+		if (currentPlayer != null) {
+			currentPlayer.play();
+		} else {
+			autoplay();
+		}
+	}
+
+	public static void pause() {
+		if (currentPlayer != null) {
+			currentPlayer.pause();
+		}
 	}
 
 	public static MediaPlayer getCurrentPlayer() {
