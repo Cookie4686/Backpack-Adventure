@@ -2,6 +2,7 @@ package logic.handler;
 
 import java.util.Random;
 
+import application.Main;
 import entities.Player;
 import game.Game;
 import game.GameBottom;
@@ -143,12 +144,45 @@ public class ItemHandler {
 	}
 
 	private static void calcValues() {
+		if(currentItem != null) {			
 		diffX = currentItem.getRotation() == ItemRotation.VERTICAL ? currentItem.getDiffX() : 0;
 		maxWidth = Game.getInstance().getWidth() - currentItem.getWidth() + diffX;
 		diffY = currentItem.getRotation() == ItemRotation.HORIZONTAL ? currentItem.getDiffY() : 0;
 		maxHeight = Game.getInstance().getHeight() - currentItem.getHeight() + diffY;
+		}
 		slotPaneX = Game.getX(Backpack.getInstance());
 		slotPaneY = Game.getY(Backpack.getInstance());
+	}
+
+	public static void addItemsToGame(Item... items) {
+		Item temp = currentItem;
+		// length = 5, row = 2 itemPerRow = 2
+		final int row = 2, itemPerRow = items.length / row, spacingX = 8, spacingY = 4;
+		double prevHeight = Backpack.getInstance().getHeight();
+		for (int i = 0; i < row; i++) {
+			double width = 0, height = 0;
+			int limit = itemPerRow + (i + 1 == row ? items.length % row : 0);
+			// calculate the total width
+			for (int j = 0; j < limit; j++) {
+				Item item = items[i * itemPerRow + j];
+				width += item.getItemWidth() * Slot.SIZE + spacingX;
+				height = Math.max(height, item.getItemHeight() * Slot.SIZE);
+			}
+			double diffX = Main.root.getWidth() / 2 - width / 2;
+			// place item
+			double accumulator = 0;
+			for (int j = 0; j < limit; j++) {
+				currentItem = items[i * itemPerRow + j];
+				calcValues();
+				setTranslateNoOffScreenX(diffX + accumulator - currentItem.getDiffX());
+				double diffY = height - currentItem.getItemHeight() * Slot.SIZE;
+				setTranslateNoOffScreenY(prevHeight + (diffY == 0 ? 0 : diffY / 2));
+				accumulator += currentItem.getItemWidth() * Slot.SIZE + spacingX;
+			}
+			prevHeight += height + spacingY;
+		}
+		currentItem = temp;
+		calcValues();
 	}
 
 	private static void setTranslateNoOffScreenX(double val) {
