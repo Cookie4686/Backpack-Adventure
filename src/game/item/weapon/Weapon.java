@@ -6,6 +6,7 @@ import game.util.ItemTier;
 import interfaces.Clickable;
 import interfaces.ReStatable;
 import logic.FightLogic;
+import sound.Sfx;
 import sound.SfxPlayer;
 
 public class Weapon extends Item implements Clickable, ReStatable {
@@ -44,7 +45,7 @@ public class Weapon extends Item implements Clickable, ReStatable {
 			return;
 
 		// TODO: change this later
-		SfxPlayer.play("sword");
+		SfxPlayer.play(Sfx.SWORD);
 		// decrease player energy by costActivate
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
 

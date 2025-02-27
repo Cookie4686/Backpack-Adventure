@@ -21,6 +21,7 @@ public class HpBar extends StackPane implements ReRenderable {
 	private static int SIZE = 12;
 	private Being being;
 	private ProgressBar hpBar;
+	private double realProgress;
 	private ImageView imageView;
 	private Text hpBarText, shieldText;
 
@@ -42,6 +43,7 @@ public class HpBar extends StackPane implements ReRenderable {
 		hpBar = new ProgressBar((double) being.getHp() / being.getMaxHp());
 		hpBar.setStyle("-fx-accent: #EF2929;");
 		hpBar.setMaxWidth(Double.MAX_VALUE);
+		realProgress = hpBar.getProgress();
 
 		hpBarText = new Text();
 		hpBarText.setFont(Font.font("Courier New", FontWeight.BOLD, SIZE));
@@ -73,9 +75,12 @@ public class HpBar extends StackPane implements ReRenderable {
 	}
 
 	private void setHpBar() {
+		// check if working: prevent bugs when multiple thread are modifying hpBar
+		final double temp = realProgress;
+		realProgress = (double) being.getHp() / being.getMaxHp();
 		Thread thread = new Thread(() -> {
 			final int SMOOTHNESS = 50;
-			double interval = (hpBar.getProgress() - (double) being.getHp() / being.getMaxHp()) / SMOOTHNESS;
+			double interval = (temp - (double) being.getHp() / being.getMaxHp()) / SMOOTHNESS;
 			for (int i = 0; i < SMOOTHNESS; i++) {
 				Platform.runLater(() -> {
 					hpBar.setProgress(hpBar.getProgress() - interval);
