@@ -10,15 +10,13 @@ public class IncreaseCostWeapon extends SpecialWeapon implements TurnActivable{
 	final private int initCost;
 	private int increaseCost;
 
-	public IncreaseCostWeapon(String name, String detail, ArrayList<Effect> effects, int increaseCost, int damage, int costActivate,
-			int width, int height, ItemTier tier) {
+	public IncreaseCostWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int increaseCost, int width, int height, ItemTier tier) {
 		super(name, detail, effects, damage, costActivate, width, height, tier);
 		this.initCost = costActivate;
 		this.increaseCost = increaseCost;
 	}
 
-	public IncreaseCostWeapon(String name, String detail, ArrayList<Effect> effects, int increaseCost, int damage, int costActivate,
-			int width, ItemTier tier) {
+	public IncreaseCostWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int increaseCost, int width, ItemTier tier) {
 		super(name, detail, effects, damage, costActivate, width, tier);
 		this.initCost = costActivate;
 		this.increaseCost = increaseCost;

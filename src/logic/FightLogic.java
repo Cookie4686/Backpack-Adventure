@@ -115,10 +115,10 @@ public class FightLogic {
 		}
 	}
 
-	public static void doDamage(Effect ef, Being e, Being p) {
+	public static void doDamage(int damage, Being e, Being p) {
 		Effect rage = findEffect(e.getAllEffect(), EffectType.ANGER);
 		Effect thorn = findEffect(p.getAllEffect(), EffectType.THORN);
-		p.takeDamage(ef.getAmount() + (rage == null ? 0 : rage.getAmount()));
+		p.takeDamage(damage + (rage == null ? 0 : rage.getAmount()));
 		e.takeDamage(thorn == null ? 0 : thorn.getAmount());
 	}
 

@@ -19,13 +19,6 @@ public class Consumable extends Item implements Clickable {
 		setDurability(durability);
 		setCostActivate(costActivate);
 	}
-
-	public Consumable(String name, String detail, int durability, Effect effect, int costActivate, int height, ItemTier tier) {
-		super(name, detail, height, tier);
-		this.effect = effect;
-		setDurability(durability);
-		setCostActivate(costActivate);
-	}
 	
 	@Override
 	public boolean isEnoughEnergy() {
