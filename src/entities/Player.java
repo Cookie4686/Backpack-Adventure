@@ -58,46 +58,46 @@ public class Player extends Being implements TurnActivable, ReStatable {
 
 		text = new Text();
 		idleFrames = new ArrayList<Image>(Arrays.asList(
-			new Image(ClassLoader.getSystemResource("player_Idle1.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_Idle2.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_Idle3.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_Idle4.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_Idle5.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_Idle6.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_Idle7.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_Idle8.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_Idle9.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_Idle10.png").toString())
+			new Image(ClassLoader.getSystemResource("Frames/player_Idle1.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_Idle2.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_Idle3.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_Idle4.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_Idle5.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_Idle6.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_Idle7.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_Idle8.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_Idle9.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_Idle10.png").toString())
 		));
 		idleTimeline = createPlayerAnimation(idleFrames,0.1);
 		idleTimeline.setCycleCount(Timeline.INDEFINITE);
 		idleTimeline.play();
 		this.getChildren().add(imageView);
 		attackFrames = new ArrayList<Image>(Arrays.asList(
-			new Image(ClassLoader.getSystemResource("player_attack1.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_attack2.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_attack3.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_attack4.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_attack5.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_attack6.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_attack7.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_attack8.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_attack9.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_attack10.png").toString())
+			new Image(ClassLoader.getSystemResource("Frames/player_attack1.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_attack2.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_attack3.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_attack4.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_attack5.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_attack6.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_attack7.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_attack8.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_attack9.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_attack10.png").toString())
 		));
 		attackTimeline = createPlayerAnimation(attackFrames,0.05);
 		attackTimeline.setCycleCount(1);
 		runFrames = new ArrayList<Image>(Arrays.asList(
-			new Image(ClassLoader.getSystemResource("player_run1.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_run2.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_run3.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_run4.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_run5.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_run6.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_run7.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_run8.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_run9.png").toString()),
-			new Image(ClassLoader.getSystemResource("player_run10.png").toString())
+			new Image(ClassLoader.getSystemResource("Frames/player_run1.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_run2.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_run3.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_run4.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_run5.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_run6.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_run7.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_run8.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_run9.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_run10.png").toString())
 		));
 		runTimeline = createPlayerAnimation(runFrames,0.2);
 		runTimeline.setCycleCount(Timeline.INDEFINITE);
