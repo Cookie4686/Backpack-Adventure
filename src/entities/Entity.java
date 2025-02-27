@@ -46,7 +46,7 @@ public class Entity extends Being implements TurnActivable {
 		imageView.setPickOnBounds(true);
 		imageView.setOnMousePressed(event -> EntityHandler.handleMouseClicked(this));
 		hpBar = new HpBar(this);
-		getChildren().setAll(imageView, hpBar);
+		getChildren().setAll(hpBar, imageView);
 		render();
 	}
 
