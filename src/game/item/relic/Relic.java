@@ -6,8 +6,8 @@ import entities.Player;
 import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.item.Item;
-import game.item.wareable.Wareable;
 import game.item.weapon.Weapon;
+import game.item.wearable.Wearable;
 import game.util.Effect;
 import game.util.EffectType;
 import game.util.ItemPosition;
@@ -37,8 +37,8 @@ public abstract class Relic extends Item {
 		}
 		
 		for (Item item : items) {
-			if (item instanceof Wareable) {
-				((Wareable)item).addShield(effect.getAmount());
+			if (item instanceof Wearable) {
+				((Wearable)item).addShield(effect.getAmount());
 			}
 		}
 	}

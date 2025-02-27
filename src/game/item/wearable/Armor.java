@@ -1,4 +1,4 @@
-package game.item.wareable;
+package game.item.wearable;
 
 import java.util.ArrayList;
 
@@ -9,13 +9,13 @@ import game.util.Effect;
 import game.util.ItemPosition;
 import game.util.ItemTier;
 
-public class Armor extends Wareable {
+public class Armor extends Wearable {
 	public Armor(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height, ItemTier tier) {
 		super(name, detail, initialShield, increaseShield, effects, width, height, tier);
 	}
 
 	private boolean isMeetCondition(Item item, ArrayList<Item> items) {
-		if (item instanceof Wareable) 
+		if (item instanceof Wearable) 
 			if (!item.equals(this))
 				if (!items.contains(item)) return true;
 		return false;

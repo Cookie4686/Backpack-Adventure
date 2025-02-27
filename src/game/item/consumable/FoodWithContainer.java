@@ -16,10 +16,6 @@ public class FoodWithContainer extends Consumable {
 		setContainer(container);
 	}
 	
-	public FoodWithContainer(String name, String detail, String container, int costActivate, int durability, Effect effect, int height, ItemTier tier) {
-		super(name, detail, durability, effect, costActivate, height, tier);
-		setContainer(container);
-	}
 	
 	@Override
 	public void activatePerClick() {

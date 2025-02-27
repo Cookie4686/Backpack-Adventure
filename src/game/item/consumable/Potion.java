@@ -11,9 +11,6 @@ public class Potion extends FoodWithContainer{
 		super(name, detail, container, costActivate, durability, effect, width, height, tier);
 	}
 
-	public Potion(String name, String detail, String container, int costActivate, int durability, Effect effect, int height, ItemTier tier) {
-		super(name, detail, container, costActivate, durability, effect, height, tier);
-	}
 	
 	public boolean isStackable(Item item) {
 		if (item.getName().equals(getName()) && getDurability()<limit) {

@@ -1,4 +1,4 @@
-package game.item.wareable;
+package game.item.wearable;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ import game.util.Effect;
 import game.util.ItemPosition;
 import game.util.ItemTier;
 
-public class Helmet extends Wareable {
+public class Helmet extends Wearable {
 	public Helmet(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height, ItemTier tier) {
 		super(name, detail, initialShield, increaseShield, effects, width, height, tier);
 	}

@@ -14,6 +14,6 @@ public class GameScene {
 		root.getChildren().setAll(GameHeader.getInstance(), Game.getInstance());
 		Main.root.getChildren().setAll(root);
 
-		Game.getInstance().getChildren().addAll(ResourceLoader.newItem("apple"), ResourceLoader.newItem("sword"));
+		Game.getInstance().getChildren().addAll(ResourceLoader.newItem("Apple"), ResourceLoader.newItem("Azurite Sword"));
 	}
 }

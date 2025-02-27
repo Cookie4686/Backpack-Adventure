@@ -1,4 +1,4 @@
-package game.item.wareable;
+package game.item.wearable;
 
 import java.util.ArrayList;
 
@@ -12,13 +12,13 @@ import interfaces.StatUpdatable;
 import interfaces.TurnActivable;
 import logic.FightLogic;
 
-public abstract class Wareable extends Item implements TurnActivable, StatUpdatable, ReStatable{
+public abstract class Wearable extends Item implements TurnActivable, StatUpdatable, ReStatable{
 	final private ArrayList<Effect> effects;
 	final private int initialShield;
 	private int shield;
 	private int increaseShield;
 	
-	public Wareable(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height, ItemTier tier) {
+	public Wearable(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height, ItemTier tier) {
 		super(name, detail, width, height, tier);
 		this.initialShield = (initialShield<0)? 0 : initialShield;
 		setShield(initialShield);
