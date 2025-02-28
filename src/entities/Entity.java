@@ -7,6 +7,7 @@ import component.HpBar;
 import game.GameBottom;
 import game.util.Effect;
 import game.util.EffectType;
+import game.util.MobTier;
 import interfaces.TurnActivable;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -20,7 +21,8 @@ import logic.GameLogic;
 import logic.handler.EntityHandler;
 
 public class Entity extends Being implements TurnActivable {
-	protected int xp, dangerLV;
+	protected int xp;
+	protected MobTier dangerLV;
 	protected boolean stunned;
 	private Timeline timeline;
 	private ImageView imageView;
@@ -30,7 +32,7 @@ public class Entity extends Being implements TurnActivable {
     private boolean isMoving = false;
     private static final double MOVE_DURATION = 0.3;
     
-	public Entity(String name, int maxHpLb, int xpLb, int dangerLV,
+	public Entity(String name, int maxHpLb, int xpLb, MobTier dangerLV,
 			ArrayList<Effect> allAttributes) {
 		super();
 		int maxHpUb = (int) (maxHpLb * 1.5);
@@ -109,11 +111,11 @@ public class Entity extends Being implements TurnActivable {
 		this.allAttributes = allAttributes;
 	}
 
-	public int getDangerLV() {
+	public MobTier getDangerLV() {
 		return dangerLV;
 	}
 
-	public void setDangerLV(int dangerLV) {
+	public void setDangerLV(MobTier dangerLV) {
 		this.dangerLV = dangerLV;
 	}
 
