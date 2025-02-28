@@ -22,7 +22,9 @@ public class Consumable extends Item implements Clickable {
 	
 	@Override
 	public boolean isEnoughEnergy() {
-		if (Player.getInstance().getEnergy()<costActivate) return false;
+		System.out.println(costActivate);
+		if (Player.getInstance().getEnergy()<costActivate) 
+			return false;
 		return true;
 	}
 	
@@ -32,6 +34,7 @@ public class Consumable extends Item implements Clickable {
 		if (!isEnoughEnergy()) return;
 		
 		setDurability(getDurability()-1);
+		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
 		
 		if (effect.getType()==EffectType.HEAL) {
 			Player.getInstance().setHp(Player.getInstance().getHp()+effect.getAmount());
@@ -57,7 +60,7 @@ public class Consumable extends Item implements Clickable {
 	protected String getProvide() {
 		String text = getName()+" is "+getTierName()+" Food\n"
 				+ getDurability()+" use left"
-				+ "When click :\n";
+				+ "\nWhen click :\n";
 		
 		if (effect.getType()==EffectType.HEAL) {
 			text=text+"Heal Player "+effect.getAmount()+" Health\n";

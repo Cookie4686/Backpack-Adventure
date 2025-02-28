@@ -154,7 +154,7 @@ public class ItemList {
 		itemMap.put("Empty Gold Cup", new Resource(() -> new Container("Empty Gold Cup", "Shiny, you really want to throw it?", 64, 1, 1, ItemTier.RARE), "Items/EmptyGoldCup.png"));
 		itemMap.put("Empty Long Bottle", new Resource(() -> new Container("Empty Long Bottle", "BTW, Its not a sugar.", 20, 1, 2, ItemTier.UNCOMMON), "Items/EmptyLongBottle.png"));
 		itemMap.put("Empty Silver Cup", new Resource(() -> new Container("Empty Silver Cup", "Luxury.", 32, 1, 1, ItemTier.UNCOMMON), "Items/EmptySilverCup.png"));
-		itemMap.put("Empty Wooden Cup", new Resource(() -> new Container("Empty Wooden Cup", "Classic.", 8, 1, 1, ItemTier.COMMON), "Items/EmptyWoodenCup.png"));
+		itemMap.put("Empty Wooden Cup", new Resource(() -> new Container("Empty Wooden Cup", "Classic.", 8, 1, 1, ItemTier.COMMON), "Items/EmptyWoodCup.png"));
 		itemMap.put("Empty Potion I", new Resource(() -> new Container("Empty Potion I", "Too small to store water.", 10, 1, 1, ItemTier.COMMON), "Items/EmptyPotion1.png"));
 		itemMap.put("Empty Potion II", new Resource(() -> new Container("Empty Potion II", "Normal bottle.", 20, 1, 1, ItemTier.COMMON), "Items/EmptyPotion2.png"));
 		itemMap.put("Empty Potion III", new Resource(() -> new Container("Empty Potion III", "BTW, Its not a sugar.", 30, 1, 1, ItemTier.COMMON), "Items/EmptyPotion3.png"));

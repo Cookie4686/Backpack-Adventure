@@ -50,7 +50,7 @@ public class SpecialWeapon extends Weapon {
 	
 	@Override
 	public String getProvide() {
-		String text = getProvide();
+		String text = super.getProvide();
 		for (Effect effect : effects) {
 			if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNTED) {
 				text=text+"Add "+effect.getAmount()+" "+effect.getTypeName()+" to target\n";
