@@ -2,6 +2,7 @@ package application;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
@@ -22,6 +23,7 @@ public class Main extends Application {
 		// double aspectRatio = screenWidth / screenHeight;
 
 		root = new StackPane();
+		root.setAlignment(Pos.TOP_LEFT);
 		root.prefWidthProperty().bind(primaryStage.widthProperty());
 		root.prefHeightProperty().bind(primaryStage.heightProperty());
 		MenuScene.use();

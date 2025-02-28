@@ -24,6 +24,7 @@ public class Game extends StackPane {
 		VBox vBox = new VBox();
 		vBox.setSpacing(16);
 		Region region = new Region();
+		VBox.setVgrow(GameBottom.getInstance(), Priority.NEVER);
 		VBox.setVgrow(region, Priority.ALWAYS);
 		vBox.getChildren().setAll(GameTop.getInstance(), region, GameBottom.getInstance());
 

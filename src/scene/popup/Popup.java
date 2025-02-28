@@ -8,6 +8,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -41,6 +42,7 @@ public class Popup extends BorderPane {
 	}
 
 	public void show() {
+		StackPane.setAlignment(this, Pos.CENTER);
 		Main.root.getChildren().add(this);
 	}
 

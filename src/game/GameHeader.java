@@ -5,9 +5,15 @@ import interfaces.ReRenderable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import logic.GameLogic;
 import logic.handler.ButtonHandler;
@@ -22,15 +28,18 @@ public class GameHeader extends HBox implements ReRenderable {
 		setAlignment(Pos.CENTER);
 		setPadding(new Insets(5, 10, 5, 10));
 		setSpacing(10);
+		setBorder(new Border(
+				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		setPrefSize(USE_COMPUTED_SIZE, USE_COMPUTED_SIZE);
 
 		floorText = new Text();
 		experienceText = new Text();
 		Region region = new Region();
 		setHgrow(region, Priority.ALWAYS);
 		backpackButton = new Button("Toggle Backpack");
-		backpackButton.setOnAction(event -> ButtonHandler.handleBackpackButtonOnAction());
+		backpackButton.setOnAction(_ -> ButtonHandler.handleBackpackButtonOnAction());
 
-		getChildren().addAll(floorText, experienceText, region, backpackButton);
+		getChildren().setAll(floorText, experienceText, region, backpackButton);
 		render();
 	}
 

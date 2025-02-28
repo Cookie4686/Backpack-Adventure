@@ -30,7 +30,6 @@ public class GameTop extends HBox {
 		for (Item item : Game.getInstance().getItemsInGame()) {
 			item.setVisible(true);
 		}
-		Backpack.getInstance().render();
 		getChildren().setAll(Backpack.getInstance());
 	}
 

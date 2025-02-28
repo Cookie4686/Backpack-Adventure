@@ -21,8 +21,7 @@ public class GameBottom extends HBox implements ReRenderable {
 
 	public GameBottom() {
 		super();
-		setAlignment(Pos.BOTTOM_LEFT);
-		setPadding(new Insets(16));
+		setPadding(new Insets(8));
 		setSpacing(20);
 		setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));

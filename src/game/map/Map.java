@@ -7,12 +7,8 @@ public class Map extends GridPane {
 	private int width, height;
 	private MapSquare[][] squares;
 
-	public Map() {
+	public Map(int width, int height) {
 		super();
-		initialize(10, 10);
-	}
-
-	public void initialize(int width, int height) {
 		this.width = width;
 		this.height = height;
 		squares = new MapSquare[height][width];
@@ -22,6 +18,11 @@ public class Map extends GridPane {
 				add(squares[y][x], x, y);
 			}
 		}
+		// for setting marker
+		initialize();
+	}
+
+	public void initialize() {
 		squares[0][0].setMarker(MapMarker.PATH);
 		squares[0][1].setMarker(MapMarker.PATH);
 		squares[0][2].setMarker(MapMarker.DOOR);
@@ -59,7 +60,7 @@ public class Map extends GridPane {
 
 	public static Map getInstance() {
 		if (instance == null) {
-			instance = new Map();
+			instance = new Map(10, 10);
 		}
 		return instance;
 	}
