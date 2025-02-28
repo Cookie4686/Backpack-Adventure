@@ -28,6 +28,9 @@ public class Game extends StackPane {
 		vBox.getChildren().setAll(GameTop.getInstance(), region, GameBottom.getInstance());
 
 		getChildren().setAll(vBox);
+
+		// important for calculating height
+		this.layout();
 	}
 
 	public ArrayList<Item> getItemsInGame() {
@@ -41,9 +44,9 @@ public class Game extends StackPane {
 	}
 
 	public void addItemsToGame(Item... items) {
+		getChildren().addAll(items);
 		final int row = 2, itemPerRow = items.length / row, spacingX = 8, spacingY = 4;
-		// TODO: find a way to get actual height
-		double prevHeight = 300;
+		double prevHeight = GameTop.getInstance().getHeight();
 		for (int i = 0; i < row; i++) {
 			double width = 0, height = 0;
 			int limit = itemPerRow + (i + 1 == row ? items.length % row : 0);
@@ -58,14 +61,13 @@ public class Game extends StackPane {
 			double accumulator = 0;
 			for (int j = 0; j < limit; j++) {
 				Item item = items[i * itemPerRow + j];
-				double diffY = height - item.getItemHeight() * Slot.SIZE;
 				item.setTranslateX(diffX + accumulator - item.getDiffX());
+				double diffY = height - item.getItemHeight() * Slot.SIZE;
 				item.setTranslateY(prevHeight + (diffY == 0 ? 0 : diffY / 2));
 				accumulator += item.getItemWidth() * Slot.SIZE + spacingX;
 			}
 			prevHeight += height + spacingY;
 		}
-		getChildren().addAll(items);
 	}
 
 	public void clearFloatingItem() {
@@ -83,13 +85,5 @@ public class Game extends StackPane {
 			instance = new Game();
 		}
 		return instance;
-	}
-
-	public static double getX(Node node) {
-		return node.localToParent(node.getBoundsInLocal()).getMinX();
-	}
-
-	public static double getY(Node node) {
-		return node.localToParent(node.getBoundsInLocal()).getMinY();
 	}
 }
