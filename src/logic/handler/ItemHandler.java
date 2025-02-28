@@ -35,7 +35,7 @@ public class ItemHandler {
 				((Clickable) item).activatePerClick();
 			}
 			Backpack.getInstance().render();
-			GameBottom.getInstance().render();
+			
 		}
 	}
 

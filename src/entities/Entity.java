@@ -9,10 +9,12 @@ import game.util.Effect;
 import game.util.EffectType;
 import interfaces.TurnActivable;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 import logic.FightLogic;
 import logic.GameLogic;
 import logic.handler.EntityHandler;
@@ -24,7 +26,10 @@ public class Entity extends Being implements TurnActivable {
 	private ImageView imageView;
 	protected ArrayList<Effect> allAttributes;
 	protected Effect nextTurn;
-
+	private double desiredX;
+    private boolean isMoving = false;
+    private static final double MOVE_DURATION = 0.3;
+    
 	public Entity(String name, int maxHpLb, int xpLb, int dangerLV,
 			ArrayList<Effect> allAttributes) {
 		super();
@@ -71,16 +76,21 @@ public class Entity extends Being implements TurnActivable {
 			this.setHp(this.getHp() - damaged);
 		}
 		if (this.getHp() == 0) {
-			GameBottom.getInstance().getEnemyBox().getChildren().remove(this);
-			FightLogic.getInstance().getEntities().remove(this);
+			checkAlive();
 			if (FightLogic.getInstance().getEntities().size() == 0) {
 				GameLogic.getInstance().endFight();
 				return damaged;
 			}
 
-			FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
+			FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getLast());
 		}
 		return damaged;
+	}
+	public void checkAlive() {
+		this.die();
+		GameBottom.getInstance().removeEntity();
+		FightLogic.getInstance().getEntities().remove(this);
+		GameBottom.getInstance().render();
 	}
 
 	public int getXp() {
@@ -153,4 +163,43 @@ public class Entity extends Being implements TurnActivable {
 	public void setTimeline(Timeline timeline) {
 		this.timeline = timeline;
 	}
+	
+	public boolean isMoving(){
+        return isMoving;
+    }
+	public double getDesiredX() {
+        return desiredX;
+    }
+
+    public void setDesiredX(double desiredX) {
+        this.desiredX = desiredX;
+    }
+
+    public void moveTo(double newX) {
+        if (isMoving) return;
+        isMoving = true;
+        setDesiredX(newX);
+
+        TranslateTransition transition = new TranslateTransition(Duration.seconds(MOVE_DURATION), this);
+        transition.setToX(newX);
+
+        transition.setOnFinished(event -> {
+            isMoving = false;
+        });
+
+        transition.play();
+    }
+
+    public void die() {
+        setVisible(false);
+        setManaged(false);
+    }
+
+    public double getCurrentX() {
+        return getTranslateX();
+    }
+
+    public void setCurrentX(double x) {
+        setTranslateX(x);
+    }
 }

@@ -13,7 +13,7 @@ private static HashMap<String, Resource> entityMap;
 	
 	static {
 		entityMap = new HashMap<String, Resource>();
-		entityMap.put("werewolf", new Resource(() -> new Entity(null, 10, 10, 1, null),new ArrayList<String>(Arrays.asList("Frames/werewolf-idle1.png","Frames/werewolf-idle2.png","Frames/werewolf-idle3.png","Frames/werewolf-idle4.png","Frames/werewolf-idle5.png"))));
+		entityMap.put("werewolf", new Resource(() -> new Entity(null, 50, 10, 1, null),new ArrayList<String>(Arrays.asList("Frames/werewolf-idle1.png","Frames/werewolf-idle2.png","Frames/werewolf-idle3.png","Frames/werewolf-idle4.png","Frames/werewolf-idle5.png"))));
 		//Weapon(String name, String detail, int initdamage, int costActivate, int width, int height)
 		//entityMap.put("werewolf", new Resource(() -> new Entity(null, 10, 10, 1, null), "werewolf-idle1.png"));
 		//Consumable(String name, String detail, int durability, Effect effect, int costActivate, int width, int height)

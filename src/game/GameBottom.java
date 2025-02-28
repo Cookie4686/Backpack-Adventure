@@ -1,10 +1,16 @@
 package game;
 
+import java.util.Random;
+
 import entities.Entity;
+import entities.EntityLoader;
 import entities.Player;
 import interfaces.ReRenderable;
+import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -13,6 +19,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import logic.FightLogic;
 
 public class GameBottom extends HBox implements ReRenderable {
@@ -28,7 +35,7 @@ public class GameBottom extends HBox implements ReRenderable {
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
 		enemyBox = new HBox();
-		enemyBox.setAlignment(Pos.BOTTOM_RIGHT);
+		enemyBox.setAlignment(Pos.BOTTOM_CENTER);
 		enemyBox.setSpacing(16);
 		enemyBox.setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -40,10 +47,31 @@ public class GameBottom extends HBox implements ReRenderable {
 
 	@Override
 	public void render() {
+		System.out.println("render all");
 		Player.getInstance().render();
 		enemyBox.getChildren().setAll(FightLogic.getInstance().getEntities());
 		for (Entity entity : FightLogic.getInstance().getEntities()) {
 			entity.initialize();
+	        FadeTransition ft = new FadeTransition(Duration.millis(500), entity);
+	        ft.setFromValue(0);
+	        ft.setToValue(1);
+	        ft.play();
+
+	        animateLayoutChange();
+		}
+	}
+	public void renderTarget(Entity e) {
+		System.out.println("render target");
+		Player.getInstance().render();
+		enemyBox.getChildren().setAll(FightLogic.getInstance().getEntities());
+		for (Entity entity : FightLogic.getInstance().getEntities()) {
+			if(entity == e) {
+				FadeTransition ft = new FadeTransition(Duration.millis(800), entity);
+				ft.setFromValue(0);
+				ft.setToValue(1);
+				ft.play();
+				
+			}
 		}
 	}
 
@@ -57,4 +85,38 @@ public class GameBottom extends HBox implements ReRenderable {
 		}
 		return instance;
 	}
+	
+	 public void addEntity(String name) {
+        Entity entity = EntityLoader.newEntity(name);
+        FightLogic.getInstance().getEntities().add(entity);
+        entity.setOpacity(0);
+    }
+
+    public void removeEntity() {
+        if (enemyBox.getChildren().isEmpty()) return;
+        for(int i = 0;i < enemyBox.getChildren().size();i++) {
+        	if(enemyBox.getChildren().get(i) instanceof Entity) {
+        		Entity e = (Entity) enemyBox.getChildren().get(i);
+        		if(e.getHp() == 0) enemyBox.getChildren().remove(i);
+        	}
+        }
+        animateLayoutChange();
+    }
+
+    private void animateLayoutChange() {
+         for (int i = 0; i < enemyBox.getChildren().size(); i++) {
+             Node node = enemyBox.getChildren().get(i);
+             if (node instanceof Entity) {
+                 Entity entity = (Entity) node;
+                 double newX = i * 10;
+                 double oldX = entity.getCurrentX();
+                 if (!entity.isMoving() && newX != oldX) {
+                	Platform.runLater(()->{			
+                		System.out.println("move");
+                		entity.moveTo(newX);
+         			});
+                 }
+             }
+         }
+     }
 }

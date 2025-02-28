@@ -13,7 +13,7 @@ import sound.BackgroundSongLoader;
 public class Main extends Application {
 	public static StackPane root;
 	public static MediaPlayer mediaPlayer;
-
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// Screen screen = Screen.getPrimary();
@@ -21,7 +21,7 @@ public class Main extends Application {
 		// double screenWidth = bounds.getWidth();
 		// double screenHeight = bounds.getHeight();
 		// double aspectRatio = screenWidth / screenHeight;
-
+		
 		root = new StackPane();
 		root.prefWidthProperty().bind(primaryStage.widthProperty());
 		root.prefHeightProperty().bind(primaryStage.heightProperty());

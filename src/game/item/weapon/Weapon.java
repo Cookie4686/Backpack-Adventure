@@ -1,6 +1,7 @@
 package game.item.weapon;
 
 import entities.Player;
+import game.GameBottom;
 import game.item.Item;
 import game.util.ItemTier;
 import interfaces.Clickable;
@@ -48,6 +49,7 @@ public class Weapon extends Item implements Clickable, ReStatable {
 			Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
 			
 			//damage enemy getDamage() amount
+			GameBottom.getInstance().renderTarget(FightLogic.getInstance().getTarget());
 			FightLogic.getInstance().getTarget().takeDamage(damage);
 		}
 	}

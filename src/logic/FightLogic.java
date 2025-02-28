@@ -43,8 +43,7 @@ public class FightLogic {
 			Platform.runLater(() -> {
 				ActivateEffect(ef, e);
 				if (e.getHp() == 0) {
-					entities.remove(e);
-					GameBottom.getInstance().render();
+					e.checkAlive();
 					return;
 				}
 			});
