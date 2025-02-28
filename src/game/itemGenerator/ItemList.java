@@ -19,6 +19,7 @@ import game.item.weapon.SpecialWeapon;
 import game.item.weapon.Weapon;
 import game.item.wearable.Armor;
 import game.item.wearable.Helmet;
+import game.item.wearable.Shoes;
 import game.util.Effect;
 import game.util.EffectType;
 import game.util.ItemTier;
@@ -118,9 +119,9 @@ public class ItemList {
 		
 		
 //		Shoes(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height, ItemTier tier) 
-		itemMap.put("Leather Boots", new Resource(() -> new Armor("Leather Boots", "Sturdy boots crafted from durable leather.", 5, 1, new ArrayList<Effect>(Arrays.asList(new Effect(5, EffectType.HEAL))), 2, 1, ItemTier.COMMON), "Items/LeatherBoots.png"));
-		itemMap.put("Steel Boots", new Resource(() -> new Armor("Steel Boots", "Leather boots decorate with steel.", 10, 2, new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.HEAL))), 2, 1, ItemTier.UNCOMMON), "Items/SteelBoots.png"));
-		itemMap.put("Talon Boots", new Resource(() -> new Armor("Talon Boots", "Steel boots with spike on a tip.", 15, 1, new ArrayList<Effect>(Arrays.asList(new Effect(5, EffectType.THORN), new Effect(15, EffectType.HEAL))), 2, 1, ItemTier.RARE), "Items/TalonBoots.png"));
+		itemMap.put("Leather Boots", new Resource(() -> new Shoes("Leather Boots", "Sturdy boots crafted from durable leather.", 5, 1, new ArrayList<Effect>(Arrays.asList(new Effect(5, EffectType.HEAL))), 2, 1, ItemTier.COMMON), "Items/LeatherBoots.png"));
+		itemMap.put("Steel Boots", new Resource(() -> new Shoes("Steel Boots", "Leather boots decorate with steel.", 10, 2, new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.HEAL))), 2, 1, ItemTier.UNCOMMON), "Items/SteelBoots.png"));
+		itemMap.put("Talon Boots", new Resource(() -> new Shoes("Talon Boots", "Steel boots with spike on a tip.", 15, 1, new ArrayList<Effect>(Arrays.asList(new Effect(5, EffectType.THORN), new Effect(15, EffectType.HEAL))), 2, 1, ItemTier.RARE), "Items/TalonBoots.png"));
 		
 //		Armor(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height, ItemTier tier)
 		itemMap.put("Chainmail Armor", new Resource(() -> new Armor("Chainmail Armor", "Favored by both mobility and defense.", 20, 1, new ArrayList<Effect>(Arrays.asList(new Effect(20, EffectType.HEAL))), 2, 2, ItemTier.RARE), "Items/Chainmail.png"));
@@ -239,8 +240,6 @@ public class ItemList {
 		itemMap.put("Mana Stone I", new Resource(() -> new ManaOrb("Mana Stone I", "Faintly glowing stone infused with magical energy.", 1, 1, 1, ItemTier.COMMON), "Items/Manastones1.png"));
 		itemMap.put("Mana Stone II", new Resource(() -> new ManaOrb("Mana Stone II", "Faintly glowing stone infused with magical energy.", 2, 1, 1, ItemTier.RARE), "Items/Manastones2.png"));
 		itemMap.put("Mana Stone III", new Resource(() -> new ManaOrb("Mana Stone III", "Faintly glowing stone infused with magical energy.", 3, 1, 1, ItemTier.EPIC), "Items/Manastones3.png"));
-		
-		
 	}
 
 	public static HashMap<String, Resource> getItemMap() {

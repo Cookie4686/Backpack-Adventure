@@ -18,10 +18,18 @@ public class Potion extends FoodWithContainer{
 		}
 		return false;
 	}
+	
+	
+	@Override
+	protected String getHeader() {
+		return getName()+" is "+getTierName()+" Potion\n"
+				+ getDurability()+" use left"
+				+ "\nWhen click :\n";
+	}
 
 	@Override
 	public String toString() {
-		return getProvide()+"This item is Stackable! (At most "+limit+")."
+		return getHeader()+getProvideMid()+"\nThis item is Stackable! (At most "+limit+")."
 				+ "\nWhen out of uses. Will be replace by "+container
 				+ ".\nCost "+getCostActivate()+" ENERGY per click";
 	}

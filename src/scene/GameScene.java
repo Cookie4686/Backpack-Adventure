@@ -15,6 +15,7 @@ public class GameScene {
 		VBox.setVgrow(Game.getInstance(), Priority.ALWAYS);
 		root.getChildren().setAll(GameHeader.getInstance(), Game.getInstance());
 		Main.root.getChildren().setAll(root);
+		
 		Item[] items = new Item[6];
 		for (int i=0 ; i<6 ; i++) {
 			items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());

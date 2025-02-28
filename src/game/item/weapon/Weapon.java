@@ -48,7 +48,7 @@ public class Weapon extends Item implements Clickable, ReStatable {
 		Player.getInstance().attack();
 		SfxPlayer.play(Sfx.SWORD);
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
-		FightLogic.getInstance().getTarget().takeDamage(damage);
+		FightLogic.doDamage(damage, Player.getInstance(), FightLogic.getInstance().getTarget());
 	}
 
 	// For print only

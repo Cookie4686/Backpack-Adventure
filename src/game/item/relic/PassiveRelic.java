@@ -24,17 +24,17 @@ public class PassiveRelic extends Relic implements StatUpdatable {
 		String text = getProvide()+" Passive Relic\nProvide :\n";
 		if (isDiagonal) {
 			if (getEffectType()==EffectType.SHIELD) {
-				text=text+"Add "+getEffectAmount()+" SHIELD to apparel at "+getRange()+" diagonal slot away";
+				text=text+"Add "+getEffectAmount()+" SHIELD to apparel at "+getRange()+" diagonal slot away\n";
 			}
 			if (getEffectType()==EffectType.DAMAGE) {
-				text=text+"Add  "+getEffectAmount()+" DAMAGE to weapon at "+getRange()+" diagonal slot away";
+				text=text+"Add  "+getEffectAmount()+" DAMAGE to weapon at "+getRange()+" diagonal slot away\n";
 			}
 		} else {
 			if (getEffectType()==EffectType.SHIELD) {
-				text=text+"Add "+getEffectAmount()+" SHIELD to apparel at "+getRange()+" beside slot away";
+				text=text+"Add "+getEffectAmount()+" SHIELD to apparel at "+getRange()+" beside slot away\n";
 			}
 			if (getEffectType()==EffectType.DAMAGE) {
-				text=text+"Add  "+getEffectAmount()+" DAMAGE to weapon at "+getRange()+" beside slot away";
+				text=text+"Add  "+getEffectAmount()+" DAMAGE to weapon at "+getRange()+" beside slot away\n";
 			}
 		}
 		

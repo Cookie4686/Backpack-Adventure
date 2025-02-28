@@ -43,7 +43,7 @@ public class SpecialWeapon extends Weapon {
 				Player.getInstance().setShield(Player.getInstance().getShield() + effect.getAmount());
 			}
 			else {
-				Player.getInstance().getAllEffect().add(effect);
+				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
 			}
 		}
 	}

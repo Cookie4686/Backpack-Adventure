@@ -31,7 +31,12 @@ public class Consumable extends Item implements Clickable {
 	
 	@Override
 	public void activatePerClick() {
-		if (!isEnoughEnergy()) return;
+		if (!isEnoughEnergy()) {
+			System.out.println("Not enough enegry");
+			return;
+		}
+		
+		System.out.println("Use "+getName());
 		
 		setDurability(getDurability()-1);
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
@@ -57,30 +62,28 @@ public class Consumable extends Item implements Clickable {
 	
 	
 	//For print only
-	protected String getProvide() {
-		String text = getName()+" is "+getTierName()+" Food\n"
+	protected String getHeader() {
+		return getName()+" is "+getTierName()+" Food\n"
 				+ getDurability()+" use left"
 				+ "\nWhen click :\n";
-		
+	}
+	
+	protected String getProvideMid() {
 		if (effect.getType()==EffectType.HEAL) {
-			text=text+"Heal Player "+effect.getAmount()+" Health\n";
+			return"Heal Player "+effect.getAmount()+" Health\n";
 		}
-		else if (effect.getType()==EffectType.LUCK) {
-			text=text+"Add "+effect.getAmount()+" LUCK to Player\n";
+		if (effect.getType()==EffectType.LUCK) {
+			return"Add "+effect.getAmount()+" LUCK to Player\n";
 		}
-		else if (effect.getType()==EffectType.ENERGY) {
-			text=text+"Add "+effect.getAmount()+" ENEGRY to Player\n";
+		if (effect.getType()==EffectType.ENERGY) {
+			return"Add "+effect.getAmount()+" ENEGRY to Player\n";
 		}
-		else {
-			text=text+"Add "+effect.getAmount()+" "+effect.getTypeName()+" to Player\n";
-		}
-		
-		return text;
+		return "Add "+effect.getAmount()+" "+effect.getTypeName()+" to Player\n";
 	}
 	
 	@Override
 	public String toString() {
-		return getProvide()+"\nCost "+costActivate+" energy per click";
+		return getHeader()+getProvideMid()+"\nCost "+costActivate+" energy per click";
 	}
 	
 	

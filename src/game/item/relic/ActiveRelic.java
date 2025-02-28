@@ -13,11 +13,13 @@ public class ActiveRelic extends Relic implements Clickable, TurnActivable{
 	
 	public ActiveRelic(String name, String detail, Effect effect, int costActivate, int range, int width, int height, ItemTier tier) {
 		super(name, detail, effect, range, width, height, tier);
+		setCostActivate(costActivate);
 		isUsed=false;
 	}
 
 	public ActiveRelic(String name, String detail, Effect effect, int costActivate, int range, int height, ItemTier tier) {
 		super(name, detail, effect, range, height, tier);
+		setCostActivate(costActivate);
 		isUsed=false;
 	}
 	
@@ -31,6 +33,7 @@ public class ActiveRelic extends Relic implements Clickable, TurnActivable{
 	@Override
 	public void activatePerClick() {
 		if (!isEnoughEnergy()) return;
+		
 		isUsed=true;
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
 		
@@ -55,17 +58,17 @@ public class ActiveRelic extends Relic implements Clickable, TurnActivable{
 		String text = getProvide()+" Active Relic\nCan use once per turn\nOn use :\n";
 		if (isDiagonal) {
 			if (getEffectType()==EffectType.SHIELD) {
-				text=text+"Add "+getEffectAmount()+" SHIELD to player per apparel at "+getRange()+" diagonal slot away";
+				text=text+"Add "+getEffectAmount()+" SHIELD to player per apparel at "+getRange()+" diagonal slot away\n";
 			}
 			if (getEffectType()==EffectType.DAMAGE) {
-				text=text+"Add  "+getEffectAmount()+" DAMAGE to weapon at "+getRange()+" diagonal slot away";
+				text=text+"Add  "+getEffectAmount()+" DAMAGE to weapon at "+getRange()+" diagonal slot away\n";
 			}
 		} else {
 			if (getEffectType()==EffectType.SHIELD) {
-				text=text+"Add "+getEffectAmount()+" SHIELD to player per apparel at "+getRange()+" beside slot away";
+				text=text+"Add "+getEffectAmount()+" SHIELD to player per apparel at "+getRange()+" beside slot away\n";
 			}
 			if (getEffectType()==EffectType.DAMAGE) {
-				text=text+"Add  "+getEffectAmount()+" DAMAGE to weapon at "+getRange()+" beside slot away";
+				text=text+"Add  "+getEffectAmount()+" DAMAGE to weapon at "+getRange()+" beside slot away\n";
 			}
 		}
 		

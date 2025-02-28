@@ -76,8 +76,10 @@ public class FightLogic {
 				}
 			});
 		}
+		System.out.println("Tpaasss");
 		for (Item item : GameLogic.getInstance().getInventory()) {
 			if (item instanceof TurnActivable) {
+				System.out.println("Turn activate");
 				((TurnActivable) item).activatePerTurn();
 			}
 		}
@@ -115,11 +117,11 @@ public class FightLogic {
 		}
 	}
 
-	public static void doDamage(int damage, Being e, Being p) {
-		Effect rage = findEffect(e.getAllEffect(), EffectType.ANGER);
-		Effect thorn = findEffect(p.getAllEffect(), EffectType.THORN);
-		p.takeDamage(damage + (rage == null ? 0 : rage.getAmount()));
-		e.takeDamage(thorn == null ? 0 : thorn.getAmount());
+	public static void doDamage(int damage, Being self, Being enemy) {
+		Effect rage = findEffect(self.getAllEffect(), EffectType.ANGER);
+		Effect thorn = findEffect(enemy.getAllEffect(), EffectType.THORN);
+		enemy.takeDamage(damage + (rage == null ? 0 : rage.getAmount()));
+		self.takeDamage(thorn == null ? 0 : thorn.getAmount());
 	}
 
 	public static void findEffectAndAdd(ArrayList<Effect> efs, EffectType target, int amount) {

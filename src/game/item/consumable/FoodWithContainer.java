@@ -19,9 +19,15 @@ public class FoodWithContainer extends Consumable {
 	
 	@Override
 	public void activatePerClick() {
-		if (!isEnoughEnergy()) return;
+		if (!isEnoughEnergy()) {
+			System.out.println("Not enough enegry");
+			return;
+		}
+		
+		System.out.println("Use "+getName());
 		
 		setDurability(getDurability()-1);
+		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - getCostActivate());
 		
 		if (getEffectType()==EffectType.HEAL) {
 			Player.getInstance().setHp(Player.getInstance().getHp()+getEffectAmount());
@@ -41,14 +47,22 @@ public class FoodWithContainer extends Consumable {
 		
 
 		if (getDurability()<=0) {
+			System.out.println("reset to "+container);
 			Backpack.getInstance().replaceItem(this,ResourceLoader.newItem(container));
+			delete();
 		}
 	}
 
+	@Override
+	protected String getHeader() {
+		return getName()+" is "+getTierName()+" Drink\n"
+				+ getDurability()+" use left"
+				+ "\nWhen click :\n";
+	}
 	
 	@Override
 	public String toString() {
-		return getProvide()+"When out of uses. Will be replace by "+container+
+		return getHeader()+getProvideMid()+"\nWhen out of uses. Will be replace by "+container+
 				"\nCost "+getCostActivate()+" ENERGY per click";
 	}
 	

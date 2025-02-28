@@ -23,7 +23,7 @@ public class Coins extends Item implements StatUpdatable{
 				+ "Provide :\n"
 				+ "Add "+amount+" COINS to Player\n"
 				+ "This item is Stackable!\n"
-				+ "Activate when in backpack";
+				+ "\nActivate when in backpack";
 	}
 	
 	public int getAmount() {

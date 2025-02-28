@@ -52,7 +52,7 @@ public class ManaWeapon extends Weapon{
 				Player.getInstance().setLuck(Player.getInstance().getLuck() + effect.getAmount());
 			}
 			else {
-				Player.getInstance().getAllEffect().add(effect);
+				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
 			}
 		}
 	}

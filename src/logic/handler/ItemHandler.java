@@ -83,8 +83,10 @@ public class ItemHandler {
 			}
 		}
 
+		
 		for (Item item : GameLogic.getInstance().getInventory()) {
 			if (item instanceof StatUpdatable) {
+				System.out.println("is instance");
 				((StatUpdatable) item).statUpdate();
 			}
 		}

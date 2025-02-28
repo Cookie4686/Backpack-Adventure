@@ -20,11 +20,7 @@ public class Shoes extends Wearable {
 		for (ItemPosition itemPostion : backpack.getItemPosition(this)) {
 			int x = itemPostion.getX();
 			for (int y=itemPostion.getY()-1 ; y>=0 ; y--) {
-				if (backpack.getSlots()[y][x].getItem().equals(this)) break;
-				
-				if (backpack.getSlots()[y][x].isUnlocked()) {
-					if (backpack.getSlots()[y][x].getItem().equals(null)) freeSpace++;
-				}
+				if (backpack.getSlots()[y][x].getItem().equals(null)) freeSpace++;
 			}
 		}
 		
