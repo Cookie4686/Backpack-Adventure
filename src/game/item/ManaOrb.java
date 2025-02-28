@@ -11,11 +11,6 @@ public class ManaOrb extends Item implements TurnActivable{
 		super(name, detail, width, height, tier);
 		setAmount(amount);
 	}
-
-	public ManaOrb(String name, String detail, int amount, int height, ItemTier tier) {
-		super(name, detail, height, tier);
-		setAmount(amount);
-	}
 	
 	@Override
 	public void activatePerTurn() {

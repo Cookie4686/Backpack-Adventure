@@ -6,7 +6,7 @@ import component.Button;
 import game.Game;
 import game.item.Item;
 import game.item.consumable.Potion;
-import game.util.ItemPostion;
+import game.util.ItemPosition;
 import game.util.ItemRotation;
 import interfaces.ReRenderable;
 import javafx.geometry.Pos;
@@ -19,7 +19,7 @@ import logic.handler.ItemHandler;
 
 public class Backpack extends VBox implements ReRenderable {
 	private static Backpack instance;
-	private static final int WIDTH = 7, HEIGHT = 5;
+	public static final int WIDTH = 7, HEIGHT = 5;
 	private Slot[][] slots;
 
 	private GridPane gridPane;
@@ -156,15 +156,15 @@ public class Backpack extends VBox implements ReRenderable {
 		}
 	}
 
-	public ArrayList<ItemPostion> getItemPostion(Item item) {
-		ArrayList<ItemPostion> itemPostions = new ArrayList<ItemPostion>();
+	public ArrayList<ItemPosition> getItemPosition(Item item) {
+		ArrayList<ItemPosition> itemPositions = new ArrayList<ItemPosition>();
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				if (slots[y][x].getItem() == item)
-					itemPostions.add(new ItemPostion(x, y));
+					itemPositions.add(new ItemPosition(x, y));
 			}
 		}
-		return itemPostions;
+		return itemPositions;
 	}
 
 	public Slot[][] getSlots() {

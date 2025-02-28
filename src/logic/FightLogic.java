@@ -102,7 +102,7 @@ public class FightLogic {
 		switch (ef.getType()) {
 		case FIRE		-> findEffectAndAdd(Player.getInstance().getAllEffect(), ef.getType(), ef.getAmount());
 		case POISON		-> findEffectAndAdd(Player.getInstance().getAllEffect(), ef.getType(), ef.getAmount());
-		case DAMAGE		-> doDamage(ef, e, Player.getInstance());
+		case DAMAGE		-> doDamage(ef.getAmount(), e, (Being) Player.getInstance());
 		case THORN		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
 		case SHIELD		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
 		case DODGE		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
@@ -115,10 +115,10 @@ public class FightLogic {
 		}
 	}
 
-	public static void doDamage(Effect ef, Being e, Being p) {
+	public static void doDamage(int damage, Being e, Being p) {
 		Effect rage = findEffect(e.getAllEffect(), EffectType.ANGER);
 		Effect thorn = findEffect(p.getAllEffect(), EffectType.THORN);
-		p.takeDamage(ef.getAmount() + (rage == null ? 0 : rage.getAmount()));
+		p.takeDamage(damage + (rage == null ? 0 : rage.getAmount()));
 		e.takeDamage(thorn == null ? 0 : thorn.getAmount());
 	}
 

@@ -21,13 +21,6 @@ public class DamageItem extends Item implements Clickable {
 		this.AoE = isAoE;
 		setCostActivate(costActivate);
 	}
-
-	public DamageItem(String name, String detail, ArrayList<Effect> effects, int costActivate, boolean isAoE, int height, ItemTier tier) {
-		super(name, detail, height, tier);
-		this.effects = effects;
-		this.AoE = isAoE;
-		setCostActivate(costActivate);
-	}
 	
 	@Override
 	public boolean isEnoughEnergy() {
@@ -64,12 +57,15 @@ public class DamageItem extends Item implements Clickable {
 				}
 			}
 		}
+		
+		delete();
 	}
 
 	
 	@Override
 	public String toString() {
-		String text=getName()+" is "+getTierName()+" weapon\n"
+		String text=getName()+" is "+getTierName()+" throw weapon\n"
+				+ "Will gone after use\n"
 				+ "When click :\n";
 		
 		for (Effect effect : effects) {

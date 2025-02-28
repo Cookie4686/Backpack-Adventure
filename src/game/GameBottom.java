@@ -43,7 +43,7 @@ public class GameBottom extends HBox implements ReRenderable {
 		Player.getInstance().render();
 		enemyBox.getChildren().setAll(FightLogic.getInstance().getEntities());
 		for (Entity entity : FightLogic.getInstance().getEntities()) {
-			entity.render();
+			entity.initialize();
 		}
 	}
 

@@ -8,6 +8,7 @@ import game.GameBottom;
 import game.util.Effect;
 import game.util.EffectType;
 import interfaces.TurnActivable;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
@@ -19,12 +20,12 @@ import logic.handler.EntityHandler;
 public class Entity extends Being implements TurnActivable {
 	protected int xp, dangerLV;
 	protected boolean stunned;
-	protected ArrayList<String> pic;
+	private Timeline timeline;
 	private ImageView imageView;
 	protected ArrayList<Effect> allAttributes;
 	protected Effect nextTurn;
 
-	public Entity(String name, ArrayList<String> pic, int maxHpLb, int xpLb, int dangerLV,
+	public Entity(String name, int maxHpLb, int xpLb, int dangerLV,
 			ArrayList<Effect> allAttributes) {
 		super();
 		int maxHpUb = (int) (maxHpLb * 1.5);
@@ -34,20 +35,18 @@ public class Entity extends Being implements TurnActivable {
 		this.hp = this.maxHp = rand.nextInt((maxHpUb - maxHpLb) + 1) + maxHpLb;
 		this.shield = 0;
 		this.xp = rand.nextInt((xpUb - xpLb) + 1) + xpLb;
-		this.pic = pic;
 		this.allAttributes = allAttributes;
 		this.dangerLV = dangerLV;
 		this.stunned = false;
 	}
 
 	// @Override
-	public void initialize(Image image) {
-		imageView = new ImageView(image);
+	public void initialize() {
 		imageView.setCursor(Cursor.CROSSHAIR);
 		imageView.setPickOnBounds(true);
 		imageView.setOnMousePressed(event -> EntityHandler.handleMouseClicked(this));
 		hpBar = new HpBar(this);
-		getChildren().setAll(imageView, hpBar);
+		getChildren().setAll(hpBar, imageView);
 		render();
 	}
 
@@ -82,14 +81,6 @@ public class Entity extends Being implements TurnActivable {
 			FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		}
 		return damaged;
-	}
-
-	public ArrayList<String> getPic() {
-		return pic;
-	}
-
-	public void setPic(ArrayList<String> pic) {
-		this.pic = pic;
 	}
 
 	public int getXp() {
@@ -143,5 +134,23 @@ public class Entity extends Being implements TurnActivable {
 		Platform.runLater(() -> {
 			// add target frame on top
 		});
+	}
+	public ImageView getImageView() {
+		if(imageView == null) {
+			imageView = new ImageView();
+		}
+		return imageView;
+	}
+
+	public void setImageView(ImageView imageView) {
+		this.imageView = imageView;
+	}
+
+	public Timeline getTimeline() {
+		return timeline;
+	}
+
+	public void setTimeline(Timeline timeline) {
+		this.timeline = timeline;
 	}
 }

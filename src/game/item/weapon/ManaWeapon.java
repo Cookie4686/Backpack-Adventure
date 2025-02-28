@@ -39,8 +39,21 @@ public class ManaWeapon extends Weapon{
 		
 		//Add effectType to enemy with effectPower amount;
 		for (Effect effect:effects) {
-			//TODO: add each effect function like toString()
-			FightLogic.findEffectAndAdd(FightLogic.getInstance().getTarget().getAllEffect(), effect.getType(), effect.getAmount());
+			if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNTED) {
+				FightLogic.findEffectAndAdd(FightLogic.getInstance().getTarget().getAllEffect(), effect.getType(), effect.getAmount());
+			}
+			else if (effect.getType()==EffectType.HEAL) {
+				Player.getInstance().setMaxHp(Player.getInstance().getMaxHp() + effect.getAmount());
+			}
+			else if (effect.getType()==EffectType.VAMPIRIC) {
+				Player.getInstance().setHp(Player.getInstance().getHp() + (getDamage() * effect.getAmount()/100));
+			}
+			else if (effect.getType()==EffectType.LUCK) {
+				Player.getInstance().setLuck(Player.getInstance().getLuck() + effect.getAmount());
+			}
+			else {
+				Player.getInstance().getAllEffect().add(effect);
+			}
 		}
 	}
 	

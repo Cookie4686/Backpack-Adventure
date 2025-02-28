@@ -3,7 +3,7 @@ package scene;
 import application.Main;
 import game.Game;
 import game.GameHeader;
-import game.item.ResourceLoader;
+import game.itemGenerator.ResourceLoader;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
@@ -14,7 +14,6 @@ public class GameScene {
 		root.getChildren().setAll(GameHeader.getInstance(), Game.getInstance());
 		Main.root.getChildren().setAll(root);
 
-		Game.getInstance().addItemsToGame(ResourceLoader.newItem("apple"), 
-				ResourceLoader.newItem("sword"), ResourceLoader.newItem("apple"));
+		Game.getInstance().addItemsToGame(ResourceLoader.newItem("Apple"), ResourceLoader.newItem("Azurite Sword"));
 	}
 }

@@ -12,11 +12,6 @@ public class Container extends Item implements Clickable{
 		super(name, detail, width, height, tier);
 		setDamage(damage);
 	}
-
-	public Container(String name, String detail, int damage, int height, ItemTier tier) {
-		super(name, detail, height, tier);
-		setDamage(damage);
-	}
 	
 	@Override
 	public boolean isEnoughEnergy() {
@@ -32,7 +27,8 @@ public class Container extends Item implements Clickable{
 	
 	@Override
 	public String toString() {
-		return getName()+" is "+getTierName()+" item\n"
+		return getName()+" is "+getTierName()+" container\n"
+				+ "Item will be gone after use\n"
 				+ "When click :\n"
 				+ "Damage target : "+damage+" DAMAGE\n"
 				+ "\nCost 0 energy per click";

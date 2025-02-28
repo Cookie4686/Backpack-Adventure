@@ -44,12 +44,10 @@ public class Weapon extends Item implements Clickable, ReStatable {
 		if (!isEnoughEnergy())
 			return;
 
-		// TODO: change this later
-		SfxPlayer.play(Sfx.SWORD);
 		// decrease player energy by costActivate
+		Player.getInstance().attack();
+		SfxPlayer.play(Sfx.SWORD);
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
-
-		// damage enemy getDamage() amount
 		FightLogic.getInstance().getTarget().takeDamage(damage);
 	}
 
@@ -71,6 +69,9 @@ public class Weapon extends Item implements Clickable, ReStatable {
 	}
 
 	// Getter & Setter
+	public void addDamage(int damage) {
+		setDamage(getDamage() + damage);
+	}
 
 	public int getInitDamage() {
 		return initDamage;

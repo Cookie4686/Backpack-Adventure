@@ -21,7 +21,7 @@ public class PassiveRelic extends Relic implements StatUpdatable {
 	
 	@Override
 	public String toString() {
-		String text = getProvide()+"Provide :\n";
+		String text = getProvide()+" Passive Relic\nProvide :\n";
 		if (isDiagonal) {
 			if (getEffectType()==EffectType.SHIELD) {
 				text=text+"Add "+getEffectAmount()+" SHIELD to apparel at "+getRange()+" diagonal slot away";
