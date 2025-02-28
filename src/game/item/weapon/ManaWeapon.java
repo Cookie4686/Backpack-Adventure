@@ -29,7 +29,11 @@ public class ManaWeapon extends Weapon{
 	
 	@Override
 	public void activatePerClick() {
-		if (!isEnoughEnergy()) return;
+		if (!isEnoughEnergy()) {
+			System.out.println("Not enough mana");
+			return;
+		}
+		System.out.println("Use "+getName());
 		
 		//decrease mana point in player by costActivate
 		Player.getInstance().setMana(Player.getInstance().getMana() - getCostActivate());

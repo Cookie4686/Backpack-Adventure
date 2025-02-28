@@ -16,6 +16,12 @@ public class Coins extends Item implements StatUpdatable{
 		Player.getInstance().setCoins(Player.getInstance().getCoins()+amount);
 	}
 	
+	public boolean isStackable(Item item) {
+		if (item.getName().equals(getName())) {
+			return true;
+		}
+		return false;
+	}
 	
 	@Override
 	public String toString() {

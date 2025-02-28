@@ -17,7 +17,6 @@ public class ManaOrb extends Item implements TurnActivable{
 		Player.getInstance().setMaxMana(Player.getInstance().getMaxMana() + amount);
 	}
 	
-	
 	@Override
 	public String toString() {
 		return getName()+" is "+getTierName()+" ManaOrb\n"

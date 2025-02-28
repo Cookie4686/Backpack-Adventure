@@ -56,7 +56,7 @@ public abstract class Wearable extends Item implements TurnActivable, StatUpdata
 				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
 			}
 		}
-		
+		System.out.println("pass");
 		Player.getInstance().setShield(Player.getInstance().getShield()+getShield());
 	}
 	

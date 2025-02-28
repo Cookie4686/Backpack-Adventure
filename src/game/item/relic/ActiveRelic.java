@@ -32,7 +32,11 @@ public class ActiveRelic extends Relic implements Clickable, TurnActivable{
 	
 	@Override
 	public void activatePerClick() {
-		if (!isEnoughEnergy()) return;
+		if (!isEnoughEnergy()) {
+			System.out.println("Not enough energy");
+			return;
+		}
+		System.out.println("Use "+getName());
 		
 		isUsed=true;
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);

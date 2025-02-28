@@ -41,8 +41,11 @@ public class Weapon extends Item implements Clickable, ReStatable {
 
 	@Override
 	public void activatePerClick() {
-		if (!isEnoughEnergy())
+		if (!isEnoughEnergy()) {
+			System.out.println("Not enough energy");
 			return;
+		}
+		System.out.println("Use "+getName());
 
 		// decrease player energy by costActivate
 		Player.getInstance().attack();

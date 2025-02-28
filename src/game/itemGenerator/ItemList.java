@@ -31,14 +31,14 @@ public class ItemList {
 		itemMap = new HashMap<String, Resource>();
 		
 //		Weapon(String name, String detail, int initdamage, int costActivate, int width, int height, ItemTier tier)  Not diagonal 
-		itemMap.put("Almighty ProgMeth", new Resource(() -> new Weapon("Almighty ProgMeth", "Radiates a mystical blue glow.", 40, 1, 1, 2, ItemTier.GOD), "Items/Progmeth.png"));
+		itemMap.put("Almighty ProgMeth", new Resource(() -> new Weapon("Almighty ProgMeth", "No one stand and escape from it..", 40, 1, 1, 1, ItemTier.GOD), "Items/Progmeth.png"));
 		itemMap.put("Azurite Sword", new Resource(() -> new Weapon("Azurite Sword", "Radiates a mystical blue glow.", 40, 1, 1, 2, ItemTier.UNCOMMON), "Items/AzuriteSword.png"));
 		itemMap.put("Book", new Resource(() -> new Weapon("Book", "It built for read not fight.", 20, 1, 1, 1, ItemTier.COMMON), "Items/Book.png"));
 		itemMap.put("Buster Sword", new Resource(() -> new Weapon("Buster Sword", "Heavy blade designed for raw power over finesse.", 500, 1, 1, 3, ItemTier.LEGENDARY), "Items/BusterSword.png"));
 		itemMap.put("Gold Sword", new Resource(() -> new Weapon("Gold Sword", "Gold Gold Gold.", 150, 1, 1, 2, ItemTier.RARE), "Items/GoldSword.png"));
 		itemMap.put("Iron Knife", new Resource(() -> new Weapon("Iron Knife", "Do you love cooking?", 20, 1, 1, 1, ItemTier.COMMON), "Items/IronKnife.png"));
 		itemMap.put("One Edge Sword", new Resource(() -> new Weapon("One Edge Sword", "Time to strike.", 60, 1, 1, 2, ItemTier.UNCOMMON), "Items/OneEdgeSowrd.png"));
-		itemMap.put("Wood Pole", new Resource(() -> new Weapon("Wood Pole", "Use for training javelin.", 20, 1, 1, 3, ItemTier.COMMON), "Items/WoodPole.png"));
+		itemMap.put("Wood Pole", new Resource(() -> new Weapon("Wood Pole", "Use for training javelin.", 20, 1, 1, 2, ItemTier.COMMON), "Items/WoodPole.png"));
 		
 		
 //		Weapon(String name, String detail, int initDamage, int costActivate, int width, ItemTier tier) Diagonal 

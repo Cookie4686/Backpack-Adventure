@@ -24,6 +24,7 @@ public class SpecialWeapon extends Weapon {
 	@Override
 	public void activatePerClick() {
 		super.activatePerClick();
+		if (!isEnoughEnergy()) return;
 		
 		//Add effectType to enemy with effectPower amount;
 		for (Effect effect:effects) {

@@ -30,7 +30,11 @@ public class DamageItem extends Item implements Clickable {
 	
 	@Override
 	public void activatePerClick() {
-		if (!isEnoughEnergy()) return;
+		if (!isEnoughEnergy()) {
+			System.out.println("Not enough energy");
+			return;
+		}
+		System.out.println("Use "+getName());
 		
 		//decrease player energy by costActivate
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);

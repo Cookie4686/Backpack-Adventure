@@ -76,13 +76,14 @@ public class FightLogic {
 				}
 			});
 		}
-		System.out.println("Tpaasss");
-		for (Item item : GameLogic.getInstance().getInventory()) {
-			if (item instanceof TurnActivable) {
-				System.out.println("Turn activate");
-				((TurnActivable) item).activatePerTurn();
-			}
-		}
+		
+//		System.out.println("Tpaasss");
+//		for (Item item : GameLogic.getInstance().getInventory()) {
+//			if (item instanceof TurnActivable) {
+//				System.out.println("Turn activate");
+//				((TurnActivable) item).activatePerTurn();
+//			}
+//		}
 	}
 
 	public void ActivateEffect(Effect ef, Being e) {

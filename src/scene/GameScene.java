@@ -16,10 +16,13 @@ public class GameScene {
 		root.getChildren().setAll(GameHeader.getInstance(), Game.getInstance());
 		Main.root.getChildren().setAll(root);
 		
-		Item[] items = new Item[6];
+		Item[] items = new Item[9];
 		for (int i=0 ; i<6 ; i++) {
 			items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
 		}
+		items[6]= ResourceLoader.newItem("Almighty ProgMeth");
+		items[7]= ResourceLoader.newItem("Apple");
+		items[8]= ResourceLoader.newItem("Armet");
 		Game.getInstance().addItemsToGame(items);
 	}
 }
