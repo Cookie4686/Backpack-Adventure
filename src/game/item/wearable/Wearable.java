@@ -10,6 +10,7 @@ import game.util.ItemTier;
 import interfaces.ReStatable;
 import interfaces.StatUpdatable;
 import interfaces.TurnActivable;
+import javafx.scene.control.Tooltip;
 import logic.FightLogic;
 
 public abstract class Wearable extends Item implements TurnActivable, StatUpdatable, ReStatable{
@@ -47,6 +48,8 @@ public abstract class Wearable extends Item implements TurnActivable, StatUpdata
 				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), EffectType.DODGE, effect.getAmount());
 			}
 		}
+		Tooltip tooltip = new Tooltip(toString());
+		Tooltip.install(getImageView(), tooltip);
 	}
 	
 	@Override
@@ -56,7 +59,7 @@ public abstract class Wearable extends Item implements TurnActivable, StatUpdata
 				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
 			}
 		}
-		System.out.println("pass");
+		
 		Player.getInstance().setShield(Player.getInstance().getShield()+getShield());
 	}
 	

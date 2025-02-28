@@ -45,10 +45,8 @@ public class Shoes extends Wearable {
 	
 	@Override
 	public void statUpdate() {
-		super.statUpdate();
-		
-		//Set bonus shield if this item at the lowest row
 		if (isLowest()) setShield(getShield() + (emptySpace() * getIncreaseShield()));
+		super.statUpdate();
 	}
 	
 	@Override

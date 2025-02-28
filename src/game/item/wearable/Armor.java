@@ -50,9 +50,8 @@ public class Armor extends Wearable {
 	
 	@Override
 	public void statUpdate() {
-		super.statUpdate();
-		
 		setShield(getShield() + (numberOfAdjacent() * getIncreaseShield()));
+		super.statUpdate();
 	}
 	
 	

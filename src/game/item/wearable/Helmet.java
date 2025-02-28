@@ -20,7 +20,7 @@ public class Helmet extends Wearable {
 		int x=itemPostions.get(0).getX();
 		
 		int count=0;
-		for (int y=itemPostions.get(0).getY() ; y<Backpack.HEIGHT ; y++) {
+		for (int y=itemPostions.get(0).getY()+1 ; y<Backpack.HEIGHT ; y++) {
 			if (backpack.getSlots()[y][x].isUnlocked()) count++;
 		}
 		
@@ -29,9 +29,9 @@ public class Helmet extends Wearable {
 	
 	@Override
 	public void statUpdate() {
+		setShield(getShield() + (underSlot() * getIncreaseShield()));
 		super.statUpdate();
 		
-		setShield(getShield() + (underSlot() * getIncreaseShield()));
 	}
 	
 	

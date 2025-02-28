@@ -6,6 +6,7 @@ import java.util.Arrays;
 import component.EnergyOrb;
 import component.HpBar;
 import game.GameBottom;
+import game.item.Item;
 import game.util.Effect;
 import game.util.EffectType;
 import interfaces.ReStatable;
@@ -199,6 +200,14 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	@Override
 	public void activatePerTurn() {
 		this.shield = 0;
+		
+		System.out.println("Tpaasss");
+		for (Item item : GameLogic.getInstance().getInventory()) {
+			if (item instanceof TurnActivable) {
+				System.out.println("Turn activate");
+				((TurnActivable) item).activatePerTurn();
+			}
+		}
 	}
 	
 	@Override

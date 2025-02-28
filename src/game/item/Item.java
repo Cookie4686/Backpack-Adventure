@@ -140,4 +140,10 @@ public abstract class Item extends Pane {
 			return "";
 		}
 	}
+
+	public ImageView getImageView() {
+		return imageView;
+	}
+	
+	
 }

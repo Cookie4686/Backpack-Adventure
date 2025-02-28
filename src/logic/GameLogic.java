@@ -3,6 +3,7 @@ package logic;
 import java.util.ArrayList;
 
 import entities.EntityLoader;
+import entities.Player;
 import game.Game;
 import game.GameBottom;
 import game.GameTop;
@@ -23,6 +24,7 @@ public class GameLogic {
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("werewolf"));
 		FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		GameBottom.getInstance().render();
+		Player.getInstance().activatePerTurn();
 		//ThemeSongLoader.play("boss1");
 	}
 
