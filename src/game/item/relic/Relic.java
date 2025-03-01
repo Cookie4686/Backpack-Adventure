@@ -12,6 +12,8 @@ import game.util.Effect;
 import game.util.EffectType;
 import game.util.ItemPosition;
 import game.util.ItemTier;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public abstract class Relic extends Item {
 	final private Effect effect;

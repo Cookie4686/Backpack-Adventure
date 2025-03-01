@@ -43,13 +43,14 @@ public class Weapon extends Item implements Clickable, ReStatable {
 	public void activatePerClick() {
 		if (!isEnoughEnergy()) {
 			System.out.println("Not enough energy");
+			SfxPlayer.play(Sfx.DENINE);
 			return;
 		}
 		System.out.println("Use "+getName());
 
-		// decrease player energy by costActivate
 		Player.getInstance().attack();
 		SfxPlayer.play(Sfx.SWORD);
+		// decrease player energy by costActivate
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
 		FightLogic.doDamage(damage, Player.getInstance(), FightLogic.getInstance().getTarget());
 	}

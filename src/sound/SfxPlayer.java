@@ -15,6 +15,7 @@ public class SfxPlayer {
 		sfxMap.put(Sfx.MAGIC, new Resource("magic.mp3"));
 		sfxMap.put(Sfx.EAT, new Resource("eat.mp3"));
 		sfxMap.put(Sfx.THROW, new Resource("throw.mp3"));
+		sfxMap.put(Sfx.GAMEOVER, new Resource("gameover.mp3"));
 	}
 
 	public static void play(Sfx sfx) {

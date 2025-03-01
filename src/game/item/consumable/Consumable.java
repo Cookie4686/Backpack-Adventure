@@ -7,6 +7,8 @@ import game.util.EffectType;
 import game.util.ItemTier;
 import interfaces.Clickable;
 import logic.FightLogic;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class Consumable extends Item implements Clickable {
 	final private Effect effect;
@@ -33,10 +35,12 @@ public class Consumable extends Item implements Clickable {
 	public void activatePerClick() {
 		if (!isEnoughEnergy()) {
 			System.out.println("Not enough enegry");
+			SfxPlayer.play(Sfx.DENINE);
 			return;
 		}
-		
 		System.out.println("Use "+getName());
+		
+		SfxPlayer.play(Sfx.EAT);
 		
 		setDurability(getDurability()-1);
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);

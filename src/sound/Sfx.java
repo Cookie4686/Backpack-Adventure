@@ -1,5 +1,5 @@
 package sound;
 
 public enum Sfx {
-	SWORD, DENINE, MAGIC, EAT, THROW
+	SWORD, DENINE, MAGIC, EAT, THROW, GAMEOVER
 }

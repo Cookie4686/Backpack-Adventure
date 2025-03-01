@@ -23,7 +23,9 @@ public class BackgroundSongPlayer {
 		currentPlayer = new MediaPlayer(new Media(ClassLoader.getSystemResource(String.format("song/Menu bg.mp3")).toString()));
 		currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getMusicSlider().valueProperty());
 		currentPlayer.play();
-		currentPlayer.getOnRepeat();
+		currentPlayer.setOnEndOfMedia(() -> {
+			menu();
+		});
 	}
 	
 	public static void fight(int level) {
@@ -32,7 +34,9 @@ public class BackgroundSongPlayer {
 				new Media(ClassLoader.getSystemResource(String.format("song/%s", fight.get(level))).toString()));
 		currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getMusicSlider().valueProperty());
 		currentPlayer.play();
-		currentPlayer.getOnRepeat();
+		currentPlayer.setOnEndOfMedia(() -> {
+			fight(level);
+		});
 	}
 	
 	public static void floor(int level) {
@@ -41,7 +45,9 @@ public class BackgroundSongPlayer {
 				new Media(ClassLoader.getSystemResource(String.format("song/%s", floor.get(level))).toString()));
 		currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getMusicSlider().valueProperty());
 		currentPlayer.play();
-		currentPlayer.getOnRepeat();
+		currentPlayer.setOnEndOfMedia(() -> {
+			floor(level);
+		});
 	}
 
 	public static void play() {
