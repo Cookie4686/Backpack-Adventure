@@ -213,6 +213,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 				((TurnActivable) item).activatePerTurn();
 			}
 		}
+		setMana(getMaxMana());
 		render();
 	}
 	
@@ -246,6 +247,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 
 	public void setEnergy(int energy) {
 		this.energy = energy < 0 ? 0 : energy;
+		energyOrb.render();
 	}
 
 	public int getMaxEnergy() {

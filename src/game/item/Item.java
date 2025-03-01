@@ -63,6 +63,10 @@ public abstract class Item extends Pane {
 		imageView.setOnMouseReleased(_ -> ItemHandler.handleMouseRelease());
 		getChildren().setAll(imageView);
 
+		updateTooltip();
+	}
+	
+	public void updateTooltip() {
 		Tooltip tooltip = new Tooltip(toString());
 		tooltip.setShowDelay(Duration.millis(200));
 		// TODO: highlight related items on toolTip shown

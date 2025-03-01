@@ -48,8 +48,7 @@ public abstract class Wearable extends Item implements TurnActivable, StatUpdata
 				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), EffectType.DODGE, effect.getAmount());
 			}
 		}
-		Tooltip tooltip = new Tooltip(toString());
-		Tooltip.install(getImageView(), tooltip);
+		updateTooltip();
 	}
 	
 	@Override
@@ -61,6 +60,7 @@ public abstract class Wearable extends Item implements TurnActivable, StatUpdata
 		}
 		
 		Player.getInstance().setShield(Player.getInstance().getShield()+getShield());
+		updateTooltip();
 	}
 	
 	

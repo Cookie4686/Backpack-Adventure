@@ -32,6 +32,7 @@ public class FightLogic {
 		}
 		
 		isPTurn = true;
+		
 		if (entities.size() == 0) {
 			GameLogic.getInstance().endFight();
 		} else {
@@ -73,16 +74,9 @@ public class FightLogic {
 			Random rand = new Random();
 			
 			if (e.getNextTurn() != null) {
-				try {
-					Platform.runLater(() -> {
-						useEffect(e.getNextTurn(), e);
-					});
-					
-					//wait for eatch monster attack 300 ms
-					Thread.sleep(300);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
+				Platform.runLater(() -> {
+					useEffect(e.getNextTurn(), e);
+				});
 			}
 			if (Player.getInstance().getHp() == 0) {
 				GameLogic.getInstance().gameOver();
@@ -96,6 +90,7 @@ public class FightLogic {
 		for (Effect ef : Player.getInstance().getAllEffect()) {
 			Platform.runLater(() -> {
 				activateEffect(ef, Player.getInstance());
+				Player.getInstance().render();
 				if (Player.getInstance().getHp() == 0) {
 					GameLogic.getInstance().gameOver();
 					return;

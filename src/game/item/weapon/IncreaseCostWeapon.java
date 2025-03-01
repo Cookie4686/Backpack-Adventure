@@ -8,7 +8,7 @@ import interfaces.TurnActivable;
 
 public class IncreaseCostWeapon extends SpecialWeapon implements TurnActivable{
 	final private int initCost;
-	private int increaseCost;
+	final private int increaseCost;
 
 	public IncreaseCostWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int increaseCost, int width, int height, ItemTier tier) {
 		super(name, detail, effects, damage, costActivate, width, height, tier);
@@ -24,14 +24,16 @@ public class IncreaseCostWeapon extends SpecialWeapon implements TurnActivable{
 	
 	@Override
 	public void activatePerTurn() {
-		increaseCost=0;
 		setCostActivate(initCost);
 	}
 	
 	@Override
 	public void activatePerClick() {
 		super.activatePerClick();
+		if (!isEnoughEnergy()) return;
+		
 		setCostActivate(getCostActivate()+increaseCost);
+		updateTooltip();
 	}
 	
 	@Override

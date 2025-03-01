@@ -60,13 +60,13 @@ public abstract class Relic extends Item {
 			if (position.getY()-range>=0 && position.getX()-range>=0) {				//North Wast
 				items.add(slots[position.getY()-range][position.getX()-range].getItem());
 			}
-			if (position.getY()-range>=0 && position.getX()+1<Backpack.WIDTH) {		//North East
+			if (position.getY()-range>=0 && position.getX()+range<Backpack.WIDTH) {		//North East
 				items.add(slots[position.getY()-range][position.getX()+range].getItem());
 			}
-			if (position.getY()+1<Backpack.HEIGHT && position.getX()-range>=0) {	//South Wast
+			if (position.getY()+range<Backpack.HEIGHT && position.getX()-range>=0) {	//South Wast
 				items.add(slots[position.getY()+range][position.getX()-range].getItem());
 			}
-			if (position.getY()+1<Backpack.HEIGHT && position.getX()+1<Backpack.WIDTH) {//south East
+			if (position.getY()+range<Backpack.HEIGHT && position.getX()+range<Backpack.WIDTH) {//south East
 				items.add(slots[position.getY()+range][position.getX()+range].getItem());
 			}
 		}
