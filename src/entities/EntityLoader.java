@@ -12,7 +12,7 @@ import logic.handler.EntityHandler;
 
 public class EntityLoader {
 	public static Entity newEntity(String name) {
-		Resource resource = EntityList.getItemMap().get(name);
+		Resource resource = EntityList.getEntityMap().get(name);
 		return resource == null ? null : resource.newEntity();
 	}
 }
@@ -47,7 +47,7 @@ class Resource {
 		for (int i = 0; i < images.size(); i++) {
 	        final int frameIndex = i;
 	        KeyFrame keyFrame = new KeyFrame(
-	            Duration.seconds(0.2 * i),
+	            Duration.seconds(0.15 * i),
 	            event -> imageView.setImage(images.get(frameIndex))
 	        );
 	        timeline.getKeyFrames().add(keyFrame);
