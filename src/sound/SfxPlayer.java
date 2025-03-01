@@ -11,6 +11,10 @@ public class SfxPlayer {
 	static {
 		sfxMap = new HashMap<Sfx, Resource>();
 		sfxMap.put(Sfx.SWORD, new Resource("sword.mp3"));
+		sfxMap.put(Sfx.DENINE, new Resource("denied.mp3"));
+		sfxMap.put(Sfx.MAGIC, new Resource("magic.mp3"));
+		sfxMap.put(Sfx.EAT, new Resource("eat.mp3"));
+		sfxMap.put(Sfx.THROW, new Resource("throw.mp3"));
 	}
 
 	public static void play(Sfx sfx) {

@@ -19,24 +19,15 @@ public class BackgroundSongPlayer {
 		paths.add("RickAstley - NeverGonnaGiveYouUp.mp3");
 		paths.add("Redtenbacher's Funkestra - Funktionality.mp3");
 	}
-
-	public static void autoplay() {
-		currentPlayer = new MediaPlayer(
-				new Media(ClassLoader.getSystemResource(String.format("song/%s", paths.get(currentIndex))).toString()));
-		currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getMusicSlider().valueProperty());
+	
+	public static void menu() {
+		currentPlayer = new MediaPlayer(new Media(ClassLoader.getSystemResource(String.format("song/Menu bg.mp3")).toString()));
 		currentPlayer.play();
-		currentPlayer.setOnEndOfMedia(() -> {
-			currentIndex = currentIndex + 1 == paths.size() ? 0 : currentIndex + 1;
-			autoplay();
-		});
+		currentPlayer.getOnRepeat();
 	}
 
 	public static void play() {
-		if (currentPlayer != null) {
-			currentPlayer.play();
-		} else {
-			autoplay();
-		}
+		currentPlayer.play();
 	}
 
 	public static void pause() {

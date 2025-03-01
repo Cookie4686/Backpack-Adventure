@@ -25,7 +25,7 @@ public class SettingPopup extends GridPane {
 		add(createText("Music Volume"), 0, 0);
 		add(createText("Theme Volume"), 0, 1);
 		add(createText("SFX Volume"), 0, 2);
-		add(musicSlider = new VolumeSlider(24, true, () -> BackgroundSongPlayer.pause(),
+		add(musicSlider = new VolumeSlider(24, false, () -> BackgroundSongPlayer.pause(),
 				() -> BackgroundSongPlayer.play()), 1, 0);
 		add(themeSlider = new VolumeSlider(24), 1, 1);
 		add(sfxSlider = new VolumeSlider(24), 1, 2);

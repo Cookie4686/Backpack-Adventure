@@ -33,6 +33,7 @@ public class VolumeSlider extends HBox {
 		imageView.setCursor(Cursor.HAND);
 		imageView.setPickOnBounds(true);
 		imageView.setOnMouseClicked(_ -> {
+			System.out.println(slider.getValue());
 			if (slider.getValue() == 0) {
 				slider.setValue(lastValue);
 			} else {

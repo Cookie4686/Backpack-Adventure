@@ -36,24 +36,8 @@ public class FightLogic {
 		if (entities.size() == 0) {
 			GameLogic.getInstance().endFight();
 		} else {
+			
 			playerTurn();
-		}
-	}
-	
-	
-	public void activateFightScene() {
-		this.isInFight = true;
-		this.isPTurn = true;
-		
-		while (isInFight) {
-			if (isPTurn) {
-				// Main thread should run this
-				playerTurn();
-			}
-			else {
-				// Main thread should run this
-				entitiesTurn();
-			}
 		}
 	}
 	
@@ -61,22 +45,18 @@ public class FightLogic {
 	public void entityTurn(Entity e) {
 		System.out.println("enemy turn");
 		for (Effect ef : e.getAllEffect()) {
-			Platform.runLater(() -> {
-				activateEffect(ef, e);
-				if (e.getHp() == 0) {
-					e.checkAlive();
-					return;
-				}
-			});
+			activateEffect(ef, e);
+			if (e.getHp() == 0) {
+				e.checkAlive();
+				return;
+			}
 		}
 		e.activatePerTurn();
 		if (!e.isStunned()) {
 			Random rand = new Random();
 			
 			if (e.getNextTurn() != null) {
-				Platform.runLater(() -> {
-					useEffect(e.getNextTurn(), e);
-				});
+				useEffect(e.getNextTurn(), e);
 			}
 			if (Player.getInstance().getHp() == 0) {
 				GameLogic.getInstance().gameOver();
@@ -88,14 +68,12 @@ public class FightLogic {
 
 	public void playerTurn() {
 		for (Effect ef : Player.getInstance().getAllEffect()) {
-			Platform.runLater(() -> {
-				activateEffect(ef, Player.getInstance());
-				Player.getInstance().render();
-				if (Player.getInstance().getHp() == 0) {
-					GameLogic.getInstance().gameOver();
-					return;
-				}
-			});
+			activateEffect(ef, Player.getInstance());
+			Player.getInstance().render();
+			if (Player.getInstance().getHp() == 0) {
+				GameLogic.getInstance().gameOver();
+				return;
+			}
 		}
 		Player.getInstance().activatePerTurn();
 	}

@@ -9,6 +9,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import logic.handler.ItemHandler;
 import scene.MenuScene;
+import sound.BackgroundSongPlayer;
 
 public class Main extends Application {
 	public static StackPane root;
@@ -35,6 +36,8 @@ public class Main extends Application {
 		// primaryStage.setMaximized(true);
 		primaryStage.setResizable(false);
 		primaryStage.show();
+		
+		BackgroundSongPlayer.menu();
 	}
 
 	@Override
