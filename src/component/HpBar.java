@@ -76,7 +76,7 @@ public class HpBar extends StackPane implements ReRenderable {
 		setShield();
 	}
 
-	private void setHpBar() {
+	public void setHpBar() {
 		// check if working: prevent bugs when multiple thread are modifying hpBar
 		final double temp = realProgress;
 		final int hp = being.getHp() > being.getMaxHp() ? being.getMaxHp() : being.getHp(); // no overheal show
@@ -99,7 +99,7 @@ public class HpBar extends StackPane implements ReRenderable {
 		thread.start();
 	}
 
-	private void setShield() {
+	public void setShield() {
 		if (being.getShield() > 0) {
 			imageView.setEffect(shieldAdjust);
 			shieldText.setText(Integer.toString(being.getShield()));

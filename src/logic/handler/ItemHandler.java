@@ -32,6 +32,7 @@ public class ItemHandler {
 		} else {
 			if (item instanceof Clickable) {
 				((Clickable) item).activatePerClick();
+				Player.getInstance().render();
 			}
 			
 			

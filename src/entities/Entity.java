@@ -86,6 +86,7 @@ public class Entity extends Being implements TurnActivable {
 
 			FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getLast());
 		}
+		render();
 		return damaged;
 	}
 	public void checkAlive() {

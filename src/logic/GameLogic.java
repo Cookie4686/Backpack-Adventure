@@ -8,6 +8,8 @@ import game.Game;
 import game.GameBottom;
 import game.GameTop;
 import game.item.Item;
+import game.itemGenerator.ItemRandomizer;
+import game.itemGenerator.ResourceLoader;
 import sound.ThemeSongLoader;
 
 public class GameLogic {
@@ -43,6 +45,12 @@ public class GameLogic {
 	public void endFight() {
 		FightLogic.getInstance().setInFight(false);
 		ThemeSongLoader.stop();
+		
+		Item[] items = new Item[6];
+		for (int i=0 ; i<6 ; i++) {
+			items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
+		}
+		Game.getInstance().addItemsToGame(items);
 	}
 
 	public ArrayList<Item> getInventory() {
