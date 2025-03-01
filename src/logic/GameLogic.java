@@ -27,7 +27,7 @@ public class GameLogic {
 		FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		GameBottom.getInstance().render();
 		Player.getInstance().activatePerTurn();
-		//ThemeSongLoader.play("boss1");
+		// ThemeSongLoader.play("boss1");
 	}
 
 	public void gameOver() {
