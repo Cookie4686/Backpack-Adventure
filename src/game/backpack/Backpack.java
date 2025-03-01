@@ -99,7 +99,7 @@ public class Backpack extends VBox implements ReRenderable {
 	public void replaceItem(Item oldItem, Item newItem) {
 		newItem.setTranslateX(oldItem.getTranslateX());
 		newItem.setTranslateY(oldItem.getTranslateY());
-		newItem.setRotate(oldItem.getRotate());
+		newItem.getImageView().setRotate(oldItem.getImageView().getRotate());
 		for (Slot[] row : slots) {
 			for (Slot slot : row) {
 				if (slot.getItem() == oldItem) {
@@ -108,7 +108,9 @@ public class Backpack extends VBox implements ReRenderable {
 			}
 		}
 		GameLogic.getInstance().getInventory().remove(oldItem);
+		Game.getInstance().getChildren().remove(oldItem);
 		GameLogic.getInstance().getInventory().add(newItem);
+		Game.getInstance().getChildren().add(newItem);
 	}
 
 	private void placeItem(Slot slot, Item item) {
