@@ -33,7 +33,7 @@ public class ItemHandler {
 			if (item instanceof Clickable) {
 				((Clickable) item).activatePerClick();
 			}
-			Backpack.getInstance().render();
+			
 			
 		}
 	}
@@ -89,6 +89,8 @@ public class ItemHandler {
 				((StatUpdatable) item).statUpdate();
 			}
 		}
+		
+		Player.getInstance().render();
 	}
 
 	private static void rotateItem() {

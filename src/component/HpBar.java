@@ -69,7 +69,9 @@ public class HpBar extends StackPane implements ReRenderable {
 
 	@Override
 	public void render() {
-		hpBarText.setText(String.format("%s/%s", being.getHp(), being.getMaxHp()));
+		final int hp = being.getHp() > being.getMaxHp() ? being.getMaxHp() : being.getHp(); // no overheal show
+		
+		hpBarText.setText(String.format("%s/%s", hp, being.getMaxHp()));
 		setHpBar();
 		setShield();
 	}
@@ -77,10 +79,12 @@ public class HpBar extends StackPane implements ReRenderable {
 	private void setHpBar() {
 		// check if working: prevent bugs when multiple thread are modifying hpBar
 		final double temp = realProgress;
-		realProgress = (double) being.getHp() / being.getMaxHp();
+		final int hp = being.getHp() > being.getMaxHp() ? being.getMaxHp() : being.getHp(); // no overheal show
+		
+		realProgress = (double) hp / being.getMaxHp();
 		Thread thread = new Thread(() -> {
 			final int SMOOTHNESS = 50;
-			double interval = (temp - (double) being.getHp() / being.getMaxHp()) / SMOOTHNESS;
+			double interval = (temp - (double) hp / being.getMaxHp()) / SMOOTHNESS;
 			for (int i = 0; i < SMOOTHNESS; i++) {
 				Platform.runLater(() -> {
 					hpBar.setProgress(hpBar.getProgress() - interval);

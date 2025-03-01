@@ -20,13 +20,19 @@ public class GameLogic {
 		Game.getInstance().clearFloatingItem();
 		GameTop.getInstance().useBackpack();
 
+		// Spawn enemies
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("werewolf"));
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("ghost"));
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("flyingAlien"));
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("flyingAlien"));
 		FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		GameBottom.getInstance().render();
-		Player.getInstance().activatePerTurn();
+		
+		// Move into fightlogic
+		// initial enemies future attack and player turn after that
+		FightLogic.getInstance().entitiesTurn();
+		
+		
 		// ThemeSongLoader.play("boss1");
 	}
 
