@@ -8,6 +8,8 @@ import game.itemGenerator.ItemRandomizer;
 import game.itemGenerator.ResourceLoader;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import logic.GameLogic;
+import sound.BackgroundSongPlayer;
 
 public class GameScene {
 	public static void use() {
@@ -24,5 +26,6 @@ public class GameScene {
 		items[7]= ResourceLoader.newItem("Staff of Flame");
 		items[8]= ResourceLoader.newItem("Iron Dagger");
 		Game.getInstance().addItemsToGame(items);
+		BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
 	}
 }

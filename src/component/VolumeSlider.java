@@ -1,11 +1,13 @@
 package component;
 
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import sound.BackgroundSongPlayer;
 
 public class VolumeSlider extends HBox {
 	private static Image mute, vol1, vol2, vol3;
@@ -33,7 +35,6 @@ public class VolumeSlider extends HBox {
 		imageView.setCursor(Cursor.HAND);
 		imageView.setPickOnBounds(true);
 		imageView.setOnMouseClicked(_ -> {
-			System.out.println(slider.getValue());
 			if (slider.getValue() == 0) {
 				slider.setValue(lastValue);
 			} else {
