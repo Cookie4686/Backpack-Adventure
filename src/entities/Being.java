@@ -73,4 +73,5 @@ public abstract class Being extends VBox implements ReRenderable {
 	public void setAllEffect(ArrayList<Effect> allEffect) {
 		this.allEffect = allEffect;
 	}
+	
 }

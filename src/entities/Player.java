@@ -24,7 +24,7 @@ import logic.GameLogic;
 public class Player extends Being implements TurnActivable, ReStatable {
 	private static Player instance = null;
 	private int xp, maxXp, energy, maxEnergy, mana, maxMana, coins, luck;
-	private ArrayList<String> pic;
+	//private ArrayList<String> pic;
 	private CharacterState currentState = CharacterState.IDLE;
 	//private ArrayList<String> idlePaths;
 	private Point2D initialPosition;
@@ -45,10 +45,10 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		this.shield = 0;
 		this.xp = 0;
 		this.maxXp = 100;
-		this.energy = this.maxEnergy = 3;
+		this.energy = this.maxEnergy = 100;
 		this.mana = this.maxMana = 0;
 		this.mana = this.maxMana = 0;
-		this.pic = null;
+		//this.pic = null;
 		this.coins = 0;
 		this.luck = 0;
 		this.allEffect = new ArrayList<Effect>();
@@ -280,14 +280,6 @@ public class Player extends Being implements TurnActivable, ReStatable {
 
 	public void setLuck(int luck) {
 		this.luck = luck;
-	}
-
-	public ArrayList<String> getPic() {
-		return pic;
-	}
-
-	public void setPic(ArrayList<String> pic) {
-		this.pic = pic;
 	}
 
 	public static Player getInstance() {

@@ -4,7 +4,6 @@ import java.util.Random;
 
 import entities.Player;
 import game.Game;
-import game.GameBottom;
 import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.item.Item;
@@ -35,7 +34,7 @@ public class ItemHandler {
 				((Clickable) item).activatePerClick();
 			}
 			Backpack.getInstance().render();
-			GameBottom.getInstance().render();
+			
 		}
 	}
 
