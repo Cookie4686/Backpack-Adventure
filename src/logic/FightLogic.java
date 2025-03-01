@@ -69,6 +69,7 @@ public class FightLogic {
 			if (e.getNextTurn() != null) {
 				e.moveLeftAndBack();
 				useEffect(e.getNextTurn(), e);
+				Player.getInstance().render();
 			}
 			if (Player.getInstance().getHp() == 0) {
 				GameLogic.getInstance().gameOver();
