@@ -27,19 +27,30 @@ public class FightLogic {
 	}
 
 	public void entitiesTurn() {
-		for (Entity en : entities) {
-			entityTurn(en);
-		}
-		
-		isPTurn = true;
-		
-		if (entities.size() == 0) {
-			GameLogic.getInstance().endFight();
-		} else {
-			
-			playerTurn();
-		}
-	}
+        isPTurn = false;
+        Platform.runLater(() -> {
+            new Thread(() -> {
+                try {
+                    for (Entity en : entities) {
+                        entityTurn(en);
+                        Thread.sleep(500);
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    System.err.println("Thread interrupted: " + e.getMessage());
+                } finally {
+                    Platform.runLater(() -> {
+                        isPTurn = true;
+                        if (entities.isEmpty()) {
+                            GameLogic.getInstance().endFight();
+                        } else {
+                            playerTurn();
+                        }
+                    });
+                }
+            }).start();
+        });
+    }
 	
 
 	public void entityTurn(Entity e) {
@@ -56,6 +67,7 @@ public class FightLogic {
 			Random rand = new Random();
 			
 			if (e.getNextTurn() != null) {
+				e.moveLeftAndBack();
 				useEffect(e.getNextTurn(), e);
 			}
 			if (Player.getInstance().getHp() == 0) {

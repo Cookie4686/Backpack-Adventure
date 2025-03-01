@@ -9,6 +9,8 @@ import game.util.Effect;
 import game.util.EffectType;
 import game.util.MobTier;
 import interfaces.TurnActivable;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -29,6 +31,7 @@ public class Entity extends Being implements TurnActivable {
 	protected ArrayList<Effect> allAttributes;
 	protected Effect nextTurn;
 	private double desiredX;
+	private double originalX;
     private boolean isMoving = false;
     private static final double MOVE_DURATION = 0.3;
     
@@ -205,4 +208,28 @@ public class Entity extends Being implements TurnActivable {
     public void setCurrentX(double x) {
         setTranslateX(x);
     }
+
+	public double getOriginalX() {
+		return originalX;
+	}
+
+	public void setOriginalX(double originalX) {
+		this.originalX = originalX;
+	}
+    
+	public void moveLeftAndBack() {
+        double currentTranslateX = imageView.getTranslateX();
+        Timeline moveTimeline = new Timeline();
+        double moveDistance = -20;
+        double targetX = currentTranslateX + moveDistance;
+        
+        moveTimeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX)),
+                new KeyFrame(Duration.millis(100), new KeyValue(imageView.translateXProperty(), currentTranslateX + moveDistance)),
+                new KeyFrame(Duration.millis(200), new KeyValue(imageView.translateXProperty(), currentTranslateX)) 
+        );
+        moveTimeline.setCycleCount(1);
+        moveTimeline.play();
+    }
+    
 }
