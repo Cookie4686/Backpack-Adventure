@@ -45,25 +45,24 @@ private static HashMap<String, Resource> entityMap;
                         "Frames/bird3.png",
                         "Frames/bird4.png",
                         "Frames/bird5.png",
-                        "Frames/bird6.png",
-                        "Frames/bird7.png"
+                        "Frames/bird6.png"
                 ))));
 
-        entityMap.put("crow", new Resource(() -> new Entity("crow", 50, 10, MobTier.E,
-                        new ArrayList<>(Arrays.asList(new Effect(20,EffectType.DAMAGE)))),
-                new ArrayList<>(Arrays.asList(
-                        "Frames/crow1.png",
-                        "Frames/crow2.png"
-                ))));
+//        entityMap.put("crow", new Resource(() -> new Entity("crow", 50, 10, MobTier.E,
+//                        new ArrayList<>(Arrays.asList(new Effect(20,EffectType.DAMAGE)))),
+//                new ArrayList<>(Arrays.asList(
+//                        "Frames/crow-fly1.png",
+//                        "Frames/crow-fly2.png"
+//                ))));
 
-        entityMap.put("snake", new Resource(() -> new Entity("snake", 30, 10, MobTier.E,
-                        new ArrayList<>(Arrays.asList(new Effect(10,EffectType.DAMAGE), new Effect(10,EffectType.POISON)))),
-                new ArrayList<>(Arrays.asList(
-                        "Frames/snake1.png",
-                        "Frames/snake2.png",
-                        "Frames/snake3.png",
-                        "Frames/snake4.png"
-                ))));
+//        entityMap.put("snake", new Resource(() -> new Entity("snake", 30, 10, MobTier.E,
+//                        new ArrayList<>(Arrays.asList(new Effect(10,EffectType.DAMAGE), new Effect(10,EffectType.POISON)))),
+//                new ArrayList<>(Arrays.asList(
+//                        "Frames/snake1.png",
+//                        "Frames/snake2.png",
+//                        "Frames/snake3.png",
+//                        "Frames/snake4.png"
+//                ))));
 
 
         // MobTier.D - 5 entities
@@ -97,12 +96,12 @@ private static HashMap<String, Resource> entityMap;
                         "Frames/frog4.png"
                 ))));
 
-        entityMap.put("meerman", new Resource(() -> new Entity("meerman", 75, 15, MobTier.D,
-                        new ArrayList<>(Arrays.asList(new Effect(10,EffectType.DAMAGE), new Effect(20,EffectType.ANGER)))),
-                new ArrayList<>(Arrays.asList(
-                        "Frames/meerman1.png",
-                        "Frames/meerman2.png"
-                ))));
+//        entityMap.put("meerman", new Resource(() -> new Entity("meerman", 75, 15, MobTier.D,
+//                        new ArrayList<>(Arrays.asList(new Effect(10,EffectType.DAMAGE), new Effect(20,EffectType.ANGER)))),
+//                new ArrayList<>(Arrays.asList(
+//                        "Frames/meerman1.png",
+//                        "Frames/meerman2.png"
+//                ))));
 
         entityMap.put("bunny", new Resource(() -> new Entity("bunny", 40, 15, MobTier.D,
                         new ArrayList<>(Arrays.asList(new Effect(5,EffectType.DAMAGE), new Effect(40,EffectType.ANGER)))),
@@ -129,20 +128,16 @@ private static HashMap<String, Resource> entityMap;
                         "Frames/mushroom1.png",
                         "Frames/mushroom2.png",
                         "Frames/mushroom3.png",
-                        "Frames/mushroom4.png",
-                        "Frames/mushroom5.png",
-                        "Frames/mushroom6.png",
-                        "Frames/mushroom7.png",
-                        "Frames/mushroom8.png"
+                        "Frames/mushroom4.png"
                 ))));
 
         entityMap.put("toad", new Resource(() -> new Entity("toad", 100, 30, MobTier.C,
                         new ArrayList<>(Arrays.asList(new Effect(20,EffectType.POISON), new Effect(20, EffectType.THORN)))),
                 new ArrayList<>(Arrays.asList(
-                        "Frames/toad1.png",
-                        "Frames/toad2.png",
-                        "Frames/toad3.png",
-                        "Frames/toad4.png"
+                        "Frames/mutant-toad-idle1.png",
+                        "Frames/mutant-toad-idle2.png",
+                        "Frames/mutant-toad-idle3.png",
+                        "Frames/mutant-toad-idle4.png"
                 ))));
 
 //        entityMap.put("C4", new Resource(() -> new Entity("", 100, 30, MobTier.C,
@@ -189,8 +184,8 @@ private static HashMap<String, Resource> entityMap;
         entityMap.put("hellHound", new Resource(() -> new Entity("hellHound", 100, 45, MobTier.B,
                         new ArrayList<>(Arrays.asList(new Effect(40,EffectType.DAMAGE), new Effect(50, EffectType.ANGER)))),
                 new ArrayList<>(Arrays.asList(
-                        "Frames/hellHound1.png",
-                        "Frames/hellHound2.png",
+//                        "Frames/hellHound1.png",
+  //                      "Frames/hellHound2.png",
                         "Frames/hellHound3.png",
                         "Frames/hellHound4.png",
                         "Frames/hellHound5.png",
@@ -198,7 +193,8 @@ private static HashMap<String, Resource> entityMap;
                         "Frames/hellHound7.png",
                         "Frames/hellHound8.png",
                         "Frames/hellHound9.png",
-                        "Frames/hellHound10.png"
+                        "Frames/hellHound10.png",
+                        "Frames/hellHound11.png"
                 ))));
 
         entityMap.put("ogre", new Resource(() -> new Entity("ogre", 200, 45, MobTier.B,
