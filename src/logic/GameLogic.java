@@ -22,6 +22,7 @@ public class GameLogic {
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("werewolf"));
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("ghost"));
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("flyingAlien"));
+		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("flyingAlien"));
 		FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		GameBottom.getInstance().render();
 		//ThemeSongLoader.play("boss1");
