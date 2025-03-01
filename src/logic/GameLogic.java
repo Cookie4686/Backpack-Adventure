@@ -9,6 +9,7 @@ import game.GameTop;
 import game.item.Item;
 import game.itemGenerator.ItemRandomizer;
 import game.itemGenerator.ResourceLoader;
+import sound.BackgroundSongPlayer;
 import sound.ThemeSongLoader;
 
 public class GameLogic {
@@ -21,7 +22,7 @@ public class GameLogic {
 		Game.getInstance().clearFloatingItem();
 		GameTop.getInstance().useBackpack();
 
-
+		BackgroundSongPlayer.fight(currentFloor);
 		// Spawn enemies
 
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("werewolf"));
@@ -71,4 +72,9 @@ public class GameLogic {
 		}
 		return instance;
 	}
+
+	public void setCurrentFloor(int currentFloor) {
+		this.currentFloor = currentFloor;
+	}
+	
 }

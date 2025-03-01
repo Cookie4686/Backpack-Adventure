@@ -7,6 +7,8 @@ import game.util.Effect;
 import game.util.EffectType;
 import game.util.ItemTier;
 import logic.FightLogic;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class ManaWeapon extends Weapon{
 	final private ArrayList<Effect> effects;
@@ -31,9 +33,13 @@ public class ManaWeapon extends Weapon{
 	public void activatePerClick() {
 		if (!isEnoughEnergy()) {
 			System.out.println("Not enough mana");
+			SfxPlayer.play(Sfx.DENINE);
 			return;
 		}
 		System.out.println("Use "+getName());
+		
+		Player.getInstance().attack();
+		SfxPlayer.play(Sfx.MAGIC);
 		
 		//decrease mana point in player by costActivate
 		Player.getInstance().setMana(Player.getInstance().getMana() - getCostActivate());

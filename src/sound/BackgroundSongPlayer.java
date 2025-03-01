@@ -7,23 +7,47 @@ import javafx.scene.media.MediaPlayer;
 import scene.popup.SettingPopup;
 
 public class BackgroundSongPlayer {
-	private static ArrayList<String> paths;
-	private static int currentIndex;
+	private static ArrayList<String> fight, floor;
 	private static MediaPlayer currentPlayer;
-
+	
 	static {
-		paths = new ArrayList<String>();
-		currentIndex = 0;
-		paths.add("CHIC - LeFreak.mp3");
-		paths.add("Jamiroquai - CosmicGirl.mp3");
-		paths.add("RickAstley - NeverGonnaGiveYouUp.mp3");
-		paths.add("Redtenbacher's Funkestra - Funktionality.mp3");
+		fight = new ArrayList<String>();
+		fight.add("Fight1.mp3");
+		
+		floor = new ArrayList<String>();
+		floor.add("Floor1.mp3");
 	}
 	
 	public static void menu() {
+		if (currentPlayer != null) currentPlayer.stop();
 		currentPlayer = new MediaPlayer(new Media(ClassLoader.getSystemResource(String.format("song/Menu bg.mp3")).toString()));
+		currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getMusicSlider().valueProperty());
 		currentPlayer.play();
-		currentPlayer.getOnRepeat();
+		currentPlayer.setOnEndOfMedia(() -> {
+			menu();
+		});
+	}
+	
+	public static void fight(int level) {
+		currentPlayer.stop();
+		currentPlayer = new MediaPlayer(
+				new Media(ClassLoader.getSystemResource(String.format("song/%s", fight.get(level))).toString()));
+		currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getMusicSlider().valueProperty());
+		currentPlayer.play();
+		currentPlayer.setOnEndOfMedia(() -> {
+			fight(level);
+		});
+	}
+	
+	public static void floor(int level) {
+		currentPlayer.stop();
+		currentPlayer = new MediaPlayer(
+				new Media(ClassLoader.getSystemResource(String.format("song/%s", floor.get(level))).toString()));
+		currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getMusicSlider().valueProperty());
+		currentPlayer.play();
+		currentPlayer.setOnEndOfMedia(() -> {
+			floor(level);
+		});
 	}
 
 	public static void play() {

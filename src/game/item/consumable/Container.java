@@ -1,9 +1,12 @@
 package game.item.consumable;
 
+import entities.Player;
 import game.item.Item;
 import game.util.ItemTier;
 import interfaces.Clickable;
 import logic.FightLogic;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class Container extends Item implements Clickable{
 	private int damage;
@@ -21,6 +24,8 @@ public class Container extends Item implements Clickable{
 	
 	@Override
 	public void activatePerClick() {
+		Player.getInstance().attack();
+		SfxPlayer.play(Sfx.THROW);
 		FightLogic.getInstance().getTarget().takeDamage(damage);
 		delete();
 	}
