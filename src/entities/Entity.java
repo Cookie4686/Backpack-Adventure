@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import component.HpBar;
@@ -86,17 +87,23 @@ public class Entity extends Being implements TurnActivable {
 				GameLogic.getInstance().endFight();
 				return damaged;
 			}
-
-			FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getLast());
 		}
 		render();
 		return damaged;
 	}
 	public void checkAlive() {
-		this.die();
-		GameBottom.getInstance().removeEntity();
-		FightLogic.getInstance().getEntities().remove(this);
-		GameBottom.getInstance().render();
+		Platform.runLater(()->{
+			this.die();
+			GameBottom.getInstance().removeEntity();
+			//FightLogic.getInstance().getEntities().remove(this);
+			GameBottom.getInstance().render();
+		});
+		for(Entity e : FightLogic.getInstance().getEntities()) {
+			if(e.getHp() > 0) {					
+				FightLogic.getInstance().setTarget(e);
+				break;
+			}
+		}
 	}
 
 	public int getXp() {

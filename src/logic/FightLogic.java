@@ -2,6 +2,7 @@ package logic;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import entities.Being;
@@ -35,6 +36,13 @@ public class FightLogic {
                         entityTurn(en);
                         Thread.sleep(500);
                     }
+                    Iterator<Entity> iterator = FightLogic.getInstance().getEntities().iterator();
+            		while (iterator.hasNext()) {
+            		    Entity e = iterator.next();
+            		    if (e.getHp() == 0) {
+            		        iterator.remove();
+            		    }
+            		}
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     System.err.println("Thread interrupted: " + e.getMessage());
@@ -55,13 +63,15 @@ public class FightLogic {
 
 	public void entityTurn(Entity e) {
 		System.out.println("enemy turn");
-		for (Effect ef : e.getAllEffect()) {
+		ArrayList<Effect> effects = new ArrayList<>(e.getAllEffect());
+		for (Effect ef : effects) {
 			activateEffect(ef, e);
 			if (e.getHp() == 0) {
 				e.checkAlive();
 				return;
 			}
 		}
+		e.setAllEffect(effects);
 		e.activatePerTurn();
 		if (!e.isStunned()) {
 			Random rand = new Random();
