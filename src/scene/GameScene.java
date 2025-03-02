@@ -1,5 +1,6 @@
 package scene;
 
+import application.Fader;
 import application.Main;
 import game.Game;
 import game.GameHeader;
@@ -17,7 +18,10 @@ public class GameScene {
 		VBox.setVgrow(Game.getInstance(), Priority.ALWAYS);
 		root.getChildren().setAll(GameHeader.getInstance(), Game.getInstance());
 		Main.root.getChildren().setAll(root);
-		
+		if (!Main.root.getChildren().contains(Fader.getBlackout())) {
+	        Main.root.getChildren().add(Fader.getBlackout());
+	        Fader.getBlackout().toBack();
+	    }
 		Item[] items = new Item[9];
 		for (int i=0 ; i<6 ; i++) {
 			items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
@@ -26,6 +30,7 @@ public class GameScene {
 		items[7]= ResourceLoader.newItem("Staff of Flame");
 		items[8]= ResourceLoader.newItem("Iron Dagger");
 		Game.getInstance().addItemsToGame(items);
+        Fader.getBlackout().toFront();
 		BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
 	}
 }

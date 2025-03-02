@@ -13,6 +13,7 @@ import game.util.EffectType;
 import interfaces.ReStatable;
 import interfaces.TurnActivable;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
@@ -105,8 +106,8 @@ public class Player extends Being implements TurnActivable, ReStatable {
 			new Image(ClassLoader.getSystemResource("Frames/player_run9.png").toString()),
 			new Image(ClassLoader.getSystemResource("Frames/player_run10.png").toString())
 		));
-		runTimeline = createPlayerAnimation(runFrames,0.2);
-		runTimeline.setCycleCount(Timeline.INDEFINITE);
+		runTimeline = createPlayerAnimation(runFrames,0.075);
+		runTimeline.setCycleCount(3);
 		dieFrames = new ArrayList<Image>(Arrays.asList(
 			new Image(ClassLoader.getSystemResource("Frames/player_die1.png").toString()),
 			new Image(ClassLoader.getSystemResource("Frames/player_die2.png").toString()),
@@ -175,8 +176,10 @@ public class Player extends Being implements TurnActivable, ReStatable {
                 break;
             case "run":
             	runTimeline.play();
+            	break;
             case "die":
             	dieTimeline.play();
+            	break;
             default:
                 System.out.println("Unknown animation: " + animationName);
         }
@@ -184,6 +187,35 @@ public class Player extends Being implements TurnActivable, ReStatable {
     
     public void die() {
     	playAnimation("die");
+    }
+    
+    public void moveLeftAndBack() {
+        double currentTranslateX = imageView.getTranslateX();
+        Timeline moveTimeline = new Timeline();
+        Timeline moveTimeline2 = new Timeline();
+        double moveDistance = 200;
+        double targetX = currentTranslateX + moveDistance;
+        
+        moveTimeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX)),
+                new KeyFrame(Duration.millis(1000), new KeyValue(imageView.translateXProperty(), currentTranslateX + moveDistance))
+        );
+        moveTimeline.setCycleCount(1);
+        
+        moveTimeline2.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX - moveDistance)),
+                new KeyFrame(Duration.millis(1000), new KeyValue(imageView.translateXProperty(), currentTranslateX))
+        );
+        moveTimeline2.setCycleCount(1);
+        
+        moveTimeline.setOnFinished(event -> {
+        	moveTimeline2.play();
+        });
+        runTimeline.setOnFinished(event -> {
+        	playAnimation("idle");
+        });
+        playAnimation("run");
+        moveTimeline.play();
     }
     
 	public int takeDamage(int damaged) {
