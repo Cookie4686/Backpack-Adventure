@@ -33,6 +33,7 @@ public class FightLogic {
             new Thread(() -> {
                 try {
                     for (Entity en : entities) {
+                    	if(Player.getInstance().getHp() == 0) break;
                         entityTurn(en);
                         Thread.sleep(500);
                     }
@@ -43,6 +44,9 @@ public class FightLogic {
             		        iterator.remove();
             		    }
             		}
+            		if (FightLogic.getInstance().getEntities().isEmpty()) {
+        				GameLogic.getInstance().endFight();
+        			}
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     System.err.println("Thread interrupted: " + e.getMessage());

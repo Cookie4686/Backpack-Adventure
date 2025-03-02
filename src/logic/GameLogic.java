@@ -3,6 +3,7 @@ package logic;
 import java.util.ArrayList;
 
 import entities.EntityLoader;
+import entities.Player;
 import game.Game;
 import game.GameBottom;
 import game.GameTop;
@@ -41,7 +42,8 @@ public class GameLogic {
 	}
 
 	public void gameOver() {
-
+		Player.getInstance().die();
+		FightLogic.getInstance().setInFight(false);
 	}
 
 	public void endFight() {

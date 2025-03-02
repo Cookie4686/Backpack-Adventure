@@ -83,27 +83,23 @@ public class Entity extends Being implements TurnActivable {
 		}
 		if (this.getHp() == 0) {
 			checkAlive();
-			if (FightLogic.getInstance().getEntities().size() == 0) {
-				GameLogic.getInstance().endFight();
-				return damaged;
-			}
 		}
 		render();
 		return damaged;
 	}
 	public void checkAlive() {
-		Platform.runLater(()->{
-			this.die();
-			GameBottom.getInstance().removeEntity();
-			//FightLogic.getInstance().getEntities().remove(this);
-			GameBottom.getInstance().render();
-		});
 		for(Entity e : FightLogic.getInstance().getEntities()) {
 			if(e.getHp() > 0) {					
 				FightLogic.getInstance().setTarget(e);
 				break;
 			}
 		}
+		Platform.runLater(()->{
+			this.die();
+			GameBottom.getInstance().removeEntity();
+			//FightLogic.getInstance().getEntities().remove(this);
+			GameBottom.getInstance().render();
+		});
 	}
 
 	public int getXp() {
