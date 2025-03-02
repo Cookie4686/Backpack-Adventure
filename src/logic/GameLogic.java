@@ -3,6 +3,7 @@ package logic;
 import java.util.ArrayList;
 
 import entities.EntityLoader;
+import entities.Player;
 import game.Game;
 import game.GameBottom;
 import game.GameTop;
@@ -26,9 +27,9 @@ public class GameLogic {
 		BackgroundSongPlayer.fight(currentFloor);
 		// Spawn enemies
 
-		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("nightmare"));
-		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("fireDragon"));
-		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("demon"));
+		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("werewolf"));
+		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("toad"));
+		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("bunny"));
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("frog"));
 		FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		GameBottom.getInstance().render();
@@ -45,6 +46,7 @@ public class GameLogic {
 		FightLogic.getInstance().setInFight(false);
 		BackgroundSongPlayer.stop();
 		SfxPlayer.play(Sfx.GAMEOVER);
+		Player.getInstance().die();
 	}
 
 	public void endFight() {

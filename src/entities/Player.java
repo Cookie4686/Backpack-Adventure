@@ -37,6 +37,8 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	private Timeline attackTimeline;
 	private ArrayList<Image> runFrames;
 	private Timeline runTimeline;
+	private ArrayList<Image> dieFrames;
+	private Timeline dieTimeline;
 	private ImageView imageView;
 	private Text text;
 	private EnergyOrb energyOrb;
@@ -105,6 +107,20 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		));
 		runTimeline = createPlayerAnimation(runFrames,0.2);
 		runTimeline.setCycleCount(Timeline.INDEFINITE);
+		dieFrames = new ArrayList<Image>(Arrays.asList(
+			new Image(ClassLoader.getSystemResource("Frames/player_die1.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_die2.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_die3.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_die4.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_die5.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_die6.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_die7.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_die8.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_die9.png").toString()),
+			new Image(ClassLoader.getSystemResource("Frames/player_die10.png").toString())
+		));
+		dieTimeline = createPlayerAnimation(dieFrames,0.075);
+		dieTimeline.setCycleCount(1);
 	}
 	
 	private Timeline createPlayerAnimation(ArrayList<Image> images, double frameDuration) {
@@ -159,11 +175,17 @@ public class Player extends Being implements TurnActivable, ReStatable {
                 break;
             case "run":
             	runTimeline.play();
+            case "die":
+            	dieTimeline.play();
             default:
                 System.out.println("Unknown animation: " + animationName);
         }
     }
-
+    
+    public void die() {
+    	playAnimation("die");
+    }
+    
 	public int takeDamage(int damaged) {
 		if (damaged==0) return 0;
 		if (FightLogic.findEffectAndDecrease(allEffect, EffectType.DODGE, 1)) {

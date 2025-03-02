@@ -22,7 +22,9 @@ public class ButtonHandler {
 	}
 
 	public static void handleEndTurnButtonOnAction() {
-		FightLogic.getInstance().setPTurn(false);
-		FightLogic.getInstance().entitiesTurn();
+		if (FightLogic.getInstance().isInFight() && FightLogic.getInstance().isPTurn()) {	
+			FightLogic.getInstance().setPTurn(false);
+			FightLogic.getInstance().entitiesTurn();
+		}
 	}
 }

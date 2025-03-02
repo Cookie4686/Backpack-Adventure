@@ -1,6 +1,7 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 import component.HpBar;
@@ -9,6 +10,8 @@ import game.util.Effect;
 import game.util.EffectType;
 import game.util.MobTier;
 import interfaces.TurnActivable;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -29,6 +32,7 @@ public class Entity extends Being implements TurnActivable {
 	protected ArrayList<Effect> allAttributes;
 	protected Effect nextTurn;
 	private double desiredX;
+	private double originalX;
     private boolean isMoving = false;
     private static final double MOVE_DURATION = 0.3;
     
@@ -79,21 +83,23 @@ public class Entity extends Being implements TurnActivable {
 		}
 		if (this.getHp() == 0) {
 			checkAlive();
-			if (FightLogic.getInstance().getEntities().size() == 0) {
-				GameLogic.getInstance().endFight();
-				return damaged;
-			}
-
-			FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getLast());
 		}
 		render();
 		return damaged;
 	}
 	public void checkAlive() {
-		this.die();
-		GameBottom.getInstance().removeEntity();
-		FightLogic.getInstance().getEntities().remove(this);
-		GameBottom.getInstance().render();
+		for(Entity e : FightLogic.getInstance().getEntities()) {
+			if(e.getHp() > 0) {					
+				FightLogic.getInstance().setTarget(e);
+				break;
+			}
+		}
+		Platform.runLater(()->{
+			this.die();
+			GameBottom.getInstance().removeEntity();
+			//FightLogic.getInstance().getEntities().remove(this);
+			GameBottom.getInstance().render();
+		});
 	}
 
 	public int getXp() {
@@ -205,4 +211,28 @@ public class Entity extends Being implements TurnActivable {
     public void setCurrentX(double x) {
         setTranslateX(x);
     }
+
+	public double getOriginalX() {
+		return originalX;
+	}
+
+	public void setOriginalX(double originalX) {
+		this.originalX = originalX;
+	}
+    
+	public void moveLeftAndBack() {
+        double currentTranslateX = imageView.getTranslateX();
+        Timeline moveTimeline = new Timeline();
+        double moveDistance = -20;
+        double targetX = currentTranslateX + moveDistance;
+        
+        moveTimeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX)),
+                new KeyFrame(Duration.millis(100), new KeyValue(imageView.translateXProperty(), currentTranslateX + moveDistance)),
+                new KeyFrame(Duration.millis(200), new KeyValue(imageView.translateXProperty(), currentTranslateX)) 
+        );
+        moveTimeline.setCycleCount(1);
+        moveTimeline.play();
+    }
+    
 }

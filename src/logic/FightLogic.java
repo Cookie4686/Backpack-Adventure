@@ -2,6 +2,7 @@ package logic;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import entities.Being;
@@ -28,6 +29,7 @@ public class FightLogic {
 	}
 
 	public void entitiesTurn() {
+		this.isPTurn = false;
 		for (Entity en : entities) {
 			entityTurn(en);
 		}
@@ -40,24 +42,28 @@ public class FightLogic {
 			
 			playerTurn();
 		}
-	}
+    }
 	
 
 	public void entityTurn(Entity e) {
 		System.out.println("enemy turn");
-		for (Effect ef : e.getAllEffect()) {
+		ArrayList<Effect> effects = new ArrayList<>(e.getAllEffect());
+		for (Effect ef : effects) {
 			activateEffect(ef, e);
 			if (e.getHp() == 0) {
 				e.checkAlive();
 				return;
 			}
 		}
+		e.setAllEffect(effects);
 		e.activatePerTurn();
 		if (!e.isStunned()) {
 			Random rand = new Random();
 			
 			if (e.getNextTurn() != null) {
+				e.moveLeftAndBack();
 				useEffect(e.getNextTurn(), e);
+				Player.getInstance().render();
 			}
 			if (Player.getInstance().getHp() == 0) {
 				GameLogic.getInstance().gameOver();
@@ -68,6 +74,7 @@ public class FightLogic {
 	}
 
 	public void playerTurn() {
+		this.isPTurn = true;
 		for (Effect ef : Player.getInstance().getAllEffect()) {
 			activateEffect(ef, Player.getInstance());
 			Player.getInstance().render();

@@ -47,31 +47,35 @@ public class GameBottom extends HBox implements ReRenderable {
 	@Override
 	public void render() {
 		System.out.println("render all");
-		Player.getInstance().render();
-		enemyBox.getChildren().setAll(FightLogic.getInstance().getEntities());
-		for (Entity entity : FightLogic.getInstance().getEntities()) {
-			entity.initialize();
-	        FadeTransition ft = new FadeTransition(Duration.millis(500), entity);
-	        ft.setFromValue(0);
-	        ft.setToValue(1);
-	        ft.play();
-
-	        animateLayoutChange();
-		}
-	}
-	public void renderTarget(Entity e) {
-		System.out.println("render target");
-		Player.getInstance().render();
-		enemyBox.getChildren().setAll(FightLogic.getInstance().getEntities());
-		for (Entity entity : FightLogic.getInstance().getEntities()) {
-			if(entity == e) {
-				FadeTransition ft = new FadeTransition(Duration.millis(800), entity);
+		Platform.runLater(()->{
+			Player.getInstance().render();
+			enemyBox.getChildren().setAll(FightLogic.getInstance().getEntities());
+			for (Entity entity : FightLogic.getInstance().getEntities()) {
+				entity.initialize();
+				FadeTransition ft = new FadeTransition(Duration.millis(500), entity);
 				ft.setFromValue(0);
 				ft.setToValue(1);
 				ft.play();
 				
+				animateLayoutChange();
 			}
-		}
+		});
+	}
+	public void renderTarget(Entity e) {
+		System.out.println("render target");
+		Platform.runLater(()->{
+			Player.getInstance().render();
+			enemyBox.getChildren().setAll(FightLogic.getInstance().getEntities());
+			for (Entity entity : FightLogic.getInstance().getEntities()) {
+				if(entity == e) {
+					FadeTransition ft = new FadeTransition(Duration.millis(800), entity);
+					ft.setFromValue(0);
+					ft.setToValue(1);
+					ft.play();
+					
+				}
+			}
+		});
 	}
 
 	public HBox getEnemyBox() {
@@ -93,13 +97,16 @@ public class GameBottom extends HBox implements ReRenderable {
 
     public void removeEntity() {
         if (enemyBox.getChildren().isEmpty()) return;
-        for(int i = 0;i < enemyBox.getChildren().size();i++) {
-        	if(enemyBox.getChildren().get(i) instanceof Entity) {
-        		Entity e = (Entity) enemyBox.getChildren().get(i);
-        		if(e.getHp() == 0) enemyBox.getChildren().remove(i);
+        Platform.runLater(()->{
+        	for(int i = 0;i < enemyBox.getChildren().size();i++) {
+        		if(enemyBox.getChildren().get(i) instanceof Entity) {
+        			Entity e = (Entity) enemyBox.getChildren().get(i);
+        			
+        			if(e.getHp() == 0) enemyBox.getChildren().remove(i);
+        		}
         	}
-        }
-        animateLayoutChange();
+        	animateLayoutChange();
+		});
     }
 
     private void animateLayoutChange() {

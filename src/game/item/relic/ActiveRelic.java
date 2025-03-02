@@ -6,6 +6,8 @@ import game.util.EffectType;
 import game.util.ItemTier;
 import interfaces.Clickable;
 import interfaces.TurnActivable;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class ActiveRelic extends Relic implements Clickable, TurnActivable{
 	private int costActivate;
@@ -34,6 +36,7 @@ public class ActiveRelic extends Relic implements Clickable, TurnActivable{
 	public void activatePerClick() {
 		if (!isEnoughEnergy()) {
 			System.out.println("Not enough energy");
+			SfxPlayer.play(Sfx.DENINE);
 			return;
 		}
 		System.out.println("Use "+getName());
