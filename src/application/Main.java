@@ -1,5 +1,6 @@
 package application;
 
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -21,11 +22,11 @@ public class Main extends Application {
 		// double screenWidth = bounds.getWidth();
 		// double screenHeight = bounds.getHeight();
 		// double aspectRatio = screenWidth / screenHeight;
-		
 		root = new StackPane();
 		root.setAlignment(Pos.TOP_LEFT);
 		root.prefWidthProperty().bind(primaryStage.widthProperty());
 		root.prefHeightProperty().bind(primaryStage.heightProperty());
+		
 		MenuScene.use();
 		Scene scene = new Scene(root, 1280, 720);
 		scene.getStylesheets().add(ClassLoader.getSystemResource("test.css").toExternalForm());
