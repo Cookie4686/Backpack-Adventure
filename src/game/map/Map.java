@@ -61,7 +61,6 @@ public class Map extends GridPane {
 		buildPath(marks.get(0), marks.get(1));
 		for (int i=2 ; i<marks.size() ; i++) {
 			int r = random(i-1)+1;
-			System.out.println(r); 
 			buildPath(marks.get(i), marks.get(r));
 		}
 		
@@ -93,7 +92,6 @@ public class Map extends GridPane {
 		}
 		
 		findRoute();
-		System.out.println("Genmap!");
 		render();
 	}
 

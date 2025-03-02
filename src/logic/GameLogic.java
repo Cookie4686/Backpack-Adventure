@@ -41,21 +41,25 @@ public class GameLogic {
 	}
 
 	public void gameOver() {
+		if (FightLogic.getInstance().isInFight()) {
+			BackgroundSongPlayer.stop();
+			SfxPlayer.play(Sfx.GAMEOVER);
+			Player.getInstance().die();
+		}
 		FightLogic.getInstance().setInFight(false);
-		BackgroundSongPlayer.stop();
-		SfxPlayer.play(Sfx.GAMEOVER);
-		Player.getInstance().die();
 	}
 
 	public void endFight() {
-		FightLogic.getInstance().setInFight(false);
-		BackgroundSongPlayer.floor(currentFloor);
-		
-		Item[] items = new Item[5];
-		for (int i=0 ; i<5 ; i++) {
-			items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
+		if (FightLogic.getInstance().isInFight()) {
+			BackgroundSongPlayer.floor(currentFloor);
+			
+			Item[] items = new Item[5];
+			for (int i=0 ; i<5 ; i++) {
+				items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
+			}
+			Game.getInstance().addItemsToGame(items);
 		}
-		Game.getInstance().addItemsToGame(items);
+		FightLogic.getInstance().setInFight(false);
 	}
 
 	public ArrayList<Item> getInventory() {

@@ -16,6 +16,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import logic.FightLogic;
 import logic.GameLogic;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class ItemHandler {
 	public static Item currentItem;
@@ -29,13 +31,13 @@ public class ItemHandler {
 			calcValues();
 			startX = event.getSceneX() - item.getTranslateX();
 			startY = event.getSceneY() - item.getTranslateY();
-		} else {
+		} else if (FightLogic.getInstance().isPTurn()) {
 			if (item instanceof Clickable) {
 				((Clickable) item).activatePerClick();
 				Player.getInstance().render();
 			}
-			
-			
+		} else {
+			SfxPlayer.play(Sfx.DENINE);
 		}
 	}
 
