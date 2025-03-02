@@ -13,7 +13,7 @@ import sound.BackgroundSongPlayer;
 public class SettingPopup extends GridPane {
 	private static SettingPopup instance;
 	private Popup popup;
-	private VolumeSlider musicSlider, themeSlider, sfxSlider;
+	private VolumeSlider musicSlider, sfxSlider;
 
 	public SettingPopup() {
 		super();
@@ -23,12 +23,10 @@ public class SettingPopup extends GridPane {
 		setHgap(16);
 		setVgap(16);
 		add(createText("Music Volume"), 0, 0);
-		add(createText("Theme Volume"), 0, 1);
-		add(createText("SFX Volume"), 0, 2);
+		add(createText("SFX Volume"), 0, 1);
 		add(musicSlider = new VolumeSlider(24, false, () -> BackgroundSongPlayer.pause(),
 				() -> BackgroundSongPlayer.play()), 1, 0);
-		add(themeSlider = new VolumeSlider(24), 1, 1);
-		add(sfxSlider = new VolumeSlider(24), 1, 2);
+		add(sfxSlider = new VolumeSlider(24), 1, 1);
 
 		popup.setCenter(this);
 
@@ -51,9 +49,6 @@ public class SettingPopup extends GridPane {
 		return musicSlider.getSlider();
 	}
 
-	public Slider getThemeSlider() {
-		return themeSlider.getSlider();
-	}
 
 	public Slider getSfxSlider() {
 		return sfxSlider.getSlider();

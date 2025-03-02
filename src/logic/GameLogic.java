@@ -10,7 +10,8 @@ import game.item.Item;
 import game.itemGenerator.ItemRandomizer;
 import game.itemGenerator.ResourceLoader;
 import sound.BackgroundSongPlayer;
-import sound.ThemeSongLoader;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class GameLogic {
 	private static GameLogic instance = null;
@@ -41,12 +42,14 @@ public class GameLogic {
 	}
 
 	public void gameOver() {
-
+		FightLogic.getInstance().setInFight(false);
+		BackgroundSongPlayer.stop();
+		SfxPlayer.play(Sfx.GAMEOVER);
 	}
 
 	public void endFight() {
 		FightLogic.getInstance().setInFight(false);
-		ThemeSongLoader.stop();
+		BackgroundSongPlayer.floor(currentFloor);
 		
 		Item[] items = new Item[6];
 		for (int i=0 ; i<6 ; i++) {

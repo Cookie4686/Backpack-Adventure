@@ -13,6 +13,7 @@ import game.util.Effect;
 import game.util.EffectType;
 import interfaces.TurnActivable;
 import javafx.application.Platform;
+import sound.SfxPlayer;
 
 public class FightLogic {
 	private static FightLogic instance;
@@ -94,6 +95,7 @@ public class FightLogic {
 	}
 
 	public void useEffect(Effect ef, Being e) {
+		SfxPlayer.playByEffect(ef);
 		switch (ef.getType()) {
 		case FIRE		-> findEffectAndAdd(Player.getInstance().getAllEffect(), ef.getType(), ef.getAmount());
 		case POISON		-> findEffectAndAdd(Player.getInstance().getAllEffect(), ef.getType(), ef.getAmount());

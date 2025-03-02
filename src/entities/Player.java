@@ -21,6 +21,8 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import logic.FightLogic;
 import logic.GameLogic;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class Player extends Being implements TurnActivable, ReStatable {
 	private static Player instance = null;
@@ -163,13 +165,17 @@ public class Player extends Being implements TurnActivable, ReStatable {
     }
 
 	public int takeDamage(int damaged) {
+		if (damaged==0) return 0;
 		if (FightLogic.findEffectAndDecrease(allEffect, EffectType.DODGE, 1)) {
+			SfxPlayer.play(Sfx.DODGE);
 			return 0;
 		}
 		if (Player.getInstance().getShield() >= damaged) {
 			Player.getInstance().setShield(Player.getInstance().getShield() - damaged);
+			SfxPlayer.play(Sfx.SHIELD);
 			damaged = 0;
 		} else {
+			SfxPlayer.play(Sfx.DAMAGE);
 			damaged -= Player.getInstance().getShield();
 			Player.getInstance().setShield(0);
 			if (Player.getInstance().getHp() - damaged < 0) {

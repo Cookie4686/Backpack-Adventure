@@ -2,6 +2,7 @@ package sound;
 
 import java.util.HashMap;
 
+import game.util.Effect;
 import javafx.scene.media.AudioClip;
 import scene.popup.SettingPopup;
 
@@ -33,6 +34,23 @@ public class SfxPlayer {
 			AudioClip audioClip = resource.getAudioClip();
 			audioClip.setVolume(SettingPopup.getInstance().getSfxSlider().getValue());
 			audioClip.play();
+		}
+	}
+	
+	public static void playByEffect(Effect effect) {
+		switch (effect.getType()) {
+		case FIRE -> play(Sfx.FIRE);
+		case ANGER -> play(Sfx.ANGER);
+		case DODGE -> play(Sfx.DODGE);
+		case HEAL -> play(Sfx.HEAL);
+		case REGEN -> play(Sfx.HEAL);
+		case POISON -> play(Sfx.POISON);
+		case SHIELD -> play(Sfx.SHIELD);
+		case THORN -> play(Sfx.THORN);
+		case VAMPIRIC -> play(Sfx.VAMPIRIC);
+//		case STUNTED -> play(Sfx.FIRE);
+//		case SUMMONER -> play(Sfx.FIRE);
+		default -> {}
 		}
 	}
 }
