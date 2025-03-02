@@ -51,8 +51,8 @@ public class GameLogic {
 		FightLogic.getInstance().setInFight(false);
 		BackgroundSongPlayer.floor(currentFloor);
 		
-		Item[] items = new Item[6];
-		for (int i=0 ; i<6 ; i++) {
+		Item[] items = new Item[5];
+		for (int i=0 ; i<5 ; i++) {
 			items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
 		}
 		Game.getInstance().addItemsToGame(items);

@@ -88,8 +88,10 @@ public class Entity extends Being implements TurnActivable {
 			checkAlive();
 		}
 		render();
+		
 		return damaged;
 	}
+	
 	public void checkAlive() {
 		for(Entity e : FightLogic.getInstance().getEntities()) {
 			if(e.getHp() > 0) {					
@@ -103,6 +105,11 @@ public class Entity extends Being implements TurnActivable {
 			//FightLogic.getInstance().getEntities().remove(this);
 			GameBottom.getInstance().render();
 		});
+		
+		for(Entity e : FightLogic.getInstance().getEntities()) {
+			if(e.getHp() > 0) return;
+		}
+		GameLogic.getInstance().endFight();
 	}
 
 	public int getXp() {
