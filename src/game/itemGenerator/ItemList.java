@@ -31,7 +31,7 @@ public class ItemList {
 		itemMap = new HashMap<String, Resource>();
 		
 //		Weapon(String name, String detail, int initdamage, int costActivate, int width, int height, ItemTier tier)  Not diagonal 
-		itemMap.put("Almighty ProgMeth", new Resource(() -> new Weapon("Almighty ProgMeth", "No one stand and escape from it..", 40, 1, 1, 1, ItemTier.GOD), "Items/Progmeth.png"));
+		itemMap.put("Almighty ProgMeth", new Resource(() -> new Weapon("Almighty ProgMeth", "No one stand and escape from it..", 9999, 1, 1, 1, ItemTier.GOD), "Items/Progmeth.png"));
 		itemMap.put("Azurite Sword", new Resource(() -> new Weapon("Azurite Sword", "Radiates a mystical blue glow.", 40, 1, 1, 2, ItemTier.UNCOMMON), "Items/AzuriteSword.png"));
 		itemMap.put("Book", new Resource(() -> new Weapon("Book", "It built for read not fight.", 20, 1, 1, 1, ItemTier.COMMON), "Items/Book.png"));
 		itemMap.put("Buster Sword", new Resource(() -> new Weapon("Buster Sword", "Heavy blade designed for raw power over finesse.", 500, 1, 1, 3, ItemTier.LEGENDARY), "Items/BusterSword.png"));
@@ -46,7 +46,7 @@ public class ItemList {
 		
 		
 //		SpecialWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int width, int height, ItemTier tier) Not diagonal 
-		itemMap.put("Bee Hive Sword", new Resource(() -> new SpecialWeapon("Bee Hive Sword", "Radiates a mystical blue glow.", new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.SHIELD), new Effect(10, EffectType.POISON))), 110, 1, 1, 3, ItemTier.RARE), "Items/BeeHive.png"));
+		itemMap.put("Bee Hive Sword", new Resource(() -> new SpecialWeapon("Bee Hive Sword", "Radiates a mystical blue glow.", new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.SHIELD), new Effect(10, EffectType.POISON))), 110, 1, 1, 2, ItemTier.RARE), "Items/BeeHive.png"));
 		itemMap.put("Blood Spike Sword", new Resource(() -> new SpecialWeapon("Blood Spike Sword", "A sinister blade thirsts for blood.", new ArrayList<Effect>(Arrays.asList(new Effect(30, EffectType.POISON), new Effect(5, EffectType.VAMPIRIC))), 200, 2, 1, 2, ItemTier.RARE), "Items/BloodSpikeSword.png"));
 		itemMap.put("Eclipse Sword", new Resource(() -> new SpecialWeapon("Eclipse Sword", "A sword from outer space.", new ArrayList<Effect>(Arrays.asList(new Effect(1, EffectType.LUCK))), 110, 1, 1, 2, ItemTier.RARE), "Items/EclipseSword.png"));
 		itemMap.put("Excalibur", new Resource(() -> new SpecialWeapon("Excalibur", "The chosen one.", new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.HEAL), new Effect(20, EffectType.SHIELD), new Effect(120, EffectType.POISON))), 500, 2, 1, 2, ItemTier.LEGENDARY), "Items/Excalibur.png"));

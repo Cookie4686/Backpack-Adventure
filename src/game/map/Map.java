@@ -1,11 +1,17 @@
 package game.map;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import javafx.scene.layout.GridPane;
+import logic.GameLogic;
 
 public class Map extends GridPane {
 	private static Map instance;
 	private int width, height;
-	private MapSquare[][] squares;
+	private static MapSquare[][] squares;
+	private static ArrayList<markPosition> marks;
+	
 
 	public Map(int width, int height) {
 		super();
@@ -21,18 +27,71 @@ public class Map extends GridPane {
 		// for setting marker
 		initialize();
 	}
-
-	public void initialize() {
-		squares[0][0].setMarker(MapMarker.PATH);
-		squares[0][1].setMarker(MapMarker.PATH);
-		squares[0][2].setMarker(MapMarker.DOOR);
-		squares[0][3].setMarker(MapMarker.PATH);
-		squares[0][4].setMarker(MapMarker.PATH);
-		squares[0][5].setMarker(MapMarker.MONSTER);
-		squares[0][6].setMarker(MapMarker.PATH);
-		squares[0][7].setMarker(MapMarker.PATH);
-		squares[0][8].setMarker(MapMarker.PLAYER);
+	
+	private markPosition randomHeading(markPosition start, markPosition end) {
+		int direction = random(2);
+		if (direction==0) { //x
+			start.setX(start.getX() + (start.getX()<end.getX() ? 1 : -1));
+		} else { //y
+			start.setY(start.getY() + (start.getY()<end.getY() ? 1 : -1));
+		}
 		
+		return start;
+	}
+	
+	private void buildPath(markPosition start, markPosition end) {
+		while (start.getX()!=end.getX() || start.getY()!=end.getY()) {
+			
+			if (start.getX()==end.getX()) {
+				start.setY(start.getY() + (start.getY()<end.getY() ? 1 : -1));
+			}
+			else if (start.getY()==end.getY()) {
+				start.setX(start.getX() + (start.getX()<end.getX() ? 1 : -1));
+			}
+			else {
+				start = randomHeading(start, end);
+			}
+			
+			if (squares[start.getX()][start.getY()].getMarker()==null) squares[start.getX()][start.getY()].setMarker(MapMarker.PATH);
+		}
+	}
+	
+	private void findRoute() {
+		// add each node route to node at the index infront randomly.
+		buildPath(marks.get(0), marks.get(1));
+		for (int i=2 ; i<marks.size() ; i++) {
+			int r = random(i-1)+1;
+			buildPath(marks.get(i), marks.get(r));
+		}
+		
+	}
+ 
+	public void initialize() {
+		marks = new ArrayList<markPosition>();
+		int x,y;
+		x=random(width);
+		y=random(width);
+		marks.add(new markPosition(x, y)); // player start at 0,0 only
+		squares[x][y].setMarker(MapMarker.PLAYER);
+		while (marks.size() < 4 + GameLogic.getInstance().getCurrentFloor()) { // create 3 monster diffrence pos
+			x=random(width);
+			y=random(width);
+			if (squares[x][y].getMarker()==null) {
+				marks.add(new markPosition(x, y));
+				squares[x][y].setMarker(MapMarker.MONSTER);
+			}
+		}
+		
+		while (marks.size() < 5 + GameLogic.getInstance().getCurrentFloor()) { // create 1 door diffrence pos
+			x=random(width);
+			y=random(width);
+			if (squares[x][y].getMarker()==null) {
+				marks.add(new markPosition(x, y));
+				squares[x][y].setMarker(MapMarker.DOOR);
+			}
+		}
+		
+		findRoute();
 		render();
 	}
 
@@ -53,6 +112,10 @@ public class Map extends GridPane {
 				}
 			}
 		}
+	}
+	
+	private int random(int limit) {
+		return new Random().nextInt(0, limit);
 	}
 
 	public MapSquare[][] getSquares() {

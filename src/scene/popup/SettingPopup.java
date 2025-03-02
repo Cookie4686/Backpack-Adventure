@@ -10,6 +10,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import scene.MenuScene;
 import sound.BackgroundSongPlayer;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class SettingPopup extends GridPane {
 	private static SettingPopup instance;
@@ -31,6 +33,7 @@ public class SettingPopup extends GridPane {
 
 		Button menuButton = new Button("Quit to menu", 128, 32);
 		menuButton.setOnAction(_ -> {
+			SfxPlayer.play(Sfx.SELECT);
 			popup.hide();
 			MenuScene.use();
 		});
@@ -39,7 +42,11 @@ public class SettingPopup extends GridPane {
 		popup.setCenter(this);
 
 		Button closeButton = new Button("Close", 128, 32);
-		closeButton.setOnAction(_ -> popup.hide());
+		closeButton.setOnAction(_ -> {
+			SfxPlayer.play(Sfx.SELECT);
+			popup.hide();
+		});
+		
 		popup.getBottomBox().getChildren().setAll(closeButton);
 	}
 

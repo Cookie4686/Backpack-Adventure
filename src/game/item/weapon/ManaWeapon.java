@@ -2,11 +2,13 @@ package game.item.weapon;
 
 import java.util.ArrayList;
 
+import entities.Entity;
 import entities.Player;
 import game.util.Effect;
 import game.util.EffectType;
 import game.util.ItemTier;
 import logic.FightLogic;
+import logic.GameLogic;
 import sound.Sfx;
 import sound.SfxPlayer;
 
@@ -45,7 +47,7 @@ public class ManaWeapon extends Weapon{
 		Player.getInstance().setMana(Player.getInstance().getMana() - getCostActivate());
 		
 		//damage enemy getDamage() amount
-		FightLogic.getInstance().getTarget().takeDamage(getDamage());
+		FightLogic.doDamage(getDamage(), Player.getInstance(), FightLogic.getInstance().getTarget());
 		
 		//Add effectType to enemy with effectPower amount;
 		for (Effect effect:effects) {

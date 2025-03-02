@@ -240,7 +240,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		if (Player.getInstance().getHp() == 0) {
 			GameLogic.getInstance().gameOver();
 		}
-
+		
 		return damaged;
 	}
 

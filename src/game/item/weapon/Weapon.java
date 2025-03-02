@@ -55,6 +55,7 @@ public class Weapon extends Item implements Clickable, ReStatable {
 		// decrease player energy by costActivate
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
 		FightLogic.doDamage(damage, Player.getInstance(), FightLogic.getInstance().getTarget());
+		
 		for (Entity e : FightLogic.getInstance().getEntities()) {
 			if(e.getHp() > 0) return;
 		}
