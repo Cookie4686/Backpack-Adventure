@@ -1,11 +1,13 @@
 package game.item.weapon;
 
 import entities.Player;
+import entities.Entity;
 import game.item.Item;
 import game.util.ItemTier;
 import interfaces.Clickable;
 import interfaces.ReStatable;
 import logic.FightLogic;
+import logic.GameLogic;
 import sound.Sfx;
 import sound.SfxPlayer;
 
@@ -53,6 +55,10 @@ public class Weapon extends Item implements Clickable, ReStatable {
 		// decrease player energy by costActivate
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
 		FightLogic.doDamage(damage, Player.getInstance(), FightLogic.getInstance().getTarget());
+		for (Entity e : FightLogic.getInstance().getEntities()) {
+			if(e.getHp() > 0) return;
+		}
+		GameLogic.getInstance().endFight();
 	}
 
 	// For print only
