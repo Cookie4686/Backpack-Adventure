@@ -36,6 +36,7 @@ public class FightLogic {
                 try {
                     for (Entity en : entities) {
                     	if(Player.getInstance().getHp() == 0) break;
+                    	if(en.getHp() == 0) continue;
                         entityTurn(en);
                         Thread.sleep(500);
                     }
