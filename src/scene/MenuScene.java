@@ -10,6 +10,8 @@ import javafx.scene.text.Text;
 import scene.popup.CharacterPopup;
 import scene.popup.SettingPopup;
 import sound.BackgroundSongPlayer;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class MenuScene {
 	public static void use() {
@@ -26,8 +28,14 @@ public class MenuScene {
 		titleText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 64));
 		Button startButton = new Button("Start", 128, 32);
 		Button settingButton = new Button("Settings", 128, 32);
-		startButton.setOnAction(_ -> CharacterPopup.getInstance().getPopup().show());
-		settingButton.setOnAction(_ -> SettingPopup.getInstance().getPopup().show());
+		startButton.setOnAction(_ -> {
+			SfxPlayer.play(Sfx.SELECT);
+			CharacterPopup.getInstance().getPopup().show();
+		});
+		settingButton.setOnAction(_ -> {
+			SfxPlayer.play(Sfx.SELECT);
+			SettingPopup.getInstance().getPopup().show();
+		});
 		actionBox.getChildren().addAll(startButton, settingButton);
 
 		root.getChildren().addAll(titleText, actionBox);

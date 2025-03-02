@@ -52,7 +52,7 @@ public class GameLogic {
 	public void endFight() {
 		if (FightLogic.getInstance().isInFight()) {
 			BackgroundSongPlayer.floor(currentFloor);
-			
+			Player.getInstance().getAllEffect().clear();
 			Item[] items = new Item[5];
 			for (int i=0 ; i<5 ; i++) {
 				items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());

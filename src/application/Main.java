@@ -9,7 +9,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import logic.handler.ItemHandler;
 import scene.MenuScene;
-import sound.BackgroundSongPlayer;
 
 public class Main extends Application {
 	public static StackPane root;
@@ -28,7 +27,7 @@ public class Main extends Application {
 		root.prefWidthProperty().bind(primaryStage.widthProperty());
 		root.prefHeightProperty().bind(primaryStage.heightProperty());
 		MenuScene.use();
-		Scene scene = new Scene(root, 800, 600);
+		Scene scene = new Scene(root, 1280, 720);
 		scene.getStylesheets().add(ClassLoader.getSystemResource("test.css").toExternalForm());
 		scene.setOnKeyPressed(event -> ItemHandler.handleSceneKeyPress(event));
 		primaryStage.setScene(scene);
