@@ -8,13 +8,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import scene.MenuScene;
 import sound.BackgroundSongPlayer;
 
 public class SettingPopup extends GridPane {
 	private static SettingPopup instance;
 	private Popup popup;
 	private VolumeSlider musicSlider, sfxSlider;
-
+	
 	public SettingPopup() {
 		super();
 		popup = new Popup("Settings");
@@ -28,6 +29,13 @@ public class SettingPopup extends GridPane {
 				() -> BackgroundSongPlayer.play()), 1, 0);
 		add(sfxSlider = new VolumeSlider(24), 1, 1);
 
+		Button menuButton = new Button("Quit to menu", 128, 32);
+		menuButton.setOnAction(_ -> {
+			popup.hide();
+			MenuScene.use();
+		});
+		add(menuButton, 1 ,3);
+		
 		popup.setCenter(this);
 
 		Button closeButton = new Button("Close", 128, 32);

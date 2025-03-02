@@ -109,7 +109,7 @@ public class ItemList {
 		
 		
 //		ShieldItem(String name, String detail, int shield, ArrayList<Effect> effects, int costActivate, int width, int height, ItemTier tier)
-		itemMap.put("Blood  Drain Shield", new Resource(() -> new ShieldItem("Blood Drain Shield", "It absorbs damage in exchange for the vitality but who.", 20, new ArrayList<Effect>(Arrays.asList(new Effect(20, EffectType.THORN))), 2, 1, 1, ItemTier.RARE), "Items/BloodDrainShield.png"));
+		itemMap.put("Blood  Drain Shield", new Resource(() -> new ShieldItem("Blood Drain Shield", "It absorbs damage in exchange for the vitality but who.", 20, new ArrayList<Effect>(Arrays.asList(new Effect(20, EffectType.THORN))), 1, 2, 2, ItemTier.RARE), "Items/BloodDrainShield.png"));
 		itemMap.put("Bronze Shield", new Resource(() -> new ShieldItem("Bronze Shield", "Though heavier than wooden counterparts.", 30, new ArrayList<Effect>(), 1, 2, 2, ItemTier.UNCOMMON), "Items/BronzeShield.png"));
 		itemMap.put("Circle Wood Shield", new Resource(() -> new ShieldItem("Circle Wood Shield", "A reinforced wooden shield with a circular design.", 15, new ArrayList<Effect>(), 1, 2, 2, ItemTier.COMMON), "Items/CircleWoodShield.png"));
 		itemMap.put("Natural Shield", new Resource(() -> new ShieldItem("Natural Shield", "Touch some nature.", 25, new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.REGEN))), 2, 2, 2, ItemTier.RARE), "Items/NaturalShield.png"));

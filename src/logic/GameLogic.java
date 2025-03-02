@@ -38,8 +38,6 @@ public class GameLogic {
 		// initial enemies future attack and player turn after that
 		FightLogic.getInstance().entitiesTurn();
 		
-		
-		// ThemeSongLoader.play("boss1");
 	}
 
 	public void gameOver() {

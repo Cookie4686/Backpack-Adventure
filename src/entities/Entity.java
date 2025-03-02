@@ -22,6 +22,8 @@ import javafx.util.Duration;
 import logic.FightLogic;
 import logic.GameLogic;
 import logic.handler.EntityHandler;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class Entity extends Being implements TurnActivable {
 	protected int xp;
@@ -82,6 +84,7 @@ public class Entity extends Being implements TurnActivable {
 			this.setHp(this.getHp() - damaged);
 		}
 		if (this.getHp() == 0) {
+			SfxPlayer.play(Sfx.DEAD);
 			checkAlive();
 		}
 		render();
@@ -233,6 +236,7 @@ public class Entity extends Being implements TurnActivable {
         );
         moveTimeline.setCycleCount(1);
         moveTimeline.play();
+        System.out.println("movetimeline : "+moveTimeline.getStatus());
     }
     
 }

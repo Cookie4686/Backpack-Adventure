@@ -13,6 +13,7 @@ import game.item.Item;
 import game.util.Effect;
 import game.util.EffectType;
 import interfaces.TurnActivable;
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import sound.SfxPlayer;
 
@@ -31,6 +32,7 @@ public class FightLogic {
 	public void entitiesTurn() {
 		this.isPTurn = false;
 		for (Entity en : entities) {
+			
 			entityTurn(en);
 		}
 		
@@ -39,7 +41,6 @@ public class FightLogic {
 		if (entities.size() == 0) {
 			GameLogic.getInstance().endFight();
 		} else {
-			
 			playerTurn();
 		}
     }

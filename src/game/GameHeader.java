@@ -17,11 +17,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import logic.GameLogic;
 import logic.handler.ButtonHandler;
+import scene.popup.SettingPopup;
 
 public class GameHeader extends HBox implements ReRenderable {
 	private static GameHeader instance;
 	private Text floorText, experienceText;
 	private Button backpackButton;
+	private Button settingButton;
 
 	public GameHeader() {
 		super();
@@ -38,8 +40,11 @@ public class GameHeader extends HBox implements ReRenderable {
 		setHgrow(region, Priority.ALWAYS);
 		backpackButton = new Button("Toggle Backpack");
 		backpackButton.setOnAction(_ -> ButtonHandler.handleBackpackButtonOnAction());
-
-		getChildren().setAll(floorText, experienceText, region, backpackButton);
+		
+		settingButton = new Button("Settings");
+		settingButton.setOnAction(_ -> SettingPopup.getInstance().getPopup().show());
+		
+		getChildren().setAll(floorText, experienceText, region, settingButton, backpackButton);
 		render();
 	}
 

@@ -32,6 +32,7 @@ public class Map extends GridPane {
 		squares[0][6].setMarker(MapMarker.PATH);
 		squares[0][7].setMarker(MapMarker.PATH);
 		squares[0][8].setMarker(MapMarker.PLAYER);
+		
 		render();
 	}
 

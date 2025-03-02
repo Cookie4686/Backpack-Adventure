@@ -9,9 +9,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import scene.popup.CharacterPopup;
 import scene.popup.SettingPopup;
+import sound.BackgroundSongPlayer;
 
 public class MenuScene {
 	public static void use() {
+		BackgroundSongPlayer.menu();
 		VBox root = new VBox();
 		root.setSpacing(40);
 		root.setAlignment(Pos.CENTER);
