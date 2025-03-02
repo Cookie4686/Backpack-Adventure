@@ -236,7 +236,6 @@ public class Entity extends Being implements TurnActivable {
         );
         moveTimeline.setCycleCount(1);
         moveTimeline.play();
-        System.out.println("movetimeline : "+moveTimeline.getStatus());
     }
     
 }

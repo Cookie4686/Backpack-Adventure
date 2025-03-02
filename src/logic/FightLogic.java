@@ -30,19 +30,40 @@ public class FightLogic {
 	}
 
 	public void entitiesTurn() {
-		this.isPTurn = false;
-		for (Entity en : entities) {
-			
-			entityTurn(en);
-		}
-		
-		isPTurn = true;
-		
-		if (entities.size() == 0) {
-			GameLogic.getInstance().endFight();
-		} else {
-			playerTurn();
-		}
+		isPTurn = false;
+        Platform.runLater(() -> {
+            new Thread(() -> {
+                try {
+                    for (Entity en : entities) {
+                    	if(Player.getInstance().getHp() == 0) break;
+                        entityTurn(en);
+                        Thread.sleep(500);
+                    }
+                    Iterator<Entity> iterator = FightLogic.getInstance().getEntities().iterator();
+            		while (iterator.hasNext()) {
+            		    Entity e = iterator.next();
+            		    if (e.getHp() == 0) {
+            		        iterator.remove();
+            		    }
+            		}
+            		if (FightLogic.getInstance().getEntities().isEmpty()) {
+        				GameLogic.getInstance().endFight();
+        			}
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    System.err.println("Thread interrupted: " + e.getMessage());
+                } finally {
+                    Platform.runLater(() -> {
+                        isPTurn = true;
+                        if (entities.isEmpty()) {
+                            GameLogic.getInstance().endFight();
+                        } else {
+                            playerTurn();
+                        }
+                    });
+                }
+            }).start();
+        });
     }
 	
 
@@ -60,7 +81,7 @@ public class FightLogic {
 		e.activatePerTurn();
 		if (!e.isStunned()) {
 			Random rand = new Random();
-			
+
 			if (e.getNextTurn() != null) {
 				e.moveLeftAndBack();
 				useEffect(e.getNextTurn(), e);
@@ -75,7 +96,7 @@ public class FightLogic {
 	}
 
 	public void playerTurn() {
-		this.isPTurn = true;
+		isPTurn = true;
 		for (Effect ef : Player.getInstance().getAllEffect()) {
 			activateEffect(ef, Player.getInstance());
 			Player.getInstance().render();
