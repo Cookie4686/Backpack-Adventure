@@ -260,6 +260,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	
 	@Override
 	public void activatePerTurn() {
+		this.energy = maxEnergy;
 		this.shield = 0;
 		setHp(getHp()); //reset if overheal
 		getAllEffect().clear();
@@ -280,7 +281,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	@Override
 	public void reStatBeforeUpdate() {
 		this.maxHp = 100;
-		this.maxEnergy = 3;
+		this.maxEnergy = 100;
 		this.maxMana = 0;
 		this.coins = 0;
 	}

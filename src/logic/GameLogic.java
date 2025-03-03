@@ -1,7 +1,9 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import entities.Entity;
 import entities.EntityLoader;
 import entities.Player;
 import game.Game;
@@ -53,6 +55,13 @@ public class GameLogic {
 	}
 
 	public void endFight() {
+		Iterator<Entity> iterator = FightLogic.getInstance().getEntities().iterator();
+		while (iterator.hasNext()) {
+		    Entity e = iterator.next();
+		    if (e.getHp() == 0) {
+		        iterator.remove();
+		    }
+		}
 		if (FightLogic.getInstance().isInFight()) {
 			BackgroundSongPlayer.floor(currentFloor);
 			Player.getInstance().getAllEffect().clear();
