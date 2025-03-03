@@ -10,6 +10,8 @@ import game.GameTop;
 import game.item.Item;
 import game.itemGenerator.ItemRandomizer;
 import game.itemGenerator.ResourceLoader;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
 import sound.BackgroundSongPlayer;
 import sound.Sfx;
 import sound.SfxPlayer;
@@ -46,7 +48,8 @@ public class GameLogic {
 			SfxPlayer.play(Sfx.GAMEOVER);
 			Player.getInstance().die();
 		}
-		FightLogic.getInstance().setInFight(false);
+		//FightLogic.getInstance().setInFight(false);
+		System.out.println("over");
 	}
 
 	public void endFight() {
@@ -56,6 +59,11 @@ public class GameLogic {
 			Item[] items = new Item[5];
 			for (int i=0 ; i<5 ; i++) {
 				items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
+				items[i].setOpacity(0.0);
+				FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), items[i]);
+				fadeIn.setFromValue(0.0);
+				fadeIn.setToValue(1.0);
+				items[i].setFadeIn(fadeIn);
 			}
 			Game.getInstance().addItemsToGame(items);
 		}

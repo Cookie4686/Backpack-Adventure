@@ -73,7 +73,7 @@ public class Map extends GridPane {
 		y=random(width);
 		marks.add(new markPosition(x, y)); // player start at 0,0 only
 		squares[x][y].setMarker(MapMarker.PLAYER);
-		while (marks.size() < 4 + GameLogic.getInstance().getCurrentFloor()) { // create 3 monster diffrence pos
+		while (marks.size() < 10 + GameLogic.getInstance().getCurrentFloor()) { // create 3 monster diffrence pos
 			x=random(width);
 			y=random(width);
 			if (squares[x][y].getMarker()==null) {
@@ -82,7 +82,7 @@ public class Map extends GridPane {
 			}
 		}
 		
-		while (marks.size() < 5 + GameLogic.getInstance().getCurrentFloor()) { // create 1 door diffrence pos
+		while (marks.size() < 11 + GameLogic.getInstance().getCurrentFloor()) { // create 1 door diffrence pos
 			x=random(width);
 			y=random(width);
 			if (squares[x][y].getMarker()==null) {

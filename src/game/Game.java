@@ -6,6 +6,7 @@ import java.util.Iterator;
 import application.Main;
 import game.backpack.Slot;
 import game.item.Item;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.Priority;
@@ -45,7 +46,12 @@ public class Game extends StackPane {
 	}
 
 	public void addItemsToGame(Item... items) {
-		getChildren().addAll(items);
+		Platform.runLater(() -> {
+			getChildren().addAll(items);
+			for(Item item : items) {
+				item.getFadeIn().play();
+			}
+		});
 		final int row = 2, itemPerRow = items.length / row, spacingX = 8, spacingY = 4;
 		double prevHeight = GameTop.getInstance().getHeight();
 		for (int i = 0; i < row; i++) {

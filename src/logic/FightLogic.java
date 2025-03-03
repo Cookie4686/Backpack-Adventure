@@ -38,7 +38,7 @@ public class FightLogic {
                     	if(Player.getInstance().getHp() == 0) break;
                     	if(en.getHp() == 0) continue;
                         entityTurn(en);
-                        Thread.sleep(500);
+                        if(!en.getAllEffect().isEmpty()) Thread.sleep(500);
                     }
                     Iterator<Entity> iterator = FightLogic.getInstance().getEntities().iterator();
             		while (iterator.hasNext()) {

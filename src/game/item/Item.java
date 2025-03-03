@@ -5,6 +5,7 @@ import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.util.ItemRotation;
 import game.util.ItemTier;
+import javafx.animation.FadeTransition;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,7 +18,7 @@ public abstract class Item extends Pane {
 	private String name, detail;
 	protected int width, height;
 	protected boolean isDiagonal;
-
+	protected FadeTransition fadeIn;
 	// used for dragging, rotating
 	private double diffX, diffY;
 	private ImageView imageView;
@@ -147,6 +148,14 @@ public abstract class Item extends Pane {
 
 	public ImageView getImageView() {
 		return imageView;
+	}
+
+	public FadeTransition getFadeIn() {
+		return fadeIn;
+	}
+
+	public void setFadeIn(FadeTransition fadeIn) {
+		this.fadeIn = fadeIn;
 	}
 	
 	
