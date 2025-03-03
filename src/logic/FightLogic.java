@@ -15,6 +15,7 @@ import game.util.EffectType;
 import interfaces.TurnActivable;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import sound.Sfx;
 import sound.SfxPlayer;
 
 public class FightLogic {
@@ -38,7 +39,7 @@ public class FightLogic {
                     	if(Player.getInstance().getHp() == 0) break;
                     	if(en.getHp() == 0) continue;
                         entityTurn(en);
-                        if(!en.getAllEffect().isEmpty()) Thread.sleep(500);
+                        Thread.sleep(500);
                     }
                     Iterator<Entity> iterator = FightLogic.getInstance().getEntities().iterator();
             		while (iterator.hasNext()) {
@@ -118,6 +119,7 @@ public class FightLogic {
 		}
 		case POISON	-> { e.takeDamage((ef.getAmount() + 10)); }
 		case REGEN	-> {
+			SfxPlayer.play(Sfx.HEAL);
 			e.setHp(e.getHp() + ef.getAmount());
 			ef.setAmount(ef.getAmount() / 2);
 		}

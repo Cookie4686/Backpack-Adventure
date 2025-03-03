@@ -44,6 +44,11 @@ public abstract class Item extends Pane {
 	}
 
 	public void initialize(Image image) {
+		this.setOpacity(0.0);
+		fadeIn = new FadeTransition(Duration.seconds(0.5), this);
+		fadeIn.setFromValue(0.0);
+		fadeIn.setToValue(1.0);
+		
 		setMaxSize(Math.max(width, height) * Slot.SIZE, Math.max(width, height) * Slot.SIZE);
 
 		imageView = new ImageView(image);

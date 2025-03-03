@@ -68,11 +68,6 @@ public class GameLogic {
 			Item[] items = new Item[5];
 			for (int i=0 ; i<5 ; i++) {
 				items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
-				items[i].setOpacity(0.0);
-				FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), items[i]);
-				fadeIn.setFromValue(0.0);
-				fadeIn.setToValue(1.0);
-				items[i].setFadeIn(fadeIn);
 			}
 			Game.getInstance().addItemsToGame(items);
 		}
