@@ -3,6 +3,7 @@ package logic;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import application.Fader;
 import entities.Entity;
 import entities.EntityLoader;
 import entities.Player;
@@ -13,6 +14,7 @@ import game.item.Item;
 import game.itemGenerator.ItemRandomizer;
 import game.itemGenerator.ResourceLoader;
 import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import sound.BackgroundSongPlayer;
 import sound.Sfx;
@@ -40,7 +42,11 @@ public class GameLogic {
 		
 		// Move into fightlogic
 		// initial enemies future attack and player turn after that
-		FightLogic.getInstance().entitiesTurn();
+		PauseTransition pause = new PauseTransition(Duration.seconds(1.3));
+		pause.setOnFinished(event -> {
+			FightLogic.getInstance().entitiesTurn();
+		});
+		pause.play();
 		
 	}
 
