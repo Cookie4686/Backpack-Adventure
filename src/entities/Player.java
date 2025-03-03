@@ -263,7 +263,12 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		this.energy = maxEnergy;
 		this.shield = 0;
 		setHp(getHp()); //reset if overheal
-		getAllEffect().clear();
+		//getAllEffect().clear();
+		for(Effect ef : allEffect) {
+			if(ef.getType().equals(EffectType.SHIELD)) {
+				allEffect.remove(ef);
+			}
+		}
 		
 		// Visible end turn button
 		Backpack.getInstance().render();
