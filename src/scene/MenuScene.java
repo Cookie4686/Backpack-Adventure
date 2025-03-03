@@ -17,6 +17,8 @@ import sound.Sfx;
 import sound.SfxPlayer;
 
 public class MenuScene {
+	private static Media videomedia = new Media(ClassLoader.getSystemResource(String.format("theme/menuBackground.mp4")).toString());
+	
 	public static void use() {
 		BackgroundSongPlayer.menu();
 		VBox root = new VBox();
@@ -27,28 +29,24 @@ public class MenuScene {
 		actionBox.setSpacing(20);
 		actionBox.setAlignment(Pos.CENTER);
 		
-		Media videomedia = new Media(ClassLoader.getSystemResource(String.format("theme/menuBackground.mp4")).toString());
 		MediaPlayer mdplayer = new MediaPlayer(videomedia);
 		MediaView viewmedia = new MediaView(mdplayer);
+		mdplayer.setMute(true);
+		mdplayer.setRate(1.2);
+		mdplayer.setCycleCount(MediaPlayer.INDEFINITE);
+		viewmedia.setFitHeight(720);
+		mdplayer.play();
 		
-		try {//Wait for image to load
-			mdplayer.setMute(true);
-			mdplayer.setRate(1.2);
-			mdplayer.setCycleCount(MediaPlayer.INDEFINITE);
-			viewmedia.setFitHeight(720);
-			Main.root.getChildren().setAll(viewmedia);
-			Thread.sleep(10);
+		try {
+			Thread.sleep(20);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-		
 
 		Text titleText = new Text("Cool Game");
 		titleText.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 64));
 		Button startButton = new Button("Start", 128, 32);
 		Button settingButton = new Button("Settings", 128, 32);
-		mdplayer.play();
 		startButton.setOnAction(_ -> {
 			SfxPlayer.play(Sfx.SELECT);
 			CharacterPopup.getInstance().getPopup().show();
@@ -60,6 +58,6 @@ public class MenuScene {
 		actionBox.getChildren().addAll(startButton, settingButton);
 		
 		root.getChildren().addAll(titleText, actionBox);
-		Main.root.getChildren().addAll(root);
+		Main.root.getChildren().addAll(viewmedia, root);
 	}
 }

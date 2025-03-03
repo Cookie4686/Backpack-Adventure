@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import logic.handler.ItemHandler;
@@ -14,7 +15,7 @@ import scene.MenuScene;
 public class Main extends Application {
 	public static StackPane root;
 	public static MediaPlayer mediaPlayer;
-	
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// Screen screen = Screen.getPrimary();
