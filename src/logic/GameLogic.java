@@ -1,7 +1,10 @@
 package logic;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import application.Fader;
+import entities.Entity;
 import entities.EntityLoader;
 import entities.Player;
 import game.Game;
@@ -10,6 +13,9 @@ import game.GameTop;
 import game.item.Item;
 import game.itemGenerator.ItemRandomizer;
 import game.itemGenerator.ResourceLoader;
+import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 import sound.BackgroundSongPlayer;
 import sound.Sfx;
 import sound.SfxPlayer;
@@ -36,7 +42,11 @@ public class GameLogic {
 		
 		// Move into fightlogic
 		// initial enemies future attack and player turn after that
-		FightLogic.getInstance().entitiesTurn();
+		PauseTransition pause = new PauseTransition(Duration.seconds(1.3));
+		pause.setOnFinished(event -> {
+			FightLogic.getInstance().entitiesTurn();
+		});
+		pause.play();
 		
 	}
 
@@ -46,10 +56,18 @@ public class GameLogic {
 			SfxPlayer.play(Sfx.GAMEOVER);
 			Player.getInstance().die();
 		}
-		FightLogic.getInstance().setInFight(false);
+		//FightLogic.getInstance().setInFight(false);
+		System.out.println("over");
 	}
 
 	public void endFight() {
+		Iterator<Entity> iterator = FightLogic.getInstance().getEntities().iterator();
+		while (iterator.hasNext()) {
+		    Entity e = iterator.next();
+		    if (e.getHp() == 0) {
+		        iterator.remove();
+		    }
+		}
 		if (FightLogic.getInstance().isInFight()) {
 			BackgroundSongPlayer.floor(currentFloor);
 			Player.getInstance().getAllEffect().clear();

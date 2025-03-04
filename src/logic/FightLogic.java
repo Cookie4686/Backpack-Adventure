@@ -15,6 +15,7 @@ import game.util.EffectType;
 import interfaces.TurnActivable;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import sound.Sfx;
 import sound.SfxPlayer;
 
 public class FightLogic {
@@ -112,11 +113,13 @@ public class FightLogic {
 	public void activateEffect(Effect ef, Being e) {
 		switch (ef.getType()) {
 		case FIRE	-> {
-			e.setHp(e.getHp() - ef.getAmount() - 10);
+			e.takeDamage((ef.getAmount()));
+			if(e.getHp() > e.getMaxHp() - 10) e.setHp(e.getMaxHp() - 10);
 			e.setMaxHp(e.getMaxHp() - 10);
 		}
-		case POISON	-> { e.setHp(e.getHp() - ef.getAmount()); }
+		case POISON	-> { e.takeDamage((ef.getAmount() + 10)); }
 		case REGEN	-> {
+			SfxPlayer.play(Sfx.HEAL);
 			e.setHp(e.getHp() + ef.getAmount());
 			ef.setAmount(ef.getAmount() / 2);
 		}
