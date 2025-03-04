@@ -88,7 +88,7 @@ public class MenuScene {
 		
 		ImageView menuBackground = new ImageView();
 		menuBackground.setPreserveRatio(true);
-		menuBackground.setFitHeight(728);
+		menuBackground.setFitWidth(1280);
 		Timeline menuTimeline = gifPlayer.createAnimation(menuBackground, gifPlayer.menuBackground, 0.1);
 		menuTimeline.setCycleCount(Timeline.INDEFINITE);
 		menuTimeline.play();
