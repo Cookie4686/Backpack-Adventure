@@ -28,8 +28,8 @@ public class SpecialWeapon extends Weapon {
 		
 		//Add effectType to enemy with effectPower amount;
 		for (Effect effect:effects) {
-			if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNTED) {
-				FightLogic.findEffectAndAdd(FightLogic.getInstance().getTarget().getAllEffect(), effect.getType(), effect.getAmount());
+			if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNNED) {
+				FightLogic.findEffectAndAdd(FightLogic.getInstance().getTarget().getAllEffect(), effect.getType(), effect.getAmount(), FightLogic.getInstance().getTarget());
 			}
 			else if (effect.getType()==EffectType.HEAL) {
 				Player.getInstance().setMaxHp(Player.getInstance().getMaxHp() + effect.getAmount());
@@ -44,7 +44,7 @@ public class SpecialWeapon extends Weapon {
 				Player.getInstance().setShield(Player.getInstance().getShield() + effect.getAmount());
 			}
 			else {
-				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
+				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount(), Player.getInstance());
 			}
 		}
 	}
@@ -53,7 +53,7 @@ public class SpecialWeapon extends Weapon {
 	public String getProvide() {
 		String text = super.getProvide();
 		for (Effect effect : effects) {
-			if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNTED) {
+			if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNNED) {
 				text=text+"Add "+effect.getAmount()+" "+effect.getTypeName()+" to target\n";
 			}
 			else if (effect.getType()==EffectType.HEAL) {

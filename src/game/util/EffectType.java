@@ -4,7 +4,7 @@ public enum EffectType {
     // to opponent effect
     FIRE,
     POISON,
-    STUNTED,
+    STUNNED,
     DAMAGE,
 
     // to self effect

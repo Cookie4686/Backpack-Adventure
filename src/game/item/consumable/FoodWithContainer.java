@@ -46,7 +46,7 @@ public class FoodWithContainer extends Consumable {
 			Player.getInstance().setLuck(Player.getInstance().getLuck()+getEffectAmount());
 		}
 		else if (getEffectType()==EffectType.THORN || getEffectType()==EffectType.ANGER || getEffectType()==EffectType.DODGE) {
-			FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), getEffectType(), getEffectAmount());
+			FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), getEffectType(), getEffectAmount(),Player.getInstance());
 		}
 		
 

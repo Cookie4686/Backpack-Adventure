@@ -51,7 +51,7 @@ public class SfxPlayer {
 		case SHIELD -> play(Sfx.SHIELD);
 		case THORN -> play(Sfx.THORN);
 		case VAMPIRIC -> play(Sfx.VAMPIRIC);
-//		case STUNTED -> play(Sfx.FIRE);
+//		case STUNNED -> play(Sfx.FIRE);
 //		case SUMMONER -> play(Sfx.FIRE);
 		default -> {}
 		}

@@ -11,10 +11,13 @@ import entities.Player;
 import game.GameBottom;
 import game.item.Item;
 import game.util.Effect;
+import game.util.EffectIcon;
 import game.util.EffectType;
+import game.util.IconLoader;
 import interfaces.TurnActivable;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import sound.Sfx;
 import sound.SfxPlayer;
 
@@ -70,6 +73,9 @@ public class FightLogic {
 	
 
 	public void entityTurn(Entity e) {
+		if(Player.getInstance().getHp() == 0) {
+			return;
+		}
 		System.out.println("enemy turn");
 		ArrayList<Effect> effects = new ArrayList<>(e.getAllEffect());
 		for (Effect ef : effects) {
@@ -93,11 +99,23 @@ public class FightLogic {
 				GameLogic.getInstance().gameOver();
 			} else {
 				e.setNextTurn(e.getAllAttributes().get(rand.nextInt(e.getAllAttributes().size())));
+				EffectIcon newIcon = IconLoader.newIcon(e.getNextTurn().getType(), e.getNextTurn().getAmount());
+		        int index = e.getChildren().indexOf(e.getNextTurnMove());
+		        Platform.runLater(() -> {
+		            if (index != -1) {
+		                e.getChildren().set(index, newIcon);
+		            }
+		        });
+				e.setNextTurnMove(newIcon);
+				e.getNextTurnMove().getFadeIn().play();
 			}
 		}
 	}
 
 	public void playerTurn() {
+		if(Player.getInstance().getHp() == 0) {
+			return;
+		}
 		isPTurn = true;
 		for (Effect ef : Player.getInstance().getAllEffect()) {
 			activateEffect(ef, Player.getInstance());
@@ -130,17 +148,17 @@ public class FightLogic {
 	public void useEffect(Effect ef, Being e) {
 		SfxPlayer.playByEffect(ef);
 		switch (ef.getType()) {
-		case FIRE		-> findEffectAndAdd(Player.getInstance().getAllEffect(), ef.getType(), ef.getAmount());
-		case POISON		-> findEffectAndAdd(Player.getInstance().getAllEffect(), ef.getType(), ef.getAmount());
+		case FIRE		-> findEffectAndAdd(Player.getInstance().getAllEffect(), ef.getType(), ef.getAmount(), e);
+		case POISON		-> findEffectAndAdd(Player.getInstance().getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case DAMAGE		-> doDamage(ef.getAmount(), e, (Being) Player.getInstance());
-		case THORN		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
-		case SHIELD		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
-		case DODGE		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
+		case THORN		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
+		case SHIELD		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
+		case DODGE		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case VAMPIRIC	-> e.setHp(e.getHp() + (int) (Player.getInstance().takeDamage(ef.getAmount()) * 0.5));
 		case SUMMONER	-> {} // TODO: implement
-		case ANGER		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
+		case ANGER		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case HEAL		-> e.setHp(e.getHp() + ef.getAmount());
-		case REGEN		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount());
+		case REGEN		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		default			-> {}
 		}
 	}
@@ -152,7 +170,7 @@ public class FightLogic {
 		self.takeDamage(thorn == null ? 0 : thorn.getAmount());
 	}
 
-	public static void findEffectAndAdd(ArrayList<Effect> efs, EffectType target, int amount) {
+	public static void findEffectAndAdd(ArrayList<Effect> efs, EffectType target, int amount, Being targetBeing) {
 		for (Effect ef : efs) {
 			if (ef.getType().equals(target)) {
 				ef.setAmount(ef.getAmount() + amount);
@@ -160,6 +178,7 @@ public class FightLogic {
 			}
 		}
 		efs.add(new Effect(amount, target));
+		
 	}
 
 	public static boolean findEffectAndDecrease(ArrayList<Effect> efs, EffectType target, int amount) {

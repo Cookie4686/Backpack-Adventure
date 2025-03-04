@@ -40,7 +40,7 @@ public class ShieldItem extends Item implements Clickable{
 		
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
 		for (Effect effect:effects) {
-			FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
+			FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount(), Player.getInstance());
 		}
 		
 		Player.getInstance().setShield(Player.getInstance().getShield()+shield);

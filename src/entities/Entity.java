@@ -7,7 +7,9 @@ import java.util.Random;
 import component.HpBar;
 import game.GameBottom;
 import game.util.Effect;
+import game.util.EffectIcon;
 import game.util.EffectType;
+import game.util.IconLoader;
 import game.util.MobTier;
 import interfaces.TurnActivable;
 import javafx.animation.KeyFrame;
@@ -37,6 +39,7 @@ public class Entity extends Being implements TurnActivable {
 	private double originalX;
     private boolean isMoving = false;
     private static final double MOVE_DURATION = 0.3;
+    private EffectIcon nextTurnMove;
     
 	public Entity(String name, int maxHpLb, int xpLb, MobTier dangerLV,
 			ArrayList<Effect> allAttributes) {
@@ -59,7 +62,9 @@ public class Entity extends Being implements TurnActivable {
 		imageView.setPickOnBounds(true);
 		imageView.setOnMousePressed(event -> EntityHandler.handleMouseClicked(this));
 		hpBar = new HpBar(this);
-		getChildren().setAll(hpBar, imageView);
+		//nextTurnMove = new EffectIcon(null);
+		nextTurnMove = new EffectIcon(null);
+		getChildren().setAll(nextTurnMove, hpBar, imageView);
 		render();
 	}
 
@@ -244,5 +249,14 @@ public class Entity extends Being implements TurnActivable {
         moveTimeline.setCycleCount(1);
         moveTimeline.play();
     }
+
+	public EffectIcon getNextTurnMove() {
+		return nextTurnMove;
+	}
+
+	public void setNextTurnMove(EffectIcon nextTurnMove) {
+		this.nextTurnMove = nextTurnMove;
+	}
     
+	
 }

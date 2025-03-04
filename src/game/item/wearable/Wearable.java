@@ -45,7 +45,7 @@ public abstract class Wearable extends Item implements TurnActivable, StatUpdata
 				Player.getInstance().setMaxEnergy(Player.getInstance().getMaxEnergy()+effect.getAmount());
 			}
 			else if (effect.getType()==EffectType.DODGE) {
-				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), EffectType.DODGE, effect.getAmount());
+				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), EffectType.DODGE, effect.getAmount(), Player.getInstance());
 			}
 		}
 		updateTooltip();
@@ -55,7 +55,7 @@ public abstract class Wearable extends Item implements TurnActivable, StatUpdata
 	public void activatePerTurn() {
 		for (Effect effect:effects) {
 			if (effect.getType()!=EffectType.LUCK && effect.getType()!=EffectType.DODGE && effect.getType()!=EffectType.HEAL && effect.getType()!=EffectType.ENERGY) {
-				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
+				FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount(), Player.getInstance());
 			}
 		}
 		

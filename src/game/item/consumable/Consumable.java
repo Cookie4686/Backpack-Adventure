@@ -55,7 +55,7 @@ public class Consumable extends Item implements Clickable {
 			Player.getInstance().setLuck(Player.getInstance().getLuck()+effect.getAmount());
 		}
 		else if (effect.getType()==EffectType.THORN || effect.getType()==EffectType.ANGER || effect.getType()==EffectType.DODGE) {
-			FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount());
+			FightLogic.findEffectAndAdd(Player.getInstance().getAllEffect(), effect.getType(), effect.getAmount(), Player.getInstance());
 		}
 		
 

@@ -51,9 +51,9 @@ public class DamageItem extends Item implements Clickable {
 						enemy.takeDamage(effect.getAmount());
 					}
 				}
-				else if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNTED) {
+				else if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNNED) {
 					for (Entity enemy:FightLogic.getInstance().getEntities()) {
-						FightLogic.findEffectAndAdd(enemy.getAllEffect(), effect.getType(), effect.getAmount());
+						FightLogic.findEffectAndAdd(enemy.getAllEffect(), effect.getType(), effect.getAmount(), enemy);
 					}
 				}
 			}
@@ -61,8 +61,8 @@ public class DamageItem extends Item implements Clickable {
 				if (effect.getType()==EffectType.DAMAGE) {
 					FightLogic.getInstance().getTarget().takeDamage(effect.getAmount());
 				}
-				if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNTED) {
-					FightLogic.findEffectAndAdd(FightLogic.getInstance().getTarget().getAllEffect(), effect.getType(), effect.getAmount());
+				if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNNED) {
+					FightLogic.findEffectAndAdd(FightLogic.getInstance().getTarget().getAllEffect(), effect.getType(), effect.getAmount(), FightLogic.getInstance().getTarget());
 				}
 			}
 		}
@@ -85,7 +85,7 @@ public class DamageItem extends Item implements Clickable {
 					text=text+"Damage target : "+effect.getAmount()+" DAMAGE\n";
 				}
 			}
-			else if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNTED) {
+			else if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNNED) {
 				if (isAoE()) {
 					text=text+"Add "+effect.getAmount()+" "+effect.getTypeName()+" to all enemy\n";
 				} else {
