@@ -29,6 +29,7 @@ public class SfxPlayer {
 		sfxMap.put(Sfx.DEAD, new Resource("dead.mp3"));
 		sfxMap.put(Sfx.GAMESTART, new Resource("gamestart.mp3"));
 		sfxMap.put(Sfx.SELECT, new Resource("select.mp3"));
+		sfxMap.put(Sfx.CLICK, new Resource("click.mp3"));
 	}
 
 	public static void play(Sfx sfx) {

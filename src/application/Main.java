@@ -22,11 +22,12 @@ public class Main extends Application {
 		// double screenHeight = bounds.getHeight();
 		// double aspectRatio = screenWidth / screenHeight;
 		root = new StackPane();
-		root.setAlignment(Pos.TOP_LEFT);
+		root.setAlignment(Pos.CENTER);
 		root.prefWidthProperty().bind(primaryStage.widthProperty());
 		root.prefHeightProperty().bind(primaryStage.heightProperty());
 
 		MenuScene.use();
+		MenuScene.setGameRunning(false);
 		Scene scene = new Scene(root, 1280, 720);
 		scene.getStylesheets().add(ClassLoader.getSystemResource("test.css").toExternalForm());
 		scene.setOnKeyPressed(event -> ItemHandler.handleSceneKeyPress(event));
