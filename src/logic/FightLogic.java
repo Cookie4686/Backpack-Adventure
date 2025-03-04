@@ -99,7 +99,6 @@ public class FightLogic {
 
 	public void playerTurn() {
 		isPTurn = true;
-		Player.getInstance().activatePerTurn();
 		for (Effect ef : Player.getInstance().getAllEffect()) {
 			activateEffect(ef, Player.getInstance());
 			Player.getInstance().render();
@@ -108,6 +107,7 @@ public class FightLogic {
 				return;
 			}
 		}
+		Player.getInstance().activatePerTurn();
 	}
 
 	public void activateEffect(Effect ef, Being e) {
