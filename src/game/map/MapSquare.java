@@ -34,7 +34,7 @@ public class MapSquare extends Pane {
 			ImageView imageView = new ImageView(MarkerLoader.getImage(marker));
 			imageView.setFitWidth(SIZE);
 			imageView.setFitHeight(SIZE);
-			imageView.setOnMouseClicked(event -> MapHandler.handleMouseClicked(this));
+			imageView.setOnMouseClicked(_ -> MapHandler.handleMouseClicked(this));
 			getChildren().setAll(imageView);
 		}
 		BorderStroke borderStroke = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,

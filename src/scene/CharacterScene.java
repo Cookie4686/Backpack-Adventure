@@ -1,6 +1,7 @@
 package scene;
 
-import image.gifPlayer;
+import entities.Player;
+import image.GifPlayer;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -43,7 +44,7 @@ public class CharacterScene {
 		preview = new ImageView();
 		preview.setPreserveRatio(true);
 		preview.setFitHeight(200);
-		Timeline idel = gifPlayer.createAnimation(preview, gifPlayer.idleKnight, 0.1);
+		Timeline idel = GifPlayer.createAnimation(preview, GifPlayer.getIdleKnight(), 0.1);
 		costumeList.getChildren().add(preview);
 		idel.setCycleCount(Timeline.INDEFINITE);
 		idel.play();
@@ -67,7 +68,7 @@ public class CharacterScene {
 		knightIcons.setFitHeight(100);
 		knightIcons.setCursor(Cursor.CROSSHAIR);
 		
-		Timeline icon = gifPlayer.createAnimation(knightIcons, gifPlayer.knightIcons, 0.25);
+		Timeline icon = GifPlayer.createAnimation(knightIcons, GifPlayer.getKnightIcons(), 0.25);
 		icon.setCycleCount(Timeline.INDEFINITE);		
 		
 		ImageView unknown1 = new ImageView(new Image(ClassLoader.getSystemResource("picture/unknown.png").toString()));

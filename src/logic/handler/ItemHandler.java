@@ -84,15 +84,13 @@ public class ItemHandler {
 				((ReStatable) item).reStatBeforeUpdate();
 			}
 		}
-
-		
 		for (Item item : GameLogic.getInstance().getInventory()) {
 			if (item instanceof StatUpdatable) {
 				System.out.println("is instance");
 				((StatUpdatable) item).statUpdate();
 			}
 		}
-		
+
 		Player.getInstance().render();
 	}
 

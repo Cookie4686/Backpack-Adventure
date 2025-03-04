@@ -1,7 +1,7 @@
 package scene;
 
 import application.Main;
-import image.gifPlayer;
+import image.GifPlayer;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -89,7 +89,7 @@ public class MenuScene {
 		ImageView menuBackground = new ImageView();
 		menuBackground.setPreserveRatio(true);
 		menuBackground.setFitWidth(1280);
-		Timeline menuTimeline = gifPlayer.createAnimation(menuBackground, gifPlayer.menuBackground, 0.1);
+		Timeline menuTimeline = GifPlayer.createAnimation(menuBackground, GifPlayer.getMenuBackground(), 0.1);
 		menuTimeline.setCycleCount(Timeline.INDEFINITE);
 		menuTimeline.play();
 		

@@ -1,6 +1,5 @@
 package scene.popup;
 
-
 import application.Main;
 import component.VolumeSlider;
 import javafx.geometry.Pos;
@@ -20,7 +19,7 @@ public class SettingPopup extends GridPane {
 	private static SettingPopup instance;
 	private Popup popup;
 	private VolumeSlider musicSlider, sfxSlider;
-	
+
 	public SettingPopup() {
 		super();
 		getChildren().clear();
@@ -71,7 +70,7 @@ public class SettingPopup extends GridPane {
 			popup.hide();
 		});
 		
-		add(menuButtonPane, 1 ,3);
+		add(menuButtonPane, 1, 3);
 		
 		popup.setCenter(this);
 		
@@ -91,7 +90,6 @@ public class SettingPopup extends GridPane {
 	public Slider getMusicSlider() {
 		return musicSlider.getSlider();
 	}
-
 
 	public Slider getSfxSlider() {
 		return sfxSlider.getSlider();

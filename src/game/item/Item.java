@@ -48,7 +48,7 @@ public abstract class Item extends Pane {
 		fadeIn = new FadeTransition(Duration.seconds(0.5), this);
 		fadeIn.setFromValue(0.0);
 		fadeIn.setToValue(1.0);
-		
+
 		setMaxSize(Math.max(width, height) * Slot.SIZE, Math.max(width, height) * Slot.SIZE);
 
 		imageView = new ImageView(image);
@@ -71,7 +71,7 @@ public abstract class Item extends Pane {
 
 		updateTooltip();
 	}
-	
+
 	public void updateTooltip() {
 		Tooltip tooltip = new Tooltip(toString());
 		tooltip.setShowDelay(Duration.millis(200));
@@ -135,20 +135,7 @@ public abstract class Item extends Pane {
 	}
 
 	public String getTierName() {
-		switch (tier) {
-		case COMMON:
-			return "COMMON";
-		case UNCOMMON:
-			return "UNCOMMON";
-		case RARE:
-			return "RARE";
-		case EPIC:
-			return "EPIC";
-		case LEGENDARY:
-			return "LEGENDARY";
-		default:
-			return "";
-		}
+		return tier == null ? "" : tier.toString();
 	}
 
 	public ImageView getImageView() {
@@ -162,6 +149,4 @@ public abstract class Item extends Pane {
 	public void setFadeIn(FadeTransition fadeIn) {
 		this.fadeIn = fadeIn;
 	}
-	
-	
 }

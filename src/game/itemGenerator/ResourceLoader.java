@@ -6,8 +6,6 @@ import game.item.Item;
 import javafx.scene.image.Image;
 
 public class ResourceLoader {
-	
-	
 	public static Item newItem(String name) {
 		Resource resource = ItemList.getItemMap().get(name);
 		return resource == null ? null : resource.newItem();

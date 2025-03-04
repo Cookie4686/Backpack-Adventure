@@ -22,13 +22,11 @@ public class CharacterPopup extends VBox {
 		super();
 		popup = new Popup("Character Select");
 		
-		
-		getChildren().clear();
-		
 		setAlignment(Pos.CENTER);
 		setSpacing(20);
 		
 		getChildren().add(CharacterScene.use());
+		popup.setCenter(this);
 		
 		ImageView journeyButton = new ImageView(new Image(ClassLoader.getSystemResource("picture/journeyButton1.png").toString()));
 		journeyButton.setFitHeight(70);

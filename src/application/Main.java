@@ -1,6 +1,5 @@
 package application;
 
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -26,7 +25,7 @@ public class Main extends Application {
 		root.setAlignment(Pos.CENTER);
 		root.prefWidthProperty().bind(primaryStage.widthProperty());
 		root.prefHeightProperty().bind(primaryStage.heightProperty());
-		
+
 		MenuScene.use();
 		MenuScene.setGameRunning(false);
 		Scene scene = new Scene(root, 1280, 720);

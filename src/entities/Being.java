@@ -18,7 +18,6 @@ public abstract class Being extends VBox implements ReRenderable {
 	protected String name;
 	protected int hp, maxHp, shield;
 	protected ArrayList<Effect> allEffect;
-
 	protected HpBar hpBar;
 
 	public Being() {
@@ -73,5 +72,4 @@ public abstract class Being extends VBox implements ReRenderable {
 	public void setAllEffect(ArrayList<Effect> allEffect) {
 		this.allEffect = allEffect;
 	}
-	
 }

@@ -9,8 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class gifPlayer {
-	public static ArrayList<Image> idleKnight = new ArrayList<Image>(Arrays.asList(
+public class GifPlayer {
+	private static ArrayList<Image> idleKnight = new ArrayList<Image>(Arrays.asList(
 		new Image(ClassLoader.getSystemResource("picture/player_Idle1.png").toString()),
 		new Image(ClassLoader.getSystemResource("picture/player_Idle2.png").toString()),
 		new Image(ClassLoader.getSystemResource("picture/player_Idle3.png").toString()),
@@ -23,7 +23,7 @@ public class gifPlayer {
 		new Image(ClassLoader.getSystemResource("picture/player_Idle10.png").toString())
 	));
 	
-	public static ArrayList<Image> knightIcons = new ArrayList<Image>(Arrays.asList(
+	private static ArrayList<Image> knightIcons = new ArrayList<Image>(Arrays.asList(
 		new Image(ClassLoader.getSystemResource("picture/knightIconFrame1.png").toString()),
 		new Image(ClassLoader.getSystemResource("picture/knightIconFrame2.png").toString()),
 		new Image(ClassLoader.getSystemResource("picture/knightIconFrame3.png").toString()),
@@ -31,7 +31,7 @@ public class gifPlayer {
 		new Image(ClassLoader.getSystemResource("picture/knightIconFrame1.png").toString())
 	));
 	
-	public static ArrayList<Image> menuBackground = new ArrayList<Image>(Arrays.asList(
+	private static ArrayList<Image> menuBackground = new ArrayList<Image>(Arrays.asList(
 		new Image(ClassLoader.getSystemResource("theme/menuBg1.png").toString()),
 		new Image(ClassLoader.getSystemResource("theme/menuBg2.png").toString()),
 		new Image(ClassLoader.getSystemResource("theme/menuBg3.png").toString()),
@@ -86,5 +86,17 @@ public class gifPlayer {
 	    }
 	    imageView.setImage(arr.get(0));
 	    return timeline;
+	}
+
+	public static ArrayList<Image> getIdleKnight() {
+		return idleKnight;
+	}
+
+	public static ArrayList<Image> getKnightIcons() {
+		return knightIcons;
+	}
+
+	public static ArrayList<Image> getMenuBackground() {
+		return menuBackground;
 	}
 }
