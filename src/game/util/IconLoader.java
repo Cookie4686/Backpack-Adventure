@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -39,7 +40,7 @@ class Resource {
 		Text text = effectIcon.getText();
 		icon.setImage(image);
 		text.setText(String.valueOf(amount));
-		text.setFont(Font.font("Monospaced", FontWeight.BOLD, 30));
+		text.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 20));
 		effectIcon.getChildren().addAll(icon,text);
 		return effectIcon;
 	}
