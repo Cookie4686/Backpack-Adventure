@@ -1,5 +1,7 @@
 package scene.popup;
 
+
+import application.Main;
 import component.Button;
 import component.VolumeSlider;
 import javafx.geometry.Pos;
@@ -34,6 +36,7 @@ public class SettingPopup extends GridPane {
 		Button menuButton = new Button("Quit to menu", 128, 32);
 		menuButton.setOnAction(_ -> {
 			SfxPlayer.play(Sfx.SELECT);
+			Main.root.getChildren().clear();
 			popup.hide();
 			MenuScene.use();
 		});

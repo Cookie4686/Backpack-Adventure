@@ -1,7 +1,5 @@
 package game;
 
-import java.util.Random;
-
 import entities.Entity;
 import entities.EntityLoader;
 import entities.Player;

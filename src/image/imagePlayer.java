@@ -2,28 +2,25 @@ package image;
 
 import java.util.HashMap;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class imagePlayer {
-	private static HashMap<String, Resource> mediaMap;
+	private static HashMap<String, Resource> imageMap;
 	
 	static {
-		mediaMap.put("menuBackground", new Resource("menuBackground.mp4"));
+		imageMap.put("knight", new Resource("knight.png"));
+		imageMap.put("knightIcon", new Resource("knightIcon.png"));
 	}
 	
-	public static MediaPlayer getMediaPlayer(String name) {
-		Resource resource = mediaMap.get(name);
-		if (resource != null) {
-			MediaPlayer media = new MediaPlayer(resource.getMediaClip());
-			return media;
-		}
-		return null;
+	public static ImageView getImageView(String name) {
+		Resource resource = imageMap.get(name);
+		return new ImageView(resource.getImage());
 	}
 }
 
+
 class Resource {
-	private Media mediaClip;
 	private String path;
 	
 	public Resource(String path) {
@@ -31,10 +28,7 @@ class Resource {
 		this.path = path;
 	}
 	
-	public Media getMediaClip() {
-		if (mediaClip == null) {
-			mediaClip =  new Media(ClassLoader.getSystemResource(String.format("theme/%s", path)).toString());
-		}
-		return mediaClip;
+	public Image getImage() {
+		return new Image(ClassLoader.getSystemResource(String.format("picture/%s", path)).toString());
 	}
 }

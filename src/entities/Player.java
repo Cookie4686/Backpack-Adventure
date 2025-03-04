@@ -137,6 +137,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	    imageView.setImage(images.get(0));
 	    return timeline;
 	}
+	
 	public void attack() {
         if (currentState == CharacterState.ATTACKING) {
             stopCurrentAnimation();
@@ -263,6 +264,12 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		this.energy = maxEnergy;
 		this.shield = 0;
 		setHp(getHp()); //reset if overheal
+		//getAllEffect().clear();
+		for(Effect ef : allEffect) {
+			if(ef.getType().equals(EffectType.SHIELD)) {
+				allEffect.remove(ef);
+			}
+		}
 		
 		// Visible end turn button
 		Backpack.getInstance().render();
@@ -355,5 +362,9 @@ public class Player extends Being implements TurnActivable, ReStatable {
 			instance = new Player();
 		}
 		return instance;
+	}
+
+	public ArrayList<Image> getIdleFrames() {
+		return idleFrames;
 	}
 }
