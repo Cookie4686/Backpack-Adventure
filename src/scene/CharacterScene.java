@@ -15,7 +15,7 @@ import sound.Sfx;
 import sound.SfxPlayer;
 
 public class CharacterScene {
-	public static ImageView preview;
+	private static ImageView preview;
 	
 	public static HBox use() {
 		HBox root = new HBox();
@@ -43,7 +43,7 @@ public class CharacterScene {
 		preview = new ImageView();
 		preview.setPreserveRatio(true);
 		preview.setFitHeight(200);
-		Timeline idel = gifPlayer.createKnightAnimation(preview, gifPlayer.idleKnight, 0.1);
+		Timeline idel = gifPlayer.createAnimation(preview, gifPlayer.idleKnight, 0.1);
 		costumeList.getChildren().add(preview);
 		idel.setCycleCount(Timeline.INDEFINITE);
 		idel.play();
@@ -67,18 +67,16 @@ public class CharacterScene {
 		knightIcons.setFitHeight(100);
 		knightIcons.setCursor(Cursor.CROSSHAIR);
 		
-		Timeline icon = gifPlayer.createKnightAnimation(knightIcons, gifPlayer.knightIcons, 0.25);
+		Timeline icon = gifPlayer.createAnimation(knightIcons, gifPlayer.knightIcons, 0.25);
 		icon.setCycleCount(Timeline.INDEFINITE);		
 		
 		ImageView unknown1 = new ImageView(new Image(ClassLoader.getSystemResource("picture/unknown.png").toString()));
-		
 		unknown1.setOnMouseClicked(_ -> SfxPlayer.play(Sfx.DENINE));
 		unknown1.setCursor(Cursor.CROSSHAIR);
 		unknown1.setFitWidth(100);
 		unknown1.setFitHeight(100);
 		
 		ImageView unknown2 = new ImageView(new Image(ClassLoader.getSystemResource("picture/unknown.png").toString()));
-		
 		unknown2.setOnMouseClicked(_ -> SfxPlayer.play(Sfx.DENINE));
 		unknown2.setCursor(Cursor.CROSSHAIR);
 		unknown2.setFitWidth(100);

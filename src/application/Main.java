@@ -23,7 +23,7 @@ public class Main extends Application {
 		// double screenHeight = bounds.getHeight();
 		// double aspectRatio = screenWidth / screenHeight;
 		root = new StackPane();
-		root.setAlignment(Pos.TOP_LEFT);
+		root.setAlignment(Pos.CENTER);
 		root.prefWidthProperty().bind(primaryStage.widthProperty());
 		root.prefHeightProperty().bind(primaryStage.heightProperty());
 		

@@ -24,14 +24,57 @@ public class gifPlayer {
 	));
 	
 	public static ArrayList<Image> knightIcons = new ArrayList<Image>(Arrays.asList(
-			new Image(ClassLoader.getSystemResource("picture/knightIconFrame1.png").toString()),
-			new Image(ClassLoader.getSystemResource("picture/knightIconFrame2.png").toString()),
-			new Image(ClassLoader.getSystemResource("picture/knightIconFrame3.png").toString()),
-			new Image(ClassLoader.getSystemResource("picture/knightIconFrame4.png").toString()),
-			new Image(ClassLoader.getSystemResource("picture/knightIconFrame1.png").toString())
-		));
+		new Image(ClassLoader.getSystemResource("picture/knightIconFrame1.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/knightIconFrame2.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/knightIconFrame3.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/knightIconFrame4.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/knightIconFrame1.png").toString())
+	));
 	
-	public static Timeline createKnightAnimation(ImageView imageView, ArrayList<Image> arr, double frameDuration) {
+	public static ArrayList<Image> menuBackground = new ArrayList<Image>(Arrays.asList(
+		new Image(ClassLoader.getSystemResource("theme/menuBg1.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg2.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg3.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg4.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg5.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg6.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg7.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg8.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg9.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg10.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg11.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg12.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg13.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg14.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg15.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg16.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg17.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg18.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg19.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg20.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg21.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg22.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg23.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg24.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg25.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg26.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg27.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg28.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg29.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg30.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg31.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg32.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg33.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg34.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg35.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg36.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg37.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg38.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg39.png").toString()),
+		new Image(ClassLoader.getSystemResource("theme/menuBg1.png").toString())
+	));
+	
+	public static Timeline createAnimation(ImageView imageView, ArrayList<Image> arr, double frameDuration) {
 		Timeline timeline = new Timeline();
 		for (int i = 0; i < arr.size(); i++) {
 	        final int frameIndex = i;

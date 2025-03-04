@@ -1,14 +1,13 @@
 package scene;
 
 import application.Main;
+import image.gifPlayer;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import scene.popup.CharacterPopup;
@@ -18,14 +17,13 @@ import sound.Sfx;
 import sound.SfxPlayer;
 
 public class MenuScene {
-	private static Media videomedia = new Media(ClassLoader.getSystemResource(String.format("theme/menuBackground.mp4")).toString());
 	private static boolean isGameRunning;
 	private static boolean isInMenuScene;
 	
 	public static void use() {
 		BackgroundSongPlayer.menu();
 		isInMenuScene=true;
-		System.out.println(MenuScene.isInMenuScene());
+		
 		
 		VBox root = new VBox();
 		root.setSpacing(40);
@@ -35,17 +33,26 @@ public class MenuScene {
 		actionBox.setSpacing(20);
 		actionBox.setAlignment(Pos.CENTER);
 		
-		MediaPlayer mdplayer = new MediaPlayer(videomedia);
-		MediaView viewmedia = new MediaView(mdplayer);
-		mdplayer.setMute(true);
-		mdplayer.setRate(1.2);
-		mdplayer.setCycleCount(MediaPlayer.INDEFINITE);
-		viewmedia.setFitHeight(720);
-		mdplayer.play();
 		
-
+		
 		Text titleText = new Text("Cool Game");
 		titleText.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 64));
+		
+		ImageView continueButton = new ImageView(new Image(ClassLoader.getSystemResource("picture/continueGameButton1.png").toString()));
+		continueButton.setFitHeight(90);
+		continueButton.setFitWidth(204);
+		
+		StackPane continueButtonPane = new StackPane(continueButton);
+		continueButtonPane.setMaxWidth(204);
+		continueButtonPane.setOnMouseEntered(_ -> {
+			SfxPlayer.play(Sfx.CLICK);
+			continueButton.setImage(new Image(ClassLoader.getSystemResource("picture/continueGameButton2.png").toString()));
+		});
+		continueButtonPane.setOnMouseExited(_ -> continueButton.setImage(new Image(ClassLoader.getSystemResource("picture/continueGameButton1.png").toString())));
+		continueButtonPane.setOnMouseClicked(_ -> {
+			SfxPlayer.play(Sfx.SELECT);
+//			TODO: go to last game
+		});
 		
 		ImageView newButton = new ImageView(new Image(ClassLoader.getSystemResource("picture/newGameButton1.png").toString()));
 		newButton.setFitHeight(90);
@@ -79,10 +86,18 @@ public class MenuScene {
 			SettingPopup.getInstance().getPopup().show();
 		});
 		
+		ImageView menuBackground = new ImageView();
+		menuBackground.setPreserveRatio(true);
+		menuBackground.setFitHeight(728);
+		Timeline menuTimeline = gifPlayer.createAnimation(menuBackground, gifPlayer.menuBackground, 0.1);
+		menuTimeline.setCycleCount(Timeline.INDEFINITE);
+		menuTimeline.play();
+		
+		if (isGameRunning) actionBox.getChildren().add(continueButtonPane);
 		actionBox.getChildren().addAll(newButtonPane, settingButtonPane);
 		
 		root.getChildren().addAll(titleText, actionBox);
-		Main.root.getChildren().addAll(viewmedia, root);
+		Main.root.getChildren().addAll(menuBackground, root);
 	}
 
 	public static boolean isGameRunning() {

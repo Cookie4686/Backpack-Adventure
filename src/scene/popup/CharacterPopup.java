@@ -50,6 +50,7 @@ public class CharacterPopup extends VBox {
 			pause.setOnFinished(_ -> {				
 				GameScene.use();
 			});
+//			TODO: Create new game after already played
 			pause.play();
 		});
 		
