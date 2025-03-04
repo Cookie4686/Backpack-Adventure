@@ -30,31 +30,29 @@ class Resource {
 	public Entity newEntity() {
 		if (images == null) {
 			images = new ArrayList<Image>();
-			for(String p : paths) {
+			for (String p : paths) {
 				Image image = new Image(ClassLoader.getSystemResource(p).toString());
-				if (image == null) {
-				    System.err.println("ERROR: Could not load image from " + p);
+				if (image.getUrl() == null) {
+					System.err.println("ERROR: Could not load image from " + p);
 				} else {
-				    System.out.println("Successfully loaded image from " + p);
+					System.out.println("Successfully loaded image from " + p);
 				}
 				images.add(image);
 			}
 		}
 		Entity entity = supplier.get();
 		ImageView imageView = entity.getImageView();
-		
+
 		Timeline timeline = new Timeline();
 		for (int i = 0; i < images.size(); i++) {
-	        final int frameIndex = i;
-	        KeyFrame keyFrame = new KeyFrame(
-	            Duration.seconds(0.15 * i),
-	            event -> imageView.setImage(images.get(frameIndex))
-	        );
-	        timeline.getKeyFrames().add(keyFrame);
-	    }
+			final int frameIndex = i;
+			KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.15 * i),
+					_ -> imageView.setImage(images.get(frameIndex)));
+			timeline.getKeyFrames().add(keyFrame);
+		}
 		timeline.setCycleCount(Timeline.INDEFINITE);
-	    timeline.play();
-	    imageView.setImage(images.get(0));
+		timeline.play();
+		imageView.setImage(images.get(0));
 		imageView.setOnMousePressed(event -> EntityHandler.handleMouseClicked(entity));
 		entity.getChildren().add(imageView);
 		entity.setTimeline(timeline);

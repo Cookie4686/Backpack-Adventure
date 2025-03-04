@@ -1,7 +1,7 @@
 package scene;
 
 import entities.Player;
-import image.gifPlayer;
+import image.GifPlayer;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -44,7 +44,7 @@ public class CharacterScene {
 		preview = new ImageView();
 		preview.setPreserveRatio(true);
 		preview.setFitHeight(200);
-		Timeline timeline = gifPlayer.createKnightAnimation(preview, 0.1);
+		Timeline timeline = GifPlayer.createKnightAnimation(preview, 0.1);
 		costumeList.getChildren().add(preview);
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();

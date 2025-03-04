@@ -4,51 +4,45 @@ import java.util.ArrayList;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
 import scene.popup.SettingPopup;
 
 public class BackgroundSongPlayer {
 	private static ArrayList<String> fight, floor;
 	private static MediaPlayer currentPlayer;
-	
+
 	static {
 		fight = new ArrayList<String>();
 		fight.add("Fight1.mp3");
-		
+
 		floor = new ArrayList<String>();
 		floor.add("Floor1.mp3");
 	}
-	
+
 	public static void menu() {
-		if (currentPlayer != null) currentPlayer.stop();
-		currentPlayer = new MediaPlayer(new Media(ClassLoader.getSystemResource(String.format("song/Menu bg.mp3")).toString()));
-		currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getMusicSlider().valueProperty());
-		play();
+		runNewPlayer("Menu bg.mp3");
 	}
-	
+
 	public static void fight(int level) {
-		currentPlayer.stop();
-		currentPlayer = new MediaPlayer(
-				new Media(ClassLoader.getSystemResource(String.format("song/%s", fight.get(level))).toString()));
-		currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getMusicSlider().valueProperty());
-		currentPlayer.play();
-		play();
+		runNewPlayer(fight.get(level));
 	}
-	
+
 	public static void floor(int level) {
-		currentPlayer.stop();
+		runNewPlayer(floor.get(level));
+	}
+
+	private static void runNewPlayer(String name) {
+		stop();
 		currentPlayer = new MediaPlayer(
-				new Media(ClassLoader.getSystemResource(String.format("song/%s", floor.get(level))).toString()));
+				new Media(ClassLoader.getSystemResource(String.format("song/%s", name)).toString()));
 		currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getMusicSlider().valueProperty());
+		currentPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		play();
 	}
 
 	public static void play() {
-		currentPlayer.play();
-		currentPlayer.setOnEndOfMedia(() -> {
-			currentPlayer.seek(Duration.ZERO);
+		if (currentPlayer != null) {
 			currentPlayer.play();
-		});
+		}
 	}
 
 	public static void pause() {
@@ -56,7 +50,7 @@ public class BackgroundSongPlayer {
 			currentPlayer.pause();
 		}
 	}
-	
+
 	public static void stop() {
 		if (currentPlayer != null) {
 			currentPlayer.stop();

@@ -5,30 +5,34 @@ import java.util.HashMap;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class imagePlayer {
+public class ImagePlayer {
 	private static HashMap<String, Resource> imageMap;
-	
+
 	static {
+		imageMap = new HashMap<String, Resource>();
 		imageMap.put("knight", new Resource("knight.png"));
 		imageMap.put("knightIcon", new Resource("knightIcon.png"));
 	}
-	
+
 	public static ImageView getImageView(String name) {
 		Resource resource = imageMap.get(name);
 		return new ImageView(resource.getImage());
 	}
 }
 
-
 class Resource {
 	private String path;
-	
+	private Image image;
+
 	public Resource(String path) {
 		super();
 		this.path = path;
 	}
-	
+
 	public Image getImage() {
-		return new Image(ClassLoader.getSystemResource(String.format("picture/%s", path)).toString());
+		if (image == null) {
+			image = new Image(ClassLoader.getSystemResource(String.format("picture/%s", path)).toString());
+		}
+		return image;
 	}
 }

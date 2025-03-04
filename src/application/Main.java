@@ -1,12 +1,10 @@
 package application;
 
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import logic.handler.ItemHandler;
@@ -27,7 +25,7 @@ public class Main extends Application {
 		root.setAlignment(Pos.TOP_LEFT);
 		root.prefWidthProperty().bind(primaryStage.widthProperty());
 		root.prefHeightProperty().bind(primaryStage.heightProperty());
-		
+
 		MenuScene.use();
 		Scene scene = new Scene(root, 1280, 720);
 		scene.getStylesheets().add(ClassLoader.getSystemResource("test.css").toExternalForm());

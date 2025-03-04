@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class gifPlayer {
+public class GifPlayer {
 	private static ArrayList<Image> idleKnight = new ArrayList<Image>(Arrays.asList(
 		new Image(ClassLoader.getSystemResource("picture/player_Idle1.png").toString()),
 		new Image(ClassLoader.getSystemResource("picture/player_Idle2.png").toString()),

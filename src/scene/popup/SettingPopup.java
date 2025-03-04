@@ -1,6 +1,5 @@
 package scene.popup;
 
-
 import application.Main;
 import component.Button;
 import component.VolumeSlider;
@@ -19,7 +18,7 @@ public class SettingPopup extends GridPane {
 	private static SettingPopup instance;
 	private Popup popup;
 	private VolumeSlider musicSlider, sfxSlider;
-	
+
 	public SettingPopup() {
 		super();
 		popup = new Popup("Settings");
@@ -37,11 +36,10 @@ public class SettingPopup extends GridPane {
 		menuButton.setOnAction(_ -> {
 			SfxPlayer.play(Sfx.SELECT);
 			Main.root.getChildren().clear();
-			popup.hide();
 			MenuScene.use();
 		});
-		add(menuButton, 1 ,3);
-		
+		add(menuButton, 1, 3);
+
 		popup.setCenter(this);
 
 		Button closeButton = new Button("Close", 128, 32);
@@ -49,7 +47,7 @@ public class SettingPopup extends GridPane {
 			SfxPlayer.play(Sfx.SELECT);
 			popup.hide();
 		});
-		
+
 		popup.getBottomBox().getChildren().setAll(closeButton);
 	}
 
@@ -66,7 +64,6 @@ public class SettingPopup extends GridPane {
 	public Slider getMusicSlider() {
 		return musicSlider.getSlider();
 	}
-
 
 	public Slider getSfxSlider() {
 		return sfxSlider.getSlider();

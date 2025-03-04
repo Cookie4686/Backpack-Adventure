@@ -7,7 +7,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 
-public class vedioPlayer {
+public class VideoPlayer {
 	private static MediaPlayer currentPlayer;
 	private static HashMap<String, Resource> mediaMap;
 	
