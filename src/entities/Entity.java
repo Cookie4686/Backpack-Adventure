@@ -1,7 +1,6 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 import component.HpBar;
@@ -18,7 +17,6 @@ import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.scene.Cursor;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import logic.FightLogic;
@@ -28,31 +26,31 @@ import sound.Sfx;
 import sound.SfxPlayer;
 
 public class Entity extends Being implements TurnActivable {
+	private static final double MOVE_DURATION = 0.3;
 	protected int xp;
-	protected MobTier dangerLV;
 	protected boolean stunned;
-	private Timeline timeline;
-	private ImageView imageView;
-	protected ArrayList<Effect> allAttributes;
+	protected MobTier dangerLV;
 	protected Effect nextTurn;
-	private double desiredX;
-	private double originalX;
-    private boolean isMoving = false;
-    private static final double MOVE_DURATION = 0.3;
+
     private EffectIcon nextTurnMove;
     
-	public Entity(String name, int maxHpLb, int xpLb, MobTier dangerLV,
-			ArrayList<Effect> allAttributes) {
+	protected ArrayList<Effect> allAttributes;
+	private double desiredX, originalX;
+	private boolean isMoving = false;
+	private ImageView imageView;
+	private Timeline timeline;
+
+	public Entity(String name, int maxHpLb, int xpLb, MobTier dangerLV, ArrayList<Effect> allAttributes) {
 		super();
+		this.name = name;
+		this.shield = 0;
+		Random rand = new Random();
 		int maxHpUb = (int) (maxHpLb * 1.5);
 		int xpUb = (int) (xpLb * 1.5);
-		this.name = name;
-		Random rand = new Random();
 		this.hp = this.maxHp = rand.nextInt((maxHpUb - maxHpLb) + 1) + maxHpLb;
-		this.shield = 0;
 		this.xp = rand.nextInt((xpUb - xpLb) + 1) + xpLb;
-		this.allAttributes = allAttributes;
 		this.dangerLV = dangerLV;
+		this.allAttributes = allAttributes;
 		this.stunned = false;
 	}
 
@@ -60,7 +58,7 @@ public class Entity extends Being implements TurnActivable {
 	public void initialize() {
 		imageView.setCursor(Cursor.CROSSHAIR);
 		imageView.setPickOnBounds(true);
-		imageView.setOnMousePressed(event -> EntityHandler.handleMouseClicked(this));
+		imageView.setOnMousePressed(_ -> EntityHandler.handleMouseClicked(this));
 		hpBar = new HpBar(this);
 		//nextTurnMove = new EffectIcon(null);
 		nextTurnMove = new EffectIcon(null);
@@ -93,26 +91,27 @@ public class Entity extends Being implements TurnActivable {
 			checkAlive();
 		}
 		render();
-		
+
 		return damaged;
 	}
-	
+
 	public void checkAlive() {
-		for(Entity e : FightLogic.getInstance().getEntities()) {
-			if(e.getHp() > 0) {					
+		for (Entity e : FightLogic.getInstance().getEntities()) {
+			if (e.getHp() > 0) {
 				FightLogic.getInstance().setTarget(e);
 				break;
 			}
 		}
-		Platform.runLater(()->{
+		Platform.runLater(() -> {
 			this.die();
 			GameBottom.getInstance().removeEntity();
-			//FightLogic.getInstance().getEntities().remove(this);
+			// FightLogic.getInstance().getEntities().remove(this);
 			GameBottom.getInstance().render();
 		});
-		
-		for(Entity e : FightLogic.getInstance().getEntities()) {
-			if(e.getHp() > 0) return;
+
+		for (Entity e : FightLogic.getInstance().getEntities()) {
+			if (e.getHp() > 0)
+				return;
 		}
 		GameLogic.getInstance().endFight();
 	}
@@ -169,8 +168,9 @@ public class Entity extends Being implements TurnActivable {
 			// add target frame on top
 		});
 	}
+
 	public ImageView getImageView() {
-		if(imageView == null) {
+		if (imageView == null) {
 			imageView = new ImageView();
 		}
 		return imageView;
@@ -187,45 +187,47 @@ public class Entity extends Being implements TurnActivable {
 	public void setTimeline(Timeline timeline) {
 		this.timeline = timeline;
 	}
-	
-	public boolean isMoving(){
-        return isMoving;
-    }
+
+	public boolean isMoving() {
+		return isMoving;
+	}
+
 	public double getDesiredX() {
-        return desiredX;
-    }
+		return desiredX;
+	}
 
-    public void setDesiredX(double desiredX) {
-        this.desiredX = desiredX;
-    }
+	public void setDesiredX(double desiredX) {
+		this.desiredX = desiredX;
+	}
 
-    public void moveTo(double newX) {
-        if (isMoving) return;
-        isMoving = true;
-        setDesiredX(newX);
+	public void moveTo(double newX) {
+		if (isMoving)
+			return;
+		isMoving = true;
+		setDesiredX(newX);
 
-        TranslateTransition transition = new TranslateTransition(Duration.seconds(MOVE_DURATION), this);
-        transition.setToX(newX);
+		TranslateTransition transition = new TranslateTransition(Duration.seconds(MOVE_DURATION), this);
+		transition.setToX(newX);
 
-        transition.setOnFinished(event -> {
-            isMoving = false;
-        });
+		transition.setOnFinished(event -> {
+			isMoving = false;
+		});
 
-        transition.play();
-    }
+		transition.play();
+	}
 
-    public void die() {
-        setVisible(false);
-        setManaged(false);
-    }
+	public void die() {
+		setVisible(false);
+		setManaged(false);
+	}
 
-    public double getCurrentX() {
-        return getTranslateX();
-    }
+	public double getCurrentX() {
+		return getTranslateX();
+	}
 
-    public void setCurrentX(double x) {
-        setTranslateX(x);
-    }
+	public void setCurrentX(double x) {
+		setTranslateX(x);
+	}
 
 	public double getOriginalX() {
 		return originalX;
@@ -234,7 +236,7 @@ public class Entity extends Being implements TurnActivable {
 	public void setOriginalX(double originalX) {
 		this.originalX = originalX;
 	}
-    
+
 	public void moveLeftAndBack() {
         double currentTranslateX = imageView.getTranslateX();
         Timeline moveTimeline = new Timeline();
@@ -257,6 +259,5 @@ public class Entity extends Being implements TurnActivable {
 	public void setNextTurnMove(EffectIcon nextTurnMove) {
 		this.nextTurnMove = nextTurnMove;
 	}
-    
-	
+
 }

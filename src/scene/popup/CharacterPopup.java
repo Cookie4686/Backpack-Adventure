@@ -3,7 +3,6 @@ package scene.popup;
 import application.Fader;
 import component.Button;
 import javafx.animation.PauseTransition;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
@@ -20,31 +19,28 @@ public class CharacterPopup extends VBox {
 		super();
 		popup = new Popup("Character Select");
 
-		getChildren().clear();
-		
 		setAlignment(Pos.CENTER);
 		setSpacing(20);
-		
+
+		getChildren().add(CharacterScene.use());
+		popup.setCenter(this);
+
 		Button characterButton = new Button("JOURNEY ON!", 128, 32);
-	
 		characterButton.setOnAction(_ -> {
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
-			pause.setOnFinished(event -> {				
+			pause.setOnFinished(_ -> {
 				GameScene.use();
 				SfxPlayer.play(Sfx.GAMESTART);
 			});
 			pause.play();
 		});
-
-		getChildren().add(CharacterScene.use());
-		popup.setCenter(this);
 		Button closeButton = new Button("Back", 128, 32);
 		closeButton.setOnAction(_ -> {
 			SfxPlayer.play(Sfx.SELECT);
 			popup.hide();
 		});
-		
+
 		popup.getBottomBox().getChildren().setAll(characterButton, closeButton);
 	}
 

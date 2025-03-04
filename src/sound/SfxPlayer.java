@@ -39,7 +39,7 @@ public class SfxPlayer {
 			audioClip.play();
 		}
 	}
-	
+
 	public static void playByEffect(Effect effect) {
 		switch (effect.getType()) {
 		case FIRE -> play(Sfx.FIRE);
@@ -53,7 +53,7 @@ public class SfxPlayer {
 		case VAMPIRIC -> play(Sfx.VAMPIRIC);
 //		case STUNNED -> play(Sfx.FIRE);
 //		case SUMMONER -> play(Sfx.FIRE);
-		default -> {}
+		default			-> {}
 		}
 	}
 }

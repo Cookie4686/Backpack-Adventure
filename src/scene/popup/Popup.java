@@ -19,6 +19,7 @@ public class Popup extends BorderPane {
 
 	public Popup(String title) {
 		super();
+		StackPane.setAlignment(this, Pos.CENTER);
 		maxWidthProperty().bind(Main.root.widthProperty().multiply(0.8));
 		maxHeightProperty().bind(Main.root.heightProperty().multiply(0.7));
 		setBackground(new Background(new BackgroundFill(Color.BURLYWOOD, new CornerRadii(4), Insets.EMPTY)));
@@ -36,14 +37,16 @@ public class Popup extends BorderPane {
 
 		bottomBox = new HBox();
 		bottomBox.setMaxSize(HBox.USE_PREF_SIZE, HBox.USE_PREF_SIZE);
+		bottomBox.setSpacing(16);
 		bottomBox.translateYProperty().bind(bottomBox.heightProperty().divide(2));
 		setAlignment(bottomBox, Pos.CENTER);
 		setBottom(bottomBox);
 	}
 
 	public void show() {
-		StackPane.setAlignment(this, Pos.CENTER);
-		Main.root.getChildren().add(this);
+		if (!Main.root.getChildren().contains(this)) {
+			Main.root.getChildren().add(this);
+		}
 	}
 
 	public void hide() {
