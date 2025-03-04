@@ -8,8 +8,8 @@ public class MarkerLoader {
 	private static HashMap<MapMarker, Resource> markerMap;
 	static {
 		markerMap = new HashMap<MapMarker, Resource>();
-		markerMap.put(MapMarker.DOOR, new Resource("door.png"));
-		markerMap.put(MapMarker.MONSTER, new Resource("skull.png"));
+		markerMap.put(MapMarker.DOOR, new Resource("icons/door.png"));
+		markerMap.put(MapMarker.MONSTER, new Resource("icons/normalSkull.png"));
 		markerMap.put(MapMarker.PLAYER, new Resource("Items/apple.png"));
 	}
 
