@@ -10,7 +10,7 @@ public class imagePlayer {
 	
 	static {
 		imageMap.put("knight", new Resource("knight.png"));
-		imageMap.put("knightIcon", new Resource("knightIcon.png"));
+		imageMap.put("knightIconFrame", new Resource("knightIconFrame.png"));
 	}
 	
 	public static ImageView getImageView(String name) {

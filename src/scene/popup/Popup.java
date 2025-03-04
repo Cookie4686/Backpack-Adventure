@@ -3,6 +3,8 @@ package scene.popup;
 import application.Main;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -19,17 +21,19 @@ public class Popup extends BorderPane {
 
 	public Popup(String title) {
 		super();
-		maxWidthProperty().bind(Main.root.widthProperty().multiply(0.8));
-		maxHeightProperty().bind(Main.root.heightProperty().multiply(0.7));
-		setBackground(new Background(new BackgroundFill(Color.BURLYWOOD, new CornerRadii(4), Insets.EMPTY)));
-
+		maxWidthProperty().bind(Main.root.widthProperty().multiply(0.7));
+		maxHeightProperty().bind(Main.root.heightProperty().multiply(0.8));
+		
+		ImageView frame = new ImageView(new Image(ClassLoader.getSystemResource("picture/chooseCharacterFrame.png").toString()));
+		getChildren().add(frame);
+		
 		HBox topBox = new HBox();
 		topBox.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
 		topBox.translateYProperty().bind(topBox.heightProperty().divide(-2));
 		topBox.setPadding(new Insets(8));
-		topBox.setBackground(new Background(new BackgroundFill(Color.FLORALWHITE, new CornerRadii(4), Insets.EMPTY)));
+		topBox.setBackground(new Background(new BackgroundFill(Color.GRAY, new CornerRadii(4), Insets.EMPTY)));
 		Text titleText = new Text(title);
-		titleText.setFont(Font.font("Consolas", FontWeight.BOLD, 48));
+		titleText.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 48));
 		topBox.getChildren().setAll(titleText);
 		setAlignment(topBox, Pos.CENTER);
 		setTop(topBox);
@@ -39,6 +43,7 @@ public class Popup extends BorderPane {
 		bottomBox.translateYProperty().bind(bottomBox.heightProperty().divide(2));
 		setAlignment(bottomBox, Pos.CENTER);
 		setBottom(bottomBox);
+		
 	}
 
 	public void show() {
