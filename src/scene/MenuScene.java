@@ -5,6 +5,8 @@ import component.GameButton;
 import component.GameButtonType;
 import image.GifPlayer;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -35,24 +37,29 @@ public class MenuScene {
 		Text titleText = new Text("Cool Game");
 		titleText.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 64));
 
-		GameButton continueButton = new GameButton(204, 90, GameButtonType.CONTINUE);
+		GameButton continueButton = new GameButton(170, 70, GameButtonType.CONTINUE);
 		continueButton.setOnMouseClicked(_ -> {
 			SfxPlayer.play(Sfx.SELECT);
 //			TODO: go to last game
 		});
 
-		GameButton newButton = new GameButton(204, 90, GameButtonType.NEW_GAME);
+		GameButton newButton = new GameButton(170, 70, GameButtonType.NEW_GAME);
 		newButton.setOnMouseClicked(_ -> {
 			SfxPlayer.play(Sfx.SELECT);
 			CharacterPopup.getInstance().getPopup().show();
 		});
 
-		GameButton settingButton = new GameButton(204, 90, GameButtonType.SETTING);
+		GameButton settingButton = new GameButton(170, 70, GameButtonType.SETTING);
 		settingButton.setOnMouseClicked(_ -> {
 			SfxPlayer.play(Sfx.SELECT);
 			SettingPopup.getInstance().getPopup().show();
 		});
 
+		GameButton exitButton = new GameButton(170, 70, GameButtonType.EXIT);
+		exitButton.setOnMouseClicked(_ -> {
+			Platform.exit();
+		});
+		
 		ImageView menuBackground = new ImageView();
 		menuBackground.setPreserveRatio(true);
 		menuBackground.setFitWidth(1280);
@@ -62,7 +69,7 @@ public class MenuScene {
 
 		if (isGameRunning)
 			actionBox.getChildren().add(continueButton);
-		actionBox.getChildren().addAll(newButton, settingButton);
+		actionBox.getChildren().addAll(newButton, settingButton, exitButton);
 
 		root.getChildren().addAll(titleText, actionBox);
 		Main.root.getChildren().addAll(menuBackground, root);

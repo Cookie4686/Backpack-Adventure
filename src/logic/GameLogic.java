@@ -43,7 +43,9 @@ public class GameLogic {
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("frog"));
 		FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		GameBottom.getInstance().render();
-
+		for(Entity en : FightLogic.getInstance().getEntities()) {
+			FightLogic.getInstance().setTotalXp(FightLogic.getInstance().getTotalXp() + en.getXp());
+		}
 		// Move into fightlogic
 		// initial enemies future attack and player turn after that
 		PauseTransition pause = new PauseTransition(Duration.seconds(1.3));
@@ -71,6 +73,8 @@ public class GameLogic {
 			}
 		}
 		if (FightLogic.getInstance().isInFight()) {
+			Player.getInstance().setXp(Player.getInstance().getXp() + FightLogic.getInstance().getTotalXp());
+			FightLogic.getInstance().setTotalXp(0);
 			BackgroundSongPlayer.floor(currentFloor);
 			Player.getInstance().getAllEffect().clear();
 			Item[] items = new Item[5];
