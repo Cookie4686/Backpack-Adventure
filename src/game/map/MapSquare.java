@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
 import logic.handler.MapHandler;
 
 public class MapSquare extends Pane {
-	public final static int SIZE = Slot.SIZE / 2;
+	public final static int SIZE = (Slot.SIZE*7)/10;
 	private MapMarker marker;
 
 	public MapSquare() {
@@ -40,7 +40,7 @@ public class MapSquare extends Pane {
 			}
 			setBackground(new Background(new BackgroundFill(Color.BEIGE, CornerRadii.EMPTY, Insets.EMPTY)));
 			BorderStroke borderStroke = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
-					new BorderWidths(top ? 0 : 1, right ? 0 : 1, bottom ? 0 : 1, left ? 0 : 1));
+					new BorderWidths(top ? 0 : 4, right ? 0 : 4, bottom ? 0 : 4, left ? 0 : 4));
 			setBorder(new Border(borderStroke));
 		}
 	}

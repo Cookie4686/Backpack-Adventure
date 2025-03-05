@@ -21,7 +21,7 @@ public class Slot extends Pane implements ReRenderable {
 		setMaxSize(SIZE, SIZE);
 		isUnlocked = false;
 		item = null;
-		setOnMouseClicked(event -> ButtonHandler.handleSlotOnClicked(this));
+		setOnMouseClicked(_ -> ButtonHandler.handleSlotOnClicked(this));
 	}
 
 	@Override

@@ -143,7 +143,7 @@ public class Map extends GridPane {
 
 	public static Map getInstance() {
 		if (instance == null) {
-			instance = new Map(15, 15);
+			instance = new Map(10, 10);
 		}
 		return instance;
 	}
