@@ -61,7 +61,7 @@ public class Entity extends Being implements TurnActivable {
 		imageView.setOnMousePressed(_ -> EntityHandler.handleMouseClicked(this));
 		hpBar = new HpBar(this);
 		//nextTurnMove = new EffectIcon(null);
-		nextTurnMove = new EffectIcon(null);
+		if(nextTurnMove == null) nextTurnMove = new EffectIcon(null);
 		getChildren().setAll(nextTurnMove, hpBar, imageView);
 		render();
 	}
@@ -104,6 +104,7 @@ public class Entity extends Being implements TurnActivable {
 		}
 		Platform.runLater(() -> {
 			this.die();
+			System.out.println("remove en");
 			GameBottom.getInstance().removeEntity();
 			// FightLogic.getInstance().getEntities().remove(this);
 			GameBottom.getInstance().render();
@@ -113,6 +114,7 @@ public class Entity extends Being implements TurnActivable {
 			if (e.getHp() > 0)
 				return;
 		}
+		System.out.println("endFight");
 		GameLogic.getInstance().endFight();
 	}
 

@@ -50,11 +50,11 @@ public class GameBottom extends HBox implements ReRenderable {
 			enemyBox.getChildren().setAll(FightLogic.getInstance().getEntities());
 			for (Entity entity : FightLogic.getInstance().getEntities()) {
 				entity.initialize();
+				entity.getNextTurnMove().getFadeIn().play();
 				FadeTransition ft = new FadeTransition(Duration.millis(500), entity);
 				ft.setFromValue(0);
 				ft.setToValue(1);
 				ft.play();
-				
 				animateLayoutChange();
 			}
 		});

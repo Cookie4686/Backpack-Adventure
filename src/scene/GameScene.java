@@ -28,7 +28,7 @@ public class GameScene {
 		}
 		items[6]= ResourceLoader.newItem("Mana Stone I");
 		items[7]= ResourceLoader.newItem("Staff of Flame");
-		items[8]= ResourceLoader.newItem("Blood  Drain Shield");
+		items[8]= ResourceLoader.newItem("Excalibur");
 		Game.getInstance().addItemsToGame(items);
         Fader.getBlackout().toFront();
 		BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());

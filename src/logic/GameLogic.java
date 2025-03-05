@@ -38,7 +38,7 @@ public class GameLogic {
 
 		// Spawn enemies
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("werewolf"));
-		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("demon"));
+		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("mushroom"));
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("bunny"));
 		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("frog"));
 		FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());

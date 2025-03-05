@@ -7,6 +7,7 @@ import java.util.Random;
 
 import entities.Being;
 import entities.Entity;
+import entities.EntityLoader;
 import entities.Player;
 import game.GameBottom;
 import game.item.Item;
@@ -25,25 +26,33 @@ public class FightLogic {
 	private static FightLogic instance;
 	private boolean isInFight, isPTurn;
 	private Entity target;
-	private ArrayList<Entity> entities;
-
+	private ArrayList<Entity> entities,entitiesFromSummon;
+	
 	public FightLogic() {
 		this.isInFight = false;
 		this.isPTurn = true;
 		this.entities = new ArrayList<Entity>();
+		this.entitiesFromSummon = new ArrayList<Entity>();
 	}
 
 	public void entitiesTurn() {
+		if(!entitiesFromSummon.isEmpty()) {
+			FightLogic.getInstance().getEntities().addAll(entitiesFromSummon);
+			GameBottom.getInstance().render();
+			entitiesFromSummon.clear();
+		}
 		isPTurn = false;
         Platform.runLater(() -> {
             new Thread(() -> {
                 try {
-                    for (Entity en : entities) {
+                	ArrayList<Entity> entitiesCopy = new ArrayList<>(entities);
+                    for (Entity en : entitiesCopy) {
                     	if(Player.getInstance().getHp() == 0) break;
                     	if(en.getHp() == 0) continue;
                         entityTurn(en);
                         Thread.sleep(500);
                     }
+                    entities = entitiesCopy;
                     Iterator<Entity> iterator = FightLogic.getInstance().getEntities().iterator();
             		while (iterator.hasNext()) {
             		    Entity e = iterator.next();
@@ -80,10 +89,11 @@ public class FightLogic {
 		ArrayList<Effect> effects = new ArrayList<>(e.getAllEffect());
 		for (Effect ef : effects) {
 			activateEffect(ef, e);
-			if (e.getHp() == 0) {
-				e.checkAlive();
-				return;
-			}
+		}
+		if (e.getHp() == 0) {
+			System.out.println("checkAlive");
+			e.checkAlive();
+			return;
 		}
 		e.setAllEffect(effects);
 		e.activatePerTurn();
@@ -155,7 +165,9 @@ public class FightLogic {
 		case SHIELD		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case DODGE		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case VAMPIRIC	-> e.setHp(e.getHp() + (int) (Player.getInstance().takeDamage(ef.getAmount()) * 0.5));
-		case SUMMONER	-> {} // TODO: implement
+		case SUMMONER	-> {
+			entitiesFromSummon.add(EntityLoader.newEntity("frog"));
+		} // TODO: implement
 		case ANGER		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case HEAL		-> e.setHp(e.getHp() + ef.getAmount());
 		case REGEN		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
@@ -245,4 +257,14 @@ public class FightLogic {
 	public void setEntities(ArrayList<Entity> entities) {
 		this.entities = entities;
 	}
+
+	public ArrayList<Entity> getEntitiesFromSummon() {
+		return entitiesFromSummon;
+	}
+
+	public void setEntitiesFromSummon(ArrayList<Entity> entitiesFromSummon) {
+		this.entitiesFromSummon = entitiesFromSummon;
+	}
+	
+	
 }
