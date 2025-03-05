@@ -35,6 +35,14 @@ public class BackgroundSongPlayer {
 		currentPlayer = new MediaPlayer(
 				new Media(ClassLoader.getSystemResource(String.format("song/%s", name)).toString()));
 		currentPlayer.volumeProperty().bind(SettingPopup.getInstance().getMusicSlider().valueProperty());
+		currentPlayer.volumeProperty().addListener((_, oldValue, newValue) -> {
+			if (oldValue.doubleValue() == 0) {
+				play();
+			}
+			if (newValue.doubleValue() == 0) {
+				pause();
+			}
+		});
 		currentPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		play();
 	}

@@ -2,7 +2,6 @@ package logic;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
 
 import entities.Being;
@@ -10,15 +9,11 @@ import entities.Entity;
 import entities.EntityLoader;
 import entities.Player;
 import game.GameBottom;
-import game.item.Item;
 import game.util.Effect;
 import game.util.EffectIcon;
 import game.util.EffectType;
 import game.util.IconLoader;
-import interfaces.TurnActivable;
-import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.scene.Node;
 import sound.Sfx;
 import sound.SfxPlayer;
 
@@ -26,8 +21,8 @@ public class FightLogic {
 	private static FightLogic instance;
 	private boolean isInFight, isPTurn;
 	private Entity target;
-	private ArrayList<Entity> entities,entitiesFromSummon;
-	
+	private ArrayList<Entity> entities, entitiesFromSummon;
+
 	public FightLogic() {
 		this.isInFight = false;
 		this.isPTurn = true;
@@ -36,53 +31,48 @@ public class FightLogic {
 	}
 
 	public void entitiesTurn() {
-		if(!entitiesFromSummon.isEmpty()) {
+		isPTurn = false;
+		if (!entitiesFromSummon.isEmpty()) {
 			FightLogic.getInstance().getEntities().addAll(entitiesFromSummon);
 			GameBottom.getInstance().render();
 			entitiesFromSummon.clear();
 		}
-		isPTurn = false;
-        Platform.runLater(() -> {
-            new Thread(() -> {
-                try {
-                	ArrayList<Entity> entitiesCopy = new ArrayList<>(entities);
-                    for (Entity en : entitiesCopy) {
-                    	if(Player.getInstance().getHp() == 0) break;
-                    	if(en.getHp() == 0) continue;
-                        entityTurn(en);
-                        Thread.sleep(500);
-                    }
-                    entities = entitiesCopy;
-                    Iterator<Entity> iterator = FightLogic.getInstance().getEntities().iterator();
-            		while (iterator.hasNext()) {
-            		    Entity e = iterator.next();
-            		    if (e.getHp() == 0) {
-            		        iterator.remove();
-            		    }
-            		}
-            		if (FightLogic.getInstance().getEntities().isEmpty()) {
-        				GameLogic.getInstance().endFight();
-        			}
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    System.err.println("Thread interrupted: " + e.getMessage());
-                } finally {
-                    Platform.runLater(() -> {
-                        isPTurn = true;
-                        if (entities.isEmpty()) {
-                            GameLogic.getInstance().endFight();
-                        } else {
-                            playerTurn();
-                        }
-                    });
-                }
-            }).start();
-        });
-    }
-	
+		Platform.runLater(() -> {
+			new Thread(() -> {
+				try {
+					ArrayList<Entity> entitiesCopy = new ArrayList<>(entities);
+					for (Entity en : entitiesCopy) {
+						if (Player.getInstance().getHp() == 0)
+							break;
+						if (en.getHp() == 0)
+							continue;
+						entityTurn(en);
+						Thread.sleep(500);
+					}
+					entities = entitiesCopy;
+					clearDeadEntities();
+					if (entities.isEmpty()) {
+						GameLogic.getInstance().endFight();
+					}
+				} catch (InterruptedException e) {
+					Thread.currentThread().interrupt();
+					System.err.println("Thread interrupted: " + e.getMessage());
+				} finally {
+					Platform.runLater(() -> {
+						isPTurn = true;
+						if (entities.isEmpty()) {
+							GameLogic.getInstance().endFight();
+						} else {
+							playerTurn();
+						}
+					});
+				}
+			}).start();
+		});
+	}
 
 	public void entityTurn(Entity e) {
-		if(Player.getInstance().getHp() == 0) {
+		if (Player.getInstance().getHp() == 0) {
 			return;
 		}
 		System.out.println("enemy turn");
@@ -110,12 +100,12 @@ public class FightLogic {
 			} else {
 				e.setNextTurn(e.getAllAttributes().get(rand.nextInt(e.getAllAttributes().size())));
 				EffectIcon newIcon = IconLoader.newIcon(e.getNextTurn().getType(), e.getNextTurn().getAmount());
-		        int index = e.getChildren().indexOf(e.getNextTurnMove());
-		        Platform.runLater(() -> {
-		            if (index != -1) {
-		                e.getChildren().set(index, newIcon);
-		            }
-		        });
+				int index = e.getChildren().indexOf(e.getNextTurnMove());
+				Platform.runLater(() -> {
+					if (index != -1) {
+						e.getChildren().set(index, newIcon);
+					}
+				});
 				e.setNextTurnMove(newIcon);
 				e.getNextTurnMove().getFadeIn().play();
 			}
@@ -123,33 +113,31 @@ public class FightLogic {
 	}
 
 	public void playerTurn() {
-		if(Player.getInstance().getHp() == 0) {
-			return;
-		}
-		isPTurn = true;
-		for (Effect ef : Player.getInstance().getAllEffect()) {
-			activateEffect(ef, Player.getInstance());
-			Player.getInstance().render();
-			if (Player.getInstance().getHp() == 0) {
-				GameLogic.getInstance().gameOver();
-				return;
+		if (Player.getInstance().getHp() != 0) {
+			isPTurn = true;
+			for (Effect ef : Player.getInstance().getAllEffect()) {
+				activateEffect(ef, Player.getInstance());
+				Player.getInstance().render();
+				if (Player.getInstance().getHp() == 0) {
+					GameLogic.getInstance().gameOver();
+					return;
+				}
 			}
+			Player.getInstance().activatePerTurn();
 		}
-		Player.getInstance().activatePerTurn();
 	}
 
-	public void activateEffect(Effect ef, Being e) {
-		switch (ef.getType()) {
+	public void activateEffect(Effect effect, Being being) {
+		switch (effect.getType()) {
 		case FIRE	-> {
-			e.takeDamage((ef.getAmount()));
-			if(e.getHp() > e.getMaxHp() - 10) e.setHp(e.getMaxHp() - 10);
-			e.setMaxHp(e.getMaxHp() - 10);
+			being.takeDamage((effect.getAmount()));
+			being.setMaxHp(being.getMaxHp() - 10);
 		}
-		case POISON	-> { e.takeDamage((ef.getAmount() + 10)); }
+		case POISON	-> { being.takeDamage((effect.getAmount() + 10)); }
 		case REGEN	-> {
 			SfxPlayer.play(Sfx.HEAL);
-			e.setHp(e.getHp() + ef.getAmount());
-			ef.setAmount(ef.getAmount() / 2);
+			being.setHp(being.getHp() + effect.getAmount());
+			effect.setAmount(effect.getAmount() / 2);
 		}
 		default		-> {}
 		}
@@ -165,13 +153,20 @@ public class FightLogic {
 		case SHIELD		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case DODGE		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case VAMPIRIC	-> e.setHp(e.getHp() + (int) (Player.getInstance().takeDamage(ef.getAmount()) * 0.5));
-		case SUMMONER	-> {
-			entitiesFromSummon.add(EntityLoader.newEntity("frog"));
-		} // TODO: implement
+		case SUMMONER	-> { entitiesFromSummon.add(EntityLoader.newEntity("frog")); } // TODO: implement
 		case ANGER		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case HEAL		-> e.setHp(e.getHp() + ef.getAmount());
 		case REGEN		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		default			-> {}
+		}
+	}
+
+	private void clearDeadEntities() {
+		Iterator<Entity> iterator = entities.iterator();
+		while (iterator.hasNext()) {
+			if (iterator.next().getHp() == 0) {
+				iterator.remove();
+			}
 		}
 	}
 
@@ -182,6 +177,15 @@ public class FightLogic {
 		self.takeDamage(thorn == null ? 0 : thorn.getAmount());
 	}
 
+	public static Effect findEffect(ArrayList<Effect> efs, EffectType target) {
+		for (Effect ef : efs) {
+			if (ef.getType().equals(target)) {
+				return ef;
+			}
+		}
+		return null;
+	}
+
 	public static void findEffectAndAdd(ArrayList<Effect> efs, EffectType target, int amount, Being targetBeing) {
 		for (Effect ef : efs) {
 			if (ef.getType().equals(target)) {
@@ -190,7 +194,7 @@ public class FightLogic {
 			}
 		}
 		efs.add(new Effect(amount, target));
-		
+
 	}
 
 	public static boolean findEffectAndDecrease(ArrayList<Effect> efs, EffectType target, int amount) {
@@ -208,15 +212,6 @@ public class FightLogic {
 			}
 		}
 		return false;
-	}
-
-	public static Effect findEffect(ArrayList<Effect> efs, EffectType target) {
-		for (Effect ef : efs) {
-			if (ef.getType().equals(target)) {
-				return ef;
-			}
-		}
-		return null;
 	}
 
 	public static FightLogic getInstance() {
@@ -265,6 +260,5 @@ public class FightLogic {
 	public void setEntitiesFromSummon(ArrayList<Entity> entitiesFromSummon) {
 		this.entitiesFromSummon = entitiesFromSummon;
 	}
-	
-	
+
 }

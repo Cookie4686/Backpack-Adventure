@@ -20,13 +20,13 @@ import sound.SfxPlayer;
 
 public class GameLogic {
 	private static GameLogic instance;
-	private ArrayList<Item> inventory;
 	private int currentFloor;
+	private ArrayList<Item> inventory;
 
 	public GameLogic() {
 		super();
-		inventory = new ArrayList<Item>();
 		currentFloor = 0;
+		inventory = new ArrayList<Item>();
 	}
 
 	public void initializeFight() {

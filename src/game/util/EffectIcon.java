@@ -12,7 +12,7 @@ public class EffectIcon extends VBox {
 	private Text text;
 	private EffectType type;
 	protected FadeTransition fadeIn;
-	
+
 	public EffectIcon(EffectType type) {
 		this.setAlignment(Pos.CENTER);
 		icon = new ImageView();
@@ -44,17 +44,7 @@ public class EffectIcon extends VBox {
 		return type;
 	}
 
-	public void setType(EffectType type) {
-		this.type = type;
-	}
-
 	public FadeTransition getFadeIn() {
 		return fadeIn;
 	}
-
-	public void setFadeIn(FadeTransition fadeIn) {
-		this.fadeIn = fadeIn;
-	}
-	
-	
 }

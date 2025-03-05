@@ -1,28 +1,22 @@
 package component;
 
-import javafx.beans.value.ChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import sound.BackgroundSongPlayer;
 
 public class VolumeSlider extends HBox {
 	private static Image mute, vol1, vol2, vol3;
-	private Slider slider;
 	private double lastValue;
+	private Slider slider;
 
 	public VolumeSlider(double iconSize) {
 		this(iconSize, false);
 	}
 
 	public VolumeSlider(double iconSize, boolean isOnMute) {
-		this(iconSize, isOnMute, null, null);
-	}
-
-	public VolumeSlider(double iconSize, boolean isOnMute, Runnable onMute, Runnable unMute) {
 		super();
 		setAlignment(Pos.CENTER);
 		setSpacing(8);
@@ -42,17 +36,7 @@ public class VolumeSlider extends HBox {
 				slider.setValue(0);
 			}
 		});
-		slider.valueProperty().addListener((_, oldValue, newValue) -> {
-			if (oldValue.doubleValue() == 0) {
-				if (unMute != null) {
-					unMute.run();
-				}
-			}
-			if (newValue.doubleValue() == 0) {
-				if (onMute != null) {
-					onMute.run();
-				}
-			}
+		slider.valueProperty().addListener((_, _, newValue) -> {
 			calcIcon(imageView, newValue.doubleValue());
 		});
 		calcIcon(imageView, slider.getValue());

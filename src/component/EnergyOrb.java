@@ -23,7 +23,6 @@ public class EnergyOrb extends StackPane implements ReRenderable {
 		if (image == null) {
 			image = new Image(ClassLoader.getSystemResource("component/energy.png").toString());
 		}
-
 		ImageView imageView = new ImageView(image);
 		imageView.setFitWidth(SIZE);
 		imageView.setFitHeight(SIZE);
