@@ -306,6 +306,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 			xp -= maxXp;
 			maxXp *= 1.2;
 			maxHp *= 1.15;
+			System.out.println("lv up");
 		}
 		hp = maxHp;
 		this.xp = xp < 0 ? 0 : xp;
