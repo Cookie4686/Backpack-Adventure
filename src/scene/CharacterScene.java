@@ -72,13 +72,13 @@ public class CharacterScene {
 		icon.setCycleCount(Timeline.INDEFINITE);		
 		
 		ImageView unknown1 = new ImageView(new Image(ClassLoader.getSystemResource("picture/unknown.png").toString()));
-		unknown1.setOnMouseClicked(_ -> SfxPlayer.play(Sfx.DENINE));
+		unknown1.setOnMouseClicked(_ -> SfxPlayer.play(Sfx.DENY));
 		unknown1.setCursor(Cursor.CROSSHAIR);
 		unknown1.setFitWidth(100);
 		unknown1.setFitHeight(100);
 		
 		ImageView unknown2 = new ImageView(new Image(ClassLoader.getSystemResource("picture/unknown.png").toString()));
-		unknown2.setOnMouseClicked(_ -> SfxPlayer.play(Sfx.DENINE));
+		unknown2.setOnMouseClicked(_ -> SfxPlayer.play(Sfx.DENY));
 		unknown2.setCursor(Cursor.CROSSHAIR);
 		unknown2.setFitWidth(100);
 		unknown2.setFitHeight(100);
