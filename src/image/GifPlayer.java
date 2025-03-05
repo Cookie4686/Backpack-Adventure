@@ -31,6 +31,28 @@ public class GifPlayer {
 		new Image(ClassLoader.getSystemResource("picture/knightIconFrame1.png").toString())
 	));
 	
+	private static ArrayList<Image> attackKnight = new ArrayList<Image>(Arrays.asList(
+		new Image(ClassLoader.getSystemResource("picture/player_Attack1.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Attack2.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Attack3.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Attack4.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Attack4.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Attack1.png").toString())
+	));
+	
+	private static ArrayList<Image> runKnight = new ArrayList<Image>(Arrays.asList(
+		new Image(ClassLoader.getSystemResource("picture/player_Run1.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Run2.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Run3.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Run4.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Run5.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Run6.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Run7.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Run8.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Run9.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/player_Run1.png").toString())
+	));
+	
 	private static ArrayList<Image> menuBackground = new ArrayList<Image>(Arrays.asList(
 		new Image(ClassLoader.getSystemResource("theme/menuBg1.png").toString()),
 		new Image(ClassLoader.getSystemResource("theme/menuBg2.png").toString()),
@@ -98,5 +120,13 @@ public class GifPlayer {
 
 	public static ArrayList<Image> getMenuBackground() {
 		return menuBackground;
+	}
+
+	public static ArrayList<Image> getAttackKnight() {
+		return attackKnight;
+	}
+
+	public static ArrayList<Image> getRunKnight() {
+		return runKnight;
 	}
 }

@@ -20,9 +20,10 @@ public class CharacterPopup extends VBox {
 	public CharacterPopup() {
 		super();
 		popup = new Popup("Character Select");
-		setAlignment(Pos.CENTER);
+		setAlignment(Pos.TOP_CENTER);
 		setSpacing(20);
 		getChildren().add(CharacterScene.use());
+
 		popup.setCenter(this);
 
 		GameButton journeyButton = new GameButton(159, 70, GameButtonType.JOURNEY_ON);

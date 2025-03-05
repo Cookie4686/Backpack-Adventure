@@ -2,12 +2,12 @@ package scene;
 
 import image.GifPlayer;
 import javafx.animation.Timeline;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -15,51 +15,74 @@ import sound.Sfx;
 import sound.SfxPlayer;
 
 public class CharacterScene {
-	private static ImageView preview;
 	
 	public static HBox use() {
 		HBox root = new HBox();
-		root.setSpacing(40);
-		root.setAlignment(Pos.CENTER_LEFT);
-		root.setPadding(new Insets(40));
+		root.setSpacing(20);
+		root.setAlignment(Pos.TOP_CENTER);
+		
+		
 		VBox characterList = new VBox();
-		characterList.setSpacing(40);
-		characterList.setAlignment(Pos.CENTER);
+		characterList.setSpacing(60);
+		characterList.setAlignment(Pos.BOTTOM_CENTER);
 		
 		VBox selectedCharacter = new VBox();
-		selectedCharacter.setAlignment(Pos.CENTER);
+		selectedCharacter.setSpacing(20);
+		selectedCharacter.setAlignment(Pos.TOP_LEFT);
 		
 		HBox mainCharacter = new HBox();
+		mainCharacter.setSpacing(20);
 		
 		VBox characterInfo = new VBox();
-		characterInfo.setPadding(new Insets(20));
-		characterInfo.setAlignment(Pos.TOP_LEFT);
+		characterInfo.setAlignment(Pos.CENTER_LEFT);
 		
-		HBox costumeList = new HBox();
-		costumeList.setSpacing(20);
-		costumeList.setAlignment(Pos.BOTTOM_CENTER);
+		StackPane animationList = new StackPane();
+		animationList.setAlignment(Pos.CENTER);
+		
+		HBox animation = new HBox();
+		animation.setAlignment(Pos.CENTER);
+		animation.setSpacing(100);
 		
 		//Adding to pane
-		preview = new ImageView();
-		preview.setPreserveRatio(true);
-		preview.setFitHeight(200);
-		Timeline idel = GifPlayer.createAnimation(preview, GifPlayer.getIdleKnight(), 0.1);
-		costumeList.getChildren().add(preview);
+		ImageView frame = new ImageView(new Image(ClassLoader.getSystemResource("picture/animationFrame.png").toString()));
+		frame.setFitHeight(260);
+		frame.setFitWidth(670);
+		
+		ImageView idelPreview = new ImageView();
+		idelPreview.setPreserveRatio(true);
+		idelPreview.setFitHeight(100);
+		Timeline idel = GifPlayer.createAnimation(idelPreview, GifPlayer.getIdleKnight(), 0.1);
 		idel.setCycleCount(Timeline.INDEFINITE);
 		idel.play();
 		
+		ImageView attackPreview = new ImageView();
+		attackPreview.setPreserveRatio(true);
+		attackPreview.setFitHeight(100);
+		Timeline attack = GifPlayer.createAnimation(attackPreview, GifPlayer.getAttackKnight(), 0.12);
+		attack.setCycleCount(Timeline.INDEFINITE);
+		attack.play();
+		
+		ImageView runPreview = new ImageView();
+		runPreview.setPreserveRatio(true);
+		runPreview.setFitHeight(100);
+		Timeline run = GifPlayer.createAnimation(runPreview, GifPlayer.getRunKnight(), 0.08);
+		run.setCycleCount(Timeline.INDEFINITE);
+		run.play();
+		
 		ImageView charactor = new ImageView(new Image(ClassLoader.getSystemResource("picture/knight.png").toString()));
-		charactor.setFitWidth(200);
-		charactor.setFitHeight(200);
+		charactor.setFitWidth(170);
+		charactor.setFitHeight(170);
 		
 		Text name = new Text("Knight");
 		name.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 60));
-		Text detail = new Text("A knight of unwavering honor, felt the weight \nof the world on his shoulders. His duty drove \nhim into the heart of the darkness.");
+		Text detail = new Text("A knight of unwavering honor, felt the weight of\nthe world on his shoulders. His duty drove him\ninto the heart of the darkness.");
 		detail.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 20));
 		
+		animation.getChildren().addAll(idelPreview, attackPreview, runPreview);
+		animationList.getChildren().addAll(frame,animation);
 		characterInfo.getChildren().addAll(name, detail);
 		mainCharacter.getChildren().addAll(charactor, characterInfo);
-		selectedCharacter.getChildren().addAll(mainCharacter, costumeList);
+		selectedCharacter.getChildren().addAll(mainCharacter, animationList);
 		
 		ImageView knightIcons = new ImageView();
 		knightIcons.setOnMouseClicked(_ -> SfxPlayer.play(Sfx.SELECT));

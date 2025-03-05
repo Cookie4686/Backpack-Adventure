@@ -21,6 +21,7 @@ public class Popup extends BorderPane {
 
 	public Popup(String title) {
 		super();
+		
 		StackPane.setAlignment(this, Pos.CENTER);
 		maxWidthProperty().bind(Main.root.widthProperty().multiply(0.7));
 		maxHeightProperty().bind(Main.root.heightProperty().multiply(0.8));
