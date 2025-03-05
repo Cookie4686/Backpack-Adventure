@@ -177,6 +177,11 @@ public class Player extends Being implements TurnActivable, ReStatable {
                 break;
             case "run":
             	runTimeline.play();
+            	if(GameLogic.getInstance().getCurrentFloor() == 0) {
+            		SfxPlayer.play(Sfx.GRASSRUN);
+            	} else {
+            		SfxPlayer.play(Sfx.STONERUN);
+            	}
             	break;
             case "die":
             	dieTimeline.play();

@@ -2,6 +2,7 @@ package game.util;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
@@ -27,6 +28,7 @@ class Resource {
 		Text text = effectIcon.getText();
 		text.setText(Integer.toString(amount));
 		text.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 20));
+		text.setFill(Color.WHITE);
 		effectIcon.getChildren().addAll(icon, text);
 		return effectIcon;
 	}
