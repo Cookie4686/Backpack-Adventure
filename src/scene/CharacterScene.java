@@ -1,6 +1,5 @@
 package scene;
 
-import entities.Player;
 import image.GifPlayer;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
