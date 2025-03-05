@@ -3,7 +3,10 @@ package game.map;
 import java.util.ArrayList;
 import java.util.Random;
 
+import game.Game;
+import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import logic.GameLogic;
 
 public class Map extends GridPane {
@@ -14,6 +17,9 @@ public class Map extends GridPane {
 
 	public Map(int width, int height) {
 		super();
+		StackPane.setAlignment(this, Pos.TOP_CENTER);
+		setAlignment(Pos.TOP_CENTER);
+		setPickOnBounds(false);
 		this.width = width;
 		this.height = height;
 		squares = new MapSquare[height][width];
@@ -26,6 +32,16 @@ public class Map extends GridPane {
 		}
 		// for setting marker
 		initialize();
+	}
+
+	public void show() {
+		if (!Game.getInstance().getChildren().contains(this)) {
+			Game.getInstance().getChildren().add(this);
+		}
+	}
+
+	public void hide() {
+		Game.getInstance().getChildren().remove(this);
 	}
 
 	public void initialize() {
@@ -109,7 +125,7 @@ public class Map extends GridPane {
 
 	public static Map getInstance() {
 		if (instance == null) {
-			instance = new Map(10, 10);
+			instance = new Map(15, 15);
 		}
 		return instance;
 	}
