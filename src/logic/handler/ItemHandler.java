@@ -11,6 +11,7 @@ import game.util.ItemRotation;
 import interfaces.Clickable;
 import interfaces.ReStatable;
 import interfaces.StatUpdatable;
+import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -28,6 +29,7 @@ public class ItemHandler {
 	public static void handleMousePress(MouseEvent event, Item item) {
 		currentItem = item;
 		if (!FightLogic.getInstance().isInFight()) {
+			currentItem.getImageView().setCursor(Cursor.CLOSED_HAND);
 			calcValues();
 			startX = event.getSceneX() - item.getTranslateX();
 			startY = event.getSceneY() - item.getTranslateY();
@@ -52,6 +54,7 @@ public class ItemHandler {
 
 	public static void handleMouseRelease() {
 		if (!FightLogic.getInstance().isInFight()) {
+			currentItem.getImageView().setCursor(Cursor.OPEN_HAND);
 			calcGrid();
 			placeItem();
 			currentItem = null;

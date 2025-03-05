@@ -8,7 +8,7 @@ import entities.EntityLoader;
 import entities.Player;
 import game.Game;
 import game.GameBottom;
-import game.GameTop;
+import game.backpack.Backpack;
 import game.item.Item;
 import game.itemGenerator.ItemRandomizer;
 import game.itemGenerator.ResourceLoader;
@@ -31,8 +31,7 @@ public class GameLogic {
 
 	public void initializeFight() {
 		FightLogic.getInstance().setInFight(true);
-		Game.getInstance().clearFloatingItem();
-		GameTop.getInstance().useBackpack();
+		Game.getInstance().initializeFight();
 
 		BackgroundSongPlayer.fight(currentFloor);
 
@@ -79,6 +78,7 @@ public class GameLogic {
 			}
 			Game.getInstance().addItemsToGame(items);
 			FightLogic.getInstance().setInFight(false);
+			Backpack.getInstance().render();
 		}
 	}
 

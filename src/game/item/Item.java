@@ -6,11 +6,13 @@ import game.backpack.Slot;
 import game.util.ItemRotation;
 import game.util.ItemTier;
 import javafx.animation.FadeTransition;
+import javafx.scene.Cursor;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import logic.FightLogic;
 import logic.handler.ItemHandler;
 
 public abstract class Item extends Pane {
@@ -64,6 +66,7 @@ public abstract class Item extends Pane {
 
 		this.setPickOnBounds(false);
 		imageView.setPickOnBounds(true);
+		imageView.setCursor(FightLogic.getInstance().isInFight() ? Cursor.HAND : Cursor.OPEN_HAND);
 		imageView.setOnMousePressed(event -> ItemHandler.handleMousePress(event, this));
 		imageView.setOnMouseDragged(event -> ItemHandler.handleMouseDrag(event));
 		imageView.setOnMouseReleased(_ -> ItemHandler.handleMouseRelease());
