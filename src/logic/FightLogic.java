@@ -8,6 +8,7 @@ import java.util.Random;
 import entities.Being;
 import entities.Entity;
 import entities.EntityLoader;
+import entities.EntitySpawner;
 import entities.Player;
 import game.GameBottom;
 import game.item.Item;
@@ -27,12 +28,14 @@ public class FightLogic {
 	private boolean isInFight, isPTurn;
 	private Entity target;
 	private ArrayList<Entity> entities,entitiesFromSummon;
+	private int totalXp;
 	
 	public FightLogic() {
 		this.isInFight = false;
 		this.isPTurn = true;
 		this.entities = new ArrayList<Entity>();
 		this.entitiesFromSummon = new ArrayList<Entity>();
+		totalXp = 0;
 	}
 
 	public void entitiesTurn() {
@@ -166,7 +169,10 @@ public class FightLogic {
 		case DODGE		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case VAMPIRIC	-> e.setHp(e.getHp() + (int) (Player.getInstance().takeDamage(ef.getAmount()) * 0.5));
 		case SUMMONER	-> {
-			entitiesFromSummon.add(EntityLoader.newEntity("frog"));
+			Entity newEntity = EntityLoader.newEntity(EntitySpawner.getNameFromTier(EntitySpawner.getTier()));
+			entitiesFromSummon.add(newEntity);
+			totalXp += newEntity.getXp();
+			
 		} // TODO: implement
 		case ANGER		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case HEAL		-> e.setHp(e.getHp() + ef.getAmount());
@@ -264,6 +270,14 @@ public class FightLogic {
 
 	public void setEntitiesFromSummon(ArrayList<Entity> entitiesFromSummon) {
 		this.entitiesFromSummon = entitiesFromSummon;
+	}
+
+	public int getTotalXp() {
+		return totalXp;
+	}
+
+	public void setTotalXp(int totalXp) {
+		this.totalXp = totalXp;
 	}
 	
 	

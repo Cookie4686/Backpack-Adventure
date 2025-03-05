@@ -13,15 +13,12 @@ public class EntitySpawner {
 		e = new ArrayList<String>(Arrays.asList(
 				"werewolf",
 				"ghost",
-				"bird",
-				"crow",
-				"snake"
+				"bird"
 		));
 		d = new ArrayList<String>(Arrays.asList(
 				"flyingAlien",
 				"walkingAlien",
 				"frog",
-				"meerman",
 				"bunny"
 		));
 		c = new ArrayList<String>(Arrays.asList(
@@ -45,7 +42,7 @@ public class EntitySpawner {
 				"fireDragon"
 		));
 	}
-	private static MobTier getTier() {
+	public static MobTier getTier() {
 		//TODO: Connect luck and floor system
 		int luckNumber = new Random().nextInt(100) + 1 + GameLogic.getInstance().getCurrentFloor() * 90;
 		
@@ -57,7 +54,7 @@ public class EntitySpawner {
 		return MobTier.S;
 	}
 	
-	private static String getNameFromTier(MobTier mobTier) {
+	public static String getNameFromTier(MobTier mobTier) {
 		switch (mobTier) {
 		case E:
 			return e.get(new Random().nextInt(e.size()));
