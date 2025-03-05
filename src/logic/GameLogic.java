@@ -14,6 +14,7 @@ import game.itemGenerator.ItemRandomizer;
 import game.itemGenerator.ResourceLoader;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
+import scene.MenuScene;
 import sound.BackgroundSongPlayer;
 import sound.Sfx;
 import sound.SfxPlayer;
@@ -55,6 +56,7 @@ public class GameLogic {
 	}
 
 	public void gameOver() {
+		MenuScene.setGameRunning(false);
 		if (FightLogic.getInstance().isInFight()) {
 			BackgroundSongPlayer.stop();
 			SfxPlayer.play(Sfx.GAMEOVER);

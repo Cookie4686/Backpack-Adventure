@@ -29,8 +29,7 @@ public class CharacterPopup extends VBox {
 
 		GameButton journeyButton = new GameButton(159, 70, GameButtonType.JOURNEY_ON);
 		journeyButton.setOnMouseClicked(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) {				
-				MenuScene.setGameRunning(true);
+			if(event.getButton() == MouseButton.PRIMARY) {
 				MenuScene.setInMenuScene(false);
 				SfxPlayer.play(Sfx.GAMESTART);
 				Fader.fadeOutAndIn();

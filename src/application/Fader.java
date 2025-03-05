@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import scene.MenuScene;
 
 public class Fader {
 	private static Rectangle blackScreen, blackout;
@@ -79,7 +80,7 @@ public class Fader {
 				System.out.println("Blackout moved to back!");
 			}));
 			fadeOut.play();
-			Player.getInstance().moveLeftAndBack();
+			if (!MenuScene.isGameRunning()) Player.getInstance().moveLeftAndBack();
 		});
 	}
 

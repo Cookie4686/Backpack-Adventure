@@ -1,9 +1,11 @@
 package scene;
 
+import application.Fader;
 import application.Main;
 import component.GameButton;
 import component.GameButtonType;
 import image.GifPlayer;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -12,6 +14,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import scene.popup.CharacterPopup;
 import scene.popup.SettingPopup;
 import sound.BackgroundSongPlayer;
@@ -38,9 +41,15 @@ public class MenuScene {
 
 		GameButton continueButton = new GameButton(170, 70, GameButtonType.CONTINUE);
 		continueButton.setOnMouseClicked(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) {				
-				SfxPlayer.play(Sfx.SELECT);
-//			TODO: go to last game
+			if(event.getButton() == MouseButton.PRIMARY) {
+				MenuScene.setInMenuScene(false);
+				SfxPlayer.play(Sfx.GAMESTART);
+				Fader.fadeOutAndIn();
+				PauseTransition pause = new PauseTransition(Duration.seconds(1));
+				pause.setOnFinished(_ -> {
+					GameScene.use();
+				});
+				pause.play();
 			}
 		});
 		GameButton newButton = new GameButton(170, 70, GameButtonType.NEW_GAME);
