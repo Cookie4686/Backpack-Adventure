@@ -53,7 +53,7 @@ public abstract class Item extends Pane {
 	}
 
 	public void initialize(Image image) {
-		moveTimeline = new Timeline();
+		
 		backToOriginTimeline = new Timeline();
 		this.setOpacity(0.0);
 		fadeIn = new FadeTransition(Duration.seconds(0.5), this);
@@ -161,7 +161,8 @@ public abstract class Item extends Pane {
 	}
 	
 	public void moveUpAndDown() {
-        currentTranslateY = imageView.getTranslateY();
+		moveTimeline = new Timeline();
+        if(currentTranslateY == 0) currentTranslateY = imageView.getTranslateY();
         double moveDistance = 10;
         double targetY = currentTranslateY + moveDistance;
         Random rand = new Random();
