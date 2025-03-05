@@ -3,7 +3,6 @@ package game.map;
 import java.util.ArrayList;
 import java.util.Random;
 
-import game.Game;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import logic.GameLogic;
@@ -30,16 +29,6 @@ public class Map extends GridPane {
 		}
 		// for setting marker
 		initialize();
-	}
-
-	public void show() {
-		if (!Game.getInstance().getChildren().contains(this)) {
-			Game.getInstance().getChildren().add(this);
-		}
-	}
-
-	public void hide() {
-		Game.getInstance().getChildren().remove(this);
 	}
 
 	public void initialize() {

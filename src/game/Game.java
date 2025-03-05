@@ -8,6 +8,7 @@ import game.backpack.Slot;
 import game.item.Item;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -48,7 +49,7 @@ public class Game extends StackPane {
 	public void addItemsToGame(Item... items) {
 		Platform.runLater(() -> {
 			getChildren().addAll(items);
-			for(Item item : items) {
+			for (Item item : items) {
 				item.getFadeIn().play();
 			}
 		});
@@ -77,12 +78,17 @@ public class Game extends StackPane {
 		}
 	}
 
-	public void clearFloatingItem() {
+	public void initializeFight() {
+		GameTop.getInstance().useBackpack();
 		Iterator<Node> iterator = getChildren().iterator();
 		while (iterator.hasNext()) {
 			Node node = iterator.next();
-			if (node instanceof Item && !GameLogic.getInstance().getInventory().contains((Item) node)) {
-				iterator.remove();
+			if (node instanceof Item) {
+				if (GameLogic.getInstance().getInventory().contains((Item) node)) {
+					((Item) node).getImageView().setCursor(Cursor.HAND);
+				} else {
+					iterator.remove();
+				}
 			}
 		}
 	}

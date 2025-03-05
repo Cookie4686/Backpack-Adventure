@@ -1,11 +1,15 @@
 package game;
 
+import java.util.Iterator;
+
 import game.backpack.Backpack;
+import game.dialog.GameDialog;
 import game.item.Item;
 import game.map.Map;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.Node;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -42,7 +46,15 @@ public class GameTop extends HBox {
 
 	public void useBackpack() {
 		isBackpack = true;
-		Map.getInstance().hide();
+		
+		Iterator<Node> iterator = Game.getInstance().getChildren().iterator();
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+			if (node instanceof GameDialog) {
+				iterator.remove();
+			}
+		}
+		
 		for (Item item : Game.getInstance().getItemsInGame()) {
 			item.setVisible(true);
 		}
@@ -59,7 +71,6 @@ public class GameTop extends HBox {
 		if (!Game.getInstance().getChildren().contains(map)) {
 			Game.getInstance().getChildren().add(map);
 		}
-//		Map.getInstance().show();
 	}
 
 	public boolean isBackpack() {
