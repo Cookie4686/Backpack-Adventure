@@ -28,6 +28,8 @@ public class ItemHandler {
 	public static void handleMousePress(MouseEvent event, Item item) {
 		currentItem = item;
 		if (!FightLogic.getInstance().isInFight()) {
+			currentItem.getMoveTimeline().stop();
+			currentItem.moveBack();
 			calcValues();
 			startX = event.getSceneX() - item.getTranslateX();
 			startY = event.getSceneY() - item.getTranslateY();

@@ -286,7 +286,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	
 	@Override
 	public void reStatBeforeUpdate() {
-		//this.maxHp = 100;
+		this.maxHp = 100;
 		this.maxEnergy = 100;
 		this.maxMana = 0;
 		this.coins = 0;

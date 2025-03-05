@@ -91,6 +91,8 @@ public class Backpack extends VBox implements ReRenderable {
 					}
 				}
 			}
+		} else {
+			item.moveUpAndDown();
 		}
 		render();
 		return isPlaceable;

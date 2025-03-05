@@ -1,11 +1,16 @@
 package game.item;
 
+import java.util.Random;
+
 import game.Game;
 import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.util.ItemRotation;
 import game.util.ItemTier;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,6 +27,9 @@ public abstract class Item extends Pane {
 	// used for dragging, rotating
 	private double diffX, diffY;
 	private ImageView imageView;
+	private Timeline moveTimeline;
+	private Timeline backToOriginTimeline;
+	private double currentTranslateY;
 
 	public Item(String name, String detail, int height, ItemTier tier) {
 		super();
@@ -44,6 +52,8 @@ public abstract class Item extends Pane {
 	}
 
 	public void initialize(Image image) {
+		moveTimeline = new Timeline();
+		backToOriginTimeline = new Timeline();
 		this.setOpacity(0.0);
 		fadeIn = new FadeTransition(Duration.seconds(0.5), this);
 		fadeIn.setFromValue(0.0);
@@ -149,4 +159,49 @@ public abstract class Item extends Pane {
 	public void setFadeIn(FadeTransition fadeIn) {
 		this.fadeIn = fadeIn;
 	}
+	
+	public void moveUpAndDown() {
+        currentTranslateY = imageView.getTranslateY();
+        double moveDistance = 10;
+        double targetY = currentTranslateY + moveDistance;
+        Random rand = new Random();
+        int dUb = 1500;
+        int dLb = 1000;
+		int duration = rand.nextInt((dUb - dLb) + 1) + dLb;
+        moveTimeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateYProperty(), currentTranslateY)),
+                new KeyFrame(Duration.millis(duration), new KeyValue(imageView.translateYProperty(), currentTranslateY + moveDistance)),
+                new KeyFrame(Duration.millis(duration * 2), new KeyValue(imageView.translateYProperty(), currentTranslateY)) 
+        );
+        moveTimeline.setCycleCount(Timeline.INDEFINITE);
+        moveTimeline.play();
+    }
+	
+	public void moveBack() {
+		double currentTranslateY = imageView.getTranslateY();
+		backToOriginTimeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateYProperty(), currentTranslateY)),
+                new KeyFrame(Duration.millis(200), new KeyValue(imageView.translateYProperty(), this.currentTranslateY))
+        );
+        backToOriginTimeline.setCycleCount(1);
+        backToOriginTimeline.play();
+	}
+	
+	public Timeline getMoveTimeline() {
+		return moveTimeline;
+	}
+
+	public void setMoveTimeline(Timeline moveTimeline) {
+		this.moveTimeline = moveTimeline;
+	}
+
+	public double getCurrentTranslateY() {
+		return currentTranslateY;
+	}
+
+	public void setCurrentTranslateY(double currentTranslateY) {
+		this.currentTranslateY = currentTranslateY;
+	}
+	
+	
 }
