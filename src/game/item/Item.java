@@ -22,6 +22,7 @@ public abstract class Item extends Pane {
 	// used for dragging, rotating
 	private double diffX, diffY;
 	private ImageView imageView;
+	private Tooltip tooltip;
 
 	public Item(String name, String detail, int height, ItemTier tier) {
 		super();
@@ -69,14 +70,13 @@ public abstract class Item extends Pane {
 		imageView.setOnMouseReleased(_ -> ItemHandler.handleMouseRelease());
 		getChildren().setAll(imageView);
 
-		updateTooltip();
+		tooltip = new Tooltip(toString());
+		tooltip.setShowDelay(Duration.millis(200));
+		Tooltip.install(imageView, tooltip);
 	}
 
 	public void updateTooltip() {
-		Tooltip tooltip = new Tooltip(toString());
-		tooltip.setShowDelay(Duration.millis(200));
-		// TODO: highlight related items on toolTip shown
-		Tooltip.install(imageView, tooltip);
+		tooltip.setText(toString());
 	}
 
 	public void delete() {
@@ -144,9 +144,5 @@ public abstract class Item extends Pane {
 
 	public FadeTransition getFadeIn() {
 		return fadeIn;
-	}
-
-	public void setFadeIn(FadeTransition fadeIn) {
-		this.fadeIn = fadeIn;
 	}
 }

@@ -30,17 +30,19 @@ public class MapSquare extends Pane {
 	}
 
 	public void render(boolean top, boolean right, boolean bottom, boolean left) {
-		if (marker != null && marker != MapMarker.PATH) {
-			ImageView imageView = new ImageView(MarkerLoader.getImage(marker));
-			imageView.setFitWidth(SIZE);
-			imageView.setFitHeight(SIZE);
-			imageView.setOnMouseClicked(_ -> MapHandler.handleMouseClicked(this));
-			getChildren().setAll(imageView);
+		if (marker != null) {
+			if (marker != MapMarker.PATH) {
+				ImageView imageView = new ImageView(MarkerLoader.getImage(marker));
+				imageView.setFitWidth(SIZE);
+				imageView.setFitHeight(SIZE);
+				imageView.setOnMouseClicked(_ -> MapHandler.handleMouseClicked(this));
+				getChildren().setAll(imageView);
+			}
+			setBackground(new Background(new BackgroundFill(Color.BEIGE, CornerRadii.EMPTY, Insets.EMPTY)));
+			BorderStroke borderStroke = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
+					new BorderWidths(top ? 0 : 1, right ? 0 : 1, bottom ? 0 : 1, left ? 0 : 1));
+			setBorder(new Border(borderStroke));
 		}
-		BorderStroke borderStroke = new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
-				new BorderWidths(top ? 0 : 1, right ? 0 : 1, bottom ? 0 : 1, left ? 0 : 1));
-		setBorder(new Border(borderStroke));
-		setBackground(new Background(new BackgroundFill(Color.BEIGE, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
 
 	public MapMarker getMarker() {

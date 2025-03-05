@@ -8,7 +8,6 @@ import game.GameBottom;
 import game.util.Effect;
 import game.util.EffectIcon;
 import game.util.EffectType;
-import game.util.IconLoader;
 import game.util.MobTier;
 import interfaces.TurnActivable;
 import javafx.animation.KeyFrame;
@@ -32,8 +31,8 @@ public class Entity extends Being implements TurnActivable {
 	protected MobTier dangerLV;
 	protected Effect nextTurn;
 
-    private EffectIcon nextTurnMove;
-    
+	private EffectIcon nextTurnMove;
+
 	protected ArrayList<Effect> allAttributes;
 	private double desiredX, originalX;
 	private boolean isMoving = false;
@@ -60,8 +59,9 @@ public class Entity extends Being implements TurnActivable {
 		imageView.setPickOnBounds(true);
 		imageView.setOnMousePressed(_ -> EntityHandler.handleMouseClicked(this));
 		hpBar = new HpBar(this);
-		//nextTurnMove = new EffectIcon(null);
-		if(nextTurnMove == null) nextTurnMove = new EffectIcon(null);
+		// nextTurnMove = new EffectIcon(null);
+		if (nextTurnMove == null)
+			nextTurnMove = new EffectIcon(null);
 		getChildren().setAll(nextTurnMove, hpBar, imageView);
 		render();
 	}
@@ -240,19 +240,19 @@ public class Entity extends Being implements TurnActivable {
 	}
 
 	public void moveLeftAndBack() {
-        double currentTranslateX = imageView.getTranslateX();
-        Timeline moveTimeline = new Timeline();
-        double moveDistance = -20;
-        double targetX = currentTranslateX + moveDistance;
-        
-        moveTimeline.getKeyFrames().addAll(
-                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX)),
-                new KeyFrame(Duration.millis(100), new KeyValue(imageView.translateXProperty(), currentTranslateX + moveDistance)),
-                new KeyFrame(Duration.millis(200), new KeyValue(imageView.translateXProperty(), currentTranslateX)) 
-        );
-        moveTimeline.setCycleCount(1);
-        moveTimeline.play();
-    }
+		double currentTranslateX = imageView.getTranslateX();
+		Timeline moveTimeline = new Timeline();
+		double moveDistance = -20;
+		double targetX = currentTranslateX + moveDistance;
+
+		moveTimeline.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX)),
+				new KeyFrame(Duration.millis(100),
+						new KeyValue(imageView.translateXProperty(), currentTranslateX + moveDistance)),
+				new KeyFrame(Duration.millis(200), new KeyValue(imageView.translateXProperty(), currentTranslateX)));
+		moveTimeline.setCycleCount(1);
+		moveTimeline.play();
+	}
 
 	public EffectIcon getNextTurnMove() {
 		return nextTurnMove;
@@ -261,5 +261,4 @@ public class Entity extends Being implements TurnActivable {
 	public void setNextTurnMove(EffectIcon nextTurnMove) {
 		this.nextTurnMove = nextTurnMove;
 	}
-
 }

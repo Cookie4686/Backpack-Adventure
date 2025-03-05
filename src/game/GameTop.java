@@ -27,10 +27,10 @@ public class GameTop extends HBox {
 
 	public void useBackpack() {
 		isBackpack = true;
+		Map.getInstance().hide();
 		for (Item item : Game.getInstance().getItemsInGame()) {
 			item.setVisible(true);
 		}
-		getChildren().setAll(Backpack.getInstance());
 	}
 
 	public void useMap() {
@@ -38,7 +38,7 @@ public class GameTop extends HBox {
 		for (Item item : Game.getInstance().getItemsInGame()) {
 			item.setVisible(false);
 		}
-		getChildren().setAll(Map.getInstance());
+		Map.getInstance().show();
 	}
 
 	public boolean isBackpack() {

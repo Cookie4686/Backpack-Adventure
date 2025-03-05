@@ -1,32 +1,27 @@
 package game.item.weapon;
 
-import entities.Player;
 import entities.Entity;
-import game.item.Item;
+import entities.Player;
+import game.item.ItemWithCost;
 import game.util.ItemTier;
-import interfaces.Clickable;
 import interfaces.ReStatable;
 import logic.FightLogic;
 import logic.GameLogic;
 import sound.Sfx;
 import sound.SfxPlayer;
 
-public class Weapon extends Item implements Clickable, ReStatable {
+public class Weapon extends ItemWithCost implements ReStatable {
 	final private int initDamage;
-	private int damage, costActivate;
+	private int damage;
 
 	public Weapon(String name, String detail, int initDamage, int costActivate, int width, ItemTier tier) {
-		super(name, detail, width, tier);
-		this.initDamage = initDamage;
-		setDamage(initDamage);
-		setCostActivate(costActivate);
+		super(name, detail, costActivate, width, tier);
+		setDamage(this.initDamage = initDamage);
 	}
 
 	public Weapon(String name, String detail, int initDamage, int costActivate, int width, int height, ItemTier tier) {
-		super(name, detail, width, height, tier);
-		this.initDamage = initDamage;
-		setDamage(initDamage);
-		setCostActivate(costActivate);
+		super(name, detail, costActivate, width, height, tier);
+		setDamage(this.initDamage = initDamage);
 	}
 
 	@Override
@@ -35,29 +30,33 @@ public class Weapon extends Item implements Clickable, ReStatable {
 	}
 
 	@Override
-	public boolean isEnoughEnergy() {
-		if (Player.getInstance().getEnergy() < costActivate)
-			return false;
-		return true;
+	public void activatePerClick() {
+		if (isEnoughEnergy()) {
+			activateItem();
+		} else {
+			System.out.println("Not enough " + (this instanceof ManaWeapon ? "mana" : "energy"));
+			SfxPlayer.play(Sfx.DENY);
+		}
 	}
 
 	@Override
-	public void activatePerClick() {
-		if (!isEnoughEnergy()) {
-			System.out.println("Not enough energy");
-			SfxPlayer.play(Sfx.DENINE);
-			return;
-		}
-		System.out.println("Use "+getName());
-
+	public void activateItem() {
+		System.out.println("Use " + getName());
 		Player.getInstance().attack();
-		SfxPlayer.play(Sfx.SWORD);
+		SfxPlayer.play(this instanceof ManaWeapon ? Sfx.MAGIC : Sfx.SWORD);
+
 		// decrease player energy by costActivate
-		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
+		if (this instanceof ManaWeapon) {
+			Player.getInstance().setMana(Player.getInstance().getMana() - getCostActivate());
+		} else {
+			Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
+		}
+
 		FightLogic.doDamage(damage, Player.getInstance(), FightLogic.getInstance().getTarget());
-		
+
 		for (Entity e : FightLogic.getInstance().getEntities()) {
-			if(e.getHp() > 0) return;
+			if (e.getHp() > 0)
+				return;
 		}
 		GameLogic.getInstance().endFight();
 	}
@@ -80,10 +79,6 @@ public class Weapon extends Item implements Clickable, ReStatable {
 	}
 
 	// Getter & Setter
-	public void addDamage(int damage) {
-		setDamage(getDamage() + damage);
-	}
-
 	public int getInitDamage() {
 		return initDamage;
 	}
@@ -96,11 +91,7 @@ public class Weapon extends Item implements Clickable, ReStatable {
 		this.damage = damage < 0 ? 0 : damage;
 	}
 
-	public int getCostActivate() {
-		return costActivate;
-	}
-
-	public void setCostActivate(int costActivate) {
-		this.costActivate = costActivate < 0 ? 0 : costActivate;
+	public void addDamage(int damage) {
+		setDamage(getDamage() + damage);
 	}
 }

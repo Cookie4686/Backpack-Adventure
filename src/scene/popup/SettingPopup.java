@@ -4,13 +4,13 @@ import application.Main;
 import component.GameButton;
 import component.GameButtonType;
 import component.VolumeSlider;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import scene.MenuScene;
-import sound.BackgroundSongPlayer;
 import sound.Sfx;
 import sound.SfxPlayer;
 
@@ -38,10 +38,10 @@ public class SettingPopup extends GridPane {
 		});
 		add(createText("Music Volume"), 0, 0);
 		add(createText("SFX Volume"), 0, 1);
-		add(musicSlider = new VolumeSlider(24, false, () -> BackgroundSongPlayer.pause(),
-				() -> BackgroundSongPlayer.play()), 1, 0);
+		add(musicSlider = new VolumeSlider(24), 1, 0);
 		add(sfxSlider = new VolumeSlider(24), 1, 1);
-		add(menuButton, 1, 3);
+		add(menuButton, 0, 2, 2, 1);
+		setHalignment(menuButton, HPos.CENTER);
 		popup.setCenter(this);
 
 		GameButton closeButton = new GameButton(159, 70, GameButtonType.CLOSE);

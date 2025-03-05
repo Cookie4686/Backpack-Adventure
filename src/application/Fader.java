@@ -64,13 +64,12 @@ public class Fader {
 			fadeIn.setFromValue(1.0);
 			fadeIn.setToValue(0.0);
 
-			fadeOut.setOnFinished(event -> {
+			fadeOut.setOnFinished(_ -> {
 				PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
-				pause.setOnFinished(e -> {
+				pause.setOnFinished(_ -> {
 					root.getChildren().remove(blackout);
 					root.getChildren().add(blackout);
 					blackout.toFront();
-
 					fadeIn.play();
 				});
 				pause.play();

@@ -18,8 +18,8 @@ import sound.Sfx;
 import sound.SfxPlayer;
 
 public class MenuScene {
-	private static boolean isGameRunning;
-	private static boolean isInMenuScene;
+	private static boolean isGameRunning = false;
+	private static boolean isInMenuScene = false;
 
 	public static void use() {
 		BackgroundSongPlayer.menu();
@@ -29,19 +29,17 @@ public class MenuScene {
 		root.setSpacing(40);
 		root.setAlignment(Pos.CENTER);
 
-		VBox actionBox = new VBox();
-		actionBox.setSpacing(20);
-		actionBox.setAlignment(Pos.CENTER);
-
 		Text titleText = new Text("Cool Game");
 		titleText.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 64));
+		VBox buttonBox = new VBox();
+		buttonBox.setSpacing(20);
+		buttonBox.setAlignment(Pos.CENTER);
 
 		GameButton continueButton = new GameButton(170, 70, GameButtonType.CONTINUE);
 		continueButton.setOnMouseClicked(_ -> {
 			SfxPlayer.play(Sfx.SELECT);
 //			TODO: go to last game
 		});
-
 		GameButton newButton = new GameButton(170, 70, GameButtonType.NEW_GAME);
 		newButton.setOnMouseClicked(_ -> {
 			SfxPlayer.play(Sfx.SELECT);
@@ -59,6 +57,13 @@ public class MenuScene {
 			Platform.exit();
 		});
 		
+		if (isGameRunning) {
+			buttonBox.getChildren().add(continueButton);
+		}
+		buttonBox.getChildren().addAll(newButton, settingButton, exitButton);
+
+		root.getChildren().addAll(titleText, buttonBox);
+
 		ImageView menuBackground = new ImageView();
 		menuBackground.setPreserveRatio(true);
 		menuBackground.setFitWidth(1280);
@@ -66,11 +71,6 @@ public class MenuScene {
 		menuTimeline.setCycleCount(Timeline.INDEFINITE);
 		menuTimeline.play();
 
-		if (isGameRunning)
-			actionBox.getChildren().add(continueButton);
-		actionBox.getChildren().addAll(newButton, settingButton, exitButton);
-
-		root.getChildren().addAll(titleText, actionBox);
 		Main.root.getChildren().addAll(menuBackground, root);
 	}
 
