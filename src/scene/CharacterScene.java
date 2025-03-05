@@ -9,6 +9,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import sound.Sfx;
@@ -75,7 +76,9 @@ public class CharacterScene {
 		
 		Text name = new Text("Knight");
 		name.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 60));
+		name.setFill(Color.WHITE);
 		Text detail = new Text("A knight of unwavering honor, felt the weight of\nthe world on his shoulders. His duty drove him\ninto the heart of the darkness.");
+		detail.setFill(Color.WHITE);
 		detail.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 20));
 		
 		animation.getChildren().addAll(idelPreview, attackPreview, runPreview);

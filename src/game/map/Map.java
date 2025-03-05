@@ -6,7 +6,6 @@ import java.util.Random;
 import game.Game;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import logic.GameLogic;
 
 public class Map extends GridPane {
@@ -17,8 +16,7 @@ public class Map extends GridPane {
 
 	public Map(int width, int height) {
 		super();
-		StackPane.setAlignment(this, Pos.TOP_CENTER);
-		setAlignment(Pos.TOP_CENTER);
+		setAlignment(Pos.CENTER);
 		setPickOnBounds(false);
 		this.width = width;
 		this.height = height;
@@ -46,35 +44,66 @@ public class Map extends GridPane {
 
 	public void initialize() {
 		placeRandomMarker(MapMarker.PLAYER);
-		while (marks.size() < 10 + GameLogic.getInstance().getCurrentFloor()) { // create 3 monster diffrence pos
+		while (marks.size() < 2 + GameLogic.getInstance().getCurrentFloor()) { // create 1 monster diffrence pos
 			placeRandomMarker(MapMarker.MONSTER);
 		}
-		while (marks.size() < 11 + GameLogic.getInstance().getCurrentFloor()) { // create 1 door diffrence pos
-			placeRandomMarker(MapMarker.DOOR);
+		buildPath(marks.get(0), marks.get(1));
+		while (marks.size() < 5 + GameLogic.getInstance().getCurrentFloor()) { // create 3 monster diffrence pos
+			if (placeRandomMarker(MapMarker.MONSTER)) findRoute();
 		}
-		findRoute();
+		while (marks.size() < 6 + GameLogic.getInstance().getCurrentFloor()) { // create 1 door diffrence pos
+			if (placeRandomMarker(MapMarker.DOOR)) findRoute();
+		}
+		while (marks.size() < 7 + GameLogic.getInstance().getCurrentFloor()) { // create 1 door diffrence pos
+			if (placeRandomMarker(MapMarker.DOCTOR)) findRoute();
+		}
 		render();
 	}
 
-	private void placeRandomMarker(MapMarker marker) {
+	private boolean placeRandomMarker(MapMarker marker) {
 		int x = random(width), y = random(height);
 		if (squares[x][y].getMarker() == null) {
 			squares[x][y].setMarker(marker);
 			marks.add(new MarkPosition(x, y));
+			return true;
 		}
+		
+		return false;
 	}
 
 	private void findRoute() {
 		// add each node route to node at the index infront randomly.
-		buildPath(marks.get(0), marks.get(1));
-		for (int i = 2; i < marks.size(); i++) {
-			int r = random(i - 1) + 1;
-			buildPath(marks.get(i), marks.get(r));
-		}
+		int r = random(2) + 2;
+		buildPath(marks.getLast(), marks.get(marks.size()-r));
+	}
+	
+	private boolean findAdjacent(MarkPosition prev, MarkPosition pos) {
+		int x = pos.getX(), y = pos.getY();
+		
+		if (x+1<width)
+			if (squares[x+1][y].getMarker() != null)
+				if (!(x+1==prev.getX() && y==prev.getY())) return true;
+		if (x-1>=0)
+			if (squares[x-1][y].getMarker() != null )
+				if (!(x-1==prev.getX() && y==prev.getY())) return true;
+		if (y+1<height)
+			if (squares[x][y+1].getMarker() != null)
+				if (!(x==prev.getX() && y+1==prev.getY())) return true;
+		if (y-1>=0)
+			if (squares[x][y-1].getMarker() != null)
+				if (!(x==prev.getX() && y-1==prev.getY())) return true;
+		
+		return false;
 	}
 
 	private void buildPath(MarkPosition start, MarkPosition end) {
+		MarkPosition prev = new MarkPosition(start.getX(), start.getY());
+		
 		while (start.getX() != end.getX() || start.getY() != end.getY()) {
+			if (findAdjacent(prev, start)) break;
+			prev.setX(start.getX());
+			prev.setY(start.getY());
+			
 			if (start.getX() == end.getX()) {
 				start.setY(start.getY() + (start.getY() < end.getY() ? 1 : -1));
 			} else if (start.getY() == end.getY()) {
