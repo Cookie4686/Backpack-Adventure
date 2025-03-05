@@ -51,6 +51,7 @@ public class Game extends StackPane {
 			getChildren().addAll(items);
 			for (Item item : items) {
 				item.getFadeIn().play();
+				item.moveUpAndDown();
 			}
 		});
 		final int row = 2, itemPerRow = items.length / row, spacingX = 8, spacingY = 4;

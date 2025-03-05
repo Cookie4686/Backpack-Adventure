@@ -32,7 +32,7 @@ public class GameScene {
 			items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
 		}
 		items[6]= ResourceLoader.newItem("Mana Stone I");
-		items[7]= ResourceLoader.newItem("Staff of Flame");
+		items[7]= ResourceLoader.newItem("Well Made Shield");
 		items[8]= ResourceLoader.newItem("Excalibur");
 		Game.getInstance().addItemsToGame(items);
         Fader.getBlackout().toFront();

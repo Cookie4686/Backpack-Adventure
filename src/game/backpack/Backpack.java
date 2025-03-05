@@ -16,6 +16,8 @@ import logic.FightLogic;
 import logic.GameLogic;
 import logic.handler.ButtonHandler;
 import logic.handler.ItemHandler;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class Backpack extends VBox implements ReRenderable {
 	private static Backpack instance;
@@ -78,6 +80,7 @@ public class Backpack extends VBox implements ReRenderable {
 		removeItem(item);
 		boolean isPlaceable = isPlaceable(gridX, gridY, item);
 		if (isPlaceable) {
+			SfxPlayer.play(Sfx.INSIDEOFBACKPACK);
 			GameLogic.getInstance().getInventory().add(item);
 			if (item.isDiagonal()) {
 				boolean isLeft = item.getRotation() == ItemRotation.DIAGONAL_LEFT;
@@ -91,6 +94,9 @@ public class Backpack extends VBox implements ReRenderable {
 					}
 				}
 			}
+		} else {
+			SfxPlayer.play(Sfx.OUTSIDEOFBACKPACK);
+			item.moveUpAndDown();
 		}
 		render();
 		return isPlaceable;

@@ -177,6 +177,11 @@ public class Player extends Being implements TurnActivable, ReStatable {
                 break;
             case "run":
             	runTimeline.play();
+            	if(GameLogic.getInstance().getCurrentFloor() == 0) {
+            		SfxPlayer.play(Sfx.GRASSRUN);
+            	} else {
+            		SfxPlayer.play(Sfx.STONERUN);
+            	}
             	break;
             case "die":
             	dieTimeline.play();
@@ -286,7 +291,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	
 	@Override
 	public void reStatBeforeUpdate() {
-		//this.maxHp = 100;
+		this.maxHp = 100;
 		this.maxEnergy = 100;
 		this.maxMana = 0;
 		this.coins = 0;
@@ -301,6 +306,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 			xp -= maxXp;
 			maxXp *= 1.2;
 			maxHp *= 1.15;
+			System.out.println("lv up");
 		}
 		hp = maxHp;
 		this.xp = xp < 0 ? 0 : xp;

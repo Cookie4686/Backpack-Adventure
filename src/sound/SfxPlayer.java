@@ -30,6 +30,11 @@ public class SfxPlayer {
 		sfxMap.put(Sfx.GAMESTART, new Resource("gamestart.mp3"));
 		sfxMap.put(Sfx.SELECT, new Resource("select.mp3"));
 		sfxMap.put(Sfx.CLICK, new Resource("click.mp3"));
+		sfxMap.put(Sfx.STONERUN, new Resource("stonerun.mp3"));
+		sfxMap.put(Sfx.GRASSRUN, new Resource("grassrun.mp3"));
+		sfxMap.put(Sfx.DRAG, new Resource("drag.mp3"));
+		sfxMap.put(Sfx.OUTSIDEOFBACKPACK, new Resource("outsideofbackpack.mp3"));
+		sfxMap.put(Sfx.INSIDEOFBACKPACK, new Resource("insideofbackpack.mp3"));
 	}
 
 	public static void play(Sfx sfx) {
@@ -52,8 +57,8 @@ public class SfxPlayer {
 		case SHIELD -> play(Sfx.SHIELD);
 		case THORN -> play(Sfx.THORN);
 		case VAMPIRIC -> play(Sfx.VAMPIRIC);
-//		case STUNNED -> play(Sfx.FIRE);
-//		case SUMMONER -> play(Sfx.FIRE);
+		case STUNNED -> play(Sfx.FIRE);
+		case SUMMONER -> play(Sfx.FIRE);
 		default			-> {}
 		}
 	}

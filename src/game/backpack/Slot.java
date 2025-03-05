@@ -3,6 +3,7 @@ package game.backpack;
 import game.item.Item;
 import interfaces.ReRenderable;
 import javafx.geometry.Insets;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -21,7 +22,10 @@ public class Slot extends Pane implements ReRenderable {
 		setMaxSize(SIZE, SIZE);
 		isUnlocked = false;
 		item = null;
-		setOnMouseClicked(_ -> ButtonHandler.handleSlotOnClicked(this));
+		
+		setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) ButtonHandler.handleSlotOnClicked(this);
+		});
 	}
 
 	@Override
