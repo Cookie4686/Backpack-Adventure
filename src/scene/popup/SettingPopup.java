@@ -1,13 +1,12 @@
 package scene.popup;
 
 import application.Main;
+import component.GameButton;
+import component.GameButtonType;
 import component.VolumeSlider;
 import javafx.geometry.Pos;
 import javafx.scene.control.Slider;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import scene.MenuScene;
@@ -24,28 +23,12 @@ public class SettingPopup extends GridPane {
 		super();
 		getChildren().clear();
 		popup = new Popup("Settings");
-
 		setAlignment(Pos.TOP_CENTER);
 		setHgap(16);
 		setVgap(16);
-		add(createText("Music Volume"), 0, 0);
-		add(createText("SFX Volume"), 0, 1);
-		add(musicSlider = new VolumeSlider(24, false, () -> BackgroundSongPlayer.pause(),
-				() -> BackgroundSongPlayer.play()), 1, 0);
-		add(sfxSlider = new VolumeSlider(24), 1, 1);
 
-		ImageView menuButton = new ImageView(new Image(ClassLoader.getSystemResource("picture/menuButton1.png").toString()));
-		menuButton.setFitHeight(70);
-		menuButton.setFitWidth(159);
-		
-		StackPane menuButtonPane = new StackPane(menuButton);
-		menuButtonPane.setMaxWidth(159);
-		menuButtonPane.setOnMouseEntered(_ -> {
-			SfxPlayer.play(Sfx.CLICK);
-			menuButton.setImage(new Image(ClassLoader.getSystemResource("picture/menuButton2.png").toString()));
-		});
-		menuButtonPane.setOnMouseExited(_ -> menuButton.setImage(new Image(ClassLoader.getSystemResource("picture/menuButton1.png").toString())));
-		menuButtonPane.setOnMouseClicked(_ -> {
+		GameButton menuButton = new GameButton(159, 70, GameButtonType.MENU);
+		menuButton.setOnMouseClicked(_ -> {
 			SfxPlayer.play(Sfx.SELECT);
 			popup.hide();
 			if (!MenuScene.isInMenuScene()) {
@@ -53,28 +36,20 @@ public class SettingPopup extends GridPane {
 				MenuScene.use();
 			}
 		});
-		
-		ImageView closeButton = new ImageView(new Image(ClassLoader.getSystemResource("picture/closeButton1.png").toString()));
-		closeButton.setFitHeight(70);
-		closeButton.setFitWidth(159);
-		
-		StackPane closeButtonPane = new StackPane(closeButton);
-		closeButtonPane.setMaxWidth(159);
-		closeButtonPane.setOnMouseEntered(_ -> {
-			SfxPlayer.play(Sfx.CLICK);
-			closeButton.setImage(new Image(ClassLoader.getSystemResource("picture/closeButton2.png").toString()));
-		});
-		closeButtonPane.setOnMouseExited(_ -> closeButton.setImage(new Image(ClassLoader.getSystemResource("picture/closeButton1.png").toString())));
-		closeButtonPane.setOnMouseClicked(_ -> {
+		add(createText("Music Volume"), 0, 0);
+		add(createText("SFX Volume"), 0, 1);
+		add(musicSlider = new VolumeSlider(24, false, () -> BackgroundSongPlayer.pause(),
+				() -> BackgroundSongPlayer.play()), 1, 0);
+		add(sfxSlider = new VolumeSlider(24), 1, 1);
+		add(menuButton, 1, 3);
+		popup.setCenter(this);
+
+		GameButton closeButton = new GameButton(159, 70, GameButtonType.CLOSE);
+		closeButton.setOnMouseClicked(_ -> {
 			SfxPlayer.play(Sfx.SELECT);
 			popup.hide();
 		});
-		
-		add(menuButtonPane, 1, 3);
-		
-		popup.setCenter(this);
-		
-		popup.getBottomBox().getChildren().setAll(closeButtonPane);
+		popup.getBottomBox().getChildren().setAll(closeButton);
 	}
 
 	private Text createText(String name) {
