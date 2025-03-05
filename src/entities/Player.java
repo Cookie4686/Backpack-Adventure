@@ -286,7 +286,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	
 	@Override
 	public void reStatBeforeUpdate() {
-		this.maxHp = 100;
+		//this.maxHp = 100;
 		this.maxEnergy = 100;
 		this.maxMana = 0;
 		this.coins = 0;
@@ -297,7 +297,14 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	}
 
 	public void setXp(int xp) {
+		while(xp > maxXp) {
+			xp -= maxXp;
+			maxXp *= 1.2;
+			maxHp *= 1.15;
+		}
+		hp = maxHp;
 		this.xp = xp < 0 ? 0 : xp;
+		//render();
 	}
 
 	public int getMaxXp() {
