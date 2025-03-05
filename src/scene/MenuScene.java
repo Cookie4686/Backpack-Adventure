@@ -8,6 +8,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -36,25 +37,33 @@ public class MenuScene {
 		buttonBox.setAlignment(Pos.CENTER);
 
 		GameButton continueButton = new GameButton(170, 70, GameButtonType.CONTINUE);
-		continueButton.setOnMouseClicked(_ -> {
-			SfxPlayer.play(Sfx.SELECT);
+		continueButton.setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) {				
+				SfxPlayer.play(Sfx.SELECT);
 //			TODO: go to last game
+			}
 		});
 		GameButton newButton = new GameButton(170, 70, GameButtonType.NEW_GAME);
-		newButton.setOnMouseClicked(_ -> {
-			SfxPlayer.play(Sfx.SELECT);
-			CharacterPopup.getInstance().getPopup().show();
+		newButton.setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) {				
+				SfxPlayer.play(Sfx.SELECT);
+				CharacterPopup.getInstance().getPopup().show();
+			}
 		});
 
 		GameButton settingButton = new GameButton(170, 70, GameButtonType.SETTING);
-		settingButton.setOnMouseClicked(_ -> {
-			SfxPlayer.play(Sfx.SELECT);
-			SettingPopup.getInstance().getPopup().show();
+		settingButton.setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) {				
+				SfxPlayer.play(Sfx.SELECT);
+				SettingPopup.getInstance().getPopup().show();
+			}
 		});
 
 		GameButton exitButton = new GameButton(170, 70, GameButtonType.EXIT);
-		exitButton.setOnMouseClicked(_ -> {
-			Platform.exit();
+		exitButton.setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) {				
+				Platform.exit();
+			}
 		});
 		
 		if (isGameRunning) {

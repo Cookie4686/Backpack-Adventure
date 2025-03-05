@@ -7,6 +7,7 @@ import component.VolumeSlider;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -28,12 +29,14 @@ public class SettingPopup extends GridPane {
 		setVgap(16);
 
 		GameButton menuButton = new GameButton(159, 70, GameButtonType.MENU);
-		menuButton.setOnMouseClicked(_ -> {
-			SfxPlayer.play(Sfx.SELECT);
-			popup.hide();
-			if (!MenuScene.isInMenuScene()) {
-				Main.root.getChildren().clear();
-				MenuScene.use();
+		menuButton.setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) {				
+				SfxPlayer.play(Sfx.SELECT);
+				popup.hide();
+				if (!MenuScene.isInMenuScene()) {
+					Main.root.getChildren().clear();
+					MenuScene.use();
+				}
 			}
 		});
 		add(createText("Music Volume"), 0, 0);
@@ -45,9 +48,11 @@ public class SettingPopup extends GridPane {
 		popup.setCenter(this);
 
 		GameButton closeButton = new GameButton(159, 70, GameButtonType.CLOSE);
-		closeButton.setOnMouseClicked(_ -> {
-			SfxPlayer.play(Sfx.SELECT);
-			popup.hide();
+		closeButton.setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) {			
+				SfxPlayer.play(Sfx.SELECT);
+				popup.hide();
+			}
 		});
 		popup.getBottomBox().getChildren().setAll(closeButton);
 	}

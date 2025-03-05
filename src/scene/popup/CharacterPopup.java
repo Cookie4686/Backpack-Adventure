@@ -5,6 +5,7 @@ import component.GameButton;
 import component.GameButtonType;
 import javafx.animation.PauseTransition;
 import javafx.geometry.Pos;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import scene.CharacterScene;
@@ -26,22 +27,26 @@ public class CharacterPopup extends VBox {
 		popup.setCenter(this);
 
 		GameButton journeyButton = new GameButton(159, 70, GameButtonType.JOURNEY_ON);
-		journeyButton.setOnMouseClicked(_ -> {
-			MenuScene.setGameRunning(true);
-			MenuScene.setInMenuScene(false);
-			SfxPlayer.play(Sfx.GAMESTART);
-			Fader.fadeOutAndIn();
-			PauseTransition pause = new PauseTransition(Duration.seconds(1));
-			pause.setOnFinished(_ -> {
-				GameScene.use();
-			});
+		journeyButton.setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) {				
+				MenuScene.setGameRunning(true);
+				MenuScene.setInMenuScene(false);
+				SfxPlayer.play(Sfx.GAMESTART);
+				Fader.fadeOutAndIn();
+				PauseTransition pause = new PauseTransition(Duration.seconds(1));
+				pause.setOnFinished(_ -> {
+					GameScene.use();
+				});
 //			TODO: Create new game after already played
-			pause.play();
+				pause.play();
+			}
 		});
 		GameButton closeButton = new GameButton(159, 70, GameButtonType.CLOSE);
-		closeButton.setOnMouseClicked(_ -> {
-			SfxPlayer.play(Sfx.SELECT);
-			popup.hide();
+		closeButton.setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) {				
+				SfxPlayer.play(Sfx.SELECT);
+				popup.hide();
+			}
 		});
 
 		popup.getBottomBox().getChildren().setAll(closeButton, journeyButton);

@@ -5,6 +5,7 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 
 public class VolumeSlider extends HBox {
@@ -28,13 +29,16 @@ public class VolumeSlider extends HBox {
 		imageView.setFitHeight(iconSize);
 		imageView.setCursor(Cursor.HAND);
 		imageView.setPickOnBounds(true);
-		imageView.setOnMouseClicked(_ -> {
-			if (slider.getValue() == 0) {
-				slider.setValue(lastValue);
-			} else {
-				lastValue = slider.getValue();
-				slider.setValue(0);
+		imageView.setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) {	
+				if (slider.getValue() == 0) {
+					slider.setValue(lastValue);
+				} else {
+					lastValue = slider.getValue();
+					slider.setValue(0);
+				}
 			}
+			
 		});
 		slider.valueProperty().addListener((_, _, newValue) -> {
 			calcIcon(imageView, newValue.doubleValue());

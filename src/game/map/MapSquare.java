@@ -3,6 +3,7 @@ package game.map;
 import game.backpack.Slot;
 import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Border;
@@ -35,7 +36,9 @@ public class MapSquare extends Pane {
 				ImageView imageView = new ImageView(MarkerLoader.getImage(marker));
 				imageView.setFitWidth(SIZE);
 				imageView.setFitHeight(SIZE);
-				imageView.setOnMouseClicked(_ -> MapHandler.handleMouseClicked(this));
+				imageView.setOnMouseClicked(event -> {
+					if(event.getButton() == MouseButton.PRIMARY) MapHandler.handleMouseClicked(this);
+				});
 				getChildren().setAll(imageView);
 			}
 			setBackground(new Background(new BackgroundFill(Color.BEIGE, CornerRadii.EMPTY, Insets.EMPTY)));

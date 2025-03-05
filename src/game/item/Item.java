@@ -14,6 +14,7 @@ import javafx.animation.Timeline;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import logic.handler.ItemHandler;
@@ -53,8 +54,6 @@ public abstract class Item extends Pane {
 	}
 
 	public void initialize(Image image) {
-		
-		backToOriginTimeline = new Timeline();
 		this.setOpacity(0.0);
 		fadeIn = new FadeTransition(Duration.seconds(0.5), this);
 		fadeIn.setFromValue(0.0);
@@ -75,9 +74,15 @@ public abstract class Item extends Pane {
 
 		this.setPickOnBounds(false);
 		imageView.setPickOnBounds(true);
-		imageView.setOnMousePressed(event -> ItemHandler.handleMousePress(event, this));
-		imageView.setOnMouseDragged(event -> ItemHandler.handleMouseDrag(event));
-		imageView.setOnMouseReleased(_ -> ItemHandler.handleMouseRelease());
+		imageView.setOnMousePressed(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) ItemHandler.handleMousePress(event, this);
+		});
+		imageView.setOnMouseDragged(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) ItemHandler.handleMouseDrag(event);
+		});
+		imageView.setOnMouseReleased(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) ItemHandler.handleMouseRelease();
+		});
 		getChildren().setAll(imageView);
 
 		tooltip = new Tooltip(toString());
@@ -179,6 +184,7 @@ public abstract class Item extends Pane {
     }
 	
 	public void moveBack() {
+		backToOriginTimeline = new Timeline();
 		double currentTranslateY = imageView.getTranslateY();
 		backToOriginTimeline.getKeyFrames().addAll(
                 new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateYProperty(), currentTranslateY)),

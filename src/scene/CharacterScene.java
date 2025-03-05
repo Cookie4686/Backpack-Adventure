@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -62,7 +63,9 @@ public class CharacterScene {
 		selectedCharacter.getChildren().addAll(mainCharacter, costumeList);
 		
 		ImageView knightIcons = new ImageView();
-		knightIcons.setOnMouseClicked(_ -> SfxPlayer.play(Sfx.SELECT));
+		knightIcons.setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) SfxPlayer.play(Sfx.SELECT);
+		});
 		knightIcons.setFitWidth(100);
 		knightIcons.setFitHeight(100);
 		knightIcons.setCursor(Cursor.CROSSHAIR);
@@ -71,13 +74,17 @@ public class CharacterScene {
 		icon.setCycleCount(Timeline.INDEFINITE);		
 		
 		ImageView unknown1 = new ImageView(new Image(ClassLoader.getSystemResource("picture/unknown.png").toString()));
-		unknown1.setOnMouseClicked(_ -> SfxPlayer.play(Sfx.DENY));
+		unknown1.setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY) SfxPlayer.play(Sfx.DENY);
+		});
 		unknown1.setCursor(Cursor.CROSSHAIR);
 		unknown1.setFitWidth(100);
 		unknown1.setFitHeight(100);
 		
 		ImageView unknown2 = new ImageView(new Image(ClassLoader.getSystemResource("picture/unknown.png").toString()));
-		unknown2.setOnMouseClicked(_ -> SfxPlayer.play(Sfx.DENY));
+		unknown2.setOnMouseClicked(event -> {
+			if(event.getButton() == MouseButton.PRIMARY)SfxPlayer.play(Sfx.DENY);
+		});
 		unknown2.setCursor(Cursor.CROSSHAIR);
 		unknown2.setFitWidth(100);
 		unknown2.setFitHeight(100);
