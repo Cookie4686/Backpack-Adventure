@@ -7,107 +7,75 @@ import entities.Player;
 import game.util.Effect;
 import game.util.EffectType;
 import game.util.ItemTier;
-import interfaces.Clickable;
 import logic.FightLogic;
 import sound.Sfx;
 import sound.SfxPlayer;
 
-public class DamageItem extends Item implements Clickable {
+public class DamageItem extends ItemWithCost {
 	final private boolean AoE;
 	final private ArrayList<Effect> effects;
-	private int costActivate;
-	
-	public DamageItem(String name, String detail, ArrayList<Effect> effects, int costActivate, boolean isAoE, int width, int height, ItemTier tier) {
-		super(name, detail, width, height, tier);
-		this.effects = effects;
+
+	public DamageItem(String name, String detail, ArrayList<Effect> effects, int costActivate, boolean isAoE, int width,
+			int height, ItemTier tier) {
+		super(name, detail, costActivate, width, height, tier);
 		this.AoE = isAoE;
-		setCostActivate(costActivate);
+		this.effects = effects;
 	}
-	
+
 	@Override
-	public boolean isEnoughEnergy() {
-		if (Player.getInstance().getEnergy()<costActivate) return false;
-		return true;
-	}	
-	
-	@Override
-	public void activatePerClick() {
-		if (!isEnoughEnergy()) {
-			System.out.println("Not enough energy");
-			SfxPlayer.play(Sfx.DENINE);
-			return;
-		}
-		System.out.println("Use "+getName());
-		
+	public void activateItem() {
+		System.out.println("Use " + getName());
 		Player.getInstance().attack();
 		SfxPlayer.play(Sfx.THROW);
-		//decrease player energy by costActivate
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
-		
-		for (Effect effect:effects) {
+		for (Effect effect : effects) {
 			if (isAoE()) {
-				if (effect.getType()==EffectType.DAMAGE) {
-					for (Entity enemy:FightLogic.getInstance().getEntities()) {
-						enemy.takeDamage(effect.getAmount());
-					}
+				for (Entity enemy : FightLogic.getInstance().getEntities()) {
+					activateEffect(effect, enemy);
 				}
-				else if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNNED) {
-					for (Entity enemy:FightLogic.getInstance().getEntities()) {
-						FightLogic.findEffectAndAdd(enemy.getAllEffect(), effect.getType(), effect.getAmount(), enemy);
-					}
-				}
-			}
-			else {
-				if (effect.getType()==EffectType.DAMAGE) {
-					FightLogic.getInstance().getTarget().takeDamage(effect.getAmount());
-				}
-				if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNNED) {
-					FightLogic.findEffectAndAdd(FightLogic.getInstance().getTarget().getAllEffect(), effect.getType(), effect.getAmount(), FightLogic.getInstance().getTarget());
-				}
+			} else {
+				activateEffect(effect, FightLogic.getInstance().getTarget());
 			}
 		}
-		
 		delete();
 	}
 
-	
+	private void activateEffect(Effect effect, Entity enemy) {
+		switch (effect.getType()) {
+		case DAMAGE					-> { enemy.takeDamage(effect.getAmount()); }
+		case FIRE, POISON, STUNNED	-> {
+			FightLogic.findEffectAndAdd(enemy.getAllEffect(), effect.getType(), effect.getAmount(), enemy);
+		}
+		default						-> {}
+		}
+	}
+
 	@Override
 	public String toString() {
-		String text=getName()+" is "+getTierName()+" throw weapon\n"
-				+ "Will gone after use\n"
+		String text = getName() + " is " + getTierName() + " throw weapon\n" + "Will gone after use\n"
 				+ "When click :\n";
-		
+
 		for (Effect effect : effects) {
-			if (effect.getType()==EffectType.DAMAGE) {
+			if (effect.getType() == EffectType.DAMAGE) {
 				if (isAoE()) {
-					text=text+"Damage all enemy : "+effect.getAmount()+" DAMAGE\n";
+					text = text + "Damage all enemy : " + effect.getAmount() + " DAMAGE\n";
 				} else {
-					text=text+"Damage target : "+effect.getAmount()+" DAMAGE\n";
+					text = text + "Damage target : " + effect.getAmount() + " DAMAGE\n";
 				}
-			}
-			else if (effect.getType()==EffectType.FIRE || effect.getType()==EffectType.POISON || effect.getType()==EffectType.STUNNED) {
+			} else if (effect.getType() == EffectType.FIRE || effect.getType() == EffectType.POISON
+					|| effect.getType() == EffectType.STUNNED) {
 				if (isAoE()) {
-					text=text+"Add "+effect.getAmount()+" "+effect.getTypeName()+" to all enemy\n";
+					text = text + "Add " + effect.getAmount() + " " + effect.getTypeName() + " to all enemy\n";
 				} else {
-					text=text+"Add "+effect.getAmount()+" "+effect.getTypeName()+" to target\n";
+					text = text + "Add " + effect.getAmount() + " " + effect.getTypeName() + " to target\n";
 				}
 			}
 		}
-		
-		return text+"\nCost "+costActivate+" energy per click";
+		return text + "\nCost " + costActivate + " energy per click";
 	}
 
-	
-	//Getter & Setter
+	// Getter & Setter
 	public boolean isAoE() {
 		return AoE;
-	}
-
-	public int getCostActivate() {
-		return costActivate;
-	}
-
-	public void setCostActivate(int costActivate) {
-		this.costActivate = costActivate < 0 ? 0 : costActivate;
 	}
 }

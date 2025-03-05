@@ -1,10 +1,10 @@
 package game.map;
 
-public class markPosition {
+public class MarkPosition {
 	private int x;
 	private int y;
 	
-	public markPosition(int x, int y) {
+	public MarkPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}

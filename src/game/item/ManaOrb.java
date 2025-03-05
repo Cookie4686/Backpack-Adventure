@@ -33,6 +33,4 @@ public class ManaOrb extends Item implements TurnActivable{
 	public void setAmount(int amount) {
 		this.amount = amount < 0 ? 0 : amount;
 	}
-	
-	
 }

@@ -39,7 +39,7 @@ public class ItemHandler {
 				Player.getInstance().render();
 			}
 		} else {
-			SfxPlayer.play(Sfx.DENINE);
+			SfxPlayer.play(Sfx.DENY);
 		}
 	}
 
