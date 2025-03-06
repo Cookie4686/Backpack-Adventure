@@ -41,7 +41,7 @@ public class GameScene {
 			for (int i=0 ; i<6 ; i++) {
 				items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
 			}
-			items[6]= ResourceLoader.newItem("Damage Relic IV");
+			items[6]= ResourceLoader.newItem("Damage Relic II");
 			items[7]= ResourceLoader.newItem("Well Made Shield");
 			items[8]= ResourceLoader.newItem("Excalibur");
 			Game.getInstance().addItemsToGame(items);

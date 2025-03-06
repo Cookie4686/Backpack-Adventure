@@ -165,9 +165,11 @@ public class GameLogic {
 		}
 		for (Item item : GameLogic.getInstance().getInventory()) {
 			if (item instanceof StatUpdatable) {
-				System.out.println("is instance");
 				((StatUpdatable) item).statUpdate();
 			}
+		}
+		for (Item item : GameLogic.getInstance().getInventory()) {
+			item.updateTooltip();
 		}
 	}
 	
