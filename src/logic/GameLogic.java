@@ -56,7 +56,7 @@ public class GameLogic {
 	}
 
 	public void gameOver() {
-		MenuScene.setGameRunning(false);
+		MenuScene.setGameStarted(false);
 		if (FightLogic.getInstance().isInFight()) {
 			BackgroundSongPlayer.stop();
 			SfxPlayer.play(Sfx.GAMEOVER);

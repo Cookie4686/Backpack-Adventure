@@ -40,10 +40,10 @@ public class GameHeader extends HBox implements ReRenderable {
 		setHgrow(region, Priority.ALWAYS);
 		backpackButton = new Button("Toggle Backpack");
 		backpackButton.setOnAction(_ -> ButtonHandler.handleBackpackButtonOnAction());
-		
+
 		settingButton = new Button("Settings");
-		settingButton.setOnAction(_ -> SettingPopup.getInstance().getPopup().show());
-		
+		settingButton.setOnAction(_ -> SettingPopup.getInstance().show());
+
 		getChildren().setAll(floorText, experienceText, region, settingButton, backpackButton);
 		render();
 	}

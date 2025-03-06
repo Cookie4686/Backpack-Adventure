@@ -22,9 +22,10 @@ public class Slot extends Pane implements ReRenderable {
 		setMaxSize(SIZE, SIZE);
 		isUnlocked = false;
 		item = null;
-		
+
 		setOnMouseClicked(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) ButtonHandler.handleSlotOnClicked(this);
+			if (event.getButton() == MouseButton.PRIMARY)
+				ButtonHandler.handleSlotOnClicked(this);
 		});
 	}
 	

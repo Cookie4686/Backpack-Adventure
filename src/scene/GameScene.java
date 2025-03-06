@@ -28,7 +28,7 @@ public class GameScene {
 	        Fader.getBlackout().toBack();
 	    }
 		
-		if (!MenuScene.isGameRunning()) {
+		if (!MenuScene.hasGameStarted()) {
 			Item[] items = new Item[9];
 			for (int i=0 ; i<6 ; i++) {
 				items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
@@ -40,7 +40,7 @@ public class GameScene {
 		}
 		
         Fader.getBlackout().toFront();
-        MenuScene.setGameRunning(true);
+        MenuScene.setGameStarted(true);
 		BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
 	}
 }

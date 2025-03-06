@@ -34,7 +34,7 @@ public class GameButton extends StackPane {
 		getChildren().setAll(imageView);
 
 		setCursor(Cursor.HAND);
-		setOnMouseEntered(event -> {
+		setOnMouseEntered(_ -> {
 			SfxPlayer.play(Sfx.CLICK);
 			imageView.setImage(getHoverImage());
 		});

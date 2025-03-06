@@ -12,10 +12,10 @@ import game.util.ItemRotation;
 import interfaces.Clickable;
 import interfaces.ReStatable;
 import interfaces.StatUpdatable;
-import javafx.scene.Cursor;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -32,8 +32,8 @@ public class ItemHandler {
 	private static int gridX, gridY;
 
 	public static void handleMousePress(MouseEvent event, Item item) {
-		currentItem = item;
 		if (!FightLogic.getInstance().isInFight()) {
+			currentItem = item;
 			currentItem.getImageView().setCursor(Cursor.CLOSED_HAND);
 			SfxPlayer.play(Sfx.DRAG);
 			currentItem.getMoveTimeline().stop();
@@ -61,7 +61,7 @@ public class ItemHandler {
 	}
 
 	public static void handleMouseRelease() {
-		if (!FightLogic.getInstance().isInFight()) {
+		if (!FightLogic.getInstance().isInFight() && currentItem != null) {
 			currentItem.getImageView().setCursor(Cursor.OPEN_HAND);
 			calcGrid();
 			placeItem();
@@ -129,19 +129,17 @@ public class ItemHandler {
 				break;
 			}
 		}
-		//setTranslateNoOffScreenX(x);
-		//setTranslateNoOffScreenY(y);
+		// setTranslateNoOffScreenX(x);
+		// setTranslateNoOffScreenY(y);
 		Timeline moveTimeline = new Timeline();
 		moveTimeline.getKeyFrames().addAll(
-                new KeyFrame(Duration.ZERO, 
-                		new KeyValue(currentItem.translateXProperty(), currentItem.getTranslateX()),
-                		new KeyValue(currentItem.translateYProperty(), currentItem.getTranslateY())
-                ),
-                new KeyFrame(Duration.millis(200), 
-                		new KeyValue(currentItem.translateXProperty(), x < -diffX ? -diffX : (x > maxWidth ? maxWidth : x)),
-                		new KeyValue(currentItem.translateYProperty(), y < -diffY ? -diffY : (y > maxHeight ? maxHeight : y))
-                )
-        );
+				new KeyFrame(Duration.ZERO, new KeyValue(currentItem.translateXProperty(), currentItem.getTranslateX()),
+						new KeyValue(currentItem.translateYProperty(), currentItem.getTranslateY())),
+				new KeyFrame(Duration.millis(200),
+						new KeyValue(currentItem.translateXProperty(),
+								x < -diffX ? -diffX : (x > maxWidth ? maxWidth : x)),
+						new KeyValue(currentItem.translateYProperty(),
+								y < -diffY ? -diffY : (y > maxHeight ? maxHeight : y))));
 		moveTimeline.play();
 		currentItem = temp;
 		calcValues();
@@ -155,7 +153,7 @@ public class ItemHandler {
 		}
 		setTranslateNoOffScreenX(x + slotPaneX);
 		setTranslateNoOffScreenY(y + slotPaneY);
-		
+
 	}
 
 	private static void calcGrid() {
