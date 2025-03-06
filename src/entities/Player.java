@@ -27,7 +27,7 @@ import sound.SfxPlayer;
 
 public class Player extends Being implements TurnActivable, ReStatable {
 	private static Player instance = null;
-	private int xp, maxXp, energy, maxEnergy, mana, maxMana, coins, luck;
+	private int xp, maxXp, energy, maxEnergy, mana, maxMana, coins, luck, fixedMaxHp;
 	//private ArrayList<String> pic;
 	private CharacterState currentState = CharacterState.IDLE;
 	//private ArrayList<String> idlePaths;
@@ -47,7 +47,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	public Player() {
 		super();
 		this.name = "Player";
-		this.hp = this.maxHp = 100;
+		this.hp = this.maxHp = this.fixedMaxHp = 100;
 		this.shield = 0;
 		this.xp = 0;
 		this.maxXp = 100;
@@ -291,7 +291,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	
 	@Override
 	public void reStatBeforeUpdate() {
-		this.maxHp = 100;
+		this.maxHp = fixedMaxHp;
 		this.maxEnergy = 100;
 		this.maxMana = 0;
 		this.coins = 0;
@@ -305,10 +305,9 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		while(xp > maxXp) {
 			xp -= maxXp;
 			maxXp *= 1.2;
-			maxHp *= 1.15;
+			fixedMaxHp *= 1.15;
 			System.out.println("lv up");
 		}
-		hp = maxHp;
 		this.xp = xp < 0 ? 0 : xp;
 		//render();
 	}

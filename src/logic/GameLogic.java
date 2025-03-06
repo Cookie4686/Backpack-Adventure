@@ -12,6 +12,8 @@ import game.backpack.Backpack;
 import game.item.Item;
 import game.itemGenerator.ItemRandomizer;
 import game.itemGenerator.ResourceLoader;
+import interfaces.ReStatable;
+import interfaces.StatUpdatable;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 import scene.MenuScene;
@@ -73,21 +75,46 @@ public class GameLogic {
 				iterator.remove();
 			}
 		}
+		
 		if (FightLogic.getInstance().isInFight()) {
 			Player.getInstance().setXp(Player.getInstance().getXp() + FightLogic.getInstance().getTotalXp());
 			FightLogic.getInstance().setTotalXp(0);
+			
 			BackgroundSongPlayer.floor(currentFloor);
 			Player.getInstance().getAllEffect().clear();
+			
 			Item[] items = new Item[5];
 			for (int i = 0; i < 5; i++) {
 				items[i] = ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
 			}
+			
+			Player.getInstance().reStatBeforeUpdate();
+			GameLogic.updateBackpackItems();
+			Player.getInstance().render();
+			
+			System.out.println(Player.getInstance().getHp());
+			Player.getInstance().setShield(0);
+			Player.getInstance().setHp(Player.getInstance().getHp());
 			Game.getInstance().addItemsToGame(items);
 			FightLogic.getInstance().setInFight(false);
 			Backpack.getInstance().render();
 		}
 	}
 
+	public static void  updateBackpackItems() {
+		for (Item item : GameLogic.getInstance().getInventory()) {
+			if (item instanceof ReStatable) {
+				((ReStatable) item).reStatBeforeUpdate();
+			}
+		}
+		for (Item item : GameLogic.getInstance().getInventory()) {
+			if (item instanceof StatUpdatable) {
+				System.out.println("is instance");
+				((StatUpdatable) item).statUpdate();
+			}
+		}
+	}
+	
 	public ArrayList<Item> getInventory() {
 		return inventory;
 	}
