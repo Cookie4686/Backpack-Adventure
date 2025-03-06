@@ -11,10 +11,10 @@ import game.util.ItemRotation;
 import interfaces.Clickable;
 import interfaces.ReStatable;
 import interfaces.StatUpdatable;
-import javafx.scene.Cursor;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.scene.Cursor;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -40,13 +40,6 @@ public class ItemHandler {
 			calcValues();
 			startX = event.getSceneX() - item.getTranslateX();
 			startY = event.getSceneY() - item.getTranslateY();
-		} else if (FightLogic.getInstance().isPTurn()) {
-			if (item instanceof Clickable) {
-				((Clickable) item).activatePerClick();
-				Player.getInstance().render();
-			}
-		} else {
-			SfxPlayer.play(Sfx.DENY);
 		}
 	}
 
@@ -65,6 +58,17 @@ public class ItemHandler {
 			calcGrid();
 			placeItem();
 			currentItem = null;
+		}
+	}
+
+	public static void handleMouseClicked(Item item) {
+		if (FightLogic.getInstance().isInFight() && FightLogic.getInstance().isPTurn()) {
+			if (item instanceof Clickable) {
+				((Clickable) item).activatePerClick();
+				Player.getInstance().render();
+			}
+		} else {
+			SfxPlayer.play(Sfx.DENY);
 		}
 	}
 
@@ -128,19 +132,17 @@ public class ItemHandler {
 				break;
 			}
 		}
-		//setTranslateNoOffScreenX(x);
-		//setTranslateNoOffScreenY(y);
+		// setTranslateNoOffScreenX(x);
+		// setTranslateNoOffScreenY(y);
 		Timeline moveTimeline = new Timeline();
 		moveTimeline.getKeyFrames().addAll(
-                new KeyFrame(Duration.ZERO, 
-                		new KeyValue(currentItem.translateXProperty(), currentItem.getTranslateX()),
-                		new KeyValue(currentItem.translateYProperty(), currentItem.getTranslateY())
-                ),
-                new KeyFrame(Duration.millis(200), 
-                		new KeyValue(currentItem.translateXProperty(), x < -diffX ? -diffX : (x > maxWidth ? maxWidth : x)),
-                		new KeyValue(currentItem.translateYProperty(), y < -diffY ? -diffY : (y > maxHeight ? maxHeight : y))
-                )
-        );
+				new KeyFrame(Duration.ZERO, new KeyValue(currentItem.translateXProperty(), currentItem.getTranslateX()),
+						new KeyValue(currentItem.translateYProperty(), currentItem.getTranslateY())),
+				new KeyFrame(Duration.millis(200),
+						new KeyValue(currentItem.translateXProperty(),
+								x < -diffX ? -diffX : (x > maxWidth ? maxWidth : x)),
+						new KeyValue(currentItem.translateYProperty(),
+								y < -diffY ? -diffY : (y > maxHeight ? maxHeight : y))));
 		moveTimeline.play();
 		currentItem = temp;
 		calcValues();
@@ -154,7 +156,7 @@ public class ItemHandler {
 		}
 		setTranslateNoOffScreenX(x + slotPaneX);
 		setTranslateNoOffScreenY(y + slotPaneY);
-		
+
 	}
 
 	private static void calcGrid() {

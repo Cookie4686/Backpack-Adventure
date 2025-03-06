@@ -117,6 +117,7 @@ public class Backpack extends VBox implements ReRenderable {
 		Game.getInstance().getChildren().remove(oldItem);
 		GameLogic.getInstance().getInventory().add(newItem);
 		Game.getInstance().getChildren().add(newItem);
+		newItem.setOpacity(1);
 	}
 
 	private void placeItem(Slot slot, Item item) {
@@ -189,5 +190,5 @@ public class Backpack extends VBox implements ReRenderable {
 	public static void setInstance(Backpack instance) {
 		Backpack.instance = instance;
 	}
-	
+
 }
