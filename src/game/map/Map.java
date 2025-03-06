@@ -33,7 +33,7 @@ public class Map extends GridPane {
 
 	public void initialize() {
 		placeRandomMarker(MapMarker.PLAYER);
-		while (marks.size() < 2 + GameLogic.getInstance().getCurrentFloor()) { // create 1 monster diffrence pos
+		while (marks.size() < 2) { // create 1 monster diffrence pos
 			placeRandomMarker(MapMarker.MONSTER);
 		}
 		buildPath(marks.get(0), marks.get(1));
