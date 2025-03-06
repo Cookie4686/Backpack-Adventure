@@ -2,14 +2,17 @@ package logic.handler;
 
 import application.Fader;
 import application.Main;
+import entities.Npc;
 import entities.Player;
 import game.Game;
+import game.GameBottom;
 import game.GameTop;
 import game.dialog.GameDialog;
 import game.map.Map;
 import game.map.MapSquare;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.util.Duration;
 import logic.FightLogic;
@@ -80,6 +83,18 @@ public class MapHandler {
 				System.out.println("op3");
 			});
 			dialog.show();
+		}
+		
+		case DOCTOR		-> {
+			Player.getInstance().moveLeftAndBack();
+			Fader.fadeOutAndIn();
+			PauseTransition pause = new PauseTransition(Duration.seconds(1));
+			pause.setOnFinished(_ -> {
+				Npc doctor = Npc.getInstance();
+				doctor.setAlignment(Pos.BOTTOM_LEFT);
+				GameBottom.getInstance().getEnemyBox().getChildren().add(doctor);
+			});
+			pause.play();
 		}
 		default			-> {}
 		}

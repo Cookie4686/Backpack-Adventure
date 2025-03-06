@@ -37,6 +37,7 @@ public class GameLogic {
 	}
 
 	public void initializeFight() {
+		GameBottom.getInstance().getEnemyBox().getChildren().clear();
 		FightLogic.getInstance().setInFight(true);
 		Game.getInstance().initializeFight();
 
