@@ -80,7 +80,6 @@ public abstract class Item extends Pane {
 		imageView.setOnMousePressed(event -> ItemHandler.handleMousePress(event, this));
 		imageView.setOnMouseDragged(event -> ItemHandler.handleMouseDrag(event));
 		imageView.setOnMouseReleased(_ -> ItemHandler.handleMouseRelease());
-		imageView.setOnMouseClicked(_ -> ItemHandler.handleMouseClicked(this));
 
 		imageView.setOnMousePressed(event -> {
 			if (event.getButton() == MouseButton.PRIMARY)

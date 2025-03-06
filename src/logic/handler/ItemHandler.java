@@ -31,8 +31,8 @@ public class ItemHandler {
 	private static int gridX, gridY;
 
 	public static void handleMousePress(MouseEvent event, Item item) {
-		currentItem = item;
 		if (!FightLogic.getInstance().isInFight()) {
+			currentItem = item;
 			currentItem.getImageView().setCursor(Cursor.CLOSED_HAND);
 			SfxPlayer.play(Sfx.DRAG);
 			currentItem.getMoveTimeline().stop();
@@ -40,6 +40,13 @@ public class ItemHandler {
 			calcValues();
 			startX = event.getSceneX() - item.getTranslateX();
 			startY = event.getSceneY() - item.getTranslateY();
+		} else if (FightLogic.getInstance().isPTurn()) {
+			if (item instanceof Clickable) {
+				((Clickable) item).activatePerClick();
+				Player.getInstance().render();
+			}
+		} else {
+			SfxPlayer.play(Sfx.DENY);
 		}
 	}
 
@@ -53,22 +60,11 @@ public class ItemHandler {
 	}
 
 	public static void handleMouseRelease() {
-		if (!FightLogic.getInstance().isInFight()) {
+		if (!FightLogic.getInstance().isInFight() && currentItem != null) {
 			currentItem.getImageView().setCursor(Cursor.OPEN_HAND);
 			calcGrid();
 			placeItem();
 			currentItem = null;
-		}
-	}
-
-	public static void handleMouseClicked(Item item) {
-		if (FightLogic.getInstance().isInFight() && FightLogic.getInstance().isPTurn()) {
-			if (item instanceof Clickable) {
-				((Clickable) item).activatePerClick();
-				Player.getInstance().render();
-			}
-		} else {
-			SfxPlayer.play(Sfx.DENY);
 		}
 	}
 
