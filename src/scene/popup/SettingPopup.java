@@ -15,56 +15,50 @@ import scene.MenuScene;
 import sound.Sfx;
 import sound.SfxPlayer;
 
-public class SettingPopup extends GridPane {
+public class SettingPopup extends Popup {
 	private static SettingPopup instance;
-	private Popup popup;
 	private VolumeSlider musicSlider, sfxSlider;
 
 	public SettingPopup() {
-		super();
-		getChildren().clear();
-		popup = new Popup("Settings");
-		setAlignment(Pos.TOP_CENTER);
-		setHgap(16);
-		setVgap(16);
+		super("Settings");
+		GridPane root = new GridPane();
+		root.setAlignment(Pos.TOP_CENTER);
+		root.setHgap(16);
+		root.setVgap(16);
 
 		GameButton menuButton = new GameButton(159, 70, GameButtonType.MENU);
 		menuButton.setOnMouseClicked(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) {				
+			if (event.getButton() == MouseButton.PRIMARY) {
 				SfxPlayer.play(Sfx.SELECT);
-				popup.hide();
+				hide();
 				if (!MenuScene.isInMenuScene()) {
 					Main.root.getChildren().clear();
 					MenuScene.use();
 				}
 			}
 		});
-		add(createText("Music Volume"), 0, 0);
-		add(createText("SFX Volume"), 0, 1);
-		add(musicSlider = new VolumeSlider(24), 1, 0);
-		add(sfxSlider = new VolumeSlider(24), 1, 1);
-		add(menuButton, 0, 2, 2, 1);
-		setHalignment(menuButton, HPos.CENTER);
-		popup.setCenter(this);
+		root.add(createText("Music Volume"), 0, 0);
+		root.add(createText("SFX Volume"), 0, 1);
+		root.add(musicSlider = new VolumeSlider(24), 1, 0);
+		root.add(sfxSlider = new VolumeSlider(24), 1, 1);
+		root.add(menuButton, 0, 2, 2, 1);
+		GridPane.setHalignment(menuButton, HPos.CENTER);
+		setCenter(root);
 
 		GameButton closeButton = new GameButton(159, 70, GameButtonType.CLOSE);
 		closeButton.setOnMouseClicked(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) {			
+			if (event.getButton() == MouseButton.PRIMARY) {
 				SfxPlayer.play(Sfx.SELECT);
-				popup.hide();
+				hide();
 			}
 		});
-		popup.getBottomBox().getChildren().setAll(closeButton);
+		bottomBox.getChildren().setAll(closeButton);
 	}
 
 	private Text createText(String name) {
 		Text text = new Text(name);
 		text.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 24));
 		return text;
-	}
-
-	public Popup getPopup() {
-		return popup;
 	}
 
 	public Slider getMusicSlider() {

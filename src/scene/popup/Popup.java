@@ -16,12 +16,12 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Popup extends BorderPane {
-	private HBox bottomBox;
 	private static Image frameImage;
+	protected HBox bottomBox;
 
 	public Popup(String title) {
 		super();
-		
+
 		StackPane.setAlignment(this, Pos.CENTER);
 		maxWidthProperty().bind(Main.root.widthProperty().multiply(0.7));
 		maxHeightProperty().bind(Main.root.heightProperty().multiply(0.8));
@@ -55,10 +55,6 @@ public class Popup extends BorderPane {
 
 	public void hide() {
 		Main.root.getChildren().remove(this);
-	}
-
-	public HBox getBottomBox() {
-		return bottomBox;
 	}
 
 	private static Image getFrameImage() {
