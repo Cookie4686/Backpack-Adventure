@@ -10,8 +10,6 @@ import game.backpack.Slot;
 import game.item.Item;
 import game.util.ItemRotation;
 import interfaces.Clickable;
-import interfaces.ReStatable;
-import interfaces.StatUpdatable;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
@@ -135,10 +133,10 @@ public class ItemHandler {
 	}
 
 	private static void setPlaceItemPostion() {
-		double x = Slot.SIZE * gridX - currentItem.getDiffX();
-		double y = Slot.SIZE * gridY - currentItem.getDiffY();
+		double x = Slot.getSize() * gridX - currentItem.getDiffX();
+		double y = Slot.getSize() * gridY - currentItem.getDiffY();
 		if (currentItem.getRotation() == ItemRotation.DIAGONAL_RIGHT) {
-			x -= currentItem.getWidth() - Slot.SIZE;
+			x -= currentItem.getWidth() - Slot.getSize();
 		}
 		setTranslateNoOffScreenX(x + slotPaneX);
 		setTranslateNoOffScreenY(y + slotPaneY);
@@ -146,15 +144,15 @@ public class ItemHandler {
 	}
 
 	private static void calcGrid() {
-		double x = currentItem.getTranslateX() + currentItem.getDiffX() + Slot.SIZE / 2;
-		double y = currentItem.getTranslateY() + currentItem.getDiffY() + Slot.SIZE / 2;
+		double x = currentItem.getTranslateX() + currentItem.getDiffX() + Slot.getSize() / 2;
+		double y = currentItem.getTranslateY() + currentItem.getDiffY() + Slot.getSize() / 2;
 		if (currentItem.getRotation() == ItemRotation.DIAGONAL_RIGHT) {
-			x += currentItem.getWidth() - Slot.SIZE;
+			x += currentItem.getWidth() - Slot.getSize();
 		}
 		x -= slotPaneX;
 		y -= slotPaneY;
-		gridX = (int) (x < 0 ? -1 : x / Slot.SIZE);
-		gridY = (int) (y < 0 ? -1 : y / Slot.SIZE);
+		gridX = (int) (x < 0 ? -1 : x / Slot.getSize());
+		gridY = (int) (y < 0 ? -1 : y / Slot.getSize());
 	}
 
 	private static void calcValues() {

@@ -6,6 +6,7 @@ import component.Button;
 import game.Game;
 import game.item.Item;
 import game.item.consumable.Potion;
+import game.item.relic.Relic;
 import game.util.ItemPosition;
 import game.util.ItemRotation;
 import interfaces.ReRenderable;
@@ -45,7 +46,7 @@ public class Backpack extends VBox implements ReRenderable {
 		gridPane.setBorder(new Border(
 				new BorderStroke(Color.AQUA, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		gridPane.setAlignment(Pos.CENTER);
-		gridPane.setMaxSize(Slot.SIZE * WIDTH, Slot.SIZE * HEIGHT);
+		gridPane.setMaxSize(Slot.getSize() * WIDTH, Slot.getSize() * HEIGHT);
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				gridPane.add(slots[y][x] = new Slot(), x, y);
@@ -86,8 +87,8 @@ public class Backpack extends VBox implements ReRenderable {
 			}
 		}
 		
-		backpack.setFitWidth((Slot.SIZE * (maxX - minX + 1)) + 150);
-		backpack.setFitHeight((Slot.SIZE * (maxY - minY + 1)) + 100);
+		backpack.setFitWidth((Slot.getSize() * (maxX - minX + 1)) + 150);
+		backpack.setFitHeight((Slot.getSize() * (maxY - minY + 1)) + 100);
 	}
   	
 	@Override
@@ -211,6 +212,9 @@ public class Backpack extends VBox implements ReRenderable {
 						slots[y][x].highlight();
 					}
 				}
+			}
+			if (item instanceof Relic) {
+				((Relic)item).highlightAdditionSlot(gridX, gridY);
 			}
 		}
 	}

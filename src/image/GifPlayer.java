@@ -53,6 +53,14 @@ public class GifPlayer {
 		new Image(ClassLoader.getSystemResource("picture/player_Run1.png").toString())
 	));
 	
+	private static ArrayList<Image> selectIcons = new ArrayList<Image>(Arrays.asList(
+			new Image(ClassLoader.getSystemResource("picture/select1.png").toString()),
+			new Image(ClassLoader.getSystemResource("picture/select2.png").toString()),
+			new Image(ClassLoader.getSystemResource("picture/select3.png").toString()),
+			new Image(ClassLoader.getSystemResource("picture/select4.png").toString()),
+			new Image(ClassLoader.getSystemResource("picture/select1.png").toString())
+		));
+	
 	private static ArrayList<Image> menuBackground = new ArrayList<Image>(Arrays.asList(
 		new Image(ClassLoader.getSystemResource("theme/menuBg1.png").toString()),
 		new Image(ClassLoader.getSystemResource("theme/menuBg2.png").toString()),
@@ -128,5 +136,9 @@ public class GifPlayer {
 
 	public static ArrayList<Image> getRunKnight() {
 		return runKnight;
+	}
+
+	public static ArrayList<Image> getSelectIcons() {
+		return selectIcons;
 	}
 }
