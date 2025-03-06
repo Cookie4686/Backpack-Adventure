@@ -20,15 +20,23 @@ public class GameScene {
 		VBox.setVgrow(Game.getInstance(), Priority.ALWAYS);
 		root.getChildren().setAll(GameHeader.getInstance(), Game.getInstance());
 		
-		ImageView biome1 = new ImageView(new Image(ClassLoader.getSystemResource("theme/biome1.png").toString()));
+		ImageView biome;
+		if(GameLogic.getInstance().getCurrentFloor() == 0) {
+			biome = new ImageView(new Image(ClassLoader.getSystemResource("theme/biome1.png").toString()));
+		} else if (GameLogic.getInstance().getCurrentFloor() == 1) {
+			biome = new ImageView(new Image(ClassLoader.getSystemResource("theme/biome2.png").toString()));
+		} else {
+			biome = new ImageView(new Image(ClassLoader.getSystemResource("theme/biome3.png").toString()));
+		}
 		
-		Main.root.getChildren().setAll(biome1, root);
+		Main.root.getChildren().setAll(biome, root);
 		if (!Main.root.getChildren().contains(Fader.getBlackout())) {
 	        Main.root.getChildren().add(Fader.getBlackout());
 	        Fader.getBlackout().toBack();
 	    }
 		
-		if (!MenuScene.hasGameStarted()) {
+
+		if (!MenuScene.hasGameStarted() && GameLogic.getInstance().getCurrentFloor() == 0) {
 			Item[] items = new Item[9];
 			for (int i=0 ; i<6 ; i++) {
 				items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());

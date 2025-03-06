@@ -41,7 +41,11 @@ public class Map extends GridPane {
 			if (placeRandomMarker(MapMarker.MONSTER)) findRoute();
 		}
 		while (marks.size() < 6 + GameLogic.getInstance().getCurrentFloor()) { // create 1 door diffrence pos
-			if (placeRandomMarker(MapMarker.DOOR)) findRoute();
+			if(GameLogic.getInstance().getCurrentFloor() == 2 && GameLogic.getInstance().getCurrentSubFloor() == 2) {				
+				if (placeRandomMarker(MapMarker.FINAL)) findRoute();
+			} else {
+				if (placeRandomMarker(MapMarker.DOOR)) findRoute();
+			}
 		}
 		while (marks.size() < 7 + GameLogic.getInstance().getCurrentFloor()) { // create 1 door diffrence pos
 			if (placeRandomMarker(MapMarker.DOCTOR)) findRoute();

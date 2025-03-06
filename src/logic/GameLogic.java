@@ -2,11 +2,13 @@ package logic;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 
 import application.Main;
 import entities.Entity;
 import entities.EntityLoader;
+import entities.EntitySpawner;
 import entities.Player;
 import game.Game;
 import game.GameBottom;
@@ -37,6 +39,8 @@ import sound.SfxPlayer;
 public class GameLogic {
 	private static GameLogic instance;
 	private int currentFloor;
+	private int currentSubFloor;
+	private boolean boss;
 	private ArrayList<Item> inventory;
 	private MediaPlayer levelupSfx;
 	private StackPane announce;
@@ -44,6 +48,8 @@ public class GameLogic {
 	public GameLogic() {
 		super();
 		currentFloor = 0;
+		currentSubFloor = 0;
+		boss = false;
 		inventory = new ArrayList<Item>();
 		
 		announce = new StackPane();
@@ -64,16 +70,27 @@ public class GameLogic {
 	}
 
 	public void initializeFight() {
+		GameBottom.getInstance().getEnemyBox().getChildren().clear();
 		FightLogic.getInstance().setInFight(true);
 		Game.getInstance().initializeFight();
 
 		BackgroundSongPlayer.fight(currentFloor);
 
 		// Spawn enemies
-		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("werewolf"));
-		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("mushroom"));
-		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("bunny"));
-		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("frog"));
+		Random rand = new Random();
+		int enUb = 3 + currentFloor;
+		int enLb = 1 + currentFloor;
+		int amount = rand.nextInt((enUb - enLb) + 1) + enLb;
+		if(!boss) {
+			for(int i = 0 ; i < amount ; i++) {			
+				FightLogic.getInstance().getEntities().add(EntityLoader.newEntity(EntitySpawner.getNameFromTier(EntitySpawner.getTier())));
+			}
+		} else {
+			FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("demon"));
+		}
+//		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("mushroom"));
+//		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("bunny"));
+//		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("frog"));
 		FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		GameBottom.getInstance().render();
 		for(Entity en : FightLogic.getInstance().getEntities()) {
@@ -176,4 +193,22 @@ public class GameLogic {
 	public static void setInstance(GameLogic instance) {
 		GameLogic.instance = instance;
 	}
+
+	public int getCurrentSubFloor() {
+		return currentSubFloor;
+	}
+
+	public void setCurrentSubFloor(int currentSubFloor) {
+		this.currentSubFloor = currentSubFloor;
+	}
+
+	public boolean isBoss() {
+		return boss;
+	}
+
+	public void setBoss(boolean boss) {
+		this.boss = boss;
+	}
+	
+	
 }

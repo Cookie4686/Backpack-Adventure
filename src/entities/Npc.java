@@ -14,6 +14,7 @@ public class Npc extends VBox{
 	private ImageView imageView;
 	private ArrayList<Image> idleFrames;
 	private Timeline idleTimeline;
+	private static Npc instance;
 	
 	public Npc() {
 		imageView = new ImageView();
@@ -27,7 +28,7 @@ public class Npc extends VBox{
 			new Image(ClassLoader.getSystemResource("Frames/balancing7.png").toString()),
 			new Image(ClassLoader.getSystemResource("Frames/balancing8.png").toString())
 		));
-		idleTimeline = createAnimation(idleFrames,0.1);
+		idleTimeline = createAnimation(idleFrames,0.15);
 		idleTimeline.setCycleCount(Timeline.INDEFINITE);
 		idleTimeline.play();
 		this.getChildren().add(imageView);
@@ -46,4 +47,17 @@ public class Npc extends VBox{
 	    imageView.setImage(images.get(0));
 	    return timeline;
 	}
+
+	public static Npc getInstance() {
+		if(instance == null) {
+			instance = new Npc();
+		}
+		return instance;
+	}
+
+	public void setInstance(Npc instance) {
+		Npc.instance = instance;
+	}
+	
+	
 }

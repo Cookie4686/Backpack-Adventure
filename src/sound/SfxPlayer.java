@@ -3,7 +3,16 @@ package sound;
 import java.util.HashMap;
 
 import game.util.Effect;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import scene.popup.SettingPopup;
 
 public class SfxPlayer {
