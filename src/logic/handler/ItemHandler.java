@@ -43,6 +43,7 @@ public class ItemHandler {
 			if (item instanceof Clickable) {
 				((Clickable) item).activatePerClick();
 				Player.getInstance().render();
+				Backpack.getInstance().render();
 			}
 		} else {
 			SfxPlayer.play(Sfx.DENY);

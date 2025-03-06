@@ -35,6 +35,7 @@ public class SfxPlayer {
 		sfxMap.put(Sfx.DRAG, new Resource("drag.mp3"));
 		sfxMap.put(Sfx.OUTSIDEOFBACKPACK, new Resource("outsideofbackpack.mp3"));
 		sfxMap.put(Sfx.INSIDEOFBACKPACK, new Resource("insideofbackpack.mp3"));
+		sfxMap.put(Sfx.MAP, new Resource("map.mp3"));		
 	}
 
 	public static void play(Sfx sfx) {

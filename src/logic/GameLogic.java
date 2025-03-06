@@ -8,6 +8,7 @@ import entities.EntityLoader;
 import entities.Player;
 import game.Game;
 import game.GameBottom;
+import game.GameHeader;
 import game.backpack.Backpack;
 import game.item.Item;
 import game.itemGenerator.ItemRandomizer;
@@ -97,6 +98,7 @@ public class GameLogic {
 			Player.getInstance().setHp(Player.getInstance().getHp());
 			Game.getInstance().addItemsToGame(items);
 			FightLogic.getInstance().setInFight(false);
+			GameHeader.getInstance().render();
 			Backpack.getInstance().render();
 		}
 	}

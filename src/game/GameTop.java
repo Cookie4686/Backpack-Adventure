@@ -28,8 +28,6 @@ public class GameTop extends HBox {
 		super();
 		isBackpack = true;
 		setAlignment(Pos.TOP_CENTER);
-		setBorder(new Border(
-				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		getChildren().setAll(Backpack.getInstance());
 		
 		ImageView mapBackground = new ImageView(new Image(ClassLoader.getSystemResource("picture/map.png").toString()));
@@ -39,8 +37,6 @@ public class GameTop extends HBox {
 		StackPane.setAlignment(map, Pos.TOP_CENTER);
 		map.setMaxHeight(400);
 		map.setMaxWidth(400);
-		map.setBorder(new Border(
-				new BorderStroke(Color.BLUEVIOLET, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		map.getChildren().setAll(mapBackground, Map.getInstance());
 	}
 

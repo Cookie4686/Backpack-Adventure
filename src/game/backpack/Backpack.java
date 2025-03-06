@@ -13,15 +13,9 @@ import interfaces.ReRenderable;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import logic.FightLogic;
 import logic.GameLogic;
 import logic.handler.ButtonHandler;
@@ -43,8 +37,6 @@ public class Backpack extends VBox implements ReRenderable {
 		slots = new Slot[HEIGHT][WIDTH];
 		gridPane = new GridPane();
 		StackPane.setAlignment(gridPane, Pos.CENTER);
-		gridPane.setBorder(new Border(
-				new BorderStroke(Color.AQUA, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		gridPane.setAlignment(Pos.CENTER);
 		gridPane.setMaxSize(Slot.getSize() * WIDTH, Slot.getSize() * HEIGHT);
 		for (int y = 0; y < HEIGHT; y++) {
@@ -62,8 +54,6 @@ public class Backpack extends VBox implements ReRenderable {
 		backpackResize();
 		
 		stackPane = new StackPane();
-		stackPane.setBorder(new Border(
-				new BorderStroke(Color.BLUEVIOLET, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		stackPane.setAlignment(Pos.CENTER);
 		stackPane.getChildren().setAll(backpack,gridPane);
 		setAlignment(Pos.CENTER);
