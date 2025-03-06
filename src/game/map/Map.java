@@ -66,7 +66,7 @@ public class Map extends GridPane {
 		buildPath(marks.getLast(), marks.get(marks.size()-r));
 	}
 	
-	private boolean findAdjacent(MarkPosition prev, MarkPosition pos) {
+	private boolean isAdjacent(MarkPosition prev, MarkPosition pos) {
 		int x = pos.getX(), y = pos.getY();
 		
 		if (x+1<width)
@@ -89,7 +89,7 @@ public class Map extends GridPane {
 		MarkPosition prev = new MarkPosition(start.getX(), start.getY());
 		
 		while (start.getX() != end.getX() || start.getY() != end.getY()) {
-			if (findAdjacent(prev, start)) break;
+			if (isAdjacent(prev, start)) break;
 			prev.setX(start.getX());
 			prev.setY(start.getY());
 			

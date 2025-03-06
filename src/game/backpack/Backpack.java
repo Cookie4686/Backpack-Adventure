@@ -2,7 +2,8 @@ package game.backpack;
 
 import java.util.ArrayList;
 
-import component.Button;
+import component.GameButton;
+import component.GameButtonType;
 import game.Game;
 import game.item.Item;
 import game.item.consumable.Potion;
@@ -13,6 +14,7 @@ import interfaces.ReRenderable;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -29,11 +31,15 @@ public class Backpack extends VBox implements ReRenderable {
 	private Slot[][] slots;
 	private StackPane stackPane;
 	private GridPane gridPane;
-	private Button endTurnButton;
+	private GameButton endTurnButton;
 	private ImageView backpack;
+	private boolean levelup;
+	private int unlockedLeft;
 
 	public Backpack() {
 		super();
+		levelup = false;
+		unlockedLeft=4;
 		slots = new Slot[HEIGHT][WIDTH];
 		gridPane = new GridPane();
 		StackPane.setAlignment(gridPane, Pos.CENTER);
@@ -47,14 +53,22 @@ public class Backpack extends VBox implements ReRenderable {
 				}
 			}
 		}
-		endTurnButton = new Button("End Turn", 64, 16);
-		endTurnButton.setOnAction(_ -> ButtonHandler.handleEndTurnButtonOnAction());
+		
+		getEndTurnButton();
+		endTurnButton.setOnMouseClicked(event -> {
+			if (event.getButton() == MouseButton.PRIMARY) {
+				SfxPlayer.play(Sfx.SELECT);
+				ButtonHandler.handleEndTurnButtonOnAction();
+			}
+		});
+	
 		
 		backpack = new ImageView(new Image(ClassLoader.getSystemResource(String.format("picture/backpack.png")).toString()));
 		backpackResize();
 		
 		stackPane = new StackPane();
 		stackPane.setAlignment(Pos.CENTER);
+		stackPane.setPrefHeight(350);
 		stackPane.getChildren().setAll(backpack,gridPane);
 		setAlignment(Pos.CENTER);
 		getChildren().setAll(stackPane, endTurnButton);
@@ -78,7 +92,7 @@ public class Backpack extends VBox implements ReRenderable {
 		}
 		
 		backpack.setFitWidth((Slot.getSize() * (maxX - minX + 1)) + 150);
-		backpack.setFitHeight((Slot.getSize() * (maxY - minY + 1)) + 100);
+		backpack.setFitHeight((Slot.getSize() * (maxY - minY + 1)) + 56);
 	}
   	
 	@Override
@@ -111,6 +125,42 @@ public class Backpack extends VBox implements ReRenderable {
 		} catch (Exception e) {
 			return false;
 		}
+	}
+	
+	public void levelUp() {
+		levelup=true;
+		for (int y = 0; y < HEIGHT; y++) {
+			for (int x = 0; x < WIDTH; x++) {
+				if (isAdjacent(x, y) && !slots[y][x].isUnlocked()) {
+					slots[y][x].highlightUpgrade();
+				}
+			}
+		}
+	}
+	
+	public void finishUpgrade() {
+		levelup=false;
+		unlockedLeft=3;
+		for (int y = 0; y < HEIGHT; y++) {
+			for (int x = 0; x < WIDTH; x++) {
+				if (!slots[y][x].isUnlocked()) {
+					slots[y][x].removeUpgradeAnimation();
+				}
+			}
+		}
+	}
+	
+	private boolean isAdjacent(int x, int y) {
+		if (x+1<WIDTH)
+			if (slots[y][x+1].isUnlocked()) return true;
+		if (x-1>=0)
+			if (slots[y][x-1].isUnlocked()) return true;
+		if (y+1<HEIGHT)
+			if (slots[y+1][x].isUnlocked()) return true;
+		if (y-1>=0)
+			if (slots[y-1][x].isUnlocked()) return true;
+		
+		return false;
 	}
 
 	public boolean placeItem(int gridX, int gridY, Item item) {
@@ -231,8 +281,28 @@ public class Backpack extends VBox implements ReRenderable {
 		return instance;
 	}
 
+	public boolean isLevelup() {
+		return levelup;
+	}
+
+	public void setLevelup(boolean levelup) {
+		this.levelup = levelup;
+	}
+
 	public static void setInstance(Backpack instance) {
 		Backpack.instance = instance;
 	}
 
+	public int getUnlockedLeft() {
+		return unlockedLeft;
+	}
+
+	public void setUnlockedLeft(int unlockedLeft) {
+		this.unlockedLeft = unlockedLeft;
+	}
+
+	public GameButton getEndTurnButton() {
+		if (endTurnButton==null) endTurnButton = new GameButton(121, 50, GameButtonType.END);
+		return endTurnButton;
+	}
 }

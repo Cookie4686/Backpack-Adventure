@@ -1,6 +1,7 @@
 package game;
 
 import entities.Player;
+import game.backpack.Backpack;
 import interfaces.ReRenderable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -73,8 +74,13 @@ public class GameHeader extends HBox implements ReRenderable {
 		mapButton.setPreserveRatio(true);
 		mapButton.setFitHeight(50);
 		mapButton.setOnMouseClicked(_ -> {
-			SfxPlayer.play(Sfx.MAP);
-			ButtonHandler.handleBackpackButtonOnAction();
+			if (Backpack.getInstance().isLevelup()) {
+				SfxPlayer.play(Sfx.DENY);
+			}
+			else {
+				SfxPlayer.play(Sfx.MAP);
+				ButtonHandler.handleBackpackButtonOnAction();
+			}
 		});
 
 		

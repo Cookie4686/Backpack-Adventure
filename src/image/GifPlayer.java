@@ -54,12 +54,18 @@ public class GifPlayer {
 	));
 	
 	private static ArrayList<Image> selectIcons = new ArrayList<Image>(Arrays.asList(
-			new Image(ClassLoader.getSystemResource("picture/select1.png").toString()),
-			new Image(ClassLoader.getSystemResource("picture/select2.png").toString()),
-			new Image(ClassLoader.getSystemResource("picture/select3.png").toString()),
-			new Image(ClassLoader.getSystemResource("picture/select4.png").toString()),
-			new Image(ClassLoader.getSystemResource("picture/select1.png").toString())
-		));
+		new Image(ClassLoader.getSystemResource("picture/select1.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/select2.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/select3.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/select4.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/select1.png").toString())
+	));
+	
+	private static ArrayList<Image> highlightIcons = new ArrayList<Image>(Arrays.asList(
+		new Image(ClassLoader.getSystemResource("picture/highlight1.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/highlight2.png").toString()),
+		new Image(ClassLoader.getSystemResource("picture/highlight1.png").toString())
+	));
 	
 	private static ArrayList<Image> menuBackground = new ArrayList<Image>(Arrays.asList(
 		new Image(ClassLoader.getSystemResource("theme/menuBg1.png").toString()),
@@ -140,5 +146,9 @@ public class GifPlayer {
 
 	public static ArrayList<Image> getSelectIcons() {
 		return selectIcons;
+	}
+
+	public static ArrayList<Image> getHighlightIcons() {
+		return highlightIcons;
 	}
 }

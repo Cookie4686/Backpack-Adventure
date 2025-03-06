@@ -22,6 +22,7 @@ public class GameButton extends StackPane {
 		typeMap.put(GameButtonType.CLOSE, new Resource("closeButton1.png", "closeButton2.png"));
 		typeMap.put(GameButtonType.MENU, new Resource("menuButton1.png", "menuButton2.png"));
 		typeMap.put(GameButtonType.EXIT, new Resource("exitButton1.png", "exitButton2.png"));
+		typeMap.put(GameButtonType.END, new Resource("endButton1.png", "endButton2.png"));
 	}
 
 	public GameButton(double width, double height, GameButtonType type) {

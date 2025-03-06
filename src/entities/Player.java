@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 import component.EnergyOrb;
 import component.HpBar;
-import game.GameBottom;
 import game.backpack.Backpack;
 import game.item.Item;
 import game.util.Effect;
@@ -61,7 +60,6 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		this.imageView = new ImageView();
 		
 		initialize(null);
-
 
 		text = new Text();
 		idleFrames = new ArrayList<Image>(Arrays.asList(
@@ -306,6 +304,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 			xp -= maxXp;
 			maxXp *= 1.2;
 			fixedMaxHp *= 1.15;
+			Backpack.getInstance().levelUp();
 			System.out.println("lv up");
 		}
 		this.xp = xp < 0 ? 0 : xp;

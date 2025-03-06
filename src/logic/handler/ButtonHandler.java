@@ -5,6 +5,8 @@ import game.GameTop;
 import game.backpack.Backpack;
 import game.backpack.Slot;
 import logic.FightLogic;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class ButtonHandler {
 	public static void handleBackpackButtonOnAction() {
@@ -18,9 +20,14 @@ public class ButtonHandler {
 	}
 
 	public static void handleSlotOnClicked(Slot slot) {
-		if (!slot.isUnlocked() && !FightLogic.getInstance().isInFight()) {
+		if (!slot.isUnlocked() && !FightLogic.getInstance().isInFight() && slot.isUnlockAble()) {
 			slot.setUnlocked(true);
+			SfxPlayer.play(Sfx.SELECT);
+			Backpack.getInstance().setUnlockedLeft(Backpack.getInstance().getUnlockedLeft() - 1);
 			Backpack.getInstance().backpackResize();
+			if (Backpack.getInstance().getUnlockedLeft() == 0) {
+				Backpack.getInstance().finishUpgrade();
+			}
 		}
 	}
 
