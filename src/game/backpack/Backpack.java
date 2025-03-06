@@ -185,4 +185,9 @@ public class Backpack extends VBox implements ReRenderable {
 		}
 		return instance;
 	}
+
+	public static void setInstance(Backpack instance) {
+		Backpack.instance = instance;
+	}
+	
 }

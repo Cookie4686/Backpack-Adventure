@@ -123,4 +123,8 @@ public class GameBottom extends HBox implements ReRenderable {
              }
          }
      }
+
+	public static void setInstance(GameBottom instance) {
+		GameBottom.instance = instance;
+	}
 }

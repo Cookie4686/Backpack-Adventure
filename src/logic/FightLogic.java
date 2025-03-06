@@ -279,4 +279,8 @@ public class FightLogic {
 	public void setTotalXp(int totalXp) {
 		this.totalXp = totalXp;
 	}
+
+	public static void setInstance(FightLogic instance) {
+		FightLogic.instance = instance;
+	}
 }

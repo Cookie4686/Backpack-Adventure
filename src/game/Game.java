@@ -100,4 +100,8 @@ public class Game extends StackPane {
 		}
 		return instance;
 	}
+
+	public static void setInstance(Game instance) {
+		Game.instance = instance;
+	}
 }

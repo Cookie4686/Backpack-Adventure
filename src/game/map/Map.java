@@ -136,6 +136,10 @@ public class Map extends GridPane {
 	private int random(int limit) {
 		return new Random().nextInt(0, limit);
 	}
+	
+	public void createNewMap() {
+		instance = new Map(10, 10);
+	}
 
 	public MapSquare[][] getSquares() {
 		return squares;
@@ -146,5 +150,9 @@ public class Map extends GridPane {
 			instance = new Map(10, 10);
 		}
 		return instance;
+	}
+
+	public static void setInstance(Map instance) {
+		Map.instance = instance;
 	}
 }

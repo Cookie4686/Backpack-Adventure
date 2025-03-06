@@ -106,4 +106,8 @@ public class GameLogic {
 		}
 		return instance;
 	}
+
+	public static void setInstance(GameLogic instance) {
+		GameLogic.instance = instance;
+	}
 }

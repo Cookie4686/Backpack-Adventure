@@ -88,4 +88,8 @@ public class GameTop extends HBox {
 		if (map == null) map = new StackPane();
 		return map;
 	}
+
+	public static void setInstance(GameTop instance) {
+		GameTop.instance = instance;
+	}
 }

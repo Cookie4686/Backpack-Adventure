@@ -61,4 +61,8 @@ public class GameHeader extends HBox implements ReRenderable {
 		}
 		return instance;
 	}
+
+	public static void setInstance(GameHeader instance) {
+		GameHeader.instance = instance;
+	}
 }

@@ -380,4 +380,8 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	public ArrayList<Image> getIdleFrames() {
 		return idleFrames;
 	}
+
+	public static void setInstance(Player instance) {
+		Player.instance = instance;
+	}
 }
