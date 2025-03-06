@@ -167,7 +167,17 @@ public class FightLogic {
 		} // TODO: implement
 		case ANGER		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case HEAL		-> e.setHp(e.getHp() + ef.getAmount());
-		case REGEN		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
+		case REGEN		-> {
+			if(e instanceof Player) findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
+			else {
+				for(Entity en : entities) {
+					if(en.getHp() > 0 && en != e) {
+						en.setHp(en.getHp() + ef.getAmount());
+						en.render();
+					}
+				}
+			}
+		}
 		default			-> {}
 		}
 	}

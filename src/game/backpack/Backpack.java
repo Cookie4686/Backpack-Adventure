@@ -10,8 +10,17 @@ import game.util.ItemPosition;
 import game.util.ItemRotation;
 import interfaces.ReRenderable;
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import logic.FightLogic;
 import logic.GameLogic;
 import logic.handler.ButtonHandler;
@@ -23,27 +32,64 @@ public class Backpack extends VBox implements ReRenderable {
 	private static Backpack instance;
 	public static final int WIDTH = 7, HEIGHT = 5;
 	private Slot[][] slots;
-
+	private StackPane stackPane;
 	private GridPane gridPane;
 	private Button endTurnButton;
+	private ImageView backpack;
 
 	public Backpack() {
 		super();
 		slots = new Slot[HEIGHT][WIDTH];
 		gridPane = new GridPane();
+		StackPane.setAlignment(gridPane, Pos.CENTER);
+		gridPane.setBorder(new Border(
+				new BorderStroke(Color.AQUA, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		gridPane.setAlignment(Pos.CENTER);
+		gridPane.setMaxSize(Slot.SIZE * WIDTH, Slot.SIZE * HEIGHT);
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				gridPane.add(slots[y][x] = new Slot(), x, y);
+				if ((0<y && 4>y) && (1<x && 5>x)) {
+					slots[y][x].setUnlocked(true);
+				}
 			}
 		}
 		endTurnButton = new Button("End Turn", 64, 16);
 		endTurnButton.setOnAction(_ -> ButtonHandler.handleEndTurnButtonOnAction());
+		
+		backpack = new ImageView(new Image(ClassLoader.getSystemResource(String.format("picture/backpack.png")).toString()));
+		backpackResize();
+		
+		stackPane = new StackPane();
+		stackPane.setBorder(new Border(
+				new BorderStroke(Color.BLUEVIOLET, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		stackPane.setAlignment(Pos.CENTER);
+		stackPane.getChildren().setAll(backpack,gridPane);
 		setAlignment(Pos.CENTER);
-		getChildren().setAll(gridPane, endTurnButton);
+		getChildren().setAll(stackPane, endTurnButton);
 		setSpacing(8);
 		render();
 	}
 
+	public void backpackResize() {
+		int minX = WIDTH, maxX = 0;
+		int minY = HEIGHT, maxY = 0;
+		
+		for (int y = 0; y < HEIGHT; y++) {
+			for (int x = 0; x < WIDTH; x++) {
+				if (slots[y][x].isUnlocked()) {
+					if (x<minX) minX=x;
+					if (x>maxX) maxX=x;
+					if (y<minY) minY=y;
+					if (y>maxY) maxY=y;					
+				}
+			}
+		}
+		
+		backpack.setFitWidth((Slot.SIZE * (maxX - minX + 1)) + 150);
+		backpack.setFitHeight((Slot.SIZE * (maxY - minY + 1)) + 100);
+	}
+  	
 	@Override
 	public void render() {
 		for (Slot[] row : slots) {
@@ -134,6 +180,10 @@ public class Backpack extends VBox implements ReRenderable {
 			removeItem(slot.getItem());
 		}
 		slot.setItem(item);
+	}
+
+	public GridPane getGridPane() {
+		return gridPane;
 	}
 
 	public void removeItem(Item item) {

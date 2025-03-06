@@ -2,6 +2,7 @@ package logic.handler;
 
 import entities.Player;
 import game.GameTop;
+import game.backpack.Backpack;
 import game.backpack.Slot;
 import logic.FightLogic;
 
@@ -19,6 +20,7 @@ public class ButtonHandler {
 	public static void handleSlotOnClicked(Slot slot) {
 		if (!slot.isUnlocked() && !FightLogic.getInstance().isInFight()) {
 			slot.setUnlocked(true);
+			Backpack.getInstance().backpackResize();
 		}
 	}
 

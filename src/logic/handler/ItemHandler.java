@@ -4,6 +4,7 @@ import java.util.Random;
 
 import entities.Player;
 import game.Game;
+import game.GameHeader;
 import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.item.Item;
@@ -176,8 +177,8 @@ public class ItemHandler {
 			diffY = currentItem.getRotation() == ItemRotation.HORIZONTAL ? currentItem.getDiffY() : 0;
 			maxHeight = Game.getInstance().getHeight() - currentItem.getHeight() + diffY;
 		}
-		slotPaneX = Backpack.getInstance().localToParent(Backpack.getInstance().getBoundsInLocal()).getMinX();
-		slotPaneY = Backpack.getInstance().localToParent(Backpack.getInstance().getBoundsInLocal()).getMinY();
+		slotPaneX = Backpack.getInstance().getGridPane().localToScene(Backpack.getInstance().getGridPane().getBoundsInLocal()).getMinX();
+		slotPaneY = Backpack.getInstance().getGridPane().localToScene(Backpack.getInstance().getGridPane().getBoundsInLocal()).getMinY() - GameHeader.getInstance().getHeight();
 	}
 
 	private static void setTranslateNoOffScreenX(double val) {

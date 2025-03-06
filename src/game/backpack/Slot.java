@@ -27,7 +27,7 @@ public class Slot extends Pane implements ReRenderable {
 			if(event.getButton() == MouseButton.PRIMARY) ButtonHandler.handleSlotOnClicked(this);
 		});
 	}
-
+	
 	@Override
 	public void render() {
 		if (isUnlocked) {
@@ -36,8 +36,6 @@ public class Slot extends Pane implements ReRenderable {
 			} else {
 				setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 			}
-		} else {
-			setBackground(new Background(new BackgroundFill(Color.LIGHTCORAL, CornerRadii.EMPTY, Insets.EMPTY)));
 		}
 	}
 
