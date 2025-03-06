@@ -40,6 +40,7 @@ public class GameScene {
 		}
 		
         Fader.getBlackout().toFront();
+        MenuScene.setInMenuScene(false);
         MenuScene.setGameStarted(true);
 		BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
 	}
