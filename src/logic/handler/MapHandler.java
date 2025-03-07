@@ -11,7 +11,6 @@ import game.dialog.GameDialog;
 import game.map.Map;
 import game.map.MapMarker;
 import game.map.MapSquare;
-import game.util.Position;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -29,7 +28,7 @@ public class MapHandler {
 			SfxPlayer.play(Sfx.DENY);
 			return;
 		}
-		
+
 		switch (square.getMarker()) {
 		case FINAL		-> {
 			GameLogic.getInstance().setDoctor(false);
@@ -130,14 +129,12 @@ public class MapHandler {
 					Player.getInstance().setHp(Player.getInstance().getHp() + 20);
 					SfxPlayer.play(Sfx.HEAL);
 					dialog.hide();
-					square.setMarker(MapMarker.PATH);
 				});
 				dialog.addOption("Yes. (add 5 maxHealth)", _ -> {
 					Map.getInstance().setNoHeal(false);
 					Player.getInstance().setMaxHp(Player.getInstance().getMaxHp() + 5);
 					SfxPlayer.play(Sfx.VAMPIRIC);
 					dialog.hide();
-					square.setMarker(MapMarker.PATH);
 				});
 				dialog.addOption("Nah I'm good", _ -> {
 					SfxPlayer.play(Sfx.SELECT);
@@ -145,6 +142,12 @@ public class MapHandler {
 					dialog.hide();
 				});
 				dialog.show();
+				doctor.setOnMouseClicked(_ -> {
+					if (!Map.getInstance().isNoHeal()) {
+						dialog.show();
+					}
+				});
+
 			});
 			pause.play();
 			break;
