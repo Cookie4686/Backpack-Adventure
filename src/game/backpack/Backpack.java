@@ -144,7 +144,14 @@ public class Backpack extends VBox implements ReRenderable {
 
 	public void finishUpgrade() {
 		levelup = false;
-		unlockedLeft = 3;
+		int remainingSlot = 0;
+		for (Slot[] slots2 : slots) {
+			for (Slot slot : slots2) {
+				if (slot.isUnlocked() == false)
+					remainingSlot++;
+			}
+		}
+		unlockedLeft = remainingSlot < 3 ? remainingSlot : 3;
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				if (!slots[y][x].isUnlocked()) {

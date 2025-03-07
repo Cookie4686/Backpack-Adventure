@@ -47,6 +47,7 @@ public abstract class Being extends VBox implements ReRenderable {
 
 	public void setHp(int hp) {
 		this.hp = hp < 0 ? 0 : (hp > maxHp ? maxHp : hp);
+		hpBar.setHpBar();
 	}
 
 	public int getMaxHp() {

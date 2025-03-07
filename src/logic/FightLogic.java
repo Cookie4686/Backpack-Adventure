@@ -22,9 +22,9 @@ public class FightLogic {
 	private static FightLogic instance;
 	private boolean isInFight, isPTurn;
 	private Entity target;
-	private ArrayList<Entity> entities,entitiesFromSummon;
+	private ArrayList<Entity> entities, entitiesFromSummon;
 	private int totalXp;
-	
+
 	public FightLogic() {
 		this.isInFight = false;
 		this.isPTurn = true;
@@ -102,10 +102,13 @@ public class FightLogic {
 				GameLogic.getInstance().gameOver();
 			} else {
 				e.setNextTurn(e.getAllAttributes().get(rand.nextInt(e.getAllAttributes().size())));
-				if((e.getNextTurn().getType().equals(EffectType.HEAL) && e.getHp() > e.getMaxHp() * 0.6) || (e.getNextTurn().getType().equals(EffectType.SUMMONER) && FightLogic.getInstance().getEntities().size() + FightLogic.getInstance().getEntitiesFromSummon().size() > 3)) {
+				if ((e.getNextTurn().getType().equals(EffectType.HEAL) && e.getHp() > e.getMaxHp() * 0.6)
+						|| (e.getNextTurn().getType().equals(EffectType.SUMMONER)
+								&& FightLogic.getInstance().getEntities().size()
+										+ FightLogic.getInstance().getEntitiesFromSummon().size() > 3)) {
 					e.setNextTurn(e.getAllAttributes().get(0));
 				}
-				if(!e.getName().equals("demon")) {					
+				if (!"demon".equals(e.getName())) {
 					EffectIcon newIcon = IconLoader.newIcon(e.getNextTurn().getType(), e.getNextTurn().getAmount());
 					int index = e.getChildren().indexOf(e.getNextTurnMove());
 					Platform.runLater(() -> {
@@ -165,15 +168,16 @@ public class FightLogic {
 			Entity newEntity = EntityLoader.newEntity(EntitySpawner.getNameFromTier(EntitySpawner.getTier()));
 			entitiesFromSummon.add(newEntity);
 			totalXp += newEntity.getXp();
-			
+
 		} // TODO: implement
 		case ANGER		-> findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 		case HEAL		-> e.setHp(e.getHp() + ef.getAmount());
 		case REGEN		-> {
-			if(e instanceof Player) findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
+			if (e instanceof Player)
+				findEffectAndAdd(e.getAllEffect(), ef.getType(), ef.getAmount(), e);
 			else {
-				for(Entity en : entities) {
-					if(en.getHp() > 0 && en != e) {
+				for (Entity en : entities) {
+					if (en.getHp() > 0 && en != e) {
 						en.setHp(en.getHp() + ef.getAmount());
 						en.render();
 					}
