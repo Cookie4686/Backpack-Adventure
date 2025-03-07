@@ -106,6 +106,7 @@ public class MapHandler {
 				Npc doctor = Npc.getInstance();
 				doctor.setAlignment(Pos.BOTTOM_LEFT);
 				GameBottom.getInstance().getEnemyBox().getChildren().add(doctor);
+				BackgroundSongPlayer.fight(4);
 			});
 			pause.play();
 			break;
