@@ -5,7 +5,6 @@ import application.Main;
 import game.Game;
 import game.GameHeader;
 import game.item.Item;
-import game.itemGenerator.ItemRandomizer;
 import game.itemGenerator.ResourceLoader;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

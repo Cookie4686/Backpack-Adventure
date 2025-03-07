@@ -2,7 +2,9 @@ package game.itemGenerator;
 
 import java.util.Random;
 
+import entities.Player;
 import game.util.ItemTier;
+import logic.GameLogic;
 
 public class ItemRandomizer {
 	private static String[] common = { "Apple", "Beggar Hood", "Book", "Bread", "Cake", "Circle Wood Shield",
@@ -42,18 +44,21 @@ public class ItemRandomizer {
 
 	private static ItemTier getTier() {
 		// TODO: Connect luck and floor system
-		int luckNumber = new Random().nextInt(0, 1001);
+		int luckNumber = new Random().nextInt(Player.getInstance().getLuck()*20 + (200*GameLogic.getInstance().getCurrentFloor()), 1001);
 		if (luckNumber <= 666)
 			return ItemTier.COMMON;// 66.6%
 		if (luckNumber <= 790)
 			return ItemTier.UNCOMMON;// 15.3%
 		if (luckNumber <= 910)
 			return ItemTier.RARE;// 9%
-		if (luckNumber == 911)
+		if (luckNumber == 931)
 			return ItemTier.GOD;// 0.1%
-		if (luckNumber <= 971)
-			return ItemTier.EPIC;// 6%
-		return ItemTier.LEGENDARY;// 3%
+		if (GameLogic.getInstance().getCurrentFloor()==0) {
+			return ItemTier.COMMON;
+		}
+		if (luckNumber <= 981)
+			return ItemTier.EPIC;// 4%
+		return ItemTier.LEGENDARY;// 2%
 	}
 
 	public static String getNameFromTier(ItemTier itemTier) {
