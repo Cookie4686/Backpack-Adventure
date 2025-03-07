@@ -74,8 +74,9 @@ public class GameLogic {
 		FightLogic.getInstance().setInFight(true);
 		Game.getInstance().initializeFight();
 
-		BackgroundSongPlayer.fight(currentFloor);
-
+		if(!boss) BackgroundSongPlayer.fight(currentFloor);
+		else if(boss) BackgroundSongPlayer.fight(3);
+		else BackgroundSongPlayer.fight(4);
 		// Spawn enemies
 		Random rand = new Random();
 		int enUb = 3 + currentFloor;
