@@ -18,6 +18,7 @@ import javafx.util.Duration;
 import logic.FightLogic;
 import logic.GameLogic;
 import scene.GameScene;
+import sound.BackgroundSongPlayer;
 import sound.Sfx;
 import sound.SfxPlayer;
 
@@ -36,6 +37,7 @@ public class MapHandler {
 				GameLogic.getInstance().initializeFight();
 			});
 			pause.play();
+			break;
 		}
 		case MONSTER	-> {
 			GameLogic.getInstance().setDoctor(false);
@@ -48,6 +50,7 @@ public class MapHandler {
 				GameLogic.getInstance().initializeFight();
 			});
 			pause.play();
+			break;
 		}
 		case DOOR		-> {
 			GameLogic.getInstance().setDoctor(false);
@@ -64,8 +67,10 @@ public class MapHandler {
 				GameBottom.getInstance().getEnemyBox().getChildren().clear();
 				Game.getInstance().initializeFight();
 				generateNewMap();
+				BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
 			});
 			pause.play();
+			break;
 		}
 		// Test dialog
 		case PLAYER		-> {
@@ -87,6 +92,7 @@ public class MapHandler {
 				System.out.println("op3");
 			});
 			dialog.show();
+			break;
 		}
 		
 		case DOCTOR		-> {
@@ -102,6 +108,7 @@ public class MapHandler {
 				GameBottom.getInstance().getEnemyBox().getChildren().add(doctor);
 			});
 			pause.play();
+			break;
 		}
 		default			-> {}
 		}

@@ -105,15 +105,17 @@ public class FightLogic {
 				if((e.getNextTurn().getType().equals(EffectType.HEAL) && e.getHp() > e.getMaxHp() * 0.6) || (e.getNextTurn().getType().equals(EffectType.SUMMONER) && FightLogic.getInstance().getEntities().size() + FightLogic.getInstance().getEntitiesFromSummon().size() > 3)) {
 					e.setNextTurn(e.getAllAttributes().get(0));
 				}
-				EffectIcon newIcon = IconLoader.newIcon(e.getNextTurn().getType(), e.getNextTurn().getAmount());
-				int index = e.getChildren().indexOf(e.getNextTurnMove());
-				Platform.runLater(() -> {
-					if (index != -1) {
-						e.getChildren().set(index, newIcon);
-					}
-				});
-				e.setNextTurnMove(newIcon);
-				e.getNextTurnMove().getFadeIn().play();
+				if(!e.getName().equals("demon")) {					
+					EffectIcon newIcon = IconLoader.newIcon(e.getNextTurn().getType(), e.getNextTurn().getAmount());
+					int index = e.getChildren().indexOf(e.getNextTurnMove());
+					Platform.runLater(() -> {
+						if (index != -1) {
+							e.getChildren().set(index, newIcon);
+						}
+					});
+					e.setNextTurnMove(newIcon);
+					e.getNextTurnMove().getFadeIn().play();
+				}
 			}
 		}
 	}
