@@ -113,13 +113,18 @@ public class MapHandler {
 				dialog.setText("Greetingss traveller, would you like some healing <3");
 				dialog.addOption("Sure thing (heal 20 health)", _ -> {
 					Player.getInstance().setHp(Player.getInstance().getHp() + 20);
+					SfxPlayer.play(Sfx.HEAL);
 					dialog.hide();
+					square.setMarker(MapMarker.PATH);
 				});
 				dialog.addOption("Yes. (add 5 maxHealth)", _ -> {
 					Player.getInstance().setMaxHp(Player.getInstance().getMaxHp() + 5);
+					SfxPlayer.play(Sfx.VAMPIRIC);
 					dialog.hide();
+					square.setMarker(MapMarker.PATH);
 				});
 				dialog.addOption("Nah I'm good", _ -> {
+					SfxPlayer.play(Sfx.SELECT);
 					dialog.hide();
 				});
 				dialog.show();
