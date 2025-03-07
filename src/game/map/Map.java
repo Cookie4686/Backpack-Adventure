@@ -155,12 +155,12 @@ public class Map extends GridPane {
 
 	private boolean recur(int x, int y, boolean[][] visited, Position targetPosition) {
 		switch (squares[x][y].getMarker()) {
-		case PLAYER, PATH	-> {}
-		case DOCTOR			-> {
+		case PATH					-> {}
+		case PLAYER, DOOR, DOCTOR	-> {
 			if (x == targetPosition.getX() && y == targetPosition.getY())
 				return true;
 		}
-		default				-> { return x == targetPosition.getX() && y == targetPosition.getY(); }
+		default						-> { return x == targetPosition.getX() && y == targetPosition.getY(); }
 		}
 
 		if (x + 1 != width && !visited[x + 1][y]) {
@@ -209,7 +209,7 @@ public class Map extends GridPane {
 		for (int x = 0; x < Map.getInstance().getMapWidth(); x++) {
 			for (int y = 0; y < Map.getInstance().getMapHeight(); y++) {
 				if (squares[x][y].getMarker() == MapMarker.PLAYER) {
-					if (noHeal) {
+					if (!GameLogic.getInstance().isDoctor() && !noHeal) {
 						squares[x][y].setMarker(MapMarker.DOCTOR);
 						return;
 					}

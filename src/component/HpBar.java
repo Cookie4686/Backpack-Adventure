@@ -77,6 +77,7 @@ public class HpBar extends StackPane implements ReRenderable {
 	public void setHpBar() {
 		// to prevent bugs when multiple thread are modifying hpBar
 		if (thread != null && thread.isAlive()) {
+			hpBar.setProgress(realProgress);
 			thread.interrupt();
 		}
 		final int hp = being.getHp() > being.getMaxHp() ? being.getMaxHp() : being.getHp(); // no overheal show

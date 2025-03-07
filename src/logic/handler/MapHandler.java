@@ -121,20 +121,20 @@ public class MapHandler {
 				GameDialog dialog = new GameDialog("Healer");
 				dialog.setText("Greetingss traveller, would you like some healing <3");
 				dialog.addOption("Sure thing (heal 20 health)", _ -> {
-					Map.getInstance().setNoHeal(false);
+					Map.getInstance().setNoHeal(true);
 					Player.getInstance().setHp(Player.getInstance().getHp() + 20);
 					SfxPlayer.play(Sfx.HEAL);
 					dialog.hide();
 				});
 				dialog.addOption("Yes. (add 5 maxHealth)", _ -> {
-					Map.getInstance().setNoHeal(false);
+					Map.getInstance().setNoHeal(true);
 					Player.getInstance().setMaxHp(Player.getInstance().getMaxHp() + 5);
 					SfxPlayer.play(Sfx.VAMPIRIC);
 					dialog.hide();
 				});
 				dialog.addOption("Nah I'm good", _ -> {
 					SfxPlayer.play(Sfx.SELECT);
-					Map.getInstance().setNoHeal(true);
+					Map.getInstance().setNoHeal(false);
 					dialog.hide();
 				});
 				dialog.show();
@@ -143,7 +143,6 @@ public class MapHandler {
 						dialog.show();
 					}
 				});
-
 			});
 			pause.play();
 		}

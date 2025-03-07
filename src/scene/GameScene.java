@@ -19,41 +19,42 @@ public class GameScene {
 		VBox root = new VBox();
 		VBox.setVgrow(Game.getInstance(), Priority.ALWAYS);
 		root.getChildren().setAll(GameHeader.getInstance(), Game.getInstance());
-		
+
 		ImageView biome;
-		if(GameLogic.getInstance().getCurrentFloor() == 0) {
+		if (GameLogic.getInstance().getCurrentFloor() == 0) {
 			biome = new ImageView(new Image(ClassLoader.getSystemResource("theme/biome1.png").toString()));
 		} else if (GameLogic.getInstance().getCurrentFloor() == 1) {
 			biome = new ImageView(new Image(ClassLoader.getSystemResource("theme/biome2.png").toString()));
 		} else {
 			biome = new ImageView(new Image(ClassLoader.getSystemResource("theme/biome3.png").toString()));
 		}
-		
-		
-		
+
 		Main.root.getChildren().setAll(biome, root);
 		if (!Main.root.getChildren().contains(Fader.getBlackout())) {
-	        Main.root.getChildren().add(Fader.getBlackout());
-	        Fader.getBlackout().toBack();
-	    }
-		
+			Main.root.getChildren().add(Fader.getBlackout());
+			Fader.getBlackout().toBack();
+		}
 
 		if (!MenuScene.hasGameStarted() && GameLogic.getInstance().getCurrentFloor() == 0) {
 			Item[] items = new Item[3];
-			items[0]= ResourceLoader.newItem("Apple");
-			items[1]= ResourceLoader.newItem("Cloth Armor");
-			items[2]= ResourceLoader.newItem("Bread Loaf");
+			items[0] = ResourceLoader.newItem("Fire Knife");
+			items[1] = ResourceLoader.newItem("Cloth Armor");
+			items[2] = ResourceLoader.newItem("Bread Loaf");
 			Game.getInstance().addItemsToGame(items);
 		}
-		
-        Fader.getBlackout().toFront();
-        MenuScene.setInMenuScene(false);
-        MenuScene.setGameStarted(true);
-		if(!FightLogic.getInstance().isInFight()) BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
+
+		Fader.getBlackout().toFront();
+		MenuScene.setInMenuScene(false);
+		MenuScene.setGameStarted(true);
+		if (!FightLogic.getInstance().isInFight())
+			BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
 		else {
-			if(GameLogic.getInstance().isBoss()) BackgroundSongPlayer.fight(3);
-			else if(!GameLogic.getInstance().isBoss() && !GameLogic.getInstance().isDoctor()) BackgroundSongPlayer.fight(GameLogic.getInstance().getCurrentFloor());
-			else BackgroundSongPlayer.fight(4);
+			if (GameLogic.getInstance().isBoss())
+				BackgroundSongPlayer.fight(3);
+			else if (!GameLogic.getInstance().isBoss() && !GameLogic.getInstance().isDoctor())
+				BackgroundSongPlayer.fight(GameLogic.getInstance().getCurrentFloor());
+			else
+				BackgroundSongPlayer.fight(4);
 		}
 	}
 }
