@@ -58,6 +58,7 @@ public class MapHandler {
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
 			pause.setOnFinished(_ -> {
+				GameBottom.getInstance().getEnemyBox().getChildren().clear();
 				Game.getInstance().initializeFight();
 				generateNewMap();
 			});
@@ -90,6 +91,7 @@ public class MapHandler {
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
 			pause.setOnFinished(_ -> {
+				Game.getInstance().initializeFight();
 				Npc doctor = Npc.getInstance();
 				doctor.setAlignment(Pos.BOTTOM_LEFT);
 				GameBottom.getInstance().getEnemyBox().getChildren().add(doctor);

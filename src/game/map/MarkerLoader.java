@@ -12,7 +12,7 @@ public class MarkerLoader {
 		markerMap.put(MapMarker.MONSTER, new Resource("icons/normalSkull.png"));
 		markerMap.put(MapMarker.PLAYER, new Resource("picture/knightIcon.png"));
 		markerMap.put(MapMarker.DOCTOR, new Resource("icons/doctor.png"));
-		markerMap.put(MapMarker.FINAL, new Resource("icons/skull.png"));
+		markerMap.put(MapMarker.FINAL, new Resource("icons/bossSkull.png"));
 	}
 
 	public static Image getImage(MapMarker marker) {
