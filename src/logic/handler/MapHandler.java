@@ -1,7 +1,6 @@
 package logic.handler;
 
 import application.Fader;
-import application.Main;
 import entities.Npc;
 import entities.Player;
 import game.Game;
@@ -15,11 +14,8 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.util.Duration;
-import logic.FightLogic;
 import logic.GameLogic;
 import scene.GameScene;
-import sound.Sfx;
-import sound.SfxPlayer;
 
 public class MapHandler {
 	public static void handleMouseClicked(MapSquare square) {

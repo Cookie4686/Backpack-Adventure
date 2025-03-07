@@ -156,6 +156,16 @@ public class GameLogic {
 			}
 		}
 	}
+	
+	public boolean isLimitReached() {
+		int count=0;
+		Backpack.getInstance().render();
+		for (Item item:inventory) {
+			if (item.isNewItem()) count++;
+			if (count>=3) return true;
+		}
+		return false; //can pick only 3 items
+	}
 
 	public static void  updateBackpackItems() {
 		for (Item item : GameLogic.getInstance().getInventory()) {
