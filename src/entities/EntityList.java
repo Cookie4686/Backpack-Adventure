@@ -258,7 +258,7 @@ private static HashMap<String, Resource> entityMap;
                 ))));
 
         entityMap.put("hellBeast", new Resource(() -> new Entity("hellBeast", 250, 90, MobTier.A,
-                        new ArrayList<>(Arrays.asList(new Effect(1,EffectType.SUMMONER), new Effect(50, EffectType.VAMPIRIC)))),
+                        new ArrayList<>(Arrays.asList(new Effect(50, EffectType.VAMPIRIC), new Effect(1,EffectType.SUMMONER)))),
                 new ArrayList<>(Arrays.asList(
                         "frames/hellBeast1.png",
                         "frames/hellBeast2.png",

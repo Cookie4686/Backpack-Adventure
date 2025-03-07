@@ -47,7 +47,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	public Player() {
 		super();
 		this.name = "Player";
-		this.hp = this.maxHp = this.fixedMaxHp = 100;
+		this.hp = this.maxHp = this.fixedMaxHp = 500000;
 		this.shield = 0;
 		this.xp = 0;
 		this.maxXp = 100;
@@ -298,7 +298,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	public void setXp(int xp) {
 		while (xp > maxXp) {
 			xp -= maxXp;
-			maxXp *= 1.2;
+			maxXp *= 2;
 			fixedMaxHp *= 1.15;
 			Backpack.getInstance().levelUp();
 			System.out.println("lv up");

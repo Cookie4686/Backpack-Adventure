@@ -102,10 +102,11 @@ public class FightLogic {
 				GameLogic.getInstance().gameOver();
 			} else {
 				e.setNextTurn(e.getAllAttributes().get(rand.nextInt(e.getAllAttributes().size())));
+				System.out.println((FightLogic.getInstance().getEntities().size() + FightLogic.getInstance().getEntitiesFromSummon().size()) > 3);
 				if ((e.getNextTurn().getType().equals(EffectType.HEAL) && e.getHp() > e.getMaxHp() * 0.6)
 						|| (e.getNextTurn().getType().equals(EffectType.SUMMONER)
-								&& FightLogic.getInstance().getEntities().size()
-										+ FightLogic.getInstance().getEntitiesFromSummon().size() > 3)) {
+								&& ((FightLogic.getInstance().getEntities().size()
+										+ FightLogic.getInstance().getEntitiesFromSummon().size()) > 4))) {
 					e.setNextTurn(e.getAllAttributes().get(0));
 				}
 				if (!"demon".equals(e.getName())) {
@@ -144,7 +145,7 @@ public class FightLogic {
 			being.takeDamage((effect.getAmount()));
 			being.setMaxHp(being.getMaxHp() - 10);
 		}
-		case POISON	-> { being.takeDamage((effect.getAmount() + 10)); }
+		case POISON	-> { being.takeDamage((effect.getAmount())); }
 		case REGEN	-> {
 			SfxPlayer.play(Sfx.HEAL);
 			being.setHp(being.getHp() + effect.getAmount());
