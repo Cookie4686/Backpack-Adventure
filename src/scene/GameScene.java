@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import logic.FightLogic;
 import logic.GameLogic;
 import sound.BackgroundSongPlayer;
 
@@ -28,6 +29,8 @@ public class GameScene {
 		} else {
 			biome = new ImageView(new Image(ClassLoader.getSystemResource("theme/biome3.png").toString()));
 		}
+		
+		
 		
 		Main.root.getChildren().setAll(biome, root);
 		if (!Main.root.getChildren().contains(Fader.getBlackout())) {
@@ -50,6 +53,11 @@ public class GameScene {
         Fader.getBlackout().toFront();
         MenuScene.setInMenuScene(false);
         MenuScene.setGameStarted(true);
-		BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
+        if (FightLogic.getInstance().isInFight()) {
+        	BackgroundSongPlayer.fight(GameLogic.getInstance().getCurrentFloor());
+		}
+        else {
+        	BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
+        }
 	}
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import component.EnergyOrb;
 import component.HpBar;
+import game.GameHeader;
 import game.backpack.Backpack;
 import game.item.Item;
 import game.util.Effect;
@@ -302,7 +303,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 			System.out.println("lv up");
 		}
 		this.xp = xp < 0 ? 0 : xp;
-		// render();
+		GameHeader.getInstance().render();
 	}
 
 	public int getMaxXp() {

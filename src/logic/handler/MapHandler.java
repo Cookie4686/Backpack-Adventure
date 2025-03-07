@@ -5,6 +5,7 @@ import entities.Npc;
 import entities.Player;
 import game.Game;
 import game.GameBottom;
+import game.GameHeader;
 import game.GameTop;
 import game.dialog.GameDialog;
 import game.map.Map;
@@ -37,6 +38,7 @@ public class MapHandler {
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
 			pause.setOnFinished(_ -> {
+				Map.getInstance().removePlayerMark();
 				square.getChildren().clear();
 				square.setMarker(MapMarker.PLAYER);
 				Map.getInstance().render();
@@ -79,6 +81,7 @@ public class MapHandler {
 				Game.getInstance().initializeFight();
 				generateNewMap();
 				BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
+				GameHeader.getInstance().render();
 			});
 			pause.play();
 			break;
