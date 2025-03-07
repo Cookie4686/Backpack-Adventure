@@ -20,12 +20,12 @@ public class Map extends GridPane {
 		setPickOnBounds(false);
 		this.width = width;
 		this.height = height;
-		squares = new MapSquare[height][width];
+		squares = new MapSquare[width][height];
 		marks = new ArrayList<Position>();
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				squares[y][x] = new MapSquare();
-				add(squares[y][x], x, y);
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				squares[x][y] = new MapSquare();
+				add(squares[x][y], x, y);
 			}
 		}
 		// for setting marker
@@ -100,7 +100,6 @@ public class Map extends GridPane {
 
 	private void buildPath(Position start, Position end) {
 		Position prev = new Position(start.getX(), start.getY());
-
 		while (start.getX() != end.getX() || start.getY() != end.getY()) {
 			if (isAdjacent(prev, start))
 				break;
@@ -128,19 +127,71 @@ public class Map extends GridPane {
 		return start;
 	}
 
+	public boolean isReachable(MapSquare targetSquare) {
+		// DFS
+		boolean[][] visited = new boolean[width][height];
+		Position targetPosition = null, currentPosition = null;
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				if (squares[x][y].getMarker() == null) {
+					visited[x][y] = true;
+				}
+				if (squares[x][y] == targetSquare) {
+					targetPosition = new Position(x, y);
+				}
+				if (squares[x][y].getMarker() == MapMarker.PLAYER) {
+					currentPosition = new Position(x, y);
+				}
+			}
+		}
+		if (targetPosition != null && currentPosition != null) {
+			return recur(currentPosition.getX(), currentPosition.getY(), visited, targetPosition);
+		}
+		return false;
+	}
+
+	private boolean recur(int x, int y, boolean[][] visited, Position targetPosition) {
+		switch (squares[x][y].getMarker()) {
+		case PLAYER, PATH	-> {}
+		default				-> { return x == targetPosition.getX() && y == targetPosition.getY(); }
+		}
+
+		if (x + 1 != width && !visited[x + 1][y]) {
+			visited[x + 1][y] = true;
+			if (recur(x + 1, y, visited, targetPosition))
+				return true;
+		}
+		if (x != 0 && !visited[x - 1][y]) {
+			visited[x - 1][y] = true;
+			if (recur(x - 1, y, visited, targetPosition))
+				return true;
+		}
+		if (y + 1 != height && !visited[x][y + 1]) {
+			visited[x][y + 1] = true;
+			if (recur(x, y + 1, visited, targetPosition))
+				return true;
+		}
+		if (y != 0 && !visited[x][y - 1]) {
+			visited[x][y - 1] = true;
+			if (recur(x, y - 1, visited, targetPosition))
+				return true;
+		}
+		return false;
+	}
+
 	public void render() {
 		MapSquare square;
 		boolean top, right, bottom, left;
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				square = squares[y][x];
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				square = squares[x][y];
 				if (square.getMarker() == null) {
 					square.render(true, true, true, true);
 				} else {
-					top = y != 0 && squares[y - 1][x].getMarker() != null;
-					right = x + 1 != width && squares[y][x + 1].getMarker() != null;
-					bottom = y + 1 != height && squares[y + 1][x].getMarker() != null;
-					left = x != 0 && squares[y][x - 1].getMarker() != null;
+					top = y != 0 && squares[x][y - 1].getMarker() != null;
+					right = x + 1 != width && squares[x + 1][y].getMarker() != null;
+					bottom = y + 1 != height && squares[x][y + 1].getMarker() != null;
+					left = x != 0 && squares[x - 1][y].getMarker() != null;
 					square.render(top, right, bottom, left);
 				}
 			}

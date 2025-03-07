@@ -19,6 +19,7 @@ import scene.GameScene;
 
 public class MapHandler {
 	public static void handleMouseClicked(MapSquare square) {
+		System.out.println(Map.getInstance().isReachable(square));
 		switch (square.getMarker()) {
 		case FINAL 		->{
 			GameLogic.getInstance().setBoss(true);
