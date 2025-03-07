@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-
+import application.Fader;
 import application.Main;
 import entities.Entity;
 import entities.EntityLoader;
@@ -19,7 +19,9 @@ import game.itemGenerator.ItemRandomizer;
 import game.itemGenerator.ResourceLoader;
 import interfaces.ReStatable;
 import interfaces.StatUpdatable;
+import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,10 +29,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import scene.MenuScene;
+import scene.popup.EndingPopup;
 import scene.popup.SettingPopup;
 import sound.BackgroundSongPlayer;
 import sound.Sfx;
@@ -126,8 +130,48 @@ public class GameLogic {
 				iterator.remove();
 			}
 		}
-		
-		if (FightLogic.getInstance().isInFight()) {
+		if (boss) {
+			Platform.runLater(() -> {
+				StackPane root = (StackPane) Main.root;
+				Rectangle blackout = Fader.getBlackout();
+				Rectangle blackScreen = Fader.getBlackScreen();
+				root.getChildren().remove(blackout);
+				root.getChildren().add(blackout);
+				blackout.toFront();
+				System.out.println("Blackout moved to front!");
+
+				FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), blackout);
+				fadeOut.setFromValue(0.0);
+				fadeOut.setToValue(1.0);
+
+				FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), blackout);
+				fadeIn.setFromValue(1.0);
+				fadeIn.setToValue(0.0);
+
+				fadeOut.setOnFinished(_ -> {
+					BackgroundSongPlayer.floor(3);
+					PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
+					pause.setOnFinished(_ -> {
+						root.getChildren().remove(blackScreen);
+						EndingPopup.getInstance().show();
+						root.getChildren().remove(blackout);
+						root.getChildren().add(blackout);
+						blackout.toFront();
+						fadeIn.play();
+					});
+					pause.play();
+					root.getChildren().clear();
+					root.getChildren().add(blackScreen);
+				});
+				fadeIn.setOnFinished(_ -> Platform.runLater(() -> {
+					blackout.toBack();
+					System.out.println("Blackout moved to back!");
+				}));
+				fadeOut.play();
+			});
+			
+		}
+		else if (FightLogic.getInstance().isInFight()) {
 			Player.getInstance().setXp(Player.getInstance().getXp() + FightLogic.getInstance().getTotalXp());
 			FightLogic.getInstance().setTotalXp(0);
 			

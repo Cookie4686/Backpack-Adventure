@@ -194,6 +194,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
     }
     
     public void moveLeftAndBack() {
+    	if(GameLogic.getInstance().isBoss()) return;
         double currentTranslateX = imageView.getTranslateX();
         Timeline moveTimeline = new Timeline();
         Timeline moveTimeline2 = new Timeline();

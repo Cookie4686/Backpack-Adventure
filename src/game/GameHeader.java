@@ -115,6 +115,24 @@ public class GameHeader extends HBox implements ReRenderable {
 		}
 		return instance;
 	}
+	
+	
+
+	public ImageView getMapButton() {
+		return mapButton;
+	}
+
+	public void setMapButton(ImageView mapButton) {
+		this.mapButton = mapButton;
+	}
+
+	public ImageView getSettingButton() {
+		return settingButton;
+	}
+
+	public void setSettingButton(ImageView settingButton) {
+		this.settingButton = settingButton;
+	}
 
 	public static void setInstance(GameHeader instance) {
 		GameHeader.instance = instance;

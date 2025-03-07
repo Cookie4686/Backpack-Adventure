@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import logic.FightLogic;
 import logic.GameLogic;
 import sound.BackgroundSongPlayer;
 
@@ -50,6 +51,11 @@ public class GameScene {
         Fader.getBlackout().toFront();
         MenuScene.setInMenuScene(false);
         MenuScene.setGameStarted(true);
-		BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
+		if(!FightLogic.getInstance().isInFight()) BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
+		else {
+			if(GameLogic.getInstance().isBoss()) BackgroundSongPlayer.fight(3);
+			else if(!GameLogic.getInstance().isBoss() && !GameLogic.getInstance().isDoctor()) BackgroundSongPlayer.fight(GameLogic.getInstance().getCurrentFloor());
+			else BackgroundSongPlayer.fight(4);
+		}
 	}
 }

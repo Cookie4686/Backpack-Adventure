@@ -66,7 +66,7 @@ public class CharacterPopup extends Popup {
 			}
 		});
 
-		bottomBox.getChildren().setAll(closeButton, journeyButton);
+		bottomBox.getChildren().addAll(closeButton, journeyButton);
 		bottomBox.setSpacing(30);
 	}
 

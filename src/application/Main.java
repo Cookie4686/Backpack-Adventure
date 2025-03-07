@@ -13,7 +13,7 @@ import scene.MenuScene;
 public class Main extends Application {
 	public static StackPane root;
 	public static MediaPlayer mediaPlayer;
-
+	public static Stage stage;
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// Screen screen = Screen.getPrimary();
@@ -21,6 +21,7 @@ public class Main extends Application {
 		// double screenWidth = bounds.getWidth();
 		// double screenHeight = bounds.getHeight();
 		// double aspectRatio = screenWidth / screenHeight;
+		stage = primaryStage;
 		root = new StackPane();
 		root.setAlignment(Pos.CENTER);
 		root.prefWidthProperty().bind(primaryStage.widthProperty());
