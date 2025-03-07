@@ -6,7 +6,6 @@ import java.util.Iterator;
 import application.Main;
 import game.backpack.Slot;
 import game.item.Item;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -23,14 +22,13 @@ public class Game extends StackPane {
 		super();
 		setAlignment(Pos.TOP_LEFT);
 
-		VBox vBox = new VBox();
-		vBox.setSpacing(16);
+		VBox root = new VBox();
+		root.setSpacing(16);
 		Region region = new Region();
-		VBox.setVgrow(GameBottom.getInstance(), Priority.NEVER);
 		VBox.setVgrow(region, Priority.ALWAYS);
-		vBox.getChildren().setAll(GameTop.getInstance(), region, GameBottom.getInstance());
+		root.getChildren().setAll(GameTop.getInstance(), region, GameBottom.getInstance());
 
-		getChildren().setAll(vBox);
+		getChildren().setAll(root);
 
 		// important for calculating height
 		this.layout();
@@ -47,13 +45,11 @@ public class Game extends StackPane {
 	}
 
 	public void addItemsToGame(Item... items) {
-		Platform.runLater(() -> {
-			getChildren().addAll(items);
-			for (Item item : items) {
-				item.getFadeIn().play();
-				item.moveUpAndDown();
-			}
-		});
+		getChildren().addAll(items);
+		for (Item item : items) {
+			item.getFadeIn().play();
+			item.moveUpAndDown();
+		}
 		final int row = 2, itemPerRow = items.length / row, spacingX = 8, spacingY = 4;
 		double prevHeight = GameTop.getInstance().getHeight();
 		for (int i = 0; i < row; i++) {
@@ -91,6 +87,9 @@ public class Game extends StackPane {
 					iterator.remove();
 				}
 			}
+		}
+		for (Item item:GameLogic.getInstance().getInventory()) {
+			item.setNewItem(false);
 		}
 	}
 

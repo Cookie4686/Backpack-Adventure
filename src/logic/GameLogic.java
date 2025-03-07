@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+<<<<<<< HEAD
 import application.Fader;
+||||||| 0d8f3a0
+
+=======
+>>>>>>> 578a9af5a378fb76c443012d3cad9f7abe04a583
 import application.Main;
 import entities.Entity;
 import entities.EntityLoader;
@@ -57,20 +62,20 @@ public class GameLogic {
 		boss = false;
 		doctor = false;
 		inventory = new ArrayList<Item>();
-		
+
 		announce = new StackPane();
 		announce.setAlignment(Pos.CENTER);
-		
+
 		ImageView dimmer = new ImageView(new Image(ClassLoader.getSystemResource("picture/dimmer.png").toString()));
 		Text levelUp = new Text("Level UP");
 		levelUp.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 64));
 		levelUp.setFill(Color.WHITE);
-		
+
 		announce.getChildren().addAll(dimmer, levelUp);
-		
+
 		levelupSfx = new MediaPlayer(new Media(ClassLoader.getSystemResource("sfx/levelup.mp3").toString()));
 		levelupSfx.volumeProperty().bind(SettingPopup.getInstance().getSfxSlider().valueProperty());
-		levelupSfx.setOnEndOfMedia(()-> {
+		levelupSfx.setOnEndOfMedia(() -> {
 			Main.root.getChildren().remove(announce);
 		});
 	}
@@ -80,17 +85,22 @@ public class GameLogic {
 		FightLogic.getInstance().setInFight(true);
 		Game.getInstance().initializeFight();
 
-		if(boss) BackgroundSongPlayer.fight(3);
-		else if(!boss && !doctor) BackgroundSongPlayer.fight(currentFloor);
-		else BackgroundSongPlayer.fight(4);
+		System.out.println("current floor : " + currentFloor);
+		if (boss)
+			BackgroundSongPlayer.fight(3);
+		else if (!boss && !doctor)
+			BackgroundSongPlayer.fight(currentFloor);
+		else
+			BackgroundSongPlayer.fight(4);
 		// Spawn enemies
 		Random rand = new Random();
 		int enUb = 3 + currentFloor;
 		int enLb = 1 + currentFloor;
 		int amount = rand.nextInt((enUb - enLb) + 1) + enLb;
-		if(!boss) {
-			for(int i = 0 ; i < amount ; i++) {			
-				FightLogic.getInstance().getEntities().add(EntityLoader.newEntity(EntitySpawner.getNameFromTier(EntitySpawner.getTier())));
+		if (!boss) {
+			for (int i = 0; i < amount; i++) {
+				FightLogic.getInstance().getEntities()
+						.add(EntityLoader.newEntity(EntitySpawner.getNameFromTier(EntitySpawner.getTier())));
 			}
 		} else {
 			FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("demon"));
@@ -100,7 +110,7 @@ public class GameLogic {
 //		FightLogic.getInstance().getEntities().add(EntityLoader.newEntity("frog"));
 		FightLogic.getInstance().setTarget(FightLogic.getInstance().getEntities().getFirst());
 		GameBottom.getInstance().render();
-		for(Entity en : FightLogic.getInstance().getEntities()) {
+		for (Entity en : FightLogic.getInstance().getEntities()) {
 			FightLogic.getInstance().setTotalXp(FightLogic.getInstance().getTotalXp() + en.getXp());
 		}
 		// Move into fightlogic
@@ -174,28 +184,27 @@ public class GameLogic {
 		else if (FightLogic.getInstance().isInFight()) {
 			Player.getInstance().setXp(Player.getInstance().getXp() + FightLogic.getInstance().getTotalXp());
 			FightLogic.getInstance().setTotalXp(0);
-			
+			System.out.println("floor : " + currentFloor);
 			BackgroundSongPlayer.floor(currentFloor);
 			Player.getInstance().getAllEffect().clear();
-			
-			
+
 			Item[] items = new Item[5];
 			for (int i = 0; i < 5; i++) {
 				items[i] = ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
 			}
 			Game.getInstance().addItemsToGame(items);
-			
+
 			Player.getInstance().reStatBeforeUpdate();
 			GameLogic.updateBackpackItems();
 			Player.getInstance().render();
-			
+
 			System.out.println(Player.getInstance().getHp());
 			Player.getInstance().setShield(0);
 			Player.getInstance().setHp(Player.getInstance().getHp());
 			FightLogic.getInstance().setInFight(false);
 			GameHeader.getInstance().render();
 			Backpack.getInstance().render();
-			
+
 			if (Backpack.getInstance().isLevelup()) {
 				levelupSfx.stop();
 				Main.root.getChildren().add(announce);
@@ -204,7 +213,19 @@ public class GameLogic {
 		}
 	}
 
-	public static void  updateBackpackItems() {
+	public boolean isLimitReached() {
+		int count = 0;
+		Backpack.getInstance().render();
+		for (Item item : inventory) {
+			if (item.isNewItem())
+				count++;
+			if (count >= 3)
+				return true;
+		}
+		return false; // can pick only 3 items
+	}
+
+	public static void updateBackpackItems() {
 		for (Item item : GameLogic.getInstance().getInventory()) {
 			if (item instanceof ReStatable) {
 				((ReStatable) item).reStatBeforeUpdate();
@@ -212,12 +233,14 @@ public class GameLogic {
 		}
 		for (Item item : GameLogic.getInstance().getInventory()) {
 			if (item instanceof StatUpdatable) {
-				System.out.println("is instance");
 				((StatUpdatable) item).statUpdate();
 			}
 		}
+		for (Item item : GameLogic.getInstance().getInventory()) {
+			item.updateTooltip();
+		}
 	}
-	
+
 	public ArrayList<Item> getInventory() {
 		return inventory;
 	}
@@ -264,6 +287,5 @@ public class GameLogic {
 	public void setDoctor(boolean doctor) {
 		this.doctor = doctor;
 	}
-	
-	
+
 }

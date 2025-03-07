@@ -30,9 +30,9 @@ public class Popup extends BorderPane {
 
 		HBox topBox = new HBox();
 		topBox.setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
-		topBox.translateYProperty().bind(topBox.heightProperty().divide(-2));
 		topBox.setPadding(new Insets(8));
 		topBox.setBackground(new Background(new BackgroundFill(Color.GRAY, new CornerRadii(4), Insets.EMPTY)));
+		topBox.translateYProperty().bind(topBox.heightProperty().divide(-2));
 		Text titleText = new Text(title);
 		titleText.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 48));
 		topBox.getChildren().setAll(titleText);

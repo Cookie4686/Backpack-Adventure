@@ -27,6 +27,7 @@ public abstract class Item extends Pane {
 	protected int width, height;
 	protected boolean isDiagonal;
 	protected FadeTransition fadeIn;
+	private boolean newItem;
 	// used for dragging, rotating
 	private double diffX, diffY;
 	private ImageView imageView;
@@ -43,6 +44,7 @@ public abstract class Item extends Pane {
 		this.height = height;
 		isDiagonal = true;
 		this.tier = tier;
+		this.newItem = true;
 	}
 
 	public Item(String name, String detail, int width, int height, ItemTier tier) {
@@ -53,6 +55,7 @@ public abstract class Item extends Pane {
 		this.height = height;
 		isDiagonal = false;
 		this.tier = tier;
+		this.newItem = true;
 	}
 
 	public void initialize(Image image) {
@@ -223,4 +226,11 @@ public abstract class Item extends Pane {
 		this.currentTranslateY = currentTranslateY;
 	}
 
+	public boolean isNewItem() {
+		return newItem;
+	}
+
+	public void setNewItem(boolean newItem) {
+		this.newItem = newItem;
+	}
 }

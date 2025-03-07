@@ -1,10 +1,10 @@
-package game.map;
+package game.util;
 
-public class MarkPosition {
-	private int x;
-	private int y;
-	
-	public MarkPosition(int x, int y) {
+public class Position {
+	private int x, y;
+
+	public Position(int x, int y) {
+		super();
 		this.x = x;
 		this.y = y;
 	}

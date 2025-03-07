@@ -5,8 +5,6 @@ import java.util.Random;
 import game.util.ItemTier;
 
 public class ItemRandomizer {
-	private static int begin = 0;
-	private static int end = 1001;
 	private static String[] common = { "Apple", "Beggar Hood", "Book", "Bread", "Cake", "Circle Wood Shield",
 			"Cloth Armor", "Coconut", "Coins", "Damage Relic I", "Empty Bottle", "Empty Bronze Cup", "Empty Potion I",
 			"Empty Potion II", "Empty Potion III", "Empty Wooden Cup", "Energy Drink I", "Fire Knife", "Fire Potion I",
@@ -44,8 +42,7 @@ public class ItemRandomizer {
 
 	private static ItemTier getTier() {
 		// TODO: Connect luck and floor system
-		int luckNumber = new Random().nextInt(begin, end);
-
+		int luckNumber = new Random().nextInt(0, 1001);
 		if (luckNumber <= 666)
 			return ItemTier.COMMON;// 66.6%
 		if (luckNumber <= 790)

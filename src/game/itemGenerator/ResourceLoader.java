@@ -14,8 +14,8 @@ public class ResourceLoader {
 
 class Resource {
 	private Supplier<Item> supplier;
-	private String path;
 	private Image image;
+	private String path;
 
 	public Resource(Supplier<Item> supplier, String path) {
 		this.supplier = supplier;

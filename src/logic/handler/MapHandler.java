@@ -1,7 +1,6 @@
 package logic.handler;
 
 import application.Fader;
-import application.Main;
 import entities.Npc;
 import entities.Player;
 import game.Game;
@@ -15,17 +14,17 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.util.Duration;
-import logic.FightLogic;
 import logic.GameLogic;
 import scene.GameScene;
 import sound.BackgroundSongPlayer;
-import sound.Sfx;
-import sound.SfxPlayer;
 
 public class MapHandler {
 	public static void handleMouseClicked(MapSquare square) {
+		if (!Map.getInstance().isReachable(square)) {
+			return;
+		}
 		switch (square.getMarker()) {
-		case FINAL 		->{
+		case FINAL		-> {
 			GameLogic.getInstance().setDoctor(false);
 			Player.getInstance().moveLeftAndBack();
 			Fader.fadeOutAndIn();
@@ -55,7 +54,7 @@ public class MapHandler {
 		case DOOR		-> {
 			GameLogic.getInstance().setDoctor(false);
 			Player.getInstance().moveLeftAndBack();
-			if(GameLogic.getInstance().getCurrentSubFloor() == 2) {
+			if (GameLogic.getInstance().getCurrentSubFloor() == 2) {
 				GameLogic.getInstance().setCurrentFloor(GameLogic.getInstance().getCurrentFloor() + 1);
 				GameLogic.getInstance().setCurrentSubFloor(0);
 			} else {
@@ -94,9 +93,10 @@ public class MapHandler {
 			dialog.show();
 			break;
 		}
-		
+
 		case DOCTOR		-> {
-			if(GameLogic.getInstance().isDoctor()) break;
+			if (GameLogic.getInstance().isDoctor())
+				break;
 			GameLogic.getInstance().setDoctor(true);
 			Player.getInstance().moveLeftAndBack();
 			Fader.fadeOutAndIn();

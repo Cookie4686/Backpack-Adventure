@@ -61,9 +61,15 @@ public class ItemHandler {
 
 	public static void handleMouseRelease() {
 		if (!FightLogic.getInstance().isInFight() && currentItem != null) {
+			Backpack.getInstance().removeItem(currentItem);
+			if (GameLogic.getInstance().isLimitReached()) {
+				setRandomOffGridLocation(currentItem);
+				SfxPlayer.play(Sfx.DENY);
+			} else {
+				calcGrid();
+				placeItem();
+			}
 			currentItem.getImageView().setCursor(Cursor.OPEN_HAND);
-			calcGrid();
-			placeItem();
 			currentItem = null;
 		}
 	}
@@ -163,8 +169,11 @@ public class ItemHandler {
 			diffY = currentItem.getRotation() == ItemRotation.HORIZONTAL ? currentItem.getDiffY() : 0;
 			maxHeight = Game.getInstance().getHeight() - currentItem.getHeight() + diffY;
 		}
-		slotPaneX = Backpack.getInstance().getGridPane().localToScene(Backpack.getInstance().getGridPane().getBoundsInLocal()).getMinX();
-		slotPaneY = Backpack.getInstance().getGridPane().localToScene(Backpack.getInstance().getGridPane().getBoundsInLocal()).getMinY() - GameHeader.getInstance().getHeight();
+		slotPaneX = Backpack.getInstance().getGridPane()
+				.localToScene(Backpack.getInstance().getGridPane().getBoundsInLocal()).getMinX();
+		slotPaneY = Backpack.getInstance().getGridPane()
+				.localToScene(Backpack.getInstance().getGridPane().getBoundsInLocal()).getMinY()
+				- GameHeader.getInstance().getHeight();
 	}
 
 	private static void setTranslateNoOffScreenX(double val) {

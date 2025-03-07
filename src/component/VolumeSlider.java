@@ -30,7 +30,7 @@ public class VolumeSlider extends HBox {
 		imageView.setCursor(Cursor.HAND);
 		imageView.setPickOnBounds(true);
 		imageView.setOnMouseClicked(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) {	
+			if (event.getButton() == MouseButton.PRIMARY) {
 				if (slider.getValue() == 0) {
 					slider.setValue(lastValue);
 				} else {
@@ -38,7 +38,7 @@ public class VolumeSlider extends HBox {
 					slider.setValue(0);
 				}
 			}
-			
+
 		});
 		slider.valueProperty().addListener((_, _, newValue) -> {
 			calcIcon(imageView, newValue.doubleValue());
@@ -47,31 +47,31 @@ public class VolumeSlider extends HBox {
 		getChildren().setAll(imageView, slider);
 	}
 
-	private static void calcIcon(ImageView imageView, double value) {
+	private static void calcIcon(ImageView muteButtonView, double value) {
 		if (value >= 0.67) {
 			if (vol3 == null) {
 				vol3 = new Image(
 						ClassLoader.getSystemResource(String.format("component/%s", "volume3.png")).toString());
 			}
-			imageView.setImage(vol3);
+			muteButtonView.setImage(vol3);
 		} else if (value >= 0.33) {
 			if (vol2 == null) {
 				vol2 = new Image(
 						ClassLoader.getSystemResource(String.format("component/%s", "volume2.png")).toString());
 			}
-			imageView.setImage(vol2);
+			muteButtonView.setImage(vol2);
 		} else if (value > 0) {
 			if (vol1 == null) {
 				vol1 = new Image(
 						ClassLoader.getSystemResource(String.format("component/%s", "volume1.png")).toString());
 			}
-			imageView.setImage(vol1);
+			muteButtonView.setImage(vol1);
 		} else {
 			if (mute == null) {
 				mute = new Image(
 						ClassLoader.getSystemResource(String.format("component/%s", "volumeX.png")).toString());
 			}
-			imageView.setImage(mute);
+			muteButtonView.setImage(mute);
 		}
 	}
 

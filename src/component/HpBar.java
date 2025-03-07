@@ -16,13 +16,13 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class HpBar extends StackPane implements ReRenderable {
+	private static int SIZE = 12;
 	private static Image heartImage;
 	private static ColorAdjust shieldAdjust;
-	private static int SIZE = 12;
 	private Being being;
 	private ProgressBar hpBar;
 	private double realProgress;
-	private ImageView imageView;
+	private ImageView heartImageView;
 	private Text hpBarText, shieldText;
 
 	public HpBar(Being being) {
@@ -57,11 +57,11 @@ public class HpBar extends StackPane implements ReRenderable {
 		shieldText = new Text();
 		shieldText.setFont(Font.font("Courier New", FontWeight.NORMAL, SIZE * 1.5));
 
-		imageView = new ImageView(heartImage);
-		imageView.setFitWidth(SIZE * 2.5);
-		imageView.setFitHeight(SIZE * 2.5);
+		heartImageView = new ImageView(heartImage);
+		heartImageView.setFitWidth(SIZE * 2.5);
+		heartImageView.setFitHeight(SIZE * 2.5);
 
-		heartPane.getChildren().setAll(imageView, shieldText);
+		heartPane.getChildren().setAll(heartImageView, shieldText);
 
 		setAlignment(heartPane, Pos.CENTER_LEFT);
 		getChildren().setAll(hpBar, hpBarText, heartPane);
@@ -78,9 +78,8 @@ public class HpBar extends StackPane implements ReRenderable {
 
 	public void setHpBar() {
 		// to prevent bugs when multiple thread are modifying hpBar
-		final double temp = realProgress;
 		final int hp = being.getHp() > being.getMaxHp() ? being.getMaxHp() : being.getHp(); // no overheal show
-
+		final double temp = realProgress;
 		realProgress = (double) hp / being.getMaxHp();
 		Thread thread = new Thread(() -> {
 			final int SMOOTHNESS = 50;
@@ -101,11 +100,11 @@ public class HpBar extends StackPane implements ReRenderable {
 
 	public void setShield() {
 		if (being.getShield() > 0) {
-			imageView.setEffect(shieldAdjust);
+			heartImageView.setEffect(shieldAdjust);
 			shieldText.setText(Integer.toString(being.getShield()));
 			shieldText.setVisible(true);
 		} else if (shieldText.isVisible()) {
-			imageView.setEffect(null);
+			heartImageView.setEffect(null);
 			shieldText.setVisible(false);
 		}
 	}

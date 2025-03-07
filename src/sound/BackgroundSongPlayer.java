@@ -70,8 +70,4 @@ public class BackgroundSongPlayer {
 			currentPlayer.stop();
 		}
 	}
-
-	public static MediaPlayer getCurrentPlayer() {
-		return currentPlayer;
-	}
 }

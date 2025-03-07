@@ -15,7 +15,7 @@ public class Effect {
 	}
 
 	public void setAmount(int amount) {
-		this.amount = amount;
+		this.amount = amount < 0 ? 0 : amount;
 	}
 
 	public EffectType getType() {
