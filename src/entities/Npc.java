@@ -12,23 +12,23 @@ import javafx.util.Duration;
 
 public class Npc extends VBox{
 	private ImageView imageView;
-	private ArrayList<Image> idleFrames;
+	private ArrayList<Image> idleframes;
 	private Timeline idleTimeline;
 	private static Npc instance;
 	
 	public Npc() {
 		imageView = new ImageView();
-		idleFrames = new ArrayList<Image>(Arrays.asList(
-			new Image(ClassLoader.getSystemResource("Frames/balancing1.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/balancing2.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/balancing3.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/balancing4.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/balancing5.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/balancing6.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/balancing7.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/balancing8.png").toString())
+		idleframes = new ArrayList<Image>(Arrays.asList(
+			new Image(ClassLoader.getSystemResource("frames/balancing1.png").toString()),
+			new Image(ClassLoader.getSystemResource("frames/balancing2.png").toString()),
+			new Image(ClassLoader.getSystemResource("frames/balancing3.png").toString()),
+			new Image(ClassLoader.getSystemResource("frames/balancing4.png").toString()),
+			new Image(ClassLoader.getSystemResource("frames/balancing5.png").toString()),
+			new Image(ClassLoader.getSystemResource("frames/balancing6.png").toString()),
+			new Image(ClassLoader.getSystemResource("frames/balancing7.png").toString()),
+			new Image(ClassLoader.getSystemResource("frames/balancing8.png").toString())
 		));
-		idleTimeline = createAnimation(idleFrames,0.15);
+		idleTimeline = createAnimation(idleframes,0.15);
 		idleTimeline.setCycleCount(Timeline.INDEFINITE);
 		idleTimeline.play();
 		this.getChildren().add(imageView);
