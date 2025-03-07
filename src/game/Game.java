@@ -92,6 +92,9 @@ public class Game extends StackPane {
 				}
 			}
 		}
+		for (Item item:GameLogic.getInstance().getInventory()) {
+			item.setNewItem(false);
+		}
 	}
 
 	public static Game getInstance() {

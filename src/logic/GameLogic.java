@@ -73,7 +73,8 @@ public class GameLogic {
 		GameBottom.getInstance().getEnemyBox().getChildren().clear();
 		FightLogic.getInstance().setInFight(true);
 		Game.getInstance().initializeFight();
-
+		
+		System.out.println("current floor : "+ currentFloor);
 		if(!boss) BackgroundSongPlayer.fight(currentFloor);
 		else if(boss) BackgroundSongPlayer.fight(3);
 		else BackgroundSongPlayer.fight(4);
@@ -128,7 +129,7 @@ public class GameLogic {
 		if (FightLogic.getInstance().isInFight()) {
 			Player.getInstance().setXp(Player.getInstance().getXp() + FightLogic.getInstance().getTotalXp());
 			FightLogic.getInstance().setTotalXp(0);
-			
+			System.out.println("floor : "+currentFloor);
 			BackgroundSongPlayer.floor(currentFloor);
 			Player.getInstance().getAllEffect().clear();
 			
