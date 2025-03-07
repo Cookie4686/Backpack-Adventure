@@ -3,7 +3,9 @@ package game.backpack;
 import game.item.Item;
 import image.GifPlayer;
 import interfaces.ReRenderable;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -13,6 +15,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import logic.handler.ButtonHandler;
 
 public class Slot extends StackPane implements ReRenderable {
@@ -75,7 +78,13 @@ public class Slot extends StackPane implements ReRenderable {
 		upgrade.stop();
 		if (!getChildren().contains(upgradeAnimation)) {
 			isUnlockable = true;
-			getChildren().add(upgradeAnimation);
+			PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
+			pause.setOnFinished(_ -> {				
+				Platform.runLater(() -> {				
+					getChildren().add(upgradeAnimation);
+				});
+			});
+			pause.play();
 		}
 		upgrade.play();
 	}

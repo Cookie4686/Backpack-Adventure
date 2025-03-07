@@ -142,8 +142,7 @@ public class GameLogic {
 				fadeIn.setToValue(0.0);
 
 				fadeOut.setOnFinished(_ -> {
-					BackgroundSongPlayer.floor(3);
-					PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
+					PauseTransition pause = new PauseTransition(Duration.seconds(2));
 					pause.setOnFinished(_ -> {
 						root.getChildren().remove(blackScreen);
 						GameOverPopup.getInstance().show();
@@ -193,9 +192,9 @@ public class GameLogic {
 				fadeIn.setToValue(0.0);
 
 				fadeOut.setOnFinished(_ -> {
-					BackgroundSongPlayer.floor(3);
-					PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
+					PauseTransition pause = new PauseTransition(Duration.seconds(4));
 					pause.setOnFinished(_ -> {
+						BackgroundSongPlayer.floor(3);
 						root.getChildren().remove(blackScreen);
 						EndingPopup.getInstance().show();
 						root.getChildren().remove(blackout);
