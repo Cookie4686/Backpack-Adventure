@@ -35,6 +35,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import scene.MenuScene;
 import scene.popup.EndingPopup;
+import scene.popup.GameOverPopup;
 import scene.popup.SettingPopup;
 import sound.BackgroundSongPlayer;
 import sound.Sfx;
@@ -123,6 +124,44 @@ public class GameLogic {
 			BackgroundSongPlayer.stop();
 			SfxPlayer.play(Sfx.GAMEOVER);
 			Player.getInstance().die();
+			Platform.runLater(() -> {
+				StackPane root = (StackPane) Main.root;
+				Rectangle blackout = Fader.getBlackout();
+				Rectangle blackScreen = Fader.getBlackScreen();
+				root.getChildren().remove(blackout);
+				root.getChildren().add(blackout);
+				blackout.toFront();
+				System.out.println("Blackout moved to front!");
+
+				FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), blackout);
+				fadeOut.setFromValue(0.0);
+				fadeOut.setToValue(1.0);
+
+				FadeTransition fadeIn = new FadeTransition(Duration.seconds(1), blackout);
+				fadeIn.setFromValue(1.0);
+				fadeIn.setToValue(0.0);
+
+				fadeOut.setOnFinished(_ -> {
+					BackgroundSongPlayer.floor(3);
+					PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
+					pause.setOnFinished(_ -> {
+						root.getChildren().remove(blackScreen);
+						GameOverPopup.getInstance().show();
+						root.getChildren().remove(blackout);
+						root.getChildren().add(blackout);
+						blackout.toFront();
+						fadeIn.play();
+					});
+					pause.play();
+					root.getChildren().clear();
+					root.getChildren().add(blackScreen);
+				});
+				fadeIn.setOnFinished(_ -> Platform.runLater(() -> {
+					blackout.toBack();
+					System.out.println("Blackout moved to back!");
+				}));
+				fadeOut.play();
+			});
 		}
 		// FightLogic.getInstance().setInFight(false);
 		System.out.println("over");

@@ -66,4 +66,14 @@ public abstract class Being extends VBox implements ReRenderable {
 	public void setAllEffect(ArrayList<Effect> allEffect) {
 		this.allEffect = allEffect;
 	}
+
+	public HpBar getHpBar() {
+		return hpBar;
+	}
+
+	public void setHpBar(HpBar hpBar) {
+		this.hpBar = hpBar;
+	}
+	
+	
 }

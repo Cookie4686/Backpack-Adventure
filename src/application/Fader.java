@@ -76,11 +76,16 @@ public class Fader {
 				pause.play();
 			});
 			fadeIn.setOnFinished(_ -> Platform.runLater(() -> {
+				Player.getInstance().getHpBar().setVisible(true);
+				Player.getInstance().getEnergyOrb().setVisible(true);
+				Player.getInstance().getHpBar().render();
+				Player.getInstance().getEnergyOrb().render();
 				blackout.toBack();
 				System.out.println("Blackout moved to back!");
 			}));
 			fadeOut.play();
-			if (!MenuScene.isInMenuScene()) Player.getInstance().moveLeftAndBack();
+			Player.getInstance().getHpBar().setVisible(false);
+			Player.getInstance().getEnergyOrb().setVisible(false);
 		});
 	}
 
