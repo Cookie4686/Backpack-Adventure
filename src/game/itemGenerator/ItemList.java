@@ -86,7 +86,7 @@ public class ItemList {
 		itemMap.put("Wide Dagger", new Resource(() -> new IncreaseCostWeapon("Wide Dagger", "Wide blade designed for powerful slashes.", new ArrayList<Effect>(), 12, 0, 1, 1, 1, ItemTier.COMMON), "Items/WideDagger.png"));
 		
 		
-//		DamageItem(String name, String detail, ArrayList<Effect> effects, int costActivate, boolean isAoE, int width, int height, ItemTier tier)
+//		DamageItem(String name, String detail, ArrayList<Effect> effects, int damage, boolean isAoE, int width, int height, ItemTier tier)
 		itemMap.put("Bomb", new Resource(() -> new DamageItem("Bomb", "Explosion BOOM!!", new ArrayList<Effect>(Arrays.asList(new Effect(30, EffectType.DAMAGE))), 1, true, 1, 1, ItemTier.UNCOMMON), "Items/Bomb.png"));
 		itemMap.put("Circular Blade", new Resource(() -> new DamageItem("Circular Blade", "A razor-sharp rotating disc.", new ArrayList<Effect>(Arrays.asList(new Effect(40, EffectType.DAMAGE))), 1, false, 1, 1, ItemTier.UNCOMMON), "Items/CircularBlade.png"));
 		itemMap.put("Fire Ball", new Resource(() -> new DamageItem("Fire Ball", "Scorching enemy with intense flames.", new ArrayList<Effect>(Arrays.asList(new Effect(30, EffectType.DAMAGE), new Effect(10, EffectType.FIRE))), 0, false, 1, 1, ItemTier.UNCOMMON), "Items/FireBall.png"));
@@ -104,7 +104,7 @@ public class ItemList {
 		itemMap.put("Poison Potion III", new Resource(() -> new DamageItem("Poison Potion III", "A vile concoction brewed with deadly toxins.", new ArrayList<Effect>(Arrays.asList(new Effect(40, EffectType.POISON))), 1, true, 1, 1, ItemTier.UNCOMMON), "Items/PoisonPotion3.png"));
 		itemMap.put("Poison Potion IV", new Resource(() -> new DamageItem("Poison Potion IV", "A vile concoction brewed with deadly toxins.", new ArrayList<Effect>(Arrays.asList(new Effect(80, EffectType.POISON))), 1, false, 1, 1, ItemTier.RARE), "Items/PoisonPotion4.png"));
 		itemMap.put("Poison Potion V", new Resource(() -> new DamageItem("Poison Potion V", "A vile concoction brewed with deadly toxins.", new ArrayList<Effect>(Arrays.asList(new Effect(160, EffectType.POISON))), 1, false, 1, 1, ItemTier.EPIC), "Items/PoisonPotion5.png"));
-		itemMap.put("Rock", new Resource(() -> new DamageItem("Rock", "A rock from around here.", new ArrayList<Effect>(), 0, false, 1, 1, ItemTier.COMMON), "Items/Rock.png"));
+		itemMap.put("Rock", new Resource(() -> new DamageItem("Rock", "A rock from around here.", new ArrayList<Effect>(Arrays.asList(new Effect(20, EffectType.DAMAGE))), 0, false, 1, 1, ItemTier.COMMON), "Items/Rock.png"));
 		
 		
 		

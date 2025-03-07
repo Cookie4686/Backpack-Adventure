@@ -13,7 +13,7 @@ import sound.SfxPlayer;
 
 public class Consumable extends ItemWithCost {
 	final private Effect effect;
-	private int costActivate, durability;
+	private int durability;
 
 	public Consumable(String name, String detail, int durability, Effect effect, int costActivate, int width,
 			int height, ItemTier tier) {
@@ -39,7 +39,7 @@ public class Consumable extends ItemWithCost {
 				effect.getType(), effect.getAmount(), Player.getInstance());
 		default						-> {}
 		}
-
+		updateTooltip();
 		if (getDurability() == 0) {
 			if (this instanceof FoodWithContainer) {
 				System.out.println("reset to " + ((FoodWithContainer) this).getContainer());
