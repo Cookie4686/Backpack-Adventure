@@ -25,6 +25,7 @@ public class MapHandler {
 	public static void handleMouseClicked(MapSquare square) {
 		switch (square.getMarker()) {
 		case FINAL 		->{
+			GameLogic.getInstance().setDoctor(false);
 			GameLogic.getInstance().setBoss(true);
 			Player.getInstance().moveLeftAndBack();
 			Fader.fadeOutAndIn();
@@ -37,6 +38,7 @@ public class MapHandler {
 			pause.play();
 		}
 		case MONSTER	-> {
+			GameLogic.getInstance().setDoctor(false);
 			Player.getInstance().moveLeftAndBack();
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
@@ -48,6 +50,7 @@ public class MapHandler {
 			pause.play();
 		}
 		case DOOR		-> {
+			GameLogic.getInstance().setDoctor(false);
 			Player.getInstance().moveLeftAndBack();
 			if(GameLogic.getInstance().getCurrentSubFloor() == 2) {
 				GameLogic.getInstance().setCurrentFloor(GameLogic.getInstance().getCurrentFloor() + 1);
@@ -87,6 +90,8 @@ public class MapHandler {
 		}
 		
 		case DOCTOR		-> {
+			if(GameLogic.getInstance().isDoctor()) break;
+			GameLogic.getInstance().setDoctor(true);
 			Player.getInstance().moveLeftAndBack();
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));

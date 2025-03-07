@@ -41,6 +41,7 @@ public class GameLogic {
 	private int currentFloor;
 	private int currentSubFloor;
 	private boolean boss;
+	private boolean doctor;
 	private ArrayList<Item> inventory;
 	private MediaPlayer levelupSfx;
 	private StackPane announce;
@@ -50,6 +51,7 @@ public class GameLogic {
 		currentFloor = 0;
 		currentSubFloor = 0;
 		boss = false;
+		doctor = false;
 		inventory = new ArrayList<Item>();
 		
 		announce = new StackPane();
@@ -74,8 +76,8 @@ public class GameLogic {
 		FightLogic.getInstance().setInFight(true);
 		Game.getInstance().initializeFight();
 
-		if(!boss) BackgroundSongPlayer.fight(currentFloor);
-		else if(boss) BackgroundSongPlayer.fight(3);
+		if(boss) BackgroundSongPlayer.fight(3);
+		else if(!boss && !doctor) BackgroundSongPlayer.fight(currentFloor);
 		else BackgroundSongPlayer.fight(4);
 		// Spawn enemies
 		Random rand = new Random();
@@ -209,6 +211,14 @@ public class GameLogic {
 
 	public void setBoss(boolean boss) {
 		this.boss = boss;
+	}
+
+	public boolean isDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(boolean doctor) {
+		this.doctor = doctor;
 	}
 	
 	
