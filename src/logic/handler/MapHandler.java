@@ -45,7 +45,6 @@ public class MapHandler {
 				GameLogic.getInstance().initializeFight();
 			});
 			pause.play();
-			break;
 		}
 		case MONSTER	-> {
 			GameLogic.getInstance().setDoctor(false);
@@ -61,7 +60,6 @@ public class MapHandler {
 				GameLogic.getInstance().initializeFight();
 			});
 			pause.play();
-			break;
 		}
 		case DOOR		-> {
 			GameLogic.getInstance().setDoctor(false);
@@ -83,7 +81,6 @@ public class MapHandler {
 				GameHeader.getInstance().render();
 			});
 			pause.play();
-			break;
 		}
 		// Test dialog
 		case PLAYER		-> {
@@ -102,7 +99,6 @@ public class MapHandler {
 				dialog.hide();
 			});
 			dialog.show();
-			break;
 		}
 
 		case DOCTOR		-> {
@@ -150,7 +146,6 @@ public class MapHandler {
 
 			});
 			pause.play();
-			break;
 		}
 		default			-> {}
 		}
