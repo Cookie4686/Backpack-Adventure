@@ -53,7 +53,7 @@ public class Weapon extends ItemWithCost implements ReStatable {
 		}
 
 		FightLogic.doDamage(damage, Player.getInstance(), FightLogic.getInstance().getTarget());
-
+		if(Player.getInstance().getHp() == 0) GameLogic.getInstance().gameOver();
 		for (Entity e : FightLogic.getInstance().getEntities()) {
 			if (e.getHp() > 0)
 				return;
