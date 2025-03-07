@@ -20,7 +20,9 @@ import sound.BackgroundSongPlayer;
 
 public class MapHandler {
 	public static void handleMouseClicked(MapSquare square) {
-		System.out.println(Map.getInstance().isReachable(square));
+		if (!Map.getInstance().isReachable(square)) {
+			return;
+		}
 		switch (square.getMarker()) {
 		case FINAL		-> {
 			GameLogic.getInstance().setDoctor(false);
