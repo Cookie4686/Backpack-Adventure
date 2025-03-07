@@ -29,7 +29,6 @@ public class Backpack extends VBox implements ReRenderable {
 	private static Backpack instance;
 	public static final int WIDTH = 7, HEIGHT = 5;
 	private Slot[][] slots;
-	private StackPane stackPane;
 	private GridPane gridPane;
 	private GameButton endTurnButton;
 	private ImageView backpack;
@@ -54,7 +53,7 @@ public class Backpack extends VBox implements ReRenderable {
 			}
 		}
 
-		getEndTurnButton();
+		endTurnButton = new GameButton(121, 50, GameButtonType.END);
 		endTurnButton.setOnMouseClicked(event -> {
 			if (event.getButton() == MouseButton.PRIMARY) {
 				SfxPlayer.play(Sfx.SELECT);
@@ -66,7 +65,7 @@ public class Backpack extends VBox implements ReRenderable {
 				new Image(ClassLoader.getSystemResource(String.format("picture/backpack.png")).toString()));
 		backpackResize();
 
-		stackPane = new StackPane();
+		StackPane stackPane = new StackPane();
 		stackPane.setAlignment(Pos.CENTER);
 		stackPane.setPrefHeight(350);
 		stackPane.getChildren().setAll(backpack, gridPane);
@@ -142,18 +141,6 @@ public class Backpack extends VBox implements ReRenderable {
 		}
 	}
 
-	public void finishUpgrade() {
-		levelup = false;
-		unlockedLeft = 3;
-		for (int y = 0; y < HEIGHT; y++) {
-			for (int x = 0; x < WIDTH; x++) {
-				if (!slots[y][x].isUnlocked()) {
-					slots[y][x].removeUpgradeAnimation();
-				}
-			}
-		}
-	}
-
 	private boolean isAdjacent(int x, int y) {
 		if (x + 1 < WIDTH && slots[y][x + 1].isUnlocked())
 			return true;
@@ -164,6 +151,20 @@ public class Backpack extends VBox implements ReRenderable {
 		if (y - 1 >= 0 && slots[y - 1][x].isUnlocked())
 			return true;
 		return false;
+	}
+
+	public void finishUpgrade() {
+		levelup = false;
+		int remainingSlot = 0;
+		for (int y = 0; y < HEIGHT; y++) {
+			for (int x = 0; x < WIDTH; x++) {
+				if (!slots[y][x].isUnlocked()) {
+					slots[y][x].removeUpgradeAnimation();
+					remainingSlot++;
+				}
+			}
+		}
+		unlockedLeft = remainingSlot < 3 ? remainingSlot : 3;
 	}
 
 	public boolean placeItem(int gridX, int gridY, Item item) {
@@ -305,8 +306,6 @@ public class Backpack extends VBox implements ReRenderable {
 	}
 
 	public GameButton getEndTurnButton() {
-		if (endTurnButton == null)
-			endTurnButton = new GameButton(121, 50, GameButtonType.END);
 		return endTurnButton;
 	}
 }

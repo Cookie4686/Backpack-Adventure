@@ -8,6 +8,7 @@ import game.GameBottom;
 import game.GameTop;
 import game.dialog.GameDialog;
 import game.map.Map;
+import game.map.MapMarker;
 import game.map.MapSquare;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -17,10 +18,13 @@ import javafx.util.Duration;
 import logic.GameLogic;
 import scene.GameScene;
 import sound.BackgroundSongPlayer;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class MapHandler {
 	public static void handleMouseClicked(MapSquare square) {
 		if (!Map.getInstance().isReachable(square)) {
+			SfxPlayer.play(Sfx.DENY);
 			return;
 		}
 		switch (square.getMarker()) {
@@ -31,7 +35,7 @@ public class MapHandler {
 			GameLogic.getInstance().setBoss(true);
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
 			pause.setOnFinished(_ -> {
-				square.setMarker(null);
+				square.setMarker(MapMarker.PATH);
 				square.getChildren().clear();
 				GameLogic.getInstance().initializeFight();
 			});
@@ -44,7 +48,7 @@ public class MapHandler {
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
 			pause.setOnFinished(_ -> {
-				square.setMarker(null);
+				square.setMarker(MapMarker.PATH);
 				square.getChildren().clear();
 				GameLogic.getInstance().initializeFight();
 			});
@@ -81,14 +85,11 @@ public class MapHandler {
 							Ut varius, tortor nec varius cursus, neque neque facilisis metus, quis ultrices mi nulla ullamcorper risus.
 							Curabitur vestibulum vel risus eu convallis. Vestibulum quis nunc magna. Curabitur vitae elit scelerisque, pharetra diam in, lacinia libero.
 									""");
-			dialog.addOption("Option 1 (print op1)", _ -> {
-				System.out.println("op1");
+			dialog.addOption("What", _ -> {
+				dialog.hide();
 			});
-			dialog.addOption("Option 2 (print op2)", _ -> {
-				System.out.println("op2");
-			});
-			dialog.addOption("Option 3 (print op3)", _ -> {
-				System.out.println("op3");
+			dialog.addOption("Leave me alonee", _ -> {
+				dialog.hide();
 			});
 			dialog.show();
 			break;
@@ -107,6 +108,21 @@ public class MapHandler {
 				doctor.setAlignment(Pos.BOTTOM_LEFT);
 				GameBottom.getInstance().getEnemyBox().getChildren().add(doctor);
 				BackgroundSongPlayer.fight(4);
+
+				GameDialog dialog = new GameDialog("Healer");
+				dialog.setText("Greetingss traveller, would you like some healing <3");
+				dialog.addOption("Sure thing (heal 20 health)", _ -> {
+					Player.getInstance().setHp(Player.getInstance().getHp() + 20);
+					dialog.hide();
+				});
+				dialog.addOption("Yes. (add 5 maxHealth)", _ -> {
+					Player.getInstance().setMaxHp(Player.getInstance().getMaxHp() + 5);
+					dialog.hide();
+				});
+				dialog.addOption("Nah I'm good", _ -> {
+					dialog.hide();
+				});
+				dialog.show();
 			});
 			pause.play();
 			break;

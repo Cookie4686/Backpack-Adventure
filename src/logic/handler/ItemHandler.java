@@ -51,7 +51,7 @@ public class ItemHandler {
 	}
 
 	public static void handleMouseDrag(MouseEvent event) {
-		if (!FightLogic.getInstance().isInFight()) {
+		if (!FightLogic.getInstance().isInFight() && currentItem != null) {
 			setTranslateNoOffScreenX(event.getSceneX() - startX);
 			setTranslateNoOffScreenY(event.getSceneY() - startY);
 			calcGrid();

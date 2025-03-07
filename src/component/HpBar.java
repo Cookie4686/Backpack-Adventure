@@ -69,9 +69,6 @@ public class HpBar extends StackPane implements ReRenderable {
 
 	@Override
 	public void render() {
-		final int hp = being.getHp() > being.getMaxHp() ? being.getMaxHp() : being.getHp(); // no overheal show
-
-		hpBarText.setText(String.format("%s/%s", hp, being.getMaxHp()));
 		setHpBar();
 		setShield();
 	}
@@ -79,6 +76,7 @@ public class HpBar extends StackPane implements ReRenderable {
 	public void setHpBar() {
 		// to prevent bugs when multiple thread are modifying hpBar
 		final int hp = being.getHp() > being.getMaxHp() ? being.getMaxHp() : being.getHp(); // no overheal show
+		hpBarText.setText(String.format("%s/%s", hp, being.getMaxHp()));
 		final double temp = realProgress;
 		realProgress = (double) hp / being.getMaxHp();
 		Thread thread = new Thread(() -> {
@@ -86,7 +84,7 @@ public class HpBar extends StackPane implements ReRenderable {
 			double interval = (temp - (double) hp / being.getMaxHp()) / SMOOTHNESS;
 			for (int i = 0; i < SMOOTHNESS; i++) {
 				Platform.runLater(() -> {
-					hpBar.setProgress(hpBar.getProgress() - interval);
+					setHpBarProgress(hpBar.getProgress() - interval);
 				});
 				try {
 					Thread.sleep(10);
@@ -107,5 +105,9 @@ public class HpBar extends StackPane implements ReRenderable {
 			heartImageView.setEffect(null);
 			shieldText.setVisible(false);
 		}
+	}
+
+	private void setHpBarProgress(double val) {
+		hpBar.setProgress(val < 0 ? 0 : val);
 	}
 }

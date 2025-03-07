@@ -42,9 +42,10 @@ public class GameDialog extends BorderPane {
 
 		VBox root = new VBox();
 		root.translateYProperty().bind(topBox.translateYProperty());
-		root.setPadding(new Insets(0, 32, 0, 32));
+		root.setPadding(new Insets(16, 32, 16, 32));
 		root.maxWidthProperty().bind(maxWidthProperty().subtract(64));
 		root.setMaxHeight(USE_PREF_SIZE);
+		root.setSpacing(32);
 		dialogText = new Text();
 		dialogText.wrappingWidthProperty().bind(root.maxWidthProperty());
 		dialogText.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 24));
