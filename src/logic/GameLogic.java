@@ -4,19 +4,34 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
+
+import application.Main;
 import entities.Entity;
 import entities.EntityLoader;
 import entities.EntitySpawner;
 import entities.Player;
 import game.Game;
 import game.GameBottom;
+import game.GameHeader;
 import game.backpack.Backpack;
 import game.item.Item;
 import game.itemGenerator.ItemRandomizer;
 import game.itemGenerator.ResourceLoader;
+import interfaces.ReStatable;
+import interfaces.StatUpdatable;
 import javafx.animation.PauseTransition;
+import javafx.geometry.Pos;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import scene.MenuScene;
+import scene.popup.SettingPopup;
 import sound.BackgroundSongPlayer;
 import sound.Sfx;
 import sound.SfxPlayer;
@@ -27,6 +42,8 @@ public class GameLogic {
 	private int currentSubFloor;
 	private boolean boss;
 	private ArrayList<Item> inventory;
+	private MediaPlayer levelupSfx;
+	private StackPane announce;
 
 	public GameLogic() {
 		super();
@@ -34,6 +51,22 @@ public class GameLogic {
 		currentSubFloor = 0;
 		boss = false;
 		inventory = new ArrayList<Item>();
+		
+		announce = new StackPane();
+		announce.setAlignment(Pos.CENTER);
+		
+		ImageView dimmer = new ImageView(new Image(ClassLoader.getSystemResource("picture/dimmer.png").toString()));
+		Text levelUp = new Text("Level UP");
+		levelUp.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 64));
+		levelUp.setFill(Color.WHITE);
+		
+		announce.getChildren().addAll(dimmer, levelUp);
+		
+		levelupSfx = new MediaPlayer(new Media(ClassLoader.getSystemResource("sfx/levelup.mp3").toString()));
+		levelupSfx.volumeProperty().bind(SettingPopup.getInstance().getSfxSlider().valueProperty());
+		levelupSfx.setOnEndOfMedia(()-> {
+			Main.root.getChildren().remove(announce);
+		});
 	}
 
 	public void initializeFight() {
@@ -74,7 +107,7 @@ public class GameLogic {
 	}
 
 	public void gameOver() {
-		MenuScene.setGameRunning(false);
+		MenuScene.setGameStarted(false);
 		if (FightLogic.getInstance().isInFight()) {
 			BackgroundSongPlayer.stop();
 			SfxPlayer.play(Sfx.GAMEOVER);
@@ -91,21 +124,54 @@ public class GameLogic {
 				iterator.remove();
 			}
 		}
+		
 		if (FightLogic.getInstance().isInFight()) {
 			Player.getInstance().setXp(Player.getInstance().getXp() + FightLogic.getInstance().getTotalXp());
 			FightLogic.getInstance().setTotalXp(0);
+			
 			BackgroundSongPlayer.floor(currentFloor);
 			Player.getInstance().getAllEffect().clear();
+			
+			
 			Item[] items = new Item[5];
 			for (int i = 0; i < 5; i++) {
 				items[i] = ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
 			}
 			Game.getInstance().addItemsToGame(items);
+			
+			Player.getInstance().reStatBeforeUpdate();
+			GameLogic.updateBackpackItems();
+			Player.getInstance().render();
+			
+			System.out.println(Player.getInstance().getHp());
+			Player.getInstance().setShield(0);
+			Player.getInstance().setHp(Player.getInstance().getHp());
 			FightLogic.getInstance().setInFight(false);
+			GameHeader.getInstance().render();
 			Backpack.getInstance().render();
+			
+			if (Backpack.getInstance().isLevelup()) {
+				levelupSfx.stop();
+				Main.root.getChildren().add(announce);
+				levelupSfx.play();
+			}
 		}
 	}
 
+	public static void  updateBackpackItems() {
+		for (Item item : GameLogic.getInstance().getInventory()) {
+			if (item instanceof ReStatable) {
+				((ReStatable) item).reStatBeforeUpdate();
+			}
+		}
+		for (Item item : GameLogic.getInstance().getInventory()) {
+			if (item instanceof StatUpdatable) {
+				System.out.println("is instance");
+				((StatUpdatable) item).statUpdate();
+			}
+		}
+	}
+	
 	public ArrayList<Item> getInventory() {
 		return inventory;
 	}

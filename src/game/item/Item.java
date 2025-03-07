@@ -8,10 +8,10 @@ import game.backpack.Slot;
 import game.util.ItemRotation;
 import game.util.ItemTier;
 import javafx.animation.FadeTransition;
-import javafx.scene.Cursor;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.scene.Cursor;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -61,11 +61,11 @@ public abstract class Item extends Pane {
 		fadeIn.setFromValue(0.0);
 		fadeIn.setToValue(1.0);
 
-		setMaxSize(Math.max(width, height) * Slot.SIZE, Math.max(width, height) * Slot.SIZE);
+		setMaxSize(Math.max(width, height) * Slot.getSize(), Math.max(width, height) * Slot.getSize());
 
 		imageView = new ImageView(image);
-		imageView.setFitWidth(Slot.SIZE * width);
-		imageView.setFitHeight(Slot.SIZE * height);
+		imageView.setFitWidth(Slot.getSize() * width);
+		imageView.setFitHeight(Slot.getSize() * height);
 		calculateDiff();
 		imageView.setX(diffX);
 		imageView.setY(diffY);
@@ -80,15 +80,18 @@ public abstract class Item extends Pane {
 		imageView.setOnMousePressed(event -> ItemHandler.handleMousePress(event, this));
 		imageView.setOnMouseDragged(event -> ItemHandler.handleMouseDrag(event));
 		imageView.setOnMouseReleased(_ -> ItemHandler.handleMouseRelease());
-		
+
 		imageView.setOnMousePressed(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) ItemHandler.handleMousePress(event, this);
+			if (event.getButton() == MouseButton.PRIMARY)
+				ItemHandler.handleMousePress(event, this);
 		});
 		imageView.setOnMouseDragged(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) ItemHandler.handleMouseDrag(event);
+			if (event.getButton() == MouseButton.PRIMARY)
+				ItemHandler.handleMouseDrag(event);
 		});
 		imageView.setOnMouseReleased(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) ItemHandler.handleMouseRelease();
+			if (event.getButton() == MouseButton.PRIMARY)
+				ItemHandler.handleMouseRelease();
 		});
 
 		getChildren().setAll(imageView);
@@ -108,8 +111,8 @@ public abstract class Item extends Pane {
 	}
 
 	private void calculateDiff() {
-		diffX = height > width ? (Slot.SIZE * height - Slot.SIZE * width) / 2 : 0;
-		diffY = width > height ? (Slot.SIZE * width - Slot.SIZE * height) / 2 : 0;
+		diffX = height > width ? (Slot.getSize() * height - Slot.getSize() * width) / 2 : 0;
+		diffY = width > height ? (Slot.getSize() * width - Slot.getSize() * height) / 2 : 0;
 	}
 
 	public void rotate(boolean right) {
@@ -172,36 +175,38 @@ public abstract class Item extends Pane {
 	public void setFadeIn(FadeTransition fadeIn) {
 		this.fadeIn = fadeIn;
 	}
-	
+
 	public void moveUpAndDown() {
 		moveTimeline = new Timeline();
-        if(currentTranslateY == 0) currentTranslateY = imageView.getTranslateY();
-        double moveDistance = 10;
-        double targetY = currentTranslateY + moveDistance;
-        Random rand = new Random();
-        int dUb = 1500;
-        int dLb = 1000;
+		if (currentTranslateY == 0)
+			currentTranslateY = imageView.getTranslateY();
+		double moveDistance = 10;
+		double targetY = currentTranslateY + moveDistance;
+		Random rand = new Random();
+		int dUb = 1500;
+		int dLb = 1000;
 		int duration = rand.nextInt((dUb - dLb) + 1) + dLb;
-        moveTimeline.getKeyFrames().addAll(
-                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateYProperty(), currentTranslateY)),
-                new KeyFrame(Duration.millis(duration), new KeyValue(imageView.translateYProperty(), currentTranslateY + moveDistance)),
-                new KeyFrame(Duration.millis(duration * 2), new KeyValue(imageView.translateYProperty(), currentTranslateY)) 
-        );
-        moveTimeline.setCycleCount(Timeline.INDEFINITE);
-        moveTimeline.play();
-    }
-	
+		moveTimeline.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateYProperty(), currentTranslateY)),
+				new KeyFrame(Duration.millis(duration),
+						new KeyValue(imageView.translateYProperty(), currentTranslateY + moveDistance)),
+				new KeyFrame(Duration.millis(duration * 2),
+						new KeyValue(imageView.translateYProperty(), currentTranslateY)));
+		moveTimeline.setCycleCount(Timeline.INDEFINITE);
+		moveTimeline.play();
+	}
+
 	public void moveBack() {
 		backToOriginTimeline = new Timeline();
 		double currentTranslateY = imageView.getTranslateY();
 		backToOriginTimeline.getKeyFrames().addAll(
-                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateYProperty(), currentTranslateY)),
-                new KeyFrame(Duration.millis(200), new KeyValue(imageView.translateYProperty(), this.currentTranslateY))
-        );
-        backToOriginTimeline.setCycleCount(1);
-        backToOriginTimeline.play();
+				new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateYProperty(), currentTranslateY)),
+				new KeyFrame(Duration.millis(200),
+						new KeyValue(imageView.translateYProperty(), this.currentTranslateY)));
+		backToOriginTimeline.setCycleCount(1);
+		backToOriginTimeline.play();
 	}
-	
+
 	public Timeline getMoveTimeline() {
 		return moveTimeline;
 	}

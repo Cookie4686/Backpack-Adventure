@@ -62,8 +62,8 @@ public class Game extends StackPane {
 			// calculate the total width
 			for (int j = 0; j < limit; j++) {
 				Item item = items[i * itemPerRow + j];
-				width += item.getItemWidth() * Slot.SIZE + spacingX;
-				height = Math.max(height, item.getItemHeight() * Slot.SIZE);
+				width += item.getItemWidth() * Slot.getSize() + spacingX;
+				height = Math.max(height, item.getItemHeight() * Slot.getSize());
 			}
 			double diffX = Main.root.getWidth() / 2 - width / 2;
 			// place item
@@ -71,9 +71,9 @@ public class Game extends StackPane {
 			for (int j = 0; j < limit; j++) {
 				Item item = items[i * itemPerRow + j];
 				item.setTranslateX(diffX + accumulator - item.getDiffX());
-				double diffY = height - item.getItemHeight() * Slot.SIZE;
+				double diffY = height - item.getItemHeight() * Slot.getSize();
 				item.setTranslateY(prevHeight + (diffY == 0 ? 0 : diffY / 2));
-				accumulator += item.getItemWidth() * Slot.SIZE + spacingX;
+				accumulator += item.getItemWidth() * Slot.getSize() + spacingX;
 			}
 			prevHeight += height + spacingY;
 		}

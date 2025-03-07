@@ -22,8 +22,7 @@ import sound.Sfx;
 import sound.SfxPlayer;
 
 public class MenuScene {
-	private static boolean isGameRunning = false;
-	private static boolean isInMenuScene = false;
+	private static boolean hasGameStarted = false, isInMenuScene = false;
 
 	public static void use() {
 		BackgroundSongPlayer.menu();
@@ -41,8 +40,7 @@ public class MenuScene {
 
 		GameButton continueButton = new GameButton(170, 70, GameButtonType.CONTINUE);
 		continueButton.setOnMouseClicked(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) {
-				MenuScene.setInMenuScene(false);
+			if (event.getButton() == MouseButton.PRIMARY) {
 				SfxPlayer.play(Sfx.GAMESTART);
 				Fader.fadeOutAndIn();
 				PauseTransition pause = new PauseTransition(Duration.seconds(1));
@@ -54,28 +52,28 @@ public class MenuScene {
 		});
 		GameButton newButton = new GameButton(170, 70, GameButtonType.NEW_GAME);
 		newButton.setOnMouseClicked(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) {				
+			if (event.getButton() == MouseButton.PRIMARY) {
 				SfxPlayer.play(Sfx.SELECT);
-				CharacterPopup.getInstance().getPopup().show();
+				CharacterPopup.getInstance().show();
 			}
 		});
 
 		GameButton settingButton = new GameButton(170, 70, GameButtonType.SETTING);
 		settingButton.setOnMouseClicked(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) {				
+			if (event.getButton() == MouseButton.PRIMARY) {
 				SfxPlayer.play(Sfx.SELECT);
-				SettingPopup.getInstance().getPopup().show();
+				SettingPopup.getInstance().show();
 			}
 		});
 
 		GameButton exitButton = new GameButton(170, 70, GameButtonType.EXIT);
 		exitButton.setOnMouseClicked(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) {				
+			if (event.getButton() == MouseButton.PRIMARY) {
 				Platform.exit();
 			}
 		});
-		
-		if (isGameRunning) {
+
+		if (hasGameStarted) {
 			buttonBox.getChildren().add(continueButton);
 		}
 		buttonBox.getChildren().addAll(newButton, settingButton, exitButton);
@@ -92,12 +90,12 @@ public class MenuScene {
 		Main.root.getChildren().addAll(menuBackground, root);
 	}
 
-	public static boolean isGameRunning() {
-		return isGameRunning;
+	public static boolean hasGameStarted() {
+		return hasGameStarted;
 	}
 
-	public static void setGameRunning(boolean isGameRunning) {
-		MenuScene.isGameRunning = isGameRunning;
+	public static void setGameStarted(boolean hasGameStarted) {
+		MenuScene.hasGameStarted = hasGameStarted;
 	}
 
 	public static boolean isInMenuScene() {

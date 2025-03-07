@@ -23,24 +23,22 @@ import scene.MenuScene;
 import sound.Sfx;
 import sound.SfxPlayer;
 
-public class CharacterPopup extends VBox {
+public class CharacterPopup extends Popup {
 	private static CharacterPopup instance;
-	private Popup popup;
 
 	public CharacterPopup() {
-		super();
-		popup = new Popup("Character Select");
-		setAlignment(Pos.TOP_CENTER);
-		setSpacing(20);
-		getChildren().add(CharacterScene.use());
-
-		popup.setCenter(this);
+		super("Character Select");
+		VBox root = new VBox();
+		root.setAlignment(Pos.TOP_CENTER);
+		root.setSpacing(20);
+		root.getChildren().add(CharacterScene.use());
+		setCenter(root);
 
 		GameButton journeyButton = new GameButton(159, 70, GameButtonType.JOURNEY_ON);
 		journeyButton.setOnMouseClicked(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) {
+			if (event.getButton() == MouseButton.PRIMARY) {
 				MenuScene.setInMenuScene(false);
-				MenuScene.setGameRunning(false);
+				MenuScene.setGameStarted(false);
 				SfxPlayer.play(Sfx.GAMESTART);
 				Fader.fadeOutAndIn();
 				PauseTransition pause = new PauseTransition(Duration.seconds(1));
@@ -54,7 +52,7 @@ public class CharacterPopup extends VBox {
 					GameTop.setInstance(null);
 					GameBottom.setInstance(null);
 					GameHeader.setInstance(null);
-					
+
 					GameScene.use();
 				});
 				pause.play();
@@ -62,18 +60,14 @@ public class CharacterPopup extends VBox {
 		});
 		GameButton closeButton = new GameButton(159, 70, GameButtonType.CLOSE);
 		closeButton.setOnMouseClicked(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) {				
+			if (event.getButton() == MouseButton.PRIMARY) {
 				SfxPlayer.play(Sfx.SELECT);
-				popup.hide();
+				hide();
 			}
 		});
 
-		popup.getBottomBox().getChildren().setAll(closeButton, journeyButton);
-		popup.getBottomBox().setSpacing(30);
-	}
-
-	public Popup getPopup() {
-		return popup;
+		bottomBox.getChildren().setAll(closeButton, journeyButton);
+		bottomBox.setSpacing(30);
 	}
 
 	public static CharacterPopup getInstance() {

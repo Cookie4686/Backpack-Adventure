@@ -11,7 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import logic.FightLogic;
 import logic.GameLogic;
 import sound.BackgroundSongPlayer;
 
@@ -36,19 +35,21 @@ public class GameScene {
 	        Fader.getBlackout().toBack();
 	    }
 		
-		if (!MenuScene.isGameRunning() && GameLogic.getInstance().getCurrentFloor() == 0) {
+
+		if (!MenuScene.hasGameStarted() && GameLogic.getInstance().getCurrentFloor() == 0) {
 			Item[] items = new Item[9];
 			for (int i=0 ; i<6 ; i++) {
 				items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
 			}
-			items[6]= ResourceLoader.newItem("Mana Stone I");
+			items[6]= ResourceLoader.newItem("Damage Relic IV");
 			items[7]= ResourceLoader.newItem("Well Made Shield");
 			items[8]= ResourceLoader.newItem("Excalibur");
 			Game.getInstance().addItemsToGame(items);
 		}
 		
         Fader.getBlackout().toFront();
-        MenuScene.setGameRunning(true);
+        MenuScene.setInMenuScene(false);
+        MenuScene.setGameStarted(true);
 		BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
 	}
 }

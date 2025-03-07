@@ -80,7 +80,7 @@ public class Fader {
 				System.out.println("Blackout moved to back!");
 			}));
 			fadeOut.play();
-			if (!MenuScene.isGameRunning()) Player.getInstance().moveLeftAndBack();
+			if (!MenuScene.isInMenuScene()) Player.getInstance().moveLeftAndBack();
 		});
 	}
 
