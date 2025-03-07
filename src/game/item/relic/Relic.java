@@ -10,8 +10,8 @@ import game.item.weapon.Weapon;
 import game.item.wearable.Wearable;
 import game.util.Effect;
 import game.util.EffectType;
-import game.util.Position;
 import game.util.ItemTier;
+import game.util.Position;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -54,44 +54,52 @@ public abstract class Relic extends Item {
 			}
 		}
 	}
-	 
+
 	public void highlightAdditionSlot(int gridX, int gridY) {
-		ItemPosition position = new ItemPosition(gridX, gridY);
+		Position position = new Position(gridX, gridY);
 		Slot[][] slots = Backpack.getInstance().getSlots();
-		
+
 		if (isDiagonal) {
 			if (position.getY() - range >= 0 && position.getX() - range >= 0) { // North Wast
 				if (slots[position.getY() - range][position.getX() - range].isUnlocked())
-					slots[position.getY() - range][position.getX() - range].setBackground(new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
+					slots[position.getY() - range][position.getX() - range].setBackground(
+							new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
 			}
 			if (position.getY() - range >= 0 && position.getX() + range < Backpack.WIDTH) { // North East
 				if (slots[position.getY() - range][position.getX() + range].isUnlocked())
-					slots[position.getY() - range][position.getX() + range].setBackground(new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
+					slots[position.getY() - range][position.getX() + range].setBackground(
+							new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
 			}
 			if (position.getY() + range < Backpack.HEIGHT && position.getX() - range >= 0) { // South Wast
 				if (slots[position.getY() + range][position.getX() - range].isUnlocked())
-					slots[position.getY() + range][position.getX() - range].setBackground(new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
+					slots[position.getY() + range][position.getX() - range].setBackground(
+							new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
 			}
 			if (position.getY() + range < Backpack.HEIGHT && position.getX() + range < Backpack.WIDTH) {// south East
 				if (slots[position.getY() + range][position.getX() + range].isUnlocked())
-					slots[position.getY() + range][position.getX() + range].setBackground(new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
+					slots[position.getY() + range][position.getX() + range].setBackground(
+							new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
 			}
 		} else {
 			if (position.getY() - range >= 0) // North
 				if (slots[position.getY() - range][position.getX()].isUnlocked())
-					slots[position.getY() - range][position.getX()].setBackground(new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
+					slots[position.getY() - range][position.getX()].setBackground(
+							new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
 
 			if (position.getY() + range < Backpack.HEIGHT) // South
 				if (slots[position.getY() + range][position.getX()].isUnlocked())
-					slots[position.getY() + range][position.getX()].setBackground(new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
+					slots[position.getY() + range][position.getX()].setBackground(
+							new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
 
 			if (position.getX() - range >= 0) // Wast
 				if (slots[position.getY()][position.getX() - range].isUnlocked())
-					slots[position.getY()][position.getX() - range].setBackground(new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
+					slots[position.getY()][position.getX() - range].setBackground(
+							new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
 
 			if (position.getX() + range < Backpack.WIDTH) // East
 				if (slots[position.getY()][position.getX() + range].isUnlocked())
-					slots[position.getY()][position.getX() + range].setBackground(new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
+					slots[position.getY()][position.getX() + range].setBackground(
+							new Background(new BackgroundFill(Color.GOLDENROD, CornerRadii.EMPTY, Insets.EMPTY)));
 		}
 	}
 
