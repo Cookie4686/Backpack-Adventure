@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 import logic.handler.MapHandler;
 
 public class MapSquare extends Pane {
-	public final static int SIZE = (Slot.SIZE*7)/10;
+	public final static int SIZE = (Slot.getSize()*7)/10;
 	private MapMarker marker;
 
 	public MapSquare() {

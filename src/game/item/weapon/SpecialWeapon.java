@@ -24,7 +24,6 @@ public class SpecialWeapon extends Weapon {
 
 	@Override
 	public void activateItem() {
-		super.activateItem();
 		for (Effect effect : effects) {
 			switch (effect.getType()) {
 			case FIRE, POISON, STUNNED	->
@@ -42,6 +41,7 @@ public class SpecialWeapon extends Weapon {
 					effect.getType(), effect.getAmount(), Player.getInstance());
 			}
 		}
+		super.activateItem();
 	}
 
 	@Override

@@ -13,9 +13,14 @@ public class BackgroundSongPlayer {
 	static {
 		fight = new ArrayList<String>();
 		fight.add("Fight1.mp3");
-
+		fight.add("Fight1.mp3");
+		fight.add("Fight1.mp3");
+		fight.add("Fight1.mp3");
+		fight.add("Fight1.mp3");
 		floor = new ArrayList<String>();
 		floor.add("Floor1.mp3");
+		floor.add("Floor2.mp3");
+		floor.add("Floor3.mp3");
 	}
 
 	public static void menu() {

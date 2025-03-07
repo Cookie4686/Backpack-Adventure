@@ -34,7 +34,7 @@ public class Map extends GridPane {
 
 	public void initialize() {
 		placeRandomMarker(MapMarker.PLAYER);
-		while (marks.size() < 2 + GameLogic.getInstance().getCurrentFloor()) { // create 1 monster diffrence pos
+		while (marks.size() < 2) { // create 1 monster diffrence pos
 			placeRandomMarker(MapMarker.MONSTER);
 		}
 		buildPath(marks.get(0), marks.get(1));
@@ -43,8 +43,13 @@ public class Map extends GridPane {
 				findRoute();
 		}
 		while (marks.size() < 6 + GameLogic.getInstance().getCurrentFloor()) { // create 1 door diffrence pos
-			if (placeRandomMarker(MapMarker.DOOR))
-				findRoute();
+			if (GameLogic.getInstance().getCurrentFloor() == 2 && GameLogic.getInstance().getCurrentSubFloor() == 2) {
+				if (placeRandomMarker(MapMarker.FINAL))
+					findRoute();
+			} else {
+				if (placeRandomMarker(MapMarker.DOOR))
+					findRoute();
+			}
 		}
 		while (marks.size() < 7 + GameLogic.getInstance().getCurrentFloor()) { // create 1 door diffrence pos
 			if (placeRandomMarker(MapMarker.DOCTOR))
@@ -70,7 +75,7 @@ public class Map extends GridPane {
 		buildPath(marks.getLast(), marks.get(marks.size() - r));
 	}
 
-	private boolean findAdjacent(Position prev, Position pos) {
+	private boolean isAdjacent(Position prev, Position pos) {
 		int x = pos.getX(), y = pos.getY();
 
 		if (x + 1 < width)
@@ -97,7 +102,7 @@ public class Map extends GridPane {
 		Position prev = new Position(start.getX(), start.getY());
 
 		while (start.getX() != end.getX() || start.getY() != end.getY()) {
-			if (findAdjacent(prev, start))
+			if (isAdjacent(prev, start))
 				break;
 			prev.setX(start.getX());
 			prev.setY(start.getY());

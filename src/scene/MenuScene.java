@@ -41,7 +41,6 @@ public class MenuScene {
 		GameButton continueButton = new GameButton(170, 70, GameButtonType.CONTINUE);
 		continueButton.setOnMouseClicked(event -> {
 			if (event.getButton() == MouseButton.PRIMARY) {
-				MenuScene.setInMenuScene(false);
 				SfxPlayer.play(Sfx.GAMESTART);
 				Fader.fadeOutAndIn();
 				PauseTransition pause = new PauseTransition(Duration.seconds(1));

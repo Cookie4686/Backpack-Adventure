@@ -22,7 +22,7 @@ public class Coins extends Item implements StatUpdatable {
 
 	@Override
 	public String toString() {
-		return getName() + " is " + getTierName() + " ManaOrb\n"
+		return getName() + " is " + getTierName() + " item\n"
 				+ "Provide :\n"
 				+ "Add " + amount + " COINS to Player\n"
 				+ "This item is Stackable!\n"

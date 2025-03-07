@@ -6,6 +6,8 @@ import entities.Player;
 import game.util.Effect;
 import game.util.ItemTier;
 import logic.FightLogic;
+import sound.Sfx;
+import sound.SfxPlayer;
 
 public class ShieldItem extends ItemWithCost {
 	final private ArrayList<Effect> effects;
@@ -20,6 +22,7 @@ public class ShieldItem extends ItemWithCost {
 
 	@Override
 	public void activateItem() {
+		SfxPlayer.play(Sfx.SHIELD);
 		System.out.println("Use " + getName());
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
 		for (Effect effect : effects) {
