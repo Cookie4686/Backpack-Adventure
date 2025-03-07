@@ -30,6 +30,8 @@ public class GameScene {
 			biome = new ImageView(new Image(ClassLoader.getSystemResource("theme/biome3.png").toString()));
 		}
 		
+		
+		
 		Main.root.getChildren().setAll(biome, root);
 		if (!Main.root.getChildren().contains(Fader.getBlackout())) {
 	        Main.root.getChildren().add(Fader.getBlackout());
@@ -38,13 +40,10 @@ public class GameScene {
 		
 
 		if (!MenuScene.hasGameStarted() && GameLogic.getInstance().getCurrentFloor() == 0) {
-			Item[] items = new Item[9];
-			for (int i=0 ; i<6 ; i++) {
-				items[i]=ResourceLoader.newItem(ItemRandomizer.getRandomItemName());
-			}
-			items[6]= ResourceLoader.newItem("Damage Relic II");
-			items[7]= ResourceLoader.newItem("Well Made Shield");
-			items[8]= ResourceLoader.newItem("Excalibur");
+			Item[] items = new Item[3];
+			items[0]= ResourceLoader.newItem("Azurite Sword");
+			items[1]= ResourceLoader.newItem("Cloth Armor");
+			items[2]= ResourceLoader.newItem("Bread Loaf");
 			Game.getInstance().addItemsToGame(items);
 		}
 		

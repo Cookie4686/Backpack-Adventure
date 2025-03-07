@@ -1,6 +1,7 @@
 package game.map;
 
 import game.backpack.Slot;
+import game.util.Position;
 import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -18,6 +19,7 @@ import logic.handler.MapHandler;
 public class MapSquare extends Pane {
 	public final static int SIZE = (Slot.getSize()*7)/10;
 	private MapMarker marker;
+	private Position position; 
 
 	public MapSquare() {
 		this(null);
@@ -54,5 +56,13 @@ public class MapSquare extends Pane {
 
 	public void setMarker(MapMarker marker) {
 		this.marker = marker;
+	}
+
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(int x, int y) {
+		this.position = new Position(x, y);
 	}
 }

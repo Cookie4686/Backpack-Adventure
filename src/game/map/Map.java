@@ -13,6 +13,7 @@ public class Map extends GridPane {
 	private int width, height;
 	private MapSquare[][] squares;
 	private ArrayList<Position> marks;
+	private boolean noHeal;
 
 	public Map(int width, int height) {
 		super();
@@ -20,6 +21,7 @@ public class Map extends GridPane {
 		setPickOnBounds(false);
 		this.width = width;
 		this.height = height;
+		noHeal = false;
 		squares = new MapSquare[width][height];
 		marks = new ArrayList<Position>();
 		for (int x = 0; x < width; x++) {
@@ -62,6 +64,7 @@ public class Map extends GridPane {
 		int x = random(width), y = random(height);
 		if (squares[x][y].getMarker() == null) {
 			squares[x][y].setMarker(marker);
+			squares[x][y].setPosition(x,y);;			
 			marks.add(new Position(x, y));
 			return true;
 		}
@@ -197,6 +200,22 @@ public class Map extends GridPane {
 			}
 		}
 	}
+	
+	public void removePlayerMark() {
+		for (int x = 0; x < Map.getInstance().getMapWidth(); x++) {
+			for (int y = 0; y < Map.getInstance().getMapHeight(); y++) {
+				if (squares[x][y].getMarker() == MapMarker.PLAYER) {
+					if (noHeal) {
+						squares[x][y].setMarker(MapMarker.DOCTOR);
+						return;
+					}
+					squares[x][y].setMarker(MapMarker.PATH);
+					squares[x][y].getChildren().clear();
+					return;
+				}
+			}
+		}
+	}
 
 	private int random(int limit) {
 		return new Random().nextInt(0, limit);
@@ -219,5 +238,21 @@ public class Map extends GridPane {
 
 	public static void setInstance(Map instance) {
 		Map.instance = instance;
+	}
+
+	public int getMapWidth() {
+		return width;
+	}
+
+	public int getMapHeight() {
+		return height;
+	}
+
+	public boolean isNoHeal() {
+		return noHeal;
+	}
+
+	public void setNoHeal(boolean noHeal) {
+		this.noHeal = noHeal;
 	}
 }

@@ -6,13 +6,7 @@ import component.HpBar;
 import game.util.Effect;
 import interfaces.ReRenderable;
 import javafx.geometry.Pos;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 public abstract class Being extends VBox implements ReRenderable {
 	protected String name;
@@ -23,8 +17,6 @@ public abstract class Being extends VBox implements ReRenderable {
 	public Being() {
 		super();
 		allEffect = new ArrayList<Effect>();
-		setBorder(new Border(
-				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		setAlignment(Pos.BOTTOM_CENTER);
 	}
 

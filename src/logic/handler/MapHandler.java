@@ -5,11 +5,13 @@ import entities.Npc;
 import entities.Player;
 import game.Game;
 import game.GameBottom;
+import game.GameHeader;
 import game.GameTop;
 import game.dialog.GameDialog;
 import game.map.Map;
 import game.map.MapMarker;
 import game.map.MapSquare;
+import game.util.Position;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -27,6 +29,7 @@ public class MapHandler {
 			SfxPlayer.play(Sfx.DENY);
 			return;
 		}
+		
 		switch (square.getMarker()) {
 		case FINAL		-> {
 			GameLogic.getInstance().setDoctor(false);
@@ -35,8 +38,11 @@ public class MapHandler {
 			GameLogic.getInstance().setBoss(true);
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
 			pause.setOnFinished(_ -> {
-				square.setMarker(MapMarker.PATH);
+				Map.getInstance().removePlayerMark();
 				square.getChildren().clear();
+				square.setMarker(MapMarker.PLAYER);
+				Map.getInstance().render();
+				Map.getInstance().setNoHeal(false);
 				GameLogic.getInstance().initializeFight();
 			});
 			pause.play();
@@ -48,8 +54,11 @@ public class MapHandler {
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
 			pause.setOnFinished(_ -> {
-				square.setMarker(MapMarker.PATH);
+				Map.getInstance().removePlayerMark();
 				square.getChildren().clear();
+				square.setMarker(MapMarker.PLAYER);
+				Map.getInstance().render();
+				Map.getInstance().setNoHeal(false);
 				GameLogic.getInstance().initializeFight();
 			});
 			pause.play();
@@ -57,6 +66,7 @@ public class MapHandler {
 		}
 		case DOOR		-> {
 			GameLogic.getInstance().setDoctor(false);
+			Map.getInstance().setNoHeal(false);
 			Player.getInstance().moveLeftAndBack();
 			if (GameLogic.getInstance().getCurrentSubFloor() == 2) {
 				GameLogic.getInstance().setCurrentFloor(GameLogic.getInstance().getCurrentFloor() + 1);
@@ -71,6 +81,7 @@ public class MapHandler {
 				Game.getInstance().initializeFight();
 				generateNewMap();
 				BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
+				GameHeader.getInstance().render();
 			});
 			pause.play();
 			break;
@@ -103,6 +114,9 @@ public class MapHandler {
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
 			pause.setOnFinished(_ -> {
+				Map.getInstance().removePlayerMark();
+				square.setMarker(MapMarker.PLAYER);
+				Map.getInstance().render();
 				Game.getInstance().initializeFight();
 				Npc doctor = Npc.getInstance();
 				doctor.setAlignment(Pos.BOTTOM_LEFT);
@@ -112,12 +126,14 @@ public class MapHandler {
 				GameDialog dialog = new GameDialog("Healer");
 				dialog.setText("Greetingss traveller, would you like some healing <3");
 				dialog.addOption("Sure thing (heal 20 health)", _ -> {
+					Map.getInstance().setNoHeal(false);
 					Player.getInstance().setHp(Player.getInstance().getHp() + 20);
 					SfxPlayer.play(Sfx.HEAL);
 					dialog.hide();
 					square.setMarker(MapMarker.PATH);
 				});
 				dialog.addOption("Yes. (add 5 maxHealth)", _ -> {
+					Map.getInstance().setNoHeal(false);
 					Player.getInstance().setMaxHp(Player.getInstance().getMaxHp() + 5);
 					SfxPlayer.play(Sfx.VAMPIRIC);
 					dialog.hide();
@@ -125,6 +141,7 @@ public class MapHandler {
 				});
 				dialog.addOption("Nah I'm good", _ -> {
 					SfxPlayer.play(Sfx.SELECT);
+					Map.getInstance().setNoHeal(true);
 					dialog.hide();
 				});
 				dialog.show();

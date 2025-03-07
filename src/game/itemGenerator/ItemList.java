@@ -42,7 +42,7 @@ public class ItemList {
 		
 		
 //		Weapon(String name, String detail, int initDamage, int costActivate, int width, ItemTier tier) Diagonal 
-		itemMap.put("Iron Saber", new Resource(() -> new Weapon("Iron Knife", "Like a pirate.", 55, 1, 2, ItemTier.UNCOMMON), "Items/IronSaber.png"));
+		itemMap.put("Iron Saber", new Resource(() -> new Weapon("Iron Saber", "Like a pirate.", 55, 1, 2, ItemTier.UNCOMMON), "Items/IronSaber.png"));
 		
 		
 //		SpecialWeapon(String name, String detail, ArrayList<Effect> effects, int damage, int costActivate, int width, int height, ItemTier tier) Not diagonal 
