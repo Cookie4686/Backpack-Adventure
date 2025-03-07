@@ -7,9 +7,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
-import logic.handler.EntityHandler;
 
 public class EntityLoader {
 	public static Entity newEntity(String name) {
@@ -54,9 +52,6 @@ class Resource {
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.play();
 		imageView.setImage(images.get(0));
-		imageView.setOnMousePressed(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) EntityHandler.handleMouseClicked(entity);
-		});
 		entity.getChildren().add(imageView);
 		entity.setTimeline(timeline);
 		return entity;
