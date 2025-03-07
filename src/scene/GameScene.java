@@ -42,7 +42,7 @@ public class GameScene {
 			Item[] items = new Item[3];
 			items[0]= ResourceLoader.newItem("Azurite Sword");
 			items[1]= ResourceLoader.newItem("Cloth Armor");
-			items[2]= ResourceLoader.newItem("Bread Loaf");
+			items[2]= ResourceLoader.newItem("Apple");
 			Game.getInstance().addItemsToGame(items);
 		}
 		

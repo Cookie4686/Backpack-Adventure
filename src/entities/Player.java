@@ -378,4 +378,14 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	public static void setInstance(Player instance) {
 		Player.instance = instance;
 	}
+
+	public EnergyOrb getEnergyOrb() {
+		return energyOrb;
+	}
+
+	public void setEnergyOrb(EnergyOrb energyOrb) {
+		this.energyOrb = energyOrb;
+	}
+	
 }
+
