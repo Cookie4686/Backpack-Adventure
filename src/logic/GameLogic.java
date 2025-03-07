@@ -4,12 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-<<<<<<< HEAD
 import application.Fader;
-||||||| 0d8f3a0
-
-=======
->>>>>>> 578a9af5a378fb76c443012d3cad9f7abe04a583
 import application.Main;
 import entities.Entity;
 import entities.EntityLoader;
