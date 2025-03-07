@@ -62,11 +62,12 @@ public class ItemHandler {
 	public static void handleMouseRelease() {
 		if (!FightLogic.getInstance().isInFight() && currentItem != null) {
 			Backpack.getInstance().removeItem(currentItem);
-			if (GameLogic.getInstance().isLimitReached() && currentItem.isNewItem()) {
+			calcGrid();
+			if (GameLogic.getInstance().isLimitReached() && currentItem.isNewItem()
+					&& Backpack.getInstance().isPlaceable(gridX, gridY, currentItem)) {
 				setRandomOffGridLocation(currentItem);
 				SfxPlayer.play(Sfx.DENY);
 			} else {
-				calcGrid();
 				placeItem();
 			}
 			currentItem.getImageView().setCursor(Cursor.OPEN_HAND);

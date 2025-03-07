@@ -155,8 +155,12 @@ public class Map extends GridPane {
 
 	private boolean recur(int x, int y, boolean[][] visited, Position targetPosition) {
 		switch (squares[x][y].getMarker()) {
-		case PLAYER, PATH, DOCTOR	-> {}
-		default						-> { return x == targetPosition.getX() && y == targetPosition.getY(); }
+		case PLAYER, PATH	-> {}
+		case DOCTOR			-> {
+			if (x == targetPosition.getX() && y == targetPosition.getY())
+				return true;
+		}
+		default				-> { return x == targetPosition.getX() && y == targetPosition.getY(); }
 		}
 
 		if (x + 1 != width && !visited[x + 1][y]) {
