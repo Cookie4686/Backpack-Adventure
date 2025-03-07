@@ -2,6 +2,7 @@ package logic.handler;
 
 import application.Fader;
 import game.dialog.GameDialog;
+import game.map.Map;
 import game.map.MapSquare;
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
@@ -9,6 +10,7 @@ import logic.GameLogic;
 
 public class MapHandler {
 	public static void handleMouseClicked(MapSquare square) {
+		System.out.println(Map.getInstance().isReachable(square));
 		switch (square.getMarker()) {
 		case MONSTER	-> {
 			Fader.fadeOutAndIn();
