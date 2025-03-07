@@ -30,9 +30,9 @@ public class MapHandler {
 		switch (square.getMarker()) {
 		case FINAL		-> {
 			GameLogic.getInstance().setDoctor(false);
-			GameLogic.getInstance().setBoss(true);
 			Player.getInstance().moveLeftAndBack();
 			Fader.fadeOutAndIn();
+			GameLogic.getInstance().setBoss(true);
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
 			pause.setOnFinished(_ -> {
 				square.setMarker(MapMarker.PATH);

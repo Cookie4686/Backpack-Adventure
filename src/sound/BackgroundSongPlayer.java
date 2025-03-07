@@ -21,6 +21,7 @@ public class BackgroundSongPlayer {
 		floor.add("Floor1.mp3");
 		floor.add("Floor2.mp3");
 		floor.add("Floor3.mp3");
+		floor.add("Floor4.mp3");
 	}
 
 	public static void menu() {

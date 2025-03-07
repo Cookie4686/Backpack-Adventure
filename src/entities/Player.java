@@ -188,35 +188,36 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		playAnimation("die");
 	}
 
-	public void moveLeftAndBack() {
-		double currentTranslateX = imageView.getTranslateX();
-		Timeline moveTimeline = new Timeline();
-		Timeline moveTimeline2 = new Timeline();
-		double moveDistance = 200;
-		double targetX = currentTranslateX + moveDistance;
-
-		moveTimeline.getKeyFrames().addAll(
-				new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX)),
-				new KeyFrame(Duration.millis(1000),
-						new KeyValue(imageView.translateXProperty(), currentTranslateX + moveDistance)));
-		moveTimeline.setCycleCount(1);
-
-		moveTimeline2.getKeyFrames().addAll(
-				new KeyFrame(Duration.ZERO,
-						new KeyValue(imageView.translateXProperty(), currentTranslateX - moveDistance)),
-				new KeyFrame(Duration.millis(1000), new KeyValue(imageView.translateXProperty(), currentTranslateX)));
-		moveTimeline2.setCycleCount(1);
-
-		moveTimeline.setOnFinished(event -> {
-			moveTimeline2.play();
-		});
-		runTimeline.setOnFinished(event -> {
-			playAnimation("idle");
-		});
-		playAnimation("run");
-		moveTimeline.play();
-	}
-
+    public void moveLeftAndBack() {
+    	if(GameLogic.getInstance().isBoss()) return;
+        double currentTranslateX = imageView.getTranslateX();
+        Timeline moveTimeline = new Timeline();
+        Timeline moveTimeline2 = new Timeline();
+        double moveDistance = 200;
+        double targetX = currentTranslateX + moveDistance;
+        
+        moveTimeline.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX)),
+                new KeyFrame(Duration.millis(1000), new KeyValue(imageView.translateXProperty(), currentTranslateX + moveDistance))
+        );
+        moveTimeline.setCycleCount(1);
+        
+        moveTimeline2.getKeyFrames().addAll(
+                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX - moveDistance)),
+                new KeyFrame(Duration.millis(1000), new KeyValue(imageView.translateXProperty(), currentTranslateX))
+        );
+        moveTimeline2.setCycleCount(1);
+        
+        moveTimeline.setOnFinished(event -> {
+        	moveTimeline2.play();
+        });
+        runTimeline.setOnFinished(event -> {
+        	playAnimation("idle");
+        });
+        playAnimation("run");
+        moveTimeline.play();
+    }
+    
 	public int takeDamage(int damaged) {
 		if (damaged == 0)
 			return 0;
