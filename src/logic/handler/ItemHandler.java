@@ -62,7 +62,7 @@ public class ItemHandler {
 	public static void handleMouseRelease() {
 		if (!FightLogic.getInstance().isInFight() && currentItem != null) {
 			Backpack.getInstance().removeItem(currentItem);
-			if (GameLogic.getInstance().isLimitReached()) {
+			if (GameLogic.getInstance().isLimitReached() && currentItem.isNewItem()) {
 				setRandomOffGridLocation(currentItem);
 				SfxPlayer.play(Sfx.DENY);
 			} else {
