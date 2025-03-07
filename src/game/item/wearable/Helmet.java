@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import game.backpack.Backpack;
 import game.util.Effect;
-import game.util.ItemPosition;
+import game.util.Position;
 import game.util.ItemTier;
 
 public class Helmet extends Wearable {
@@ -16,7 +16,7 @@ public class Helmet extends Wearable {
 	private int underSlot() {	
 		//Find number of row under
 		Backpack backpack = Backpack.getInstance();
-		ArrayList<ItemPosition> itemPostions = backpack.getItemPosition(this);
+		ArrayList<Position> itemPostions = backpack.getItemPosition(this);
 		int x=itemPostions.get(0).getX();
 		
 		int count=0;

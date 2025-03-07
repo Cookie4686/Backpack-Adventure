@@ -10,7 +10,7 @@ import game.item.weapon.Weapon;
 import game.item.wearable.Wearable;
 import game.util.Effect;
 import game.util.EffectType;
-import game.util.ItemPosition;
+import game.util.Position;
 import game.util.ItemTier;
 
 public abstract class Relic extends Item {
@@ -51,7 +51,7 @@ public abstract class Relic extends Item {
 	}
 
 	private ArrayList<Item> findItemInSlot() {
-		ItemPosition position = Backpack.getInstance().getItemPosition(this).get(0);
+		Position position = Backpack.getInstance().getItemPosition(this).get(0);
 		Slot[][] slots = Backpack.getInstance().getSlots();
 		ArrayList<Item> items = new ArrayList<Item>();
 

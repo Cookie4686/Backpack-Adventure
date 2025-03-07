@@ -13,12 +13,10 @@ import javafx.scene.text.Text;
 public class EnergyOrb extends StackPane implements ReRenderable {
 	private static int SIZE = 40;
 	private static Image image;
-	private Player player;
 	private Text text;
 
-	public EnergyOrb(Player player) {
+	public EnergyOrb() {
 		super();
-		this.player = player;
 
 		if (image == null) {
 			image = new Image(ClassLoader.getSystemResource("component/energy.png").toString());
@@ -35,6 +33,6 @@ public class EnergyOrb extends StackPane implements ReRenderable {
 
 	@Override
 	public void render() {
-		text.setText(Integer.toString(player.getEnergy()));
+		text.setText(Integer.toString(Player.getInstance().getEnergy()));
 	}
 }

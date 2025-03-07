@@ -6,7 +6,7 @@ import component.Button;
 import game.Game;
 import game.item.Item;
 import game.item.consumable.Potion;
-import game.util.ItemPosition;
+import game.util.Position;
 import game.util.ItemRotation;
 import interfaces.ReRenderable;
 import javafx.geometry.Pos;
@@ -165,12 +165,12 @@ public class Backpack extends VBox implements ReRenderable {
 		}
 	}
 
-	public ArrayList<ItemPosition> getItemPosition(Item item) {
-		ArrayList<ItemPosition> itemPositions = new ArrayList<ItemPosition>();
+	public ArrayList<Position> getItemPosition(Item item) {
+		ArrayList<Position> itemPositions = new ArrayList<Position>();
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				if (slots[y][x].getItem() == item)
-					itemPositions.add(new ItemPosition(x, y));
+					itemPositions.add(new Position(x, y));
 			}
 		}
 		return itemPositions;

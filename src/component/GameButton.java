@@ -5,13 +5,12 @@ import java.util.HashMap;
 import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import sound.Sfx;
 import sound.SfxPlayer;
 
-public class GameButton extends StackPane {
+public class GameButton extends Pane {
 	private static HashMap<GameButtonType, Resource> typeMap;
-	private GameButtonType type;
 
 	static {
 		typeMap = new HashMap<GameButtonType, Resource>();
@@ -26,9 +25,8 @@ public class GameButton extends StackPane {
 
 	public GameButton(double width, double height, GameButtonType type) {
 		super();
-		this.type = type;
+		ImageView imageView = new ImageView(getIdleImage(type));
 		setMaxSize(width, height);
-		ImageView imageView = new ImageView(getIdleImage());
 		imageView.setFitWidth(width);
 		imageView.setFitHeight(height);
 		getChildren().setAll(imageView);
@@ -36,16 +34,16 @@ public class GameButton extends StackPane {
 		setCursor(Cursor.HAND);
 		setOnMouseEntered(_ -> {
 			SfxPlayer.play(Sfx.CLICK);
-			imageView.setImage(getHoverImage());
+			imageView.setImage(getHoverImage(type));
 		});
-		setOnMouseExited(_ -> imageView.setImage(getIdleImage()));
+		setOnMouseExited(_ -> imageView.setImage(getIdleImage(type)));
 	}
 
-	private Image getIdleImage() {
+	private static Image getIdleImage(GameButtonType type) {
 		return typeMap.get(type).getIdleImage();
 	}
 
-	private Image getHoverImage() {
+	private static Image getHoverImage(GameButtonType type) {
 		return typeMap.get(type).getHoverImage();
 	}
 }

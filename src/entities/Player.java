@@ -5,7 +5,6 @@ import java.util.Arrays;
 
 import component.EnergyOrb;
 import component.HpBar;
-import game.GameBottom;
 import game.backpack.Backpack;
 import game.item.Item;
 import game.util.Effect;
@@ -28,9 +27,9 @@ import sound.SfxPlayer;
 public class Player extends Being implements TurnActivable, ReStatable {
 	private static Player instance = null;
 	private int xp, maxXp, energy, maxEnergy, mana, maxMana, coins, luck;
-	//private ArrayList<String> pic;
+	// private ArrayList<String> pic;
 	private CharacterState currentState = CharacterState.IDLE;
-	//private ArrayList<String> idlePaths;
+	// private ArrayList<String> idlePaths;
 	private Point2D initialPosition;
 	private ArrayList<Image> idleFrames;
 	private Timeline idleTimeline;
@@ -54,178 +53,173 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		this.energy = this.maxEnergy = 100;
 		this.mana = this.maxMana = 0;
 		this.mana = this.maxMana = 0;
-		//this.pic = null;
+		// this.pic = null;
 		this.coins = 0;
 		this.luck = 0;
 		this.allEffect = new ArrayList<Effect>();
 		this.imageView = new ImageView();
-		
+
 		initialize(null);
 
-
 		text = new Text();
-		idleFrames = new ArrayList<Image>(Arrays.asList(
-			new Image(ClassLoader.getSystemResource("Frames/player_Idle1.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_Idle2.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_Idle3.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_Idle4.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_Idle5.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_Idle6.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_Idle7.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_Idle8.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_Idle9.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_Idle10.png").toString())
-		));
-		idleTimeline = createPlayerAnimation(idleFrames,0.1);
+		idleFrames = new ArrayList<Image>(
+				Arrays.asList(new Image(ClassLoader.getSystemResource("Frames/player_Idle1.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_Idle2.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_Idle3.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_Idle4.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_Idle5.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_Idle6.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_Idle7.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_Idle8.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_Idle9.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_Idle10.png").toString())));
+		idleTimeline = createPlayerAnimation(idleFrames, 0.1);
 		idleTimeline.setCycleCount(Timeline.INDEFINITE);
 		idleTimeline.play();
 		this.getChildren().add(imageView);
-		attackFrames = new ArrayList<Image>(Arrays.asList(
-			new Image(ClassLoader.getSystemResource("Frames/player_attack1.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_attack2.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_attack3.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_attack4.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_attack5.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_attack6.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_attack7.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_attack8.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_attack9.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_attack10.png").toString())
-		));
-		attackTimeline = createPlayerAnimation(attackFrames,0.05);
+		attackFrames = new ArrayList<Image>(
+				Arrays.asList(new Image(ClassLoader.getSystemResource("Frames/player_attack1.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_attack2.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_attack3.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_attack4.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_attack5.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_attack6.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_attack7.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_attack8.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_attack9.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_attack10.png").toString())));
+		attackTimeline = createPlayerAnimation(attackFrames, 0.05);
 		attackTimeline.setCycleCount(1);
-		runFrames = new ArrayList<Image>(Arrays.asList(
-			new Image(ClassLoader.getSystemResource("Frames/player_run1.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_run2.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_run3.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_run4.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_run5.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_run6.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_run7.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_run8.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_run9.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_run10.png").toString())
-		));
-		runTimeline = createPlayerAnimation(runFrames,0.075);
+		runFrames = new ArrayList<Image>(
+				Arrays.asList(new Image(ClassLoader.getSystemResource("Frames/player_run1.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_run2.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_run3.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_run4.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_run5.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_run6.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_run7.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_run8.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_run9.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_run10.png").toString())));
+		runTimeline = createPlayerAnimation(runFrames, 0.075);
 		runTimeline.setCycleCount(3);
-		dieFrames = new ArrayList<Image>(Arrays.asList(
-			new Image(ClassLoader.getSystemResource("Frames/player_die1.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_die2.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_die3.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_die4.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_die5.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_die6.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_die7.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_die8.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_die9.png").toString()),
-			new Image(ClassLoader.getSystemResource("Frames/player_die10.png").toString())
-		));
-		dieTimeline = createPlayerAnimation(dieFrames,0.075);
+		dieFrames = new ArrayList<Image>(
+				Arrays.asList(new Image(ClassLoader.getSystemResource("Frames/player_die1.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_die2.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_die3.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_die4.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_die5.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_die6.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_die7.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_die8.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_die9.png").toString()),
+						new Image(ClassLoader.getSystemResource("Frames/player_die10.png").toString())));
+		dieTimeline = createPlayerAnimation(dieFrames, 0.075);
 		dieTimeline.setCycleCount(1);
 	}
-	
+
 	private Timeline createPlayerAnimation(ArrayList<Image> images, double frameDuration) {
 		Timeline timeline = new Timeline();
 		for (int i = 0; i < images.size(); i++) {
-	        final int frameIndex = i;
-	        KeyFrame keyFrame = new KeyFrame(
-	            Duration.seconds(frameDuration * i),
-	            event -> imageView.setImage(images.get(frameIndex))
-	        );
-	        timeline.getKeyFrames().add(keyFrame);
-	    }
-	    imageView.setImage(images.get(0));
-	    return timeline;
+			final int frameIndex = i;
+			KeyFrame keyFrame = new KeyFrame(Duration.seconds(frameDuration * i),
+					event -> imageView.setImage(images.get(frameIndex)));
+			timeline.getKeyFrames().add(keyFrame);
+		}
+		imageView.setImage(images.get(0));
+		return timeline;
 	}
-	
+
 	public void attack() {
-        if (currentState == CharacterState.ATTACKING) {
-            stopCurrentAnimation();
-        }
+		if (currentState == CharacterState.ATTACKING) {
+			stopCurrentAnimation();
+		}
 
-        currentState = CharacterState.ATTACKING;
-        startAttackAnimation();
-    }
+		currentState = CharacterState.ATTACKING;
+		startAttackAnimation();
+	}
+
 	private void startAttackAnimation() {
-        attackTimeline.setOnFinished(event -> {
-            currentState = CharacterState.IDLE;
-            playAnimation("idle");
-        });
-        playAnimation("attack");
-    }
+		attackTimeline.setOnFinished(event -> {
+			currentState = CharacterState.IDLE;
+			playAnimation("idle");
+		});
+		playAnimation("attack");
+	}
 
-    private void stopCurrentAnimation() {
-        if (idleTimeline.getStatus() == Timeline.Status.RUNNING) {
-            idleTimeline.stop();
-        }
-        if (attackTimeline.getStatus() == Timeline.Status.RUNNING) {
-            attackTimeline.stop();
-        }
-        if (runTimeline.getStatus() == Timeline.Status.RUNNING) {
-            runTimeline.stop();
-        }
-    }
+	private void stopCurrentAnimation() {
+		if (idleTimeline.getStatus() == Timeline.Status.RUNNING) {
+			idleTimeline.stop();
+		}
+		if (attackTimeline.getStatus() == Timeline.Status.RUNNING) {
+			attackTimeline.stop();
+		}
+		if (runTimeline.getStatus() == Timeline.Status.RUNNING) {
+			runTimeline.stop();
+		}
+	}
 
-    private void playAnimation(String animationName) {
-        stopCurrentAnimation();
-        switch (animationName) {
-            case "idle":
-                idleTimeline.play();
-                break;
-            case "attack":
-                attackTimeline.play();
-                break;
-            case "run":
-            	runTimeline.play();
-            	if(GameLogic.getInstance().getCurrentFloor() == 0) {
-            		SfxPlayer.play(Sfx.GRASSRUN);
-            	} else {
-            		SfxPlayer.play(Sfx.STONERUN);
-            	}
-            	break;
-            case "die":
-            	dieTimeline.play();
-            	break;
-            default:
-                System.out.println("Unknown animation: " + animationName);
-        }
-    }
-    
-    public void die() {
-    	playAnimation("die");
-    }
-    
-    public void moveLeftAndBack() {
-        double currentTranslateX = imageView.getTranslateX();
-        Timeline moveTimeline = new Timeline();
-        Timeline moveTimeline2 = new Timeline();
-        double moveDistance = 200;
-        double targetX = currentTranslateX + moveDistance;
-        
-        moveTimeline.getKeyFrames().addAll(
-                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX)),
-                new KeyFrame(Duration.millis(1000), new KeyValue(imageView.translateXProperty(), currentTranslateX + moveDistance))
-        );
-        moveTimeline.setCycleCount(1);
-        
-        moveTimeline2.getKeyFrames().addAll(
-                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX - moveDistance)),
-                new KeyFrame(Duration.millis(1000), new KeyValue(imageView.translateXProperty(), currentTranslateX))
-        );
-        moveTimeline2.setCycleCount(1);
-        
-        moveTimeline.setOnFinished(event -> {
-        	moveTimeline2.play();
-        });
-        runTimeline.setOnFinished(event -> {
-        	playAnimation("idle");
-        });
-        playAnimation("run");
-        moveTimeline.play();
-    }
-    
+	private void playAnimation(String animationName) {
+		stopCurrentAnimation();
+		switch (animationName) {
+		case "idle":
+			idleTimeline.play();
+			break;
+		case "attack":
+			attackTimeline.play();
+			break;
+		case "run":
+			runTimeline.play();
+			if (GameLogic.getInstance().getCurrentFloor() == 0) {
+				SfxPlayer.play(Sfx.GRASSRUN);
+			} else {
+				SfxPlayer.play(Sfx.STONERUN);
+			}
+			break;
+		case "die":
+			dieTimeline.play();
+			break;
+		default:
+			System.out.println("Unknown animation: " + animationName);
+		}
+	}
+
+	public void die() {
+		playAnimation("die");
+	}
+
+	public void moveLeftAndBack() {
+		double currentTranslateX = imageView.getTranslateX();
+		Timeline moveTimeline = new Timeline();
+		Timeline moveTimeline2 = new Timeline();
+		double moveDistance = 200;
+		double targetX = currentTranslateX + moveDistance;
+
+		moveTimeline.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX)),
+				new KeyFrame(Duration.millis(1000),
+						new KeyValue(imageView.translateXProperty(), currentTranslateX + moveDistance)));
+		moveTimeline.setCycleCount(1);
+
+		moveTimeline2.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO,
+						new KeyValue(imageView.translateXProperty(), currentTranslateX - moveDistance)),
+				new KeyFrame(Duration.millis(1000), new KeyValue(imageView.translateXProperty(), currentTranslateX)));
+		moveTimeline2.setCycleCount(1);
+
+		moveTimeline.setOnFinished(event -> {
+			moveTimeline2.play();
+		});
+		runTimeline.setOnFinished(event -> {
+			playAnimation("idle");
+		});
+		playAnimation("run");
+		moveTimeline.play();
+	}
+
 	public int takeDamage(int damaged) {
-		if (damaged==0) return 0;
+		if (damaged == 0)
+			return 0;
 		if (FightLogic.findEffectAndDecrease(allEffect, EffectType.DODGE, 1)) {
 			SfxPlayer.play(Sfx.DODGE);
 			return 0;
@@ -246,39 +240,37 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		if (Player.getInstance().getHp() == 0) {
 			GameLogic.getInstance().gameOver();
 		}
-		
+
 		return damaged;
 	}
 
-	
 	public void initialize(Image image) {
-		energyOrb = new EnergyOrb(this);
+		energyOrb = new EnergyOrb();
 		hpBar = new HpBar(this);
 		getChildren().setAll(energyOrb, hpBar);
-		render();
 	}
-	
+
 	@Override
 	public void render() {
 		hpBar.render();
 		energyOrb.render();
 	}
-	
+
 	@Override
 	public void activatePerTurn() {
 		this.energy = maxEnergy;
 		this.shield = 0;
-		setHp(getHp()); //reset if overheal
-		//getAllEffect().clear();
-		for(Effect ef : allEffect) {
-			if(ef.getType().equals(EffectType.SHIELD)) {
+		setHp(getHp()); // reset if overheal
+		// getAllEffect().clear();
+		for (Effect ef : allEffect) {
+			if (ef.getType().equals(EffectType.SHIELD)) {
 				allEffect.remove(ef);
 			}
 		}
-		
+
 		// Visible end turn button
 		Backpack.getInstance().render();
-		
+
 		for (Item item : GameLogic.getInstance().getInventory()) {
 			if (item instanceof TurnActivable) {
 				System.out.println("Turn activate");
@@ -288,7 +280,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		setMana(getMaxMana());
 		render();
 	}
-	
+
 	@Override
 	public void reStatBeforeUpdate() {
 		this.maxHp = 100;
@@ -302,7 +294,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	}
 
 	public void setXp(int xp) {
-		while(xp > maxXp) {
+		while (xp > maxXp) {
 			xp -= maxXp;
 			maxXp *= 1.2;
 			maxHp *= 1.15;
@@ -310,7 +302,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		}
 		hp = maxHp;
 		this.xp = xp < 0 ? 0 : xp;
-		//render();
+		// render();
 	}
 
 	public int getMaxXp() {

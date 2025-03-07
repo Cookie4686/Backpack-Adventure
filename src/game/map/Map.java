@@ -3,6 +3,7 @@ package game.map;
 import java.util.ArrayList;
 import java.util.Random;
 
+import game.util.Position;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import logic.GameLogic;
@@ -11,7 +12,7 @@ public class Map extends GridPane {
 	private static Map instance;
 	private int width, height;
 	private MapSquare[][] squares;
-	private ArrayList<MarkPosition> marks;
+	private ArrayList<Position> marks;
 
 	public Map(int width, int height) {
 		super();
@@ -20,7 +21,7 @@ public class Map extends GridPane {
 		this.width = width;
 		this.height = height;
 		squares = new MapSquare[height][width];
-		marks = new ArrayList<MarkPosition>();
+		marks = new ArrayList<Position>();
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				squares[y][x] = new MapSquare();
@@ -38,13 +39,16 @@ public class Map extends GridPane {
 		}
 		buildPath(marks.get(0), marks.get(1));
 		while (marks.size() < 5 + GameLogic.getInstance().getCurrentFloor()) { // create 3 monster diffrence pos
-			if (placeRandomMarker(MapMarker.MONSTER)) findRoute();
+			if (placeRandomMarker(MapMarker.MONSTER))
+				findRoute();
 		}
 		while (marks.size() < 6 + GameLogic.getInstance().getCurrentFloor()) { // create 1 door diffrence pos
-			if (placeRandomMarker(MapMarker.DOOR)) findRoute();
+			if (placeRandomMarker(MapMarker.DOOR))
+				findRoute();
 		}
 		while (marks.size() < 7 + GameLogic.getInstance().getCurrentFloor()) { // create 1 door diffrence pos
-			if (placeRandomMarker(MapMarker.DOCTOR)) findRoute();
+			if (placeRandomMarker(MapMarker.DOCTOR))
+				findRoute();
 		}
 		render();
 	}
@@ -53,46 +57,51 @@ public class Map extends GridPane {
 		int x = random(width), y = random(height);
 		if (squares[x][y].getMarker() == null) {
 			squares[x][y].setMarker(marker);
-			marks.add(new MarkPosition(x, y));
+			marks.add(new Position(x, y));
 			return true;
 		}
-		
+
 		return false;
 	}
 
 	private void findRoute() {
 		// add each node route to node at the index infront randomly.
 		int r = random(2) + 2;
-		buildPath(marks.getLast(), marks.get(marks.size()-r));
+		buildPath(marks.getLast(), marks.get(marks.size() - r));
 	}
-	
-	private boolean findAdjacent(MarkPosition prev, MarkPosition pos) {
+
+	private boolean findAdjacent(Position prev, Position pos) {
 		int x = pos.getX(), y = pos.getY();
-		
-		if (x+1<width)
-			if (squares[x+1][y].getMarker() != null)
-				if (!(x+1==prev.getX() && y==prev.getY())) return true;
-		if (x-1>=0)
-			if (squares[x-1][y].getMarker() != null )
-				if (!(x-1==prev.getX() && y==prev.getY())) return true;
-		if (y+1<height)
-			if (squares[x][y+1].getMarker() != null)
-				if (!(x==prev.getX() && y+1==prev.getY())) return true;
-		if (y-1>=0)
-			if (squares[x][y-1].getMarker() != null)
-				if (!(x==prev.getX() && y-1==prev.getY())) return true;
-		
+
+		if (x + 1 < width)
+			if (squares[x + 1][y].getMarker() != null)
+				if (!(x + 1 == prev.getX() && y == prev.getY()))
+					return true;
+		if (x - 1 >= 0)
+			if (squares[x - 1][y].getMarker() != null)
+				if (!(x - 1 == prev.getX() && y == prev.getY()))
+					return true;
+		if (y + 1 < height)
+			if (squares[x][y + 1].getMarker() != null)
+				if (!(x == prev.getX() && y + 1 == prev.getY()))
+					return true;
+		if (y - 1 >= 0)
+			if (squares[x][y - 1].getMarker() != null)
+				if (!(x == prev.getX() && y - 1 == prev.getY()))
+					return true;
+
 		return false;
 	}
 
-	private void buildPath(MarkPosition start, MarkPosition end) {
-		MarkPosition prev = new MarkPosition(start.getX(), start.getY());
-		
+	private void buildPath(Position start, Position end) {
+		Position prev = new Position(start.getX(), start.getY());
+
 		while (start.getX() != end.getX() || start.getY() != end.getY()) {
-			if (findAdjacent(prev, start)) break;
+			if (findAdjacent(prev, start))
+				break;
 			prev.setX(start.getX());
 			prev.setY(start.getY());
-			
+
 			if (start.getX() == end.getX()) {
 				start.setY(start.getY() + (start.getY() < end.getY() ? 1 : -1));
 			} else if (start.getY() == end.getY()) {
@@ -105,7 +114,7 @@ public class Map extends GridPane {
 		}
 	}
 
-	private MarkPosition randomHeading(MarkPosition start, MarkPosition end) {
+	private Position randomHeading(Position start, Position end) {
 		if (random(2) == 0) { // x
 			start.setX(start.getX() + (start.getX() < end.getX() ? 1 : -1));
 		} else { // y
@@ -136,7 +145,7 @@ public class Map extends GridPane {
 	private int random(int limit) {
 		return new Random().nextInt(0, limit);
 	}
-	
+
 	public void createNewMap() {
 		instance = new Map(10, 10);
 	}

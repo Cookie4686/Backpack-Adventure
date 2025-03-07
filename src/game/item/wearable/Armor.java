@@ -6,7 +6,7 @@ import game.backpack.Backpack;
 import game.backpack.Slot;
 import game.item.Item;
 import game.util.Effect;
-import game.util.ItemPosition;
+import game.util.Position;
 import game.util.ItemTier;
 
 public class Armor extends Wearable {
@@ -25,7 +25,7 @@ public class Armor extends Wearable {
 		Backpack backpack = Backpack.getInstance();
 		ArrayList<Item> items = new ArrayList<Item>();
 		
-		for (ItemPosition position : backpack.getItemPosition(this)) {
+		for (Position position : backpack.getItemPosition(this)) {
 			Slot[][] slots = backpack.getSlots();
 			if (position.getY()-1>=0) //North
 				if (isMeetCondition(slots[position.getY()-1][position.getX()].getItem(), items))

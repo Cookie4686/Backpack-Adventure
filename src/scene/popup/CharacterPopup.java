@@ -11,9 +11,7 @@ import game.GameTop;
 import game.backpack.Backpack;
 import game.map.Map;
 import javafx.animation.PauseTransition;
-import javafx.geometry.Pos;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import logic.FightLogic;
 import logic.GameLogic;
@@ -28,11 +26,7 @@ public class CharacterPopup extends Popup {
 
 	public CharacterPopup() {
 		super("Character Select");
-		VBox root = new VBox();
-		root.setAlignment(Pos.TOP_CENTER);
-		root.setSpacing(20);
-		root.getChildren().add(CharacterScene.use());
-		setCenter(root);
+		setCenter(CharacterScene.use());
 
 		GameButton journeyButton = new GameButton(159, 70, GameButtonType.JOURNEY_ON);
 		journeyButton.setOnMouseClicked(event -> {
@@ -67,7 +61,6 @@ public class CharacterPopup extends Popup {
 		});
 
 		bottomBox.getChildren().setAll(closeButton, journeyButton);
-		bottomBox.setSpacing(30);
 	}
 
 	public static CharacterPopup getInstance() {
