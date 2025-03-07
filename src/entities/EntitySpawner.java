@@ -27,7 +27,7 @@ public class EntitySpawner {
 				"toad"
 		));
 		b = new ArrayList<String>(Arrays.asList(
-				"dragon",
+//				"dragon",
 				"hellHound",
 				"ogre",
 				"highGhost"

@@ -132,7 +132,7 @@ private static HashMap<String, Resource> entityMap;
                 ))));
 
         entityMap.put("toad", new Resource(() -> new Entity("toad", 100, 30, MobTier.C,
-                        new ArrayList<>(Arrays.asList(new Effect(20,EffectType.POISON), new Effect(20, EffectType.THORN)))),
+                        new ArrayList<>(Arrays.asList(new Effect(20,EffectType.POISON), new Effect(20, EffectType.THORN), new Effect(1000, EffectType.HEAL)))),
                 new ArrayList<>(Arrays.asList(
                         "Frames/mutant-toad-idle1.png",
                         "Frames/mutant-toad-idle2.png",
@@ -207,7 +207,7 @@ private static HashMap<String, Resource> entityMap;
                 ))));
 
         entityMap.put("highGhost", new Resource(() -> new Entity("highGhost", 150, 45, MobTier.B,
-                        new ArrayList<>(Arrays.asList(new Effect(40,EffectType.DAMAGE), new Effect(1, EffectType.SUMMONER)))),
+                        new ArrayList<>(Arrays.asList(new Effect(40,EffectType.DAMAGE), new Effect(1, EffectType.SUMMONER), new Effect(1000, EffectType.HEAL)))),
                 new ArrayList<>(Arrays.asList(
                         "Frames/highGhost1.png",
                         "Frames/highGhost2.png",
@@ -270,7 +270,7 @@ private static HashMap<String, Resource> entityMap;
 
         // MobTier.S - 2 entities
         entityMap.put("nightmare", new Resource(() -> new Entity("nightmare", 400, 180, MobTier.S,
-                        new ArrayList<>(Arrays.asList(new Effect(120,EffectType.FIRE), new Effect(120, EffectType.VAMPIRIC)))),
+                        new ArrayList<>(Arrays.asList(new Effect(120,EffectType.FIRE), new Effect(120, EffectType.VAMPIRIC), new Effect(1000, EffectType.HEAL)))),
                 new ArrayList<>(Arrays.asList(
                         "Frames/nightmare1.png",
                         "Frames/nightmare2.png",

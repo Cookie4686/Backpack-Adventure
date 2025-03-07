@@ -16,12 +16,14 @@ import javafx.scene.Node;
 import javafx.util.Duration;
 import logic.GameLogic;
 import scene.GameScene;
+import sound.BackgroundSongPlayer;
 
 public class MapHandler {
 	public static void handleMouseClicked(MapSquare square) {
 		System.out.println(Map.getInstance().isReachable(square));
 		switch (square.getMarker()) {
-		case FINAL 		->{
+		case FINAL		-> {
+			GameLogic.getInstance().setDoctor(false);
 			GameLogic.getInstance().setBoss(true);
 			Player.getInstance().moveLeftAndBack();
 			Fader.fadeOutAndIn();
@@ -32,8 +34,10 @@ public class MapHandler {
 				GameLogic.getInstance().initializeFight();
 			});
 			pause.play();
+			break;
 		}
 		case MONSTER	-> {
+			GameLogic.getInstance().setDoctor(false);
 			Player.getInstance().moveLeftAndBack();
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
@@ -43,10 +47,12 @@ public class MapHandler {
 				GameLogic.getInstance().initializeFight();
 			});
 			pause.play();
+			break;
 		}
 		case DOOR		-> {
+			GameLogic.getInstance().setDoctor(false);
 			Player.getInstance().moveLeftAndBack();
-			if(GameLogic.getInstance().getCurrentSubFloor() == 2) {
+			if (GameLogic.getInstance().getCurrentSubFloor() == 2) {
 				GameLogic.getInstance().setCurrentFloor(GameLogic.getInstance().getCurrentFloor() + 1);
 				GameLogic.getInstance().setCurrentSubFloor(0);
 			} else {
@@ -58,8 +64,10 @@ public class MapHandler {
 				GameBottom.getInstance().getEnemyBox().getChildren().clear();
 				Game.getInstance().initializeFight();
 				generateNewMap();
+				BackgroundSongPlayer.floor(GameLogic.getInstance().getCurrentFloor());
 			});
 			pause.play();
+			break;
 		}
 		// Test dialog
 		case PLAYER		-> {
@@ -81,9 +89,13 @@ public class MapHandler {
 				System.out.println("op3");
 			});
 			dialog.show();
+			break;
 		}
-		
+
 		case DOCTOR		-> {
+			if (GameLogic.getInstance().isDoctor())
+				break;
+			GameLogic.getInstance().setDoctor(true);
 			Player.getInstance().moveLeftAndBack();
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
@@ -92,8 +104,10 @@ public class MapHandler {
 				Npc doctor = Npc.getInstance();
 				doctor.setAlignment(Pos.BOTTOM_LEFT);
 				GameBottom.getInstance().getEnemyBox().getChildren().add(doctor);
+				BackgroundSongPlayer.fight(4);
 			});
 			pause.play();
+			break;
 		}
 		default			-> {}
 		}
