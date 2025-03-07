@@ -51,7 +51,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		this.shield = 0;
 		this.xp = 0;
 		this.maxXp = 100;
-		this.energy = this.maxEnergy = 100;
+		this.energy = this.maxEnergy = 4;
 		this.mana = this.maxMana = 0;
 		this.mana = this.maxMana = 0;
 		// this.pic = null;
@@ -285,7 +285,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	@Override
 	public void reStatBeforeUpdate() {
 		this.maxHp = fixedMaxHp;
-		this.maxEnergy = 100;
+		this.maxEnergy = 4;
 		this.maxMana = 0;
 		this.coins = 0;
 	}
