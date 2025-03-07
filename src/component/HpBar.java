@@ -78,7 +78,6 @@ public class HpBar extends StackPane implements ReRenderable {
 		final int hp = being.getHp() > being.getMaxHp() ? being.getMaxHp() : being.getHp(); // no overheal show
 		hpBarText.setText(String.format("%s/%s", hp, being.getMaxHp()));
 		final double temp = realProgress;
-		System.out.println(realProgress);
 		realProgress = (double) hp / being.getMaxHp();
 		Thread thread = new Thread(() -> {
 			final int SMOOTHNESS = 50;

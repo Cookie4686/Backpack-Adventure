@@ -298,8 +298,8 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	public void setXp(int xp) {
 		while (xp > maxXp) {
 			xp -= maxXp;
-			maxXp *= 1.2;
-			fixedMaxHp *= 1.15;
+			maxXp *= 2;
+			fixedMaxHp *= 1.3;
 			Backpack.getInstance().levelUp();
 			System.out.println("lv up");
 		}

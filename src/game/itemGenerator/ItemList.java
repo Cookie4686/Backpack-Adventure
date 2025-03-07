@@ -109,31 +109,31 @@ public class ItemList {
 		
 		
 //		ShieldItem(String name, String detail, int shield, ArrayList<Effect> effects, int costActivate, int width, int height, ItemTier tier)
-		itemMap.put("Blood  Drain Shield", new Resource(() -> new ShieldItem("Blood Drain Shield", "It absorbs damage in exchange for the vitality but who.", 20, new ArrayList<Effect>(Arrays.asList(new Effect(20, EffectType.THORN))), 1, 2, 2, ItemTier.RARE), "Items/BloodDrainShield.png"));
-		itemMap.put("Bronze Shield", new Resource(() -> new ShieldItem("Bronze Shield", "Though heavier than wooden counterparts.", 30, new ArrayList<Effect>(), 1, 2, 2, ItemTier.UNCOMMON), "Items/BronzeShield.png"));
-		itemMap.put("Circle Wood Shield", new Resource(() -> new ShieldItem("Circle Wood Shield", "A reinforced wooden shield with a circular design.", 15, new ArrayList<Effect>(), 1, 2, 2, ItemTier.COMMON), "Items/CircleWoodShield.png"));
-		itemMap.put("Natural Shield", new Resource(() -> new ShieldItem("Natural Shield", "Touch some nature.", 25, new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.REGEN))), 2, 2, 2, ItemTier.RARE), "Items/NaturalShield.png"));
-		itemMap.put("Squre Wood Shield", new Resource(() -> new ShieldItem("Squre Wood Shield", "Design for maximum coverage.", 20, new ArrayList<Effect>(), 1, 2, 2, ItemTier.COMMON), "Items/SqureWoodShield.png"));
-		itemMap.put("Well Made Shield", new Resource(() -> new ShieldItem("Well Made Shield", "A finely crafted shield.", 40, new ArrayList<Effect>(), 1, 2, 2, ItemTier.EPIC), "Items/WellMadeShield.png"));
+		itemMap.put("Blood  Drain Shield", new Resource(() -> new ShieldItem("Blood Drain Shield", "It absorbs damage in exchange for the vitality but who.", 70, new ArrayList<Effect>(Arrays.asList(new Effect(20, EffectType.THORN))), 1, 2, 2, ItemTier.RARE), "Items/BloodDrainShield.png"));
+		itemMap.put("Bronze Shield", new Resource(() -> new ShieldItem("Bronze Shield", "Though heavier than wooden counterparts.", 45, new ArrayList<Effect>(), 1, 2, 2, ItemTier.UNCOMMON), "Items/BronzeShield.png"));
+		itemMap.put("Circle Wood Shield", new Resource(() -> new ShieldItem("Circle Wood Shield", "A reinforced wooden shield with a circular design.", 40, new ArrayList<Effect>(), 1, 2, 2, ItemTier.COMMON), "Items/CircleWoodShield.png"));
+		itemMap.put("Natural Shield", new Resource(() -> new ShieldItem("Natural Shield", "Touch some nature.", 80, new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.REGEN))), 2, 2, 2, ItemTier.RARE), "Items/NaturalShield.png"));
+		itemMap.put("Squre Wood Shield", new Resource(() -> new ShieldItem("Squre Wood Shield", "Design for maximum coverage.", 25, new ArrayList<Effect>(), 1, 2, 2, ItemTier.COMMON), "Items/SqureWoodShield.png"));
+		itemMap.put("Well Made Shield", new Resource(() -> new ShieldItem("Well Made Shield", "A finely crafted shield.", 130, new ArrayList<Effect>(), 1, 2, 2, ItemTier.EPIC), "Items/WellMadeShield.png"));
 		
 		
 		
 //		Shoes(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height, ItemTier tier) 
-		itemMap.put("Leather Boots", new Resource(() -> new Shoes("Leather Boots", "Sturdy boots crafted from durable leather.", 5, 1, new ArrayList<Effect>(Arrays.asList(new Effect(5, EffectType.HEAL))), 2, 1, ItemTier.COMMON), "Items/LeatherBoots.png"));
-		itemMap.put("Steel Boots", new Resource(() -> new Shoes("Steel Boots", "Leather boots decorate with steel.", 10, 2, new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.HEAL))), 2, 1, ItemTier.UNCOMMON), "Items/SteelBoots.png"));
-		itemMap.put("Talon Boots", new Resource(() -> new Shoes("Talon Boots", "Steel boots with spike on a tip.", 15, 1, new ArrayList<Effect>(Arrays.asList(new Effect(5, EffectType.THORN), new Effect(15, EffectType.HEAL))), 2, 1, ItemTier.RARE), "Items/TalonBoots.png"));
+		itemMap.put("Leather Boots", new Resource(() -> new Shoes("Leather Boots", "Sturdy boots crafted from durable leather.", 20, 2, new ArrayList<Effect>(Arrays.asList(new Effect(5, EffectType.HEAL))), 2, 1, ItemTier.COMMON), "Items/LeatherBoots.png"));
+		itemMap.put("Steel Boots", new Resource(() -> new Shoes("Steel Boots", "Leather boots decorate with steel.", 30, 3, new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.HEAL), new Effect(1, EffectType.ENERGY))), 2, 1, ItemTier.UNCOMMON), "Items/SteelBoots.png"));
+		itemMap.put("Talon Boots", new Resource(() -> new Shoes("Talon Boots", "Steel boots with spike on a tip.", 40, 5, new ArrayList<Effect>(Arrays.asList(new Effect(5, EffectType.THORN), new Effect(15, EffectType.HEAL))), 2, 1, ItemTier.RARE), "Items/TalonBoots.png"));
 		
 //		Armor(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height, ItemTier tier)
-		itemMap.put("Chainmail Armor", new Resource(() -> new Armor("Chainmail Armor", "Favored by both mobility and defense.", 20, 1, new ArrayList<Effect>(Arrays.asList(new Effect(20, EffectType.HEAL))), 2, 2, ItemTier.RARE), "Items/Chainmail.png"));
+		itemMap.put("Chainmail Armor", new Resource(() -> new Armor("Chainmail Armor", "Favored by both mobility and defense.", 40, 1, new ArrayList<Effect>(Arrays.asList(new Effect(20, EffectType.HEAL))), 2, 2, ItemTier.RARE), "Items/Chainmail.png"));
 		itemMap.put("Cloth Armor", new Resource(() -> new Armor("Cloth Armor", "Simple cloth.", 5, 1, new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.HEAL))), 2, 2, ItemTier.COMMON), "Items/ClothArmor.png"));
-		itemMap.put("Iron Plate", new Resource(() -> new Armor("Iron Plate", "No One able to hit you now.", 30, 2, new ArrayList<Effect>(Arrays.asList(new Effect(30, EffectType.HEAL))), 2, 2, ItemTier.EPIC), "Items/IronPlate.png"));
-		itemMap.put("Leather Armor", new Resource(() -> new Armor("Leather Armor", "Cool looking design.", 5, 2, new ArrayList<Effect>(Arrays.asList(new Effect(15, EffectType.HEAL), new Effect(1, EffectType.ENERGY))), 2, 2, ItemTier.UNCOMMON), "Items/LeatherArmor.png"));
+		itemMap.put("Iron Plate", new Resource(() -> new Armor("Iron Plate", "No One able to hit you now.", 70, 2, new ArrayList<Effect>(Arrays.asList(new Effect(30, EffectType.HEAL))), 2, 2, ItemTier.EPIC), "Items/IronPlate.png"));
+		itemMap.put("Leather Armor", new Resource(() -> new Armor("Leather Armor", "Cool looking design.", 20, 2, new ArrayList<Effect>(Arrays.asList(new Effect(15, EffectType.HEAL), new Effect(1, EffectType.ENERGY))), 2, 2, ItemTier.UNCOMMON), "Items/LeatherArmor.png"));
 
 //		Helmet(String name, String detail, int initialShield, int increaseShield, ArrayList<Effect> effects, int width, int height, ItemTier tier)
-		itemMap.put("Armet", new Resource(() -> new Helmet("Armet", "This is what I call a Knight.", 10, 2, new ArrayList<Effect>(Arrays.asList(new Effect(1, EffectType.THORN), new Effect(15, EffectType.HEAL))), 1, 1, ItemTier.RARE), "Items/Armet.png"));
-		itemMap.put("Barbuta", new Resource(() -> new Helmet("Barbuta", "Leather armor reinforced with iron.", 5, 1, new ArrayList<Effect>(), 1, 1, ItemTier.UNCOMMON), "Items/Barbuta.png"));
-		itemMap.put("Beggar Hood", new Resource(() -> new Helmet("Beggar Hood", "A hood like a thief", 1, 1, new ArrayList<Effect>(Arrays.asList(new Effect(1, EffectType.ANGER), new Effect(5, EffectType.HEAL), new Effect(1, EffectType.ENERGY))), 1, 1, ItemTier.COMMON), "Items/BeggarHood.png"));
-		itemMap.put("Kettle Helm", new Resource(() -> new Helmet("Kettle Helm", "First step for a warrior", 5, 1, new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.HEAL))), 1, 1, ItemTier.UNCOMMON), "Items/KettleHelm.png"));
+		itemMap.put("Armet", new Resource(() -> new Helmet("Armet", "This is what I call a Knight.", 40, 2, new ArrayList<Effect>(Arrays.asList(new Effect(1, EffectType.THORN), new Effect(15, EffectType.HEAL))), 1, 1, ItemTier.RARE), "Items/Armet.png"));
+		itemMap.put("Barbuta", new Resource(() -> new Helmet("Barbuta", "Leather armor reinforced with iron.", 20, 2, new ArrayList<Effect>(), 1, 1, ItemTier.UNCOMMON), "Items/Barbuta.png"));
+		itemMap.put("Beggar Hood", new Resource(() -> new Helmet("Beggar Hood", "A hood like a thief", 1, 2, new ArrayList<Effect>(Arrays.asList(new Effect(1, EffectType.ANGER), new Effect(5, EffectType.HEAL), new Effect(1, EffectType.ENERGY))), 1, 1, ItemTier.COMMON), "Items/BeggarHood.png"));
+		itemMap.put("Kettle Helm", new Resource(() -> new Helmet("Kettle Helm", "First step for a warrior", 5, 2, new ArrayList<Effect>(Arrays.asList(new Effect(10, EffectType.HEAL))), 1, 1, ItemTier.UNCOMMON), "Items/KettleHelm.png"));
 		
 
 //		Consumable(String name, String detail, int durability, Effect effect, int costActivate, int width, int height, ItemTier tier)

@@ -40,9 +40,9 @@ public class GameScene {
 
 		if (!MenuScene.hasGameStarted() && GameLogic.getInstance().getCurrentFloor() == 0) {
 			Item[] items = new Item[3];
-			items[0]= ResourceLoader.newItem("Armet");
-			items[1]= ResourceLoader.newItem("Chainmail Armor");
-			items[2]= ResourceLoader.newItem("Steel Boots");
+			items[0]= ResourceLoader.newItem("Azurite Sword");
+			items[1]= ResourceLoader.newItem("Cloth Armor");
+			items[2]= ResourceLoader.newItem("Bread Loaf");
 			Game.getInstance().addItemsToGame(items);
 		}
 		

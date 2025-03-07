@@ -235,9 +235,9 @@ public class GameLogic {
 			System.out.println(Player.getInstance().getHp());
 			Player.getInstance().setShield(0);
 			Player.getInstance().setHp(Player.getInstance().getHp());
-			FightLogic.getInstance().setInFight(false);
 			GameHeader.getInstance().render();
 			Backpack.getInstance().render();
+			FightLogic.getInstance().setInFight(false);
 
 			if (Backpack.getInstance().isLevelup()) {
 				levelupSfx.stop();
