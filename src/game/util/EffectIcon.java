@@ -11,7 +11,7 @@ public class EffectIcon extends VBox {
 	private ImageView icon;
 	private Text text;
 	private EffectType type;
-	protected FadeTransition fadeIn;
+	private FadeTransition fadeIn;
 
 	public EffectIcon(EffectType type) {
 		this.setAlignment(Pos.CENTER);
