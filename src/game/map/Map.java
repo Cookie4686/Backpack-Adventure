@@ -34,7 +34,7 @@ public class Map extends GridPane {
 		initialize();
 	}
 
-	public void initialize() {
+	private void initialize() {
 		placeRandomMarker(MapMarker.PLAYER);
 		while (marks.size() < 2) { // create 1 monster diffrence pos
 			placeRandomMarker(MapMarker.MONSTER);
@@ -64,7 +64,7 @@ public class Map extends GridPane {
 		int x = random(width), y = random(height);
 		if (squares[x][y].getMarker() == null) {
 			squares[x][y].setMarker(marker);
-			squares[x][y].setPosition(x,y);;			
+			squares[x][y].setPosition(x, y);
 			marks.add(new Position(x, y));
 			return true;
 		}
@@ -200,7 +200,7 @@ public class Map extends GridPane {
 			}
 		}
 	}
-	
+
 	public void removePlayerMark() {
 		for (int x = 0; x < Map.getInstance().getMapWidth(); x++) {
 			for (int y = 0; y < Map.getInstance().getMapHeight(); y++) {

@@ -21,7 +21,6 @@ import javafx.scene.input.MouseButton;
 import javafx.util.Duration;
 import logic.FightLogic;
 import logic.GameLogic;
-import logic.handler.EntityHandler;
 import sound.Sfx;
 import sound.SfxPlayer;
 
@@ -59,7 +58,9 @@ public class Entity extends Being implements TurnActivable {
 		imageView.setCursor(Cursor.CROSSHAIR);
 		imageView.setPickOnBounds(true);
 		imageView.setOnMousePressed(event -> {
-			if(event.getButton() == MouseButton.PRIMARY) EntityHandler.handleMouseClicked(this);
+			if (event.getButton() == MouseButton.PRIMARY) {
+				FightLogic.getInstance().setTarget(this);
+			}
 		});
 		hpBar = new HpBar(this);
 		// nextTurnMove = new EffectIcon(null);
