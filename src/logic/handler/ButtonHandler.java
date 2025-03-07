@@ -20,7 +20,7 @@ public class ButtonHandler {
 	}
 
 	public static void handleSlotOnClicked(Slot slot) {
-		if (!slot.isUnlocked() && !FightLogic.getInstance().isInFight() && slot.isUnlockAble()) {
+		if (!slot.isUnlocked() && !FightLogic.getInstance().isInFight() && slot.isUnlockable()) {
 			slot.setUnlocked(true);
 			SfxPlayer.play(Sfx.SELECT);
 			Backpack.getInstance().setUnlockedLeft(Backpack.getInstance().getUnlockedLeft() - 1);

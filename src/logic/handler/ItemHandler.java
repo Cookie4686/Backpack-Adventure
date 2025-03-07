@@ -65,8 +65,7 @@ public class ItemHandler {
 			if (GameLogic.getInstance().isLimitReached()) {
 				setRandomOffGridLocation(currentItem);
 				SfxPlayer.play(Sfx.DENY);
-			}
-			else {
+			} else {
 				calcGrid();
 				placeItem();
 			}
@@ -170,8 +169,11 @@ public class ItemHandler {
 			diffY = currentItem.getRotation() == ItemRotation.HORIZONTAL ? currentItem.getDiffY() : 0;
 			maxHeight = Game.getInstance().getHeight() - currentItem.getHeight() + diffY;
 		}
-		slotPaneX = Backpack.getInstance().getGridPane().localToScene(Backpack.getInstance().getGridPane().getBoundsInLocal()).getMinX();
-		slotPaneY = Backpack.getInstance().getGridPane().localToScene(Backpack.getInstance().getGridPane().getBoundsInLocal()).getMinY() - GameHeader.getInstance().getHeight();
+		slotPaneX = Backpack.getInstance().getGridPane()
+				.localToScene(Backpack.getInstance().getGridPane().getBoundsInLocal()).getMinX();
+		slotPaneY = Backpack.getInstance().getGridPane()
+				.localToScene(Backpack.getInstance().getGridPane().getBoundsInLocal()).getMinY()
+				- GameHeader.getInstance().getHeight();
 	}
 
 	private static void setTranslateNoOffScreenX(double val) {

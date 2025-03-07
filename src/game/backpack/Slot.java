@@ -17,13 +17,11 @@ import logic.handler.ButtonHandler;
 
 public class Slot extends StackPane implements ReRenderable {
 	private final static int SIZE = 48;
+	private static Image emptySlot, usedSlot;
 	private ImageView slotBackground;
-	private ImageView selectAnimation;
-	private ImageView upgradeAnimation;
-	private Timeline select;
-	private Timeline upgrade;
-	private boolean isUnlocked;
-	private boolean unlockAble;
+	private ImageView selectAnimation, upgradeAnimation;
+	private Timeline select, upgrade;
+	private boolean isUnlocked, isUnlockable;
 	private Item item;
 
 	public Slot() {
@@ -31,25 +29,25 @@ public class Slot extends StackPane implements ReRenderable {
 		setMinSize(SIZE, SIZE);
 		setMaxSize(SIZE, SIZE);
 		isUnlocked = false;
-		unlockAble = false;
+		isUnlockable = false;
 		item = null;
-		
+
 //		highlight = new ImageView(new Image(ClassLoader.getSystemResource("picture/highlight1.png").toString()));
 //		highlight.setFitHeight(SIZE);
 //		highlight.setFitWidth(SIZE);
-		
+
 		selectAnimation = new ImageView();
 		select = GifPlayer.createAnimation(selectAnimation, GifPlayer.getSelectIcons(), 0.15);
 		select.setCycleCount(Timeline.INDEFINITE);
 		selectAnimation.setFitHeight(SIZE);
 		selectAnimation.setFitWidth(SIZE);
-		
+
 		upgradeAnimation = new ImageView();
 		upgrade = GifPlayer.createAnimation(upgradeAnimation, GifPlayer.getHighlightIcons(), 0.2);
 		upgrade.setCycleCount(Timeline.INDEFINITE);
 		upgradeAnimation.setFitHeight(SIZE);
 		upgradeAnimation.setFitWidth(SIZE);
-		
+
 		slotBackground = new ImageView();
 		slotBackground.setFitHeight(SIZE);
 		slotBackground.setFitWidth(SIZE);
@@ -62,47 +60,54 @@ public class Slot extends StackPane implements ReRenderable {
 			}
 		});
 	}
-	
+
 	@Override
 	public void render() {
 		if (isUnlocked) {
-			if (item != null) {
-				getChildren().removeAll(selectAnimation, upgradeAnimation);
-				select.stop();
-				setBackground(new Background(new BackgroundFill(Color.SADDLEBROWN, CornerRadii.EMPTY, Insets.EMPTY)));
-				slotBackground.setImage(new Image(ClassLoader.getSystemResource("picture/usedSlot.png").toString()));
-			} else {
-				getChildren().removeAll(selectAnimation, upgradeAnimation);
-				select.stop();
-				setBackground(new Background(new BackgroundFill(Color.SADDLEBROWN, CornerRadii.EMPTY, Insets.EMPTY)));
-				slotBackground.setImage(new Image(ClassLoader.getSystemResource("picture/emptySlot.png").toString()));
-			}
+			getChildren().removeAll(selectAnimation, upgradeAnimation);
+			select.stop();
+			setBackground(new Background(new BackgroundFill(Color.SADDLEBROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+			slotBackground.setImage(item == null ? getEmptySlot() : getUsedSlot());
 		}
 	}
-	
+
 	public void highlightUpgrade() {
 		upgrade.stop();
 		if (!getChildren().contains(upgradeAnimation)) {
-			unlockAble = true;
+			isUnlockable = true;
 			getChildren().add(upgradeAnimation);
 		}
 		upgrade.play();
 	}
-	
+
 	public void removeUpgradeAnimation() {
 		upgrade.stop();
 		getChildren().remove(upgradeAnimation);
 	}
-	
+
 	public void highlightRelic() {
 		setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
-	
+
 	public void highlight() {
 		if (!getChildren().contains(selectAnimation)) {
 			getChildren().add(selectAnimation);
 			select.play();
 		}
+	}
+
+	public static Image getEmptySlot() {
+		if (emptySlot == null) {
+			emptySlot = new Image(ClassLoader.getSystemResource("picture/emptySlot.png").toString());
+		}
+		return emptySlot;
+	}
+
+	public static Image getUsedSlot() {
+		if (usedSlot == null) {
+			usedSlot = new Image(ClassLoader.getSystemResource("picture/usedSlot.png").toString());
+		}
+		return usedSlot;
 	}
 
 	public boolean isUnlocked() {
@@ -126,11 +131,11 @@ public class Slot extends StackPane implements ReRenderable {
 		return SIZE;
 	}
 
-	public boolean isUnlockAble() {
-		return unlockAble;
+	public boolean isUnlockable() {
+		return isUnlockable;
 	}
 
-	public void setUnlockAble(boolean unlockAble) {
-		this.unlockAble = unlockAble;
+	public void setUnlockable(boolean isUnlockable) {
+		this.isUnlockable = isUnlockable;
 	}
 }

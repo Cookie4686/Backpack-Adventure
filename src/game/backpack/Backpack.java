@@ -39,7 +39,7 @@ public class Backpack extends VBox implements ReRenderable {
 	public Backpack() {
 		super();
 		levelup = false;
-		unlockedLeft=4;
+		unlockedLeft = 4;
 		slots = new Slot[HEIGHT][WIDTH];
 		gridPane = new GridPane();
 		StackPane.setAlignment(gridPane, Pos.CENTER);
@@ -48,12 +48,12 @@ public class Backpack extends VBox implements ReRenderable {
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				gridPane.add(slots[y][x] = new Slot(), x, y);
-				if ((0<y && 4>y) && (1<x && 5>x)) {
+				if ((0 < y && 4 > y) && (1 < x && 5 > x)) {
 					slots[y][x].setUnlocked(true);
 				}
 			}
 		}
-		
+
 		getEndTurnButton();
 		endTurnButton.setOnMouseClicked(event -> {
 			if (event.getButton() == MouseButton.PRIMARY) {
@@ -61,15 +61,15 @@ public class Backpack extends VBox implements ReRenderable {
 				ButtonHandler.handleEndTurnButtonOnAction();
 			}
 		});
-	
-		
-		backpack = new ImageView(new Image(ClassLoader.getSystemResource(String.format("picture/backpack.png")).toString()));
+
+		backpack = new ImageView(
+				new Image(ClassLoader.getSystemResource(String.format("picture/backpack.png")).toString()));
 		backpackResize();
-		
+
 		stackPane = new StackPane();
 		stackPane.setAlignment(Pos.CENTER);
 		stackPane.setPrefHeight(350);
-		stackPane.getChildren().setAll(backpack,gridPane);
+		stackPane.getChildren().setAll(backpack, gridPane);
 		setAlignment(Pos.CENTER);
 		getChildren().setAll(stackPane, endTurnButton);
 		setSpacing(8);
@@ -79,22 +79,26 @@ public class Backpack extends VBox implements ReRenderable {
 	public void backpackResize() {
 		int minX = WIDTH, maxX = 0;
 		int minY = HEIGHT, maxY = 0;
-		
+
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				if (slots[y][x].isUnlocked()) {
-					if (x<minX) minX=x;
-					if (x>maxX) maxX=x;
-					if (y<minY) minY=y;
-					if (y>maxY) maxY=y;					
+					if (x < minX)
+						minX = x;
+					if (x > maxX)
+						maxX = x;
+					if (y < minY)
+						minY = y;
+					if (y > maxY)
+						maxY = y;
 				}
 			}
 		}
-		
+
 		backpack.setFitWidth((Slot.getSize() * (maxX - minX + 1)) + 150);
 		backpack.setFitHeight((Slot.getSize() * (maxY - minY + 1)) + 56);
 	}
-  	
+
 	@Override
 	public void render() {
 		for (Slot[] row : slots) {
@@ -126,9 +130,9 @@ public class Backpack extends VBox implements ReRenderable {
 			return false;
 		}
 	}
-	
+
 	public void levelUp() {
-		levelup=true;
+		levelup = true;
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				if (isAdjacent(x, y) && !slots[y][x].isUnlocked()) {
@@ -137,10 +141,10 @@ public class Backpack extends VBox implements ReRenderable {
 			}
 		}
 	}
-	
+
 	public void finishUpgrade() {
-		levelup=false;
-		unlockedLeft=3;
+		levelup = false;
+		unlockedLeft = 3;
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				if (!slots[y][x].isUnlocked()) {
@@ -149,17 +153,16 @@ public class Backpack extends VBox implements ReRenderable {
 			}
 		}
 	}
-	
+
 	private boolean isAdjacent(int x, int y) {
-		if (x+1<WIDTH)
-			if (slots[y][x+1].isUnlocked()) return true;
-		if (x-1>=0)
-			if (slots[y][x-1].isUnlocked()) return true;
-		if (y+1<HEIGHT)
-			if (slots[y+1][x].isUnlocked()) return true;
-		if (y-1>=0)
-			if (slots[y-1][x].isUnlocked()) return true;
-		
+		if (x + 1 < WIDTH && slots[y][x + 1].isUnlocked())
+			return true;
+		if (x - 1 >= 0 && slots[y][x - 1].isUnlocked())
+			return true;
+		if (y + 1 < HEIGHT && slots[y + 1][x].isUnlocked())
+			return true;
+		if (y - 1 >= 0 && slots[y - 1][x].isUnlocked())
+			return true;
 		return false;
 	}
 
@@ -254,7 +257,7 @@ public class Backpack extends VBox implements ReRenderable {
 				}
 			}
 			if (item instanceof Relic) {
-				((Relic)item).highlightAdditionSlot(gridX, gridY);
+				((Relic) item).highlightAdditionSlot(gridX, gridY);
 			}
 		}
 	}
@@ -302,7 +305,8 @@ public class Backpack extends VBox implements ReRenderable {
 	}
 
 	public GameButton getEndTurnButton() {
-		if (endTurnButton==null) endTurnButton = new GameButton(121, 50, GameButtonType.END);
+		if (endTurnButton == null)
+			endTurnButton = new GameButton(121, 50, GameButtonType.END);
 		return endTurnButton;
 	}
 }
