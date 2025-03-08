@@ -1,0 +1,65 @@
+@startuml
+abstract class Item [[java:game.item.Item]] {}
+class Entity [[java:entities.Entity]] {}
+class GameLogic [[java:logic.GameLogic]] {
+	-{static} instance: GameLogic
+	-currentFloor: int
+	-currentSubFloor: int
+	-boss: boolean
+	-doctor: boolean
+	-levelupSfx: MediaPlayer
+	-announce: StackPane
+	+GameLogic()
+	+initializeFight(): void
+	+gameOver(): void
+	+endFight(): void
+	+isLimitReached(): boolean
+	+{static} updateBackpackItems(): void
+	+getCurrentFloor(): int
+	+setCurrentFloor(currentFloor: int): void
+	+{static} getInstance(): GameLogic
+	+{static} setInstance(instance: GameLogic): void
+	+getCurrentSubFloor(): int
+	+setCurrentSubFloor(currentSubFloor: int): void
+	+isBoss(): boolean
+	+setBoss(boss: boolean): void
+	+isDoctor(): boolean
+	+setDoctor(doctor: boolean): void
+}
+class FightLogic [[java:logic.FightLogic]] {
+	-{static} instance: FightLogic
+	-isInFight: boolean
+	-isPTurn: boolean
+	-totalXp: int
+	+FightLogic()
+	+entitiesTurn(): void
+	+entityTurn(e: Entity): void
+	+playerTurn(): void
+	+activateEffect(effect: Effect, being: Being): void
+	+useEffect(ef: Effect, e: Being): void
+	-clearDeadEntities(): void
+	+{static} doDamage(damage: int, self: Being, enemy: Being): void
+	+{static} findEffect(efs: ArrayList<Effect>, target: EffectType): Effect
+	+{static} findEffectAndAdd(efs: ArrayList<Effect>, target: EffectType, amount: int, targetBeing: Being): void
+	+{static} findEffectAndDecrease(efs: ArrayList<Effect>, target: EffectType, amount: int): boolean
+	+{static} getInstance(): FightLogic
+	+isInFight(): boolean
+	+setInFight(isInFight: boolean): void
+	+isPTurn(): boolean
+	+setPTurn(isPTurn: boolean): void
+	+setTarget(target: Entity): void
+	+setEntities(entities: ArrayList<Entity>): void
+	+setEntitiesFromSummon(entitiesFromSummon: ArrayList<Entity>): void
+	+getTotalXp(): int
+	+setTotalXp(totalXp: int): void
+	+{static} setInstance(instance: FightLogic): void
+}
+GameLogic --> "*" Item : inventory
+GameLogic --> "*" Item : getInventory()
+FightLogic --> "1" Entity : target
+FightLogic --> "*" Entity : entities
+FightLogic --> "*" Entity : entitiesFromSummon
+FightLogic --> "1" Entity : getTarget()
+FightLogic --> "*" Entity : getEntities()
+FightLogic --> "*" Entity : getEntitiesFromSummon()
+@enduml

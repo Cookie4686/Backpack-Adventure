@@ -1,0 +1,71 @@
+@startuml
+class Pane {}
+class GridPane {}
+enum MapMarker [[java:game.map.MapMarker]] {
+	MYSTERY
+	DOOR
+	MONSTER
+	PATH
+	PLAYER
+	DOCTOR
+	FINAL
+}
+class Map [[java:game.map.Map]] {
+	-{static} instance: Map
+	-width: int
+	-height: int
+	-squares: MapSquare[][]
+	-marks: ArrayList<Position>
+	-noHeal: boolean
+	+Map(width: int, height: int)
+	-initialize(): void
+	-placeRandomMarker(marker: MapMarker): boolean
+	-findRoute(): void
+	-isAdjacent(prev: Position, pos: Position): boolean
+	-buildPath(start: Position, end: Position): void
+	-randomHeading(start: Position, end: Position): Position
+	+isReachable(targetSquare: MapSquare): boolean
+	-recur(x: int, y: int, visited: boolean[][], targetPosition: Position): boolean
+	+render(): void
+	+removePlayerMark(): void
+	-random(limit: int): int
+	+createNewMap(): void
+	+getSquares(): MapSquare[][]
+	+{static} getInstance(): Map
+	+{static} setInstance(instance: Map): void
+	+getMapWidth(): int
+	+getMapHeight(): int
+	+isNoHeal(): boolean
+	+setNoHeal(noHeal: boolean): void
+}
+class MapSquare [[java:game.map.MapSquare]] {
+	+{static} SIZE: int
+	-position: Position
+	+MapSquare()
+	+MapSquare(marker: MapMarker)
+	+render(top: boolean, right: boolean, bottom: boolean, left: boolean): void
+	+setMarker(marker: MapMarker): void
+	+getPosition(): Position
+	+setPosition(x: int, y: int): void
+}
+class MarkerLoader [[java:game.map.MarkerLoader]] {
+	-{static} markerMap: HashMap<MapMarker,Resource>
+	+{static} getImage(marker: MapMarker): Image
+}
+class Resource [[java:game.map.Resource]] {
+	-image: Image
+	-path: String
+	+Resource(path: String)
+	+getImage(): Image
+}
+GridPane <|-- Map
+Map --> "*" Position : marks
+Pane <|-- MapSquare
+MapSquare --> "1" MapMarker : marker
+MapSquare --> "1" Position : position
+MapSquare --> "1" MapMarker : getMarker()
+MapSquare --> "1" Position : getPosition()
+MapSquare --> "1" MarkerLoader : render()
+MarkerLoader --> "1" Resource : getImage()
+
+@enduml

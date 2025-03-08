@@ -1,0 +1,41 @@
+@startuml
+top to bottom direction
+interface Clickable [[java:interfaces.Clickable]] {
+	activatePerClick(): void
+	isEnoughEnergy(): boolean
+}
+abstract class ItemWithCost [[java:game.item.ItemWithCost]] {}
+Clickable <|.. ItemWithCost
+class Consumable [[java:game.item.consumable.Consumable]] {
+  -effect: Effect
+  -costActivate: int
+  -durability: int
+  +Consumable(name, detail, durability, effect, costActivate, width, height, tier)
+  +activateItem(): void
+  #getHeader(): String
+  #getProvideMid(): String
+  +toString(): String
+  +getEffectType(): EffectType
+  +getEffectAmount(): int
+  +getDurability(): int
+  +setDurability(durability: int): void
+}
+class FoodWithContainer [[java:game.item.consumable.FoodWithContainer]] {
+  -container: String
+  +FoodWithContainer(name, detail, container, costActivate, durability, effect, width, height, tier)
+  #getHeader(): String
+  +toString(): String
+  +getContainer(): String
+}
+class Potion [[java:game.item.consumable.Potion]] {
+  -{static} limit: int
+  +Potion(name, detail, container, costActivate, durability, effect, width, height, tier)
+  +isStackable(item: Item): boolean
+  #getHeader(): String
+  +toString(): String
+  +getLimit(): int
+}
+ItemWithCost <|-- Consumable
+Consumable <|-- FoodWithContainer
+FoodWithContainer <|-- Potion
+@enduml

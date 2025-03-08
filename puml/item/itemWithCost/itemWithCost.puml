@@ -1,0 +1,46 @@
+@startuml
+top to bottom direction
+interface Clickable [[java:interfaces.Clickable]] {
+	activatePerClick(): void
+	isEnoughEnergy(): boolean
+}
+interface ReStatable [[java:interfaces.ReStatable]] {
+	reStatBeforeUpdate(): void
+}
+abstract class Item [[java:game.item.Item]] {}
+abstract class ItemWithCost [[java:game.item.ItemWithCost]] {
+  #costActivate: int
+  +ItemWithCost(name, detail, costActivate, height, tier)
+  +ItemWithCost(name, detail, costActivate, width, height, tier)
+  +isEnoughEnergy(): boolean
+  +activatePerClick(): void
+  +{abstract} activateItem(): void
+  +getCostActivate(): int
+  +setCostActivate(costActivate: int): void
+}
+class Weapon [[java:game.item.weapon.Weapon]] {}
+class ShieldItem [[java:game.item.ShieldItem]] {
+  -effects: ArrayList<Effect>
+  -shield: int
+  +ShieldItem(name, detail, shield, effects, costActivate, width, height, tier)
+  +activateItem(): void
+  +toString(): String
+}
+class DamageItem [[java:game.item.DamageItem]] {
+  -AoE: boolean
+  -effects: ArrayList<Effect>
+  +DamageItem(name, detail, effects, costActivate, isAoE, width, height, tier)
+  +activateItem(): void
+  -activateEffect(effect: Effect, enemy: Entity): void
+  +toString(): String
+  +isAoE(): boolean
+}
+class Consumable [[java:game.item.consumable.Consumable]] {}
+Item <|-- ItemWithCost
+Clickable <|.. ItemWithCost
+ItemWithCost <|-- ShieldItem
+ItemWithCost <|-- DamageItem
+ItemWithCost <|-- Weapon
+ReStatable <|.. Weapon
+ItemWithCost <|-- Consumable
+@enduml

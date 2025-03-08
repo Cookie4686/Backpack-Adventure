@@ -1,0 +1,68 @@
+@startuml
+interface ReRenderable [[java:interfaces.ReRenderable]] {
+	render(): void
+}
+class StackPane {}
+class HBox {}
+abstract class Item [[java:game.item.Item]] {}
+class Game [[java:game.Game]] {
+	-{static} instance: Game
+	+Game()
+	+addItemsToGame(items: Item[]): void
+	+initializeFight(): void
+	+{static} getInstance(): Game
+	+{static} setInstance(instance: Game): void
+}
+class GameHeader [[java:game.GameHeader]] {
+	-{static} instance: GameHeader
+	-floorText: Text
+	-experienceText: Text
+	-coinsText: Text
+	-mapButton: ImageView
+	-settingButton: ImageView
+	-moneySlot: StackPane
+	-expSlot: StackPane
+	-stat: VBox
+	+GameHeader()
+	+render(): void
+	+{static} getInstance(): GameHeader
+	+getMapButton(): ImageView
+	+setMapButton(mapButton: ImageView): void
+	+getSettingButton(): ImageView
+	+setSettingButton(settingButton: ImageView): void
+	+{static} setInstance(instance: GameHeader): void
+}
+class GameTop [[java:game.GameTop]] {
+	-{static} instance: GameTop
+	-{static} map: StackPane
+	-isBackpack: boolean
+	+GameTop()
+	+useBackpack(): void
+	+useMap(): void
+	+isBackpack(): boolean
+	+{static} getInstance(): GameTop
+	+{static} getMap(): StackPane
+	+{static} setInstance(instance: GameTop): void
+}
+class GameBottom [[java:game.GameBottom]] {
+	-{static} instance: GameBottom
+	-enemyBox: HBox
+	+GameBottom()
+	+render(): void
+	+renderTarget(e: Entity): void
+	+getEnemyBox(): HBox
+	+{static} getInstance(): GameBottom
+	+addEntity(name: String): void
+	+removeEntity(): void
+	-animateLayoutChange(): void
+	+{static} setInstance(instance: GameBottom): void
+}
+StackPane <|-- Game
+Game --> "*" Item : getItemsInGame()
+HBox <|-- GameHeader
+ReRenderable <|.. GameHeader
+HBox <|-- GameTop
+HBox <|-- GameBottom
+ReRenderable <|.. GameBottom
+
+@enduml

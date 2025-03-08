@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+class Entity [[java:entities.Entity]] {}
+class EntitySpawner [[java:entities.EntitySpawner]] {
+  -{static} e: ArrayList<String>
+  -{static} d: ArrayList<String>
+  -{static} c: ArrayList<String>
+  -{static} b: ArrayList<String>
+  -{static} a: ArrayList<String>
+  -{static} s: ArrayList<String>
+  +{static} getTier(): MobTier
+  +{static} getNameFromTier(mobTier: MobTier): String
+}
+class EntityLoader [[java:entities.EntityLoader]] {
+  +{static} newEntity(name: String): Entity
+}
+class EntityList [[java:entities.EntityList]] {
+  -{static} entityMap: HashMap<String,Resource>
+  +{static} getEntityMap(): HashMap<String,Resource>
+}
+class Resource [[java:entities.Resource]] {
+  -paths: ArrayList<String>
+  -images: ArrayList<Image>
+  +Resource(supplier: Supplier<Entity>, arrayList: ArrayList<String>)
+}
+
+EntityLoader --> "1" EntityList : entity
+EntityList --> "1" Resource : resource
+Resource --> "Supplier<Entity>" Entity : supplier
+Resource --> "1" Entity : newEntity()
+
+@enduml

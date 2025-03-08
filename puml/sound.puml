@@ -1,0 +1,58 @@
+@startuml
+left to right direction
+enum Sfx [[java:sound.Sfx]] {
+  SWORD
+  DENY
+  MAGIC
+  EAT
+  THROW
+  GAMEOVER
+  GAMESTART
+  SELECT
+  LEVELUP
+  FIRE
+  POISON
+  DAMAGE
+  THORN
+  SHIELD
+  DODGE
+  VAMPIRIC
+  CLICK
+  MAP
+  SUMMONER
+  ANGER
+  HEAL
+  DEAD
+  STONERUN
+  GRASSRUN
+  OUTSIDEOFBACKPACK
+  INSIDEOFBACKPACK
+  DRAG
+}
+class SfxPlayer [[java:sound.SfxPlayer]] {
+  -{static} sfxMap: HashMap<Sfx,Resource>
+  +{static} play(sfx: Sfx): void
+  +{static} playByEffect(effect: Effect): void
+}
+class Resource [[java:sound.Resource]] {
+  -audioClip: AudioClip
+  -path: String
+  +Resource(path: String)
+  +getAudioClip(): AudioClip
+}
+class BackgroundSongPlayer [[java:sound.BackgroundSongPlayer]] {
+  -{static} fight: ArrayList<String>
+  -{static} floor: ArrayList<String>
+  -{static} currentPlayer: MediaPlayer
+  +{static} menu(): void
+  +{static} fight(level: int): void
+  +{static} floor(level: int): void
+  -{static} runNewPlayer(name: String): void
+  +{static} play(): void
+  +{static} pause(): void
+  +{static} stop(): void
+}
+
+Sfx -- SfxPlayer
+SfxPlayer --> "1" Resource: resource
+@enduml

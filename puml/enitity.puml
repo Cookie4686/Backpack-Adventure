@@ -1,0 +1,173 @@
+@startuml
+interface ReRenderable [[java:interfaces.ReRenderable]] {
+	render(): void
+}
+interface ReStatable [[java:interfaces.ReStatable]] {
+	reStatBeforeUpdate(): void
+}
+interface TurnActivable [[java:interfaces.TurnActivable]] {
+	activatePerTurn(): void
+}
+enum MobTier {}
+class Effect {}
+class EffectIcon {}
+class EnergyOrb {}
+class HpBar {}
+
+enum CharacterState [[java:entities.CharacterState]] {
+  IDLE
+  RUNNING
+  ATTACKING
+}
+together {
+  abstract class Being [[java:entities.Being]] {
+    #name: String
+    #hp: int
+    #maxHp: int
+    #shield: int
+    +Being()
+    +{abstract} render(): void
+    +{abstract} takeDamage(damaged: int): int
+    +getName(): String
+    +setName(name: String): void
+    +getHp(): int
+    +setHp(hp: int): void
+    +getMaxHp(): int
+    +setMaxHp(maxHp: int): void
+    +getShield(): int
+    +setShield(shield: int): void
+    +setAllEffect(allEffect: ArrayList<Effect>): void
+    +setHpBar(hpBar: HpBar): void
+  }
+  class Player [[java:entities.Player]] {
+    -{static} instance: Player
+    -xp: int
+    -maxXp: int
+    -energy: int
+    -maxEnergy: int
+    -mana: int
+    -maxMana: int
+    -coins: int
+    -luck: int
+    -fixedMaxHp: int
+    -idleframes: ArrayList<Image>
+    -idleTimeline: Timeline
+    -attackframes: ArrayList<Image>
+    -attackTimeline: Timeline
+    -runframes: ArrayList<Image>
+    -runTimeline: Timeline
+    -dieframes: ArrayList<Image>
+    -dieTimeline: Timeline
+    -imageView: ImageView
+    +Player()
+    -createPlayerAnimation(images: ArrayList<Image>, frameDuration: double): Timeline
+    +attack(): void
+    -startAttackAnimation(): void
+    -stopCurrentAnimation(): void
+    -playAnimation(animationName: String): void
+    +die(): void
+    +moveLeftAndBack(): void
+    +takeDamage(damaged: int): int
+    +initialize(image: Image): void
+    +render(): void
+    +activatePerTurn(): void
+    +reStatBeforeUpdate(): void
+    +getXp(): int
+    +setXp(xp: int): void
+    +getMaxXp(): int
+    +setMaxXp(maxXp: int): void
+    +getEnergy(): int
+    +setEnergy(energy: int): void
+    +getMaxEnergy(): int
+    +setMaxEnergy(maxEnergy: int): void
+    +getMaxMana(): int
+    +setMaxMana(maxMana: int): void
+    +getMana(): int
+    +setMana(mana: int): void
+    +getCoins(): int
+    +setCoins(coins: int): void
+    +getLuck(): int
+    +setLuck(luck: int): void
+    +{static} getInstance(): Player
+    +getIdleframes(): ArrayList<Image>
+    +{static} setInstance(instance: Player): void
+    +setEnergyOrb(energyOrb: EnergyOrb): void
+    +getFixedMaxHp(): int
+    +setFixedMaxHp(fixedMaxHp: int): void
+  }
+  class Entity [[java:entities.Entity]] {
+    -{static} MOVE_DURATION: double
+    #xp: int
+    #stunned: boolean
+    -desiredX: double
+    -originalX: double
+    -isMoving: boolean
+    -imageView: ImageView
+    -timeline: Timeline
+    +Entity(name: String, maxHpLb: int, xpLb: int, dangerLV: MobTier, allAttributes: ArrayList<Effect>)
+    +initialize(): void
+    +render(): void
+    +takeDamage(damaged: int): int
+    +checkAlive(): void
+    +getXp(): int
+    +setXp(xp: int): void
+    +setAllAttributes(allAttributes: ArrayList<Effect>): void
+    +setDangerLV(dangerLV: MobTier): void
+    +setNextTurn(nextTurn: Effect): void
+    +isStunned(): boolean
+    +setStunned(stunned: boolean): void
+    +activatePerTurn(): void
+    +getImageView(): ImageView
+    +setImageView(imageView: ImageView): void
+    +getTimeline(): Timeline
+    +setTimeline(timeline: Timeline): void
+    +isMoving(): boolean
+    +getDesiredX(): double
+    +setDesiredX(desiredX: double): void
+    +moveTo(newX: double): void
+    +die(): void
+    +getCurrentX(): double
+    +setCurrentX(x: double): void
+    +getOriginalX(): double
+    +setOriginalX(originalX: double): void
+    +moveLeftAndBack(): void
+    +setNextTurnMove(nextTurnMove: EffectIcon): void
+  }
+}
+class Npc [[java:entities.Npc]] {
+  -imageView: ImageView
+  -idleframes: ArrayList<Image>
+  -idleTimeline: Timeline
+  -{static} instance: Npc
+  +Npc()
+  -createAnimation(images: ArrayList<Image>, frameDuration: double): Timeline
+  +{static} getInstance(): Npc
+  +setInstance(instance: Npc): void
+}
+VBox <|-- Being
+ReRenderable <|.. Being
+Being --> "*" Effect : allEffect
+Being --> "1" HpBar : hpBar
+Being --> "*" Effect : getAllEffect()
+Being --> "1" HpBar : getHpBar()
+
+Player --> "1" CharacterState : currentState
+Player --> "1" EnergyOrb : energyOrb
+Player --> "1" EnergyOrb : getEnergyOrb()
+Being <|-- Player
+TurnActivable <|.. Player
+ReStatable <|.. Player
+
+Entity --> "1" MobTier : dangerLV
+Entity --> "1" MobTier : getDangerLV()
+Entity --> "1" Effect : nextTurn
+Entity --> "1" Effect : getNextTurn()
+Entity --> "*" Effect : allAttributes
+Entity --> "*" Effect : getAllAttributes()
+Entity --> "1" EffectIcon : nextTurnMove
+Entity --> "1" EffectIcon : getNextTurnMove()
+Being <|-- Entity
+TurnActivable <|.. Entity
+
+VBox <|-- Npc
+@enduml

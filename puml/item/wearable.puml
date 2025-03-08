@@ -1,0 +1,59 @@
+@startuml
+top to bottom direction
+interface TurnActivable [[java:interfaces.TurnActivable]] {
+	activatePerTurn(): void
+}
+interface ReStatable [[java:interfaces.ReStatable]] {
+	reStatBeforeUpdate(): void
+}
+interface StatUpdatable [[java:interfaces.StatUpdatable]] {
+	statUpdate(): void
+}
+abstract class Item [[java:game.item.Item]] {}
+abstract class Wearable [[java:game.item.wearable.Wearable]] {
+  -effects: ArrayList<Effect>
+  -initialShield: int
+  -shield: int
+  -increaseShield: int
+  +Wearable(name, detail, initialShield, increaseShield, effects, width, height, tier)
+  +reStatBeforeUpdate(): void
+  +statUpdate(): void
+  +activatePerTurn(): void
+  #getProvide(): String
+  +toString(): String
+  +getEffects(): ArrayList<Effect>
+  +getShield(): int
+  +addShield(shield: int): void
+  +setShield(shield: int): void
+  +getInitialShield(): int
+  +setIncreaseShield(increaseShield: int): void
+  +getIncreaseShield(): int
+}
+class Helmet [[java:game.item.wearable.Helmet]] {
+  +Helmet(name, detail, initialShield, increaseShield, effects, width, height, tier)
+  -underSlot(): int
+  +statUpdate(): void
+  +toString(): String
+}
+class Armor [[java:game.item.wearable.Armor]] {
+  +Armor(name, detail, initialShield, increaseShield, effects, width, height, tier)
+  -isMeetCondition(item: Item, items: ArrayList<Item>): boolean
+  -numberOfAdjacent(): int
+  +statUpdate(): void
+  +toString(): String
+}
+class Shoes [[java:game.item.wearable.Shoes]] {
+  +Shoes(name, detail, initialShield, increaseShield, effects, width, height, tier)
+  -emptySpace(): int
+  -isLowest(): boolean
+  +statUpdate(): void
+  +toString(): String
+}
+Item <|-- Wearable
+TurnActivable <|.. Wearable
+StatUpdatable <|.. Wearable
+ReStatable <|.. Wearable
+Wearable <|-- Helmet
+Wearable <|-- Armor
+Wearable <|-- Shoes
+@enduml

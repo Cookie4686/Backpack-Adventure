@@ -1,0 +1,77 @@
+@startuml
+left to right direction
+interface ReRenderable [[java:interfaces.ReRenderable]] {
+	render(): void
+}
+class VBox {}
+class StackPane {}
+abstract class Item {}
+class Backpack [[java:game.backpack.Backpack]] {
+	-{static} instance: Backpack
+	+{static} WIDTH: int
+	+{static} HEIGHT: int
+	-slots: Slot[][]
+	-gridPane: GridPane
+	-endTurnButton: GameButton
+	-backpack: ImageView
+	-levelup: boolean
+	-unlockedLeft: int
+	+Backpack()
+	+backpackResize(): void
+	+render(): void
+	+isPlaceable(gridX: int, gridY: int, item: Item): boolean
+	+levelUp(): void
+	-isAdjacent(x: int, y: int): boolean
+	+finishUpgrade(): void
+	+placeItem(gridX: int, gridY: int, item: Item): boolean
+	+replaceItem(oldItem: Item, newItem: Item): void
+	-placeItem(slot: Slot, item: Item): void
+	+getGridPane(): GridPane
+	+removeItem(item: Item): void
+	+hightlight(gridX: int, gridY: int, item: Item): void
+	+getItemPosition(item: Item): ArrayList<Position>
+	+getSlots(): Slot[][]
+	+{static} getInstance(): Backpack
+	+isLevelup(): boolean
+	+setLevelup(levelup: boolean): void
+	+{static} setInstance(instance: Backpack): void
+	+getUnlockedLeft(): int
+	+setUnlockedLeft(unlockedLeft: int): void
+	+getEndTurnButton(): GameButton
+}
+class Slot [[java:game.backpack.Slot]] {
+	-{static} SIZE: int
+	-{static} emptySlot: Image
+	-{static} usedSlot: Image
+	-slotBackground: ImageView
+	-selectAnimation: ImageView
+	-upgradeAnimation: ImageView
+	-select: Timeline
+	-upgrade: Timeline
+	-isUnlocked: boolean
+	-isUnlockable: boolean
+	-item: Item
+	+Slot()
+	+render(): void
+	+highlightUpgrade(): void
+	+removeUpgradeAnimation(): void
+	+highlightRelic(): void
+	+highlight(): void
+	+{static} getEmptySlot(): Image
+	+{static} getUsedSlot(): Image
+	+isUnlocked(): boolean
+	+setUnlocked(isUnlocked: boolean): void
+	+getItem(): Item
+	+setItem(item: Item): void
+	+{static} getSize(): int
+	+isUnlockable(): boolean
+	+setUnlockable(isUnlockable: boolean): void
+}
+VBox <|-- Backpack
+ReRenderable <|.. Backpack
+StackPane <|-- Slot
+ReRenderable <|.. Slot
+Backpack --> "*" Slot : slots
+Slot --> "1" Item : item
+
+@enduml

@@ -1,0 +1,63 @@
+@startuml
+enum GameButtonType [[java:component.GameButtonType]] {
+  CONTINUE
+  NEW_GAME
+  SETTING
+  JOURNEY_ON
+  CLOSE
+  MENU
+  EXIT
+  END
+}
+class GameButton [[java:component.GameButton]] {
+  -{static} typeMap: HashMap<GameButtonType,Resource>
+  +GameButton(width: double, height: double, type: GameButtonType)
+  -{static} getIdleImage(type: GameButtonType): Image
+  -{static} getHoverImage(type: GameButtonType): Image
+}
+class Resource [[java:component.Resource]] {
+  -idleImage: Image
+  -hoverImage: Image
+  -idlePath: String
+  -hoverPath: String
+  +Resource(idlePath: String, hoverPath: String)
+  +getIdleImage(): Image
+  +getHoverImage(): Image
+}
+class EnergyOrb [[java:component.EnergyOrb]] {
+  -{static} SIZE: int
+  -{static} image: Image
+  -text: Text
+  +EnergyOrb()
+  +render(): void
+}
+class HpBar [[java:component.HpBar]] {
+  -{static} SIZE: int
+  -{static} heartImage: Image
+  -{static} shieldAdjust: ColorAdjust
+  -hpBar: ProgressBar
+  -heartImageView: ImageView
+  -hpBarText: Text
+  -shieldText: Text
+  -thread: Thread
+  +HpBar(being: Being)
+  +render(): void
+  +setHpBar(): void
+  +setShield(): void
+}
+class VolumeSlider [[java:component.VolumeSlider]] {
+  -{static} mute: Image
+  -{static} vol1: Image
+  -{static} vol2: Image
+  -{static} vol3: Image
+  -lastValue: double
+  -slider: Slider
+  +VolumeSlider(iconSize: double)
+  +VolumeSlider(iconSize: double, isOnMute: boolean)
+  -{static} calcIcon(muteButtonView: ImageView, value: double): void
+  +getSlider(): Slider
+}
+
+GameButton -- GameButtonType
+GameButton --> "1" Resource : resource
+@enduml

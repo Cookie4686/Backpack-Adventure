@@ -1,0 +1,52 @@
+@startuml
+top to bottom direction
+interface TurnActivable [[java:interfaces.TurnActivable]] {
+	activatePerTurn(): void
+}
+interface StatUpdatable [[java:interfaces.StatUpdatable]] {
+	statUpdate(): void
+}
+interface Clickable [[java:interfaces.Clickable]] {
+	activatePerClick(): void
+	isEnoughEnergy(): boolean
+}
+abstract class Item [[java:game.item.Item]] {}
+abstract class Relic [[java:game.item.relic.Relic]] {
+  -effect: Effect
+  #range: int
+  +Relic(name, detail, effect, range, width, height, tier)
+  +Relic(name, detail, effect, range, height, tier)
+  -increaseShield(items: ArrayList<Item>): void
+  -increaseDamage(items: ArrayList<Item>): void
+  +activate(): void
+  #getProvide(): String
+  +getEffectType(): EffectType
+  +getEffectAmount(): int
+  +getRange(): int
+}
+class ActiveRelic [[java:game.item.relic.ActiveRelic]] {
+  -costActivate: int
+  -isUsed: boolean
+  +ActiveRelic(name, detail, effect, costActivate, range, width, height, tier)
+  +ActiveRelic(name, detail, effect, costActivate, range, height, tier)
+  +isEnoughEnergy(): boolean
+  +activatePerClick(): void
+  +getCostActivate(): int
+  +setCostActivate(costActivate: int): void
+  +activatePerTurn(): void
+  +toString(): String
+}
+class PassiveRelic [[java:game.item.relic.PassiveRelic]] {
+  +PassiveRelic(name, detail, effect, range, width, height, tier)
+  +PassiveRelic(name, detail, effect, range, height, tier)
+  +statUpdate(): void
+  +toString(): String
+}
+Item <|-- Relic
+Relic --> "*" Item : findItemInSlot()
+Relic <|-- ActiveRelic
+Relic <|-- PassiveRelic
+Clickable <|.. ActiveRelic
+TurnActivable <|.. ActiveRelic
+StatUpdatable <|.. PassiveRelic
+@enduml

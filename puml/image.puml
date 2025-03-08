@@ -1,0 +1,40 @@
+@startuml
+class ImagePlayer [[java:image.ImagePlayer]] {
+  -{static} imageMap: HashMap<String,Resource>
+  +{static} getImageView(name: String): ImageView
+}
+class Resource [[java:image.Resource]] {
+  -path: String
+  -image: Image
+  +Resource(path: String)
+  +getImage(): Image
+}
+class GifPlayer [[java:image.GifPlayer]] {
+  -{static} idleKnight: ArrayList<Image>
+  -{static} knightIcons: ArrayList<Image>
+  -{static} attackKnight: ArrayList<Image>
+  -{static} runKnight: ArrayList<Image>
+  -{static} selectIcons: ArrayList<Image>
+  -{static} highlightIcons: ArrayList<Image>
+  -{static} menuBackground: ArrayList<Image>
+  +{static} createAnimation(imageView: ImageView, arr: ArrayList<Image>, frameDuration: double): Timeline
+  +{static} getIdleKnight(): ArrayList<Image>
+  +{static} getKnightIcons(): ArrayList<Image>
+  +{static} getMenuBackground(): ArrayList<Image>
+  +{static} getAttackKnight(): ArrayList<Image>
+  +{static} getRunKnight(): ArrayList<Image>
+  +{static} getSelectIcons(): ArrayList<Image>
+  +{static} getHighlightIcons(): ArrayList<Image>
+}
+class VideoPlayer [[java:image.VideoPlayer]] {
+  -{static} currentPlayer: MediaPlayer
+  -{static} mediaMap: HashMap<String,Resource>
+  -{static} getMedia(path: String): Media
+  +{static} getView(name: String): MediaView
+  +{static} play(): void
+  +{static} getCurrentPlayer(): MediaPlayer
+}
+
+ImagePlayer --> "1" Resource: resource
+VideoPlayer --> "1" Resource: resource
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+left to right direction
+abstract class Item [[java:game.item.Item]] {}
+class ItemRandomizer [[java:game.itemGenerator.ItemRandomizer]] {
+	-{static} common: String[]
+	-{static} uncommon: String[]
+	-{static} rare: String[]
+	-{static} epic: String[]
+	-{static} legend: String[]
+	-{static} getTier(): ItemTier
+	+{static} getNameFromTier(itemTier: ItemTier): String
+	+{static} getRandomItemName(): String
+}
+class ResourceLoader [[java:game.itemGenerator.ResourceLoader]] {
+	+{static} newItem(name: String): Item
+}
+class Resource [[java:game.itemGenerator.Resource]] {
+	-image: Image
+	-path: String
+	+Resource(supplier: Supplier<Item>, path: String)
+}
+class ItemList [[java:game.itemGenerator.ItemList]] {
+	-{static} itemMap: HashMap<String,Resource>
+	+{static} getItemMap(): HashMap<String,Resource>
+}
+
+ResourceLoader --> "1" ItemList : item
+ItemList --> "1" Resource : resource
+Resource --> "Supplier<Item>" Item : supplier
+Resource --> "1" Item : newItem()
+
+
+@enduml

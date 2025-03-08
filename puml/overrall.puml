@@ -1,0 +1,877 @@
+@startuml
+interface ReRenderable [[java:interfaces.ReRenderable]] {
+	render(): void
+}
+interface Clickable [[java:interfaces.Clickable]] {
+	activatePerClick(): void
+	isEnoughEnergy(): boolean
+}
+interface ReStatable [[java:interfaces.ReStatable]] {
+	reStatBeforeUpdate(): void
+}
+interface StatUpdatable [[java:interfaces.StatUpdatable]] {
+	statUpdate(): void
+}
+interface TurnActivable [[java:interfaces.TurnActivable]] {
+	activatePerTurn(): void
+}
+class VBox {}
+class HBox {}
+class Pane {}
+class BorderPane {}
+class StackPane {}
+class GridPane {}
+
+' DONE
+package mainApp {
+  class Application {}
+  class Fader [[java:application.Fader]] {
+    -{static} blackScreen: Rectangle
+    -{static} blackout: Rectangle
+    -{static} scene: Scene
+    +{static} initialize(stage: Stage): void
+    +{static} fadeOutAndIn(): void
+    +{static} getBlackout(): Rectangle
+    +{static} getBlackScreen(): Rectangle
+  }
+  class Main [[java:application.Main]] {
+    +{static} root: StackPane
+    +{static} mediaPlayer: MediaPlayer
+    +{static} stage: Stage
+    +start(primaryStage: Stage): void
+    +stop(): void
+    +{static} main(args: String[]): void
+  }
+  Application <|-- Main
+}
+
+' DONE
+package componentPck {
+  enum GameButtonType [[java:component.GameButtonType]] {
+    CONTINUE
+    NEW_GAME
+    SETTING
+    JOURNEY_ON
+    CLOSE
+    MENU
+    EXIT
+    END
+  }
+  class GameButton [[java:component.GameButton]] {
+    -{static} typeMap: HashMap<GameButtonType,Resource>
+    +GameButton(width: double, height: double, type: GameButtonType)
+    -{static} getIdleImage(type: GameButtonType): Image
+    -{static} getHoverImage(type: GameButtonType): Image
+  }
+  class Resource [[java:component.Resource]] {
+    -idleImage: Image
+    -hoverImage: Image
+    -idlePath: String
+    -hoverPath: String
+    +Resource(idlePath: String, hoverPath: String)
+    +getIdleImage(): Image
+    +getHoverImage(): Image
+  }
+  class EnergyOrb [[java:component.EnergyOrb]] {
+    -{static} SIZE: int
+    -{static} image: Image
+    -text: Text
+    +EnergyOrb()
+    +render(): void
+  }
+  class HpBar [[java:component.HpBar]] {
+    -{static} SIZE: int
+    -{static} heartImage: Image
+    -{static} shieldAdjust: ColorAdjust
+    -hpBar: ProgressBar
+    -heartImageView: ImageView
+    -hpBarText: Text
+    -shieldText: Text
+    -thread: Thread
+    +HpBar(being: Being)
+    +render(): void
+    +setHpBar(): void
+    +setShield(): void
+  }
+  class VolumeSlider [[java:component.VolumeSlider]] {
+    -{static} mute: Image
+    -{static} vol1: Image
+    -{static} vol2: Image
+    -{static} vol3: Image
+    -lastValue: double
+    -slider: Slider
+    +VolumeSlider(iconSize: double)
+    +VolumeSlider(iconSize: double, isOnMute: boolean)
+    -{static} calcIcon(muteButtonView: ImageView, value: double): void
+    +getSlider(): Slider
+  }
+  HBox <|-- VolumeSlider
+  HpBar --> "1" Being : being
+  StackPane <|-- HpBar
+  ReRenderable <|.. HpBar
+  Pane <|-- GameButton
+  Backpack --> "1" GameButton : endTurnButton
+  Backpack --> "1" GameButton : getEndTurnButton()
+}
+
+' DONE
+package util {
+  enum MobTier [[java:game.util.MobTier]] {
+    E
+    D
+    C
+    B
+    A
+    S
+    EX
+  }
+  enum ItemRotation [[java:game.util.ItemRotation]] {
+    VERTICAL
+    HORIZONTAL
+    DIAGONAL_LEFT
+    DIAGONAL_RIGHT
+  }
+  enum ItemTier [[java:game.util.ItemTier]] {
+    COMMON
+    UNCOMMON
+    RARE
+    EPIC
+    LEGENDARY
+    GOD
+  }
+  enum EffectType [[java:game.util.EffectType]] {
+    FIRE
+    POISON
+    STUNNED
+    DAMAGE
+    THORN
+    SHIELD
+    DODGE
+    VAMPIRIC
+    SUMMONER
+    ANGER
+    HEAL
+    ENERGY
+    REGEN
+    LUCK
+  }
+  class Effect [[java:game.util.Effect]] {
+    -amount: int
+    +Effect(amount: int, type: EffectType)
+    +getAmount(): int
+    +setAmount(amount: int): void
+    +setType(type: EffectType): void
+    +getTypeName(): String
+  }
+  Effect --> "1" EffectType : type
+  Effect --> "1" EffectType : getType()
+  class EffectIcon [[java:game.util.EffectIcon]] {
+    -icon: ImageView
+    -text: Text
+    -fadeIn: FadeTransition
+    +EffectIcon(type: EffectType)
+    +getIcon(): ImageView
+    +setIcon(icon: ImageView): void
+    +getText(): Text
+    +setText(amount: Text): void
+    +getFadeIn(): FadeTransition
+  }
+  EffectIcon --> "1" EffectType : type
+  EffectIcon --> "1" EffectType : getType()
+  VBox <|-- EffectIcon
+  class IconList [[java:game.util.IconList]] {
+    -{static} iconMap: HashMap<EffectType,Resource>
+    +{static} getIconMap(): HashMap<EffectType,Resource>
+  }
+  class IconLoader [[java:game.util.IconLoader]] {
+    +{static} newIcon(type: EffectType, amount: int): EffectIcon
+  }
+  class Resource [[java:game.util.Resource]] {
+    -path: String
+    -image: Image
+    +Resource(path: String)
+    +newIcon(type: EffectType, amount: int): EffectIcon
+    -getImage(): Image
+  }
+  class Position [[java:game.util.Position]] {
+    -x: int
+    -y: int
+    +Position(x: int, y: int)
+    +getX(): int
+    +getY(): int
+    +setX(x: int): void
+    +setY(y: int): void
+  }
+  class GameDialog [[java:game.dialog.GameDialog]] {
+    -{static} frameImage: Image
+    -dialogText: Text
+    -optionBox: VBox
+    +GameDialog(title: String)
+    +setText(text: String): void
+    +addOption(textStr: String, onMouseClickedHandler: EventHandler<? super MouseEvent>): void
+    +show(): void
+    +hide(): void
+    -{static} getFrameImage(): Image
+  }
+  BorderPane <|-- GameDialog
+}
+
+' DONE
+package imagePck {
+  class ImagePlayer [[java:image.ImagePlayer]] {
+    -{static} imageMap: HashMap<String,Resource>
+    +{static} getImageView(name: String): ImageView
+  }
+  class Resource [[java:image.Resource]] {
+    -path: String
+    -image: Image
+    +Resource(path: String)
+    +getImage(): Image
+  }
+  class GifPlayer [[java:image.GifPlayer]] {
+    -{static} idleKnight: ArrayList<Image>
+    -{static} knightIcons: ArrayList<Image>
+    -{static} attackKnight: ArrayList<Image>
+    -{static} runKnight: ArrayList<Image>
+    -{static} selectIcons: ArrayList<Image>
+    -{static} highlightIcons: ArrayList<Image>
+    -{static} menuBackground: ArrayList<Image>
+    +{static} createAnimation(imageView: ImageView, arr: ArrayList<Image>, frameDuration: double): Timeline
+    +{static} getIdleKnight(): ArrayList<Image>
+    +{static} getKnightIcons(): ArrayList<Image>
+    +{static} getMenuBackground(): ArrayList<Image>
+    +{static} getAttackKnight(): ArrayList<Image>
+    +{static} getRunKnight(): ArrayList<Image>
+    +{static} getSelectIcons(): ArrayList<Image>
+    +{static} getHighlightIcons(): ArrayList<Image>
+  }
+  class VideoPlayer [[java:image.VideoPlayer]] {
+    -{static} currentPlayer: MediaPlayer
+    -{static} mediaMap: HashMap<String,Resource>
+    -{static} getMedia(path: String): Media
+    +{static} getView(name: String): MediaView
+    +{static} play(): void
+    +{static} getCurrentPlayer(): MediaPlayer
+  }
+}
+
+package soundPck {
+  enum Sfx [[java:sound.Sfx]] {
+    SWORD
+    DENY
+    MAGIC
+    EAT
+    THROW
+    GAMEOVER
+    GAMESTART
+    SELECT
+    LEVELUP
+    FIRE
+    POISON
+    DAMAGE
+    THORN
+    SHIELD
+    DODGE
+    VAMPIRIC
+    CLICK
+    MAP
+    SUMMONER
+    ANGER
+    HEAL
+    DEAD
+    STONERUN
+    GRASSRUN
+    OUTSIDEOFBACKPACK
+    INSIDEOFBACKPACK
+    DRAG
+  }
+  class SfxPlayer [[java:sound.SfxPlayer]] {
+    -{static} sfxMap: HashMap<Sfx,Resource>
+    +{static} play(sfx: Sfx): void
+    +{static} playByEffect(effect: Effect): void
+  }
+  class Resource [[java:sound.Resource]] {
+    -audioClip: AudioClip
+    -path: String
+    +Resource(path: String)
+    +getAudioClip(): AudioClip
+  }
+  class BackgroundSongPlayer [[java:sound.BackgroundSongPlayer]] {
+    -{static} fight: ArrayList<String>
+    -{static} floor: ArrayList<String>
+    -{static} currentPlayer: MediaPlayer
+    +{static} menu(): void
+    +{static} fight(level: int): void
+    +{static} floor(level: int): void
+    -{static} runNewPlayer(name: String): void
+    +{static} play(): void
+    +{static} pause(): void
+    +{static} stop(): void
+  }
+}
+
+' DONE
+package entityPck {
+  enum CharacterState [[java:entities.CharacterState]] {
+    IDLE
+    RUNNING
+    ATTACKING
+  }
+  abstract class Being [[java:entities.Being]] {
+    #name: String
+    #hp: int
+    #maxHp: int
+    #shield: int
+    +Being()
+    +{abstract} render(): void
+    +{abstract} takeDamage(damaged: int): int
+    +getName(): String
+    +setName(name: String): void
+    +getHp(): int
+    +setHp(hp: int): void
+    +getMaxHp(): int
+    +setMaxHp(maxHp: int): void
+    +getShield(): int
+    +setShield(shield: int): void
+    +setAllEffect(allEffect: ArrayList<Effect>): void
+    +setHpBar(hpBar: HpBar): void
+  }
+  class EntityList [[java:entities.EntityList]] {
+    -{static} entityMap: HashMap<String,Resource>
+    +{static} getEntityMap(): HashMap<String,Resource>
+  }
+  class EntityLoader [[java:entities.EntityLoader]] {
+    +{static} newEntity(name: String): Entity
+  }
+  class Resource [[java:entities.Resource]] {
+    -paths: ArrayList<String>
+    -images: ArrayList<Image>
+    +Resource(supplier: Supplier<Entity>, arrayList: ArrayList<String>)
+  }
+  class EntitySpawner [[java:entities.EntitySpawner]] {
+    -{static} e: ArrayList<String>
+    -{static} d: ArrayList<String>
+    -{static} c: ArrayList<String>
+    -{static} b: ArrayList<String>
+    -{static} a: ArrayList<String>
+    -{static} s: ArrayList<String>
+    +{static} getTier(): MobTier
+    +{static} getNameFromTier(mobTier: MobTier): String
+  }
+  class Npc [[java:entities.Npc]] {
+    -imageView: ImageView
+    -idleframes: ArrayList<Image>
+    -idleTimeline: Timeline
+    -{static} instance: Npc
+    +Npc()
+    -createAnimation(images: ArrayList<Image>, frameDuration: double): Timeline
+    +{static} getInstance(): Npc
+    +setInstance(instance: Npc): void
+  }
+  class Player [[java:entities.Player]] {
+    -{static} instance: Player
+    -xp: int
+    -maxXp: int
+    -energy: int
+    -maxEnergy: int
+    -mana: int
+    -maxMana: int
+    -coins: int
+    -luck: int
+    -fixedMaxHp: int
+    -idleframes: ArrayList<Image>
+    -idleTimeline: Timeline
+    -attackframes: ArrayList<Image>
+    -attackTimeline: Timeline
+    -runframes: ArrayList<Image>
+    -runTimeline: Timeline
+    -dieframes: ArrayList<Image>
+    -dieTimeline: Timeline
+    -imageView: ImageView
+    +Player()
+    -createPlayerAnimation(images: ArrayList<Image>, frameDuration: double): Timeline
+    +attack(): void
+    -startAttackAnimation(): void
+    -stopCurrentAnimation(): void
+    -playAnimation(animationName: String): void
+    +die(): void
+    +moveLeftAndBack(): void
+    +takeDamage(damaged: int): int
+    +initialize(image: Image): void
+    +render(): void
+    +activatePerTurn(): void
+    +reStatBeforeUpdate(): void
+    +getXp(): int
+    +setXp(xp: int): void
+    +getMaxXp(): int
+    +setMaxXp(maxXp: int): void
+    +getEnergy(): int
+    +setEnergy(energy: int): void
+    +getMaxEnergy(): int
+    +setMaxEnergy(maxEnergy: int): void
+    +getMaxMana(): int
+    +setMaxMana(maxMana: int): void
+    +getMana(): int
+    +setMana(mana: int): void
+    +getCoins(): int
+    +setCoins(coins: int): void
+    +getLuck(): int
+    +setLuck(luck: int): void
+    +{static} getInstance(): Player
+    +getIdleframes(): ArrayList<Image>
+    +{static} setInstance(instance: Player): void
+    +setEnergyOrb(energyOrb: EnergyOrb): void
+    +getFixedMaxHp(): int
+    +setFixedMaxHp(fixedMaxHp: int): void
+  }
+  class Entity [[java:entities.Entity]] {
+    -{static} MOVE_DURATION: double
+    #xp: int
+    #stunned: boolean
+    -desiredX: double
+    -originalX: double
+    -isMoving: boolean
+    -imageView: ImageView
+    -timeline: Timeline
+    +Entity(name: String, maxHpLb: int, xpLb: int, dangerLV: MobTier, allAttributes: ArrayList<Effect>)
+    +initialize(): void
+    +render(): void
+    +takeDamage(damaged: int): int
+    +checkAlive(): void
+    +getXp(): int
+    +setXp(xp: int): void
+    +setAllAttributes(allAttributes: ArrayList<Effect>): void
+    +setDangerLV(dangerLV: MobTier): void
+    +setNextTurn(nextTurn: Effect): void
+    +isStunned(): boolean
+    +setStunned(stunned: boolean): void
+    +activatePerTurn(): void
+    +getImageView(): ImageView
+    +setImageView(imageView: ImageView): void
+    +getTimeline(): Timeline
+    +setTimeline(timeline: Timeline): void
+    +isMoving(): boolean
+    +getDesiredX(): double
+    +setDesiredX(desiredX: double): void
+    +moveTo(newX: double): void
+    +die(): void
+    +getCurrentX(): double
+    +setCurrentX(x: double): void
+    +getOriginalX(): double
+    +setOriginalX(originalX: double): void
+    +moveLeftAndBack(): void
+    +setNextTurnMove(nextTurnMove: EffectIcon): void
+  }
+  Entity --> "1" MobTier : dangerLV
+  Entity --> "1" Effect : nextTurn
+  Entity --> "1" EffectIcon : nextTurnMove
+  Entity --> "*" Effect : allAttributes
+  Entity --> "*" Effect : getAllAttributes()
+  Entity --> "1" MobTier : getDangerLV()
+  Entity --> "1" Effect : getNextTurn()
+  Entity --> "1" EffectIcon : getNextTurnMove()
+  Being <|-- Entity
+  TurnActivable <|.. Entity
+
+  Player --> "1" CharacterState : currentState
+  Player --> "1" EnergyOrb : energyOrb
+  Player --> "1" EnergyOrb : getEnergyOrb()
+  Being <|-- Player
+  TurnActivable <|.. Player
+  ReStatable <|.. Player
+
+  VBox <|-- Npc
+  Being --> "*" Effect : allEffect
+  Being --> "1" HpBar : hpBar
+  Being --> "*" Effect : getAllEffect()
+  Being --> "1" HpBar : getHpBar()
+  VBox <|-- Being
+  ReRenderable <|.. Being
+  Resource --> "Supplier<Entity>" Entity : supplier
+  Resource --> "1" Entity : newEntity()
+}
+
+' DONE
+package logic {
+  class GameLogic [[java:logic.GameLogic]] {
+    -{static} instance: GameLogic
+    -currentFloor: int
+    -currentSubFloor: int
+    -boss: boolean
+    -doctor: boolean
+    -inventory: ArrayList<Item>
+    -levelupSfx: MediaPlayer
+    -announce: StackPane
+    +GameLogic()
+    +initializeFight(): void
+    +gameOver(): void
+    +endFight(): void
+    +isLimitReached(): boolean
+    +{static} updateBackpackItems(): void
+    +getInventory(): ArrayList<Item>
+    +getCurrentFloor(): int
+    +setCurrentFloor(currentFloor: int): void
+    +{static} getInstance(): GameLogic
+    +{static} setInstance(instance: GameLogic): void
+    +getCurrentSubFloor(): int
+    +setCurrentSubFloor(currentSubFloor: int): void
+    +isBoss(): boolean
+    +setBoss(boss: boolean): void
+    +isDoctor(): boolean
+    +setDoctor(doctor: boolean): void
+  }
+  class FightLogic [[java:logic.FightLogic]] {
+    -{static} instance: FightLogic
+    -isInFight: boolean
+    -isPTurn: boolean
+    -totalXp: int
+    +FightLogic()
+    +entitiesTurn(): void
+    +entityTurn(e: Entity): void
+    +playerTurn(): void
+    +activateEffect(effect: Effect, being: Being): void
+    +useEffect(ef: Effect, e: Being): void
+    -clearDeadEntities(): void
+    +{static} doDamage(damage: int, self: Being, enemy: Being): void
+    +{static} findEffect(efs: ArrayList<Effect>, target: EffectType): Effect
+    +{static} findEffectAndAdd(efs: ArrayList<Effect>, target: EffectType, amount: int, targetBeing: Being): void
+    +{static} findEffectAndDecrease(efs: ArrayList<Effect>, target: EffectType, amount: int): boolean
+    +{static} getInstance(): FightLogic
+    +isInFight(): boolean
+    +setInFight(isInFight: boolean): void
+    +isPTurn(): boolean
+    +setPTurn(isPTurn: boolean): void
+    +setTarget(target: Entity): void
+    +setEntities(entities: ArrayList<Entity>): void
+    +setEntitiesFromSummon(entitiesFromSummon: ArrayList<Entity>): void
+    +getTotalXp(): int
+    +setTotalXp(totalXp: int): void
+    +{static} setInstance(instance: FightLogic): void
+  }
+  FightLogic --> "1" Entity : target
+  FightLogic --> "*" Entity : entities
+  FightLogic --> "*" Entity : entitiesFromSummon
+  FightLogic --> "1" Entity : getTarget()
+  FightLogic --> "*" Entity : getEntities()
+  FightLogic --> "*" Entity : getEntitiesFromSummon()
+}
+
+' DONE 
+package handler {
+  class ButtonHandler [[java:logic.handler.ButtonHandler]] {
+    +{static} handleBackpackButtonOnAction(): void
+    +{static} handleSlotOnClicked(slot: Slot): void
+    +{static} handleEndTurnButtonOnAction(): void
+  }
+  class MapHandler [[java:logic.handler.MapHandler]] {
+    +{static} handleMouseClicked(square: MapSquare): void
+    +{static} generateNewMap(): void
+  }
+  class ItemHandler [[java:logic.handler.ItemHandler]] {
+    +{static} currentItem: Item
+    -{static} startX: double
+    -{static} startY: double
+    -{static} diffX: double
+    -{static} diffY: double
+    -{static} maxWidth: double
+    -{static} maxHeight: double
+    -{static} slotPaneX: double
+    -{static} slotPaneY: double
+    -{static} gridX: int
+    -{static} gridY: int
+    +{static} handleMousePress(event: MouseEvent, item: Item): void
+    +{static} handleMouseDrag(event: MouseEvent): void
+    +{static} handleMouseRelease(): void
+    +{static} handleSceneKeyPress(event: KeyEvent): void
+    -{static} hightlightGrid(): void
+    -{static} placeItem(): void
+    -{static} rotateItem(): void
+    +{static} setRandomOffGridLocation(item: Item): void
+    -{static} setPlaceItemPostion(): void
+    -{static} calcGrid(): void
+    -{static} calcValues(): void
+    -{static} setTranslateNoOffScreenX(val: double): void
+    -{static} setTranslateNoOffScreenY(val: double): void
+  }
+}
+
+
+' DONE
+package mapPck {
+  class Map [[java:game.map.Map]] {
+    -{static} instance: Map
+    -width: int
+    -height: int
+    -squares: MapSquare[][]
+    -noHeal: boolean
+    +Map(width: int, height: int)
+    -initialize(): void
+    -placeRandomMarker(marker: MapMarker): boolean
+    -findRoute(): void
+    -isAdjacent(prev: Position, pos: Position): boolean
+    -buildPath(start: Position, end: Position): void
+    -randomHeading(start: Position, end: Position): Position
+    +isReachable(targetSquare: MapSquare): boolean
+    -recur(x: int, y: int, visited: boolean[][], targetPosition: Position): boolean
+    +render(): void
+    +removePlayerMark(): void
+    -random(limit: int): int
+    +createNewMap(): void
+    +getSquares(): MapSquare[][]
+    +{static} getInstance(): Map
+    +{static} setInstance(instance: Map): void
+    +getMapWidth(): int
+    +getMapHeight(): int
+    +isNoHeal(): boolean
+    +setNoHeal(noHeal: boolean): void
+  }
+  Map --> "*" Position : marks
+  GridPane <|-- Map
+  enum MapMarker [[java:game.map.MapMarker]] {
+    MYSTERY
+    DOOR
+    MONSTER
+    PATH
+    PLAYER
+    DOCTOR
+    FINAL
+  }
+  class MarkerLoader [[java:game.map.MarkerLoader]] {
+    -{static} markerMap: HashMap<MapMarker,Resource>
+    +{static} getImage(marker: MapMarker): Image
+  }
+  class Resource [[java:game.map.Resource]] {
+    -image: Image
+    -path: String
+    +Resource(path: String)
+    +getImage(): Image
+  }
+  class MapSquare [[java:game.map.MapSquare]] {
+    +{static} SIZE: int
+    +MapSquare()
+    +MapSquare(marker: MapMarker)
+    +render(top: boolean, right: boolean, bottom: boolean, left: boolean): void
+    +setMarker(marker: MapMarker): void
+    +setPosition(x: int, y: int): void
+  }
+  MapSquare --> "1" MapMarker : marker
+  MapSquare --> "1" Position : position
+  MapSquare --> "1" MapMarker : getMarker()
+  MapSquare --> "1" Position : getPosition()
+  Pane <|-- MapSquare
+}
+
+' DONE
+package backpackPck {
+  class Backpack [[java:game.backpack.Backpack]] {
+    -{static} instance: Backpack
+    +{static} WIDTH: int
+    +{static} HEIGHT: int
+    -slots: Slot[][]
+    -gridPane: GridPane
+    -backpack: ImageView
+    -levelup: boolean
+    -unlockedLeft: int
+    +Backpack()
+    +backpackResize(): void
+    +render(): void
+    +isPlaceable(gridX: int, gridY: int, item: Item): boolean
+    +levelUp(): void
+    -isAdjacent(x: int, y: int): boolean
+    +finishUpgrade(): void
+    +placeItem(gridX: int, gridY: int, item: Item): boolean
+    +replaceItem(oldItem: Item, newItem: Item): void
+    -placeItem(slot: Slot, item: Item): void
+    +getGridPane(): GridPane
+    +removeItem(item: Item): void
+    +hightlight(gridX: int, gridY: int, item: Item): void
+    +getItemPosition(item: Item): ArrayList<Position>
+    +getSlots(): Slot[][]
+    +{static} getInstance(): Backpack
+    +isLevelup(): boolean
+    +setLevelup(levelup: boolean): void
+    +{static} setInstance(instance: Backpack): void
+    +getUnlockedLeft(): int
+    +setUnlockedLeft(unlockedLeft: int): void
+  }
+  VBox <|-- Backpack
+  ReRenderable <|.. Backpack
+  class Slot [[java:game.backpack.Slot]] {
+    -{static} SIZE: int
+    -{static} emptySlot: Image
+    -{static} usedSlot: Image
+    -slotBackground: ImageView
+    -selectAnimation: ImageView
+    -upgradeAnimation: ImageView
+    -select: Timeline
+    -upgrade: Timeline
+    -isUnlocked: boolean
+    -isUnlockable: boolean
+    -item: Item
+    +Slot()
+    +render(): void
+    +highlightUpgrade(): void
+    +removeUpgradeAnimation(): void
+    +highlightRelic(): void
+    +highlight(): void
+    +{static} getEmptySlot(): Image
+    +{static} getUsedSlot(): Image
+    +isUnlocked(): boolean
+    +setUnlocked(isUnlocked: boolean): void
+    +getItem(): Item
+    +setItem(item: Item): void
+    +{static} getSize(): int
+    +isUnlockable(): boolean
+    +setUnlockable(isUnlockable: boolean): void
+  }
+  StackPane <|-- Slot
+  ReRenderable <|.. Slot
+}
+
+' DONE
+package gameUI {
+  class Game [[java:game.Game]] {
+    -{static} instance: Game
+    +Game()
+    +getItemsInGame(): ArrayList<Item>
+    +addItemsToGame(items: Item[]): void
+    +initializeFight(): void
+    +{static} getInstance(): Game
+    +{static} setInstance(instance: Game): void
+  }
+  StackPane <|-- Game
+  class GameHeader [[java:game.GameHeader]] {
+    -{static} instance: GameHeader
+    -floorText: Text
+    -experienceText: Text
+    -coinsText: Text
+    -mapButton: ImageView
+    -settingButton: ImageView
+    -moneySlot: StackPane
+    -expSlot: StackPane
+    -stat: VBox
+    +GameHeader()
+    +render(): void
+    +{static} getInstance(): GameHeader
+    +getMapButton(): ImageView
+    +setMapButton(mapButton: ImageView): void
+    +getSettingButton(): ImageView
+    +setSettingButton(settingButton: ImageView): void
+    +{static} setInstance(instance: GameHeader): void
+  }
+  HBox <|-- GameHeader
+  ReRenderable <|.. GameHeader
+  StackPane <|-- EnergyOrb
+  ReRenderable <|.. EnergyOrb
+  class GameTop [[java:game.GameTop]] {
+    -{static} instance: GameTop
+    -{static} map: StackPane
+    -isBackpack: boolean
+    +GameTop()
+    +useBackpack(): void
+    +useMap(): void
+    +isBackpack(): boolean
+    +{static} getInstance(): GameTop
+    +{static} getMap(): StackPane
+    +{static} setInstance(instance: GameTop): void
+  }
+  HBox <|-- GameTop
+  class GameBottom [[java:game.GameBottom]] {
+    -{static} instance: GameBottom
+    -enemyBox: HBox
+    +GameBottom()
+    +render(): void
+    +renderTarget(e: Entity): void
+    +getEnemyBox(): HBox
+    +{static} getInstance(): GameBottom
+    +addEntity(name: String): void
+    +removeEntity(): void
+    -animateLayoutChange(): void
+    +{static} setInstance(instance: GameBottom): void
+  }
+  HBox <|-- GameBottom
+  ReRenderable <|.. GameBottom
+}
+
+' DONE
+package itemGen {
+  class ItemList [[java:game.itemGenerator.ItemList]] {
+    -{static} itemMap: HashMap<String,Resource>
+    +{static} getItemMap(): HashMap<String,Resource>
+  }
+  class ItemRandomizer [[java:game.itemGenerator.ItemRandomizer]] {
+    -{static} common: String[]
+    -{static} uncommon: String[]
+    -{static} rare: String[]
+    -{static} epic: String[]
+    -{static} legend: String[]
+    -{static} getTier(): ItemTier
+    +{static} getNameFromTier(itemTier: ItemTier): String
+    +{static} getRandomItemName(): String
+  }
+  class ResourceLoader [[java:game.itemGenerator.ResourceLoader]] {
+    +{static} newItem(name: String): Item
+  }
+  class Resource [[java:game.itemGenerator.Resource]] {
+    -supplier: Supplier<Item>
+    -image: Image
+    -path: String
+    +Resource(supplier: Supplier<Item>, path: String)
+    +newItem(): Item
+  }
+}
+
+' DONE
+package popupUI {
+  class GameScene [[java:scene.GameScene]] {
+    +{static} use(): void
+  }
+  class MenuScene [[java:scene.MenuScene]] {
+    -{static} hasGameStarted: boolean
+    -{static} isInMenuScene: boolean
+    +{static} use(): void
+    +{static} hasGameStarted(): boolean
+    +{static} setGameStarted(hasGameStarted: boolean): void
+    +{static} isInMenuScene(): boolean
+    +{static} setInMenuScene(isInMenuScene: boolean): void
+  }
+  class EndingPopup [[java:scene.popup.EndingPopup]] {
+    -{static} instance: EndingPopup
+    +EndingPopup()
+    +{static} getInstance(): EndingPopup
+  }
+  Popup <|-- EndingPopup
+  class CharacterPopup [[java:scene.popup.CharacterPopup]] {
+    -{static} instance: CharacterPopup
+    +CharacterPopup()
+    +{static} getInstance(): CharacterPopup
+  }
+  Popup <|-- CharacterPopup
+  class GameOverPopup [[java:scene.popup.GameOverPopup]] {
+    -{static} instance: GameOverPopup
+    +GameOverPopup()
+    +{static} getInstance(): GameOverPopup
+  }
+  Popup <|-- GameOverPopup
+  class SettingPopup [[java:scene.popup.SettingPopup]] {
+    -{static} instance: SettingPopup
+    +SettingPopup()
+    -createText(name: String): Text
+    +getMusicSlider(): Slider
+    +getSfxSlider(): Slider
+    +{static} getInstance(): SettingPopup
+  }
+  SettingPopup --> "1" VolumeSlider : musicSlider
+  SettingPopup --> "1" VolumeSlider : sfxSlider
+  Popup <|-- SettingPopup
+    class Popup [[java:scene.popup.Popup]] {
+    -{static} frameImage: Image
+    #bottomBox: HBox
+    +Popup(title: String)
+    +show(): void
+    +hide(): void
+    -{static} getFrameImage(): Image
+  }
+  BorderPane <|-- Popup
+}
+@enduml

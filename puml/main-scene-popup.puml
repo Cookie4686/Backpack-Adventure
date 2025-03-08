@@ -1,0 +1,82 @@
+@startuml
+class Application {}
+class BorderPane {}
+together{
+  class Main [[java:application.Main]] {
+    +{static} root: StackPane
+    +{static} mediaPlayer: MediaPlayer
+    +{static} stage: Stage
+    +start(primaryStage: Stage): void
+    +stop(): void
+    +{static} main(args: String[]): void
+  }
+  class Fader [[java:application.Fader]] {
+    -{static} blackScreen: Rectangle
+    -{static} blackout: Rectangle
+    -{static} scene: Scene
+    +{static} initialize(stage: Stage): void
+    +{static} fadeOutAndIn(): void
+    +{static} getBlackout(): Rectangle
+    +{static} getBlackScreen(): Rectangle
+  }
+}
+Application <|-- Main
+together {
+  class MenuScene [[java:scene.MenuScene]] {
+    -{static} hasGameStarted: boolean
+    -{static} isInMenuScene: boolean
+    +{static} use(): void
+    +{static} hasGameStarted(): boolean
+    +{static} setGameStarted(hasGameStarted: boolean): void
+    +{static} isInMenuScene(): boolean
+    +{static} setInMenuScene(isInMenuScene: boolean): void
+  }
+  class GameScene [[java:scene.GameScene]] {
+    +{static} use(): void
+  }
+  class CharacterScene [[java:scene.CharacterScene]] {
+    +{static} use(): HBox
+  }
+}
+class Popup [[java:scene.popup.Popup]] {
+	-{static} frameImage: Image
+	#bottomBox: HBox
+	+Popup(title: String)
+	+show(): void
+	+hide(): void
+	-{static} getFrameImage(): Image
+}
+class CharacterPopup [[java:scene.popup.CharacterPopup]] {
+	-{static} instance: CharacterPopup
+	+CharacterPopup()
+	+{static} getInstance(): CharacterPopup
+}
+class SettingPopup [[java:scene.popup.SettingPopup]] {
+	-{static} instance: SettingPopup
+	-musicSlider: VolumeSlider
+	-sfxSlider: VolumeSlider
+	+SettingPopup()
+	-createText(name: String): Text
+	+getMusicSlider(): Slider
+	+getSfxSlider(): Slider
+	+{static} getInstance(): SettingPopup
+}
+class GameOverPopup [[java:scene.popup.GameOverPopup]] {
+	-{static} instance: GameOverPopup
+	+GameOverPopup()
+	+{static} getInstance(): GameOverPopup
+}
+class EndingPopup [[java:scene.popup.EndingPopup]] {
+	-{static} instance: EndingPopup
+	+EndingPopup()
+	+{static} getInstance(): EndingPopup
+}
+BorderPane <|-- Popup
+Popup <|-- CharacterPopup
+Popup <|-- SettingPopup
+Popup <|-- GameOverPopup
+Popup <|-- EndingPopup
+SettingPopup --> "1" VolumeSlider : musicSlider
+SettingPopup --> "1" VolumeSlider : sfxSlider
+
+@enduml

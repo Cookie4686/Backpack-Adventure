@@ -1,0 +1,105 @@
+@startuml
+enum MobTier [[java:game.util.MobTier]] {
+  E
+  D
+  C
+  B
+  A
+  S
+  EX
+}
+enum ItemRotation [[java:game.util.ItemRotation]] {
+  VERTICAL
+  HORIZONTAL
+  DIAGONAL_LEFT
+  DIAGONAL_RIGHT
+}
+enum ItemTier [[java:game.util.ItemTier]] {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+  GOD
+}
+enum EffectType [[java:game.util.EffectType]] {
+  FIRE
+  POISON
+  STUNNED
+  DAMAGE
+  THORN
+  SHIELD
+  DODGE
+  VAMPIRIC
+  SUMMONER
+  ANGER
+  HEAL
+  ENERGY
+  REGEN
+  LUCK
+}
+class Effect [[java:game.util.Effect]] {
+  -amount: int
+  +Effect(amount: int, type: EffectType)
+  +getAmount(): int
+  +setAmount(amount: int): void
+  +setType(type: EffectType): void
+  +getTypeName(): String
+}
+class EffectIcon [[java:game.util.EffectIcon]] {
+  -icon: ImageView
+  -text: Text
+  -fadeIn: FadeTransition
+  +EffectIcon(type: EffectType)
+  +getIcon(): ImageView
+  +setIcon(icon: ImageView): void
+  +getText(): Text
+  +setText(amount: Text): void
+  +getFadeIn(): FadeTransition
+}
+class IconList [[java:game.util.IconList]] {
+  -{static} iconMap: HashMap<EffectType,Resource>
+  +{static} getIconMap(): HashMap<EffectType,Resource>
+}
+class IconLoader [[java:game.util.IconLoader]] {
+  +{static} newIcon(type: EffectType, amount: int): EffectIcon
+}
+class Resource [[java:game.util.Resource]] {
+  -path: String
+  -image: Image
+  +Resource(path: String)
+  +newIcon(type: EffectType, amount: int): EffectIcon
+  -getImage(): Image
+}
+together {
+class Position [[java:game.util.Position]] {
+  -x: int
+  -y: int
+  +Position(x: int, y: int)
+  +getX(): int
+  +getY(): int
+  +setX(x: int): void
+  +setY(y: int): void
+}
+class GameDialog [[java:game.dialog.GameDialog]] {
+  -{static} frameImage: Image
+  -dialogText: Text
+  -optionBox: VBox
+  +GameDialog(title: String)
+  +setText(text: String): void
+  +addOption(textStr: String, onMouseClickedHandler: EventHandler<? super MouseEvent>): void
+  +show(): void
+  +hide(): void
+  -{static} getFrameImage(): Image
+}
+}
+VBox <|-- EffectIcon
+BorderPane <|-- GameDialog
+Effect --> "1" EffectType : type
+Effect --> "1" EffectType : getType()
+EffectIcon --> "1" EffectType : type
+EffectIcon --> "1" EffectType : getType()
+
+IconLoader --> "1" IconList: icon
+IconList --> "1" Resource: resource
+@enduml

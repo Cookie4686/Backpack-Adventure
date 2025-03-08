@@ -1,0 +1,60 @@
+@startuml
+top to bottom direction
+interface TurnActivable [[java:interfaces.TurnActivable]] {
+	activatePerTurn(): void
+}
+interface ReStatable [[java:interfaces.ReStatable]] {
+	reStatBeforeUpdate(): void
+}
+interface Clickable [[java:interfaces.Clickable]] {
+	activatePerClick(): void
+	isEnoughEnergy(): boolean
+}
+abstract class ItemWithCost [[java:game.item.ItemWithCost]] {}
+Clickable <|.. ItemWithCost
+class Weapon [[java:game.item.weapon.Weapon]] {
+  -initDamage: int
+  -damage: int
+  +Weapon(name, detail, initDamage, costActivate, width, tier)
+  +Weapon(name, detail, initDamage, costActivate, width, height, tier)
+  +reStatBeforeUpdate(): void
+  +activatePerClick(): void
+  +activateItem(): void
+  +getProvide(): String
+  +toString(): String
+  +getInitDamage(): int
+  +getDamage(): int
+  +setDamage(damage: int): void
+  +addDamage(damage: int): void
+}
+class SpecialWeapon [[java:game.item.weapon.SpecialWeapon]] {
+  -effects: ArrayList<Effect>
+  +SpecialWeapon(name, detail, effects, damage, costActivate, width, tier)
+  +SpecialWeapon(name, detail, effects, damage, costActivate, width, height, tier)
+  +activateItem(): void
+  +getProvide(): String
+  +toString(): String
+  +getEffects(): ArrayList<Effect>
+}
+class ManaWeapon [[java:game.item.weapon.ManaWeapon]] {
+  +ManaWeapon(name, detail, effects, damage, costActivate, width, tier)
+  +ManaWeapon(name, detail, effects, damage, costActivate, width, height, tier)
+  +isEnoughEnergy(): boolean
+  +toString(): String
+}
+class IncreaseCostWeapon [[java:game.item.weapon.IncreaseCostWeapon]] {
+  -initCost: int
+  -increaseCost: int
+  +IncreaseCostWeapon(name, detail, effects, damage, costActivate, increaseCost, width, tier)
+  +IncreaseCostWeapon(name, detail, effects, damage, costActivate, increaseCost, width, height, tier)
+  +activatePerTurn(): void
+  +activateItem(): void
+  +toString(): String
+}
+ItemWithCost <|-- Weapon
+ReStatable <|.. Weapon
+Weapon <|-- SpecialWeapon
+SpecialWeapon <|-- IncreaseCostWeapon
+TurnActivable <|.. IncreaseCostWeapon
+SpecialWeapon <|-- ManaWeapon
+@enduml
