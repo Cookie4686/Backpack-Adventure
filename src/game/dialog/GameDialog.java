@@ -37,6 +37,7 @@ public class GameDialog extends BorderPane {
 		topBox.setBackground(new Background(new BackgroundFill(Color.GRAY, new CornerRadii(4), Insets.EMPTY)));
 		Text titleText = new Text(title);
 		titleText.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 48));
+		titleText.setFill(Color.LIGHTGREEN);
 		topBox.getChildren().setAll(titleText);
 		setAlignment(topBox, Pos.CENTER);
 
@@ -49,6 +50,7 @@ public class GameDialog extends BorderPane {
 		dialogText = new Text();
 		dialogText.wrappingWidthProperty().bind(root.maxWidthProperty());
 		dialogText.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 24));
+		dialogText.setFill(Color.WHITE);
 		optionBox = new VBox();
 		optionBox.setMaxHeight(USE_PREF_SIZE);
 		optionBox.setSpacing(16);

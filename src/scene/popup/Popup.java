@@ -35,6 +35,7 @@ public class Popup extends BorderPane {
 		topBox.translateYProperty().bind(topBox.heightProperty().divide(-2));
 		Text titleText = new Text(title);
 		titleText.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 48));
+		titleText.setFill(Color.WHITESMOKE);
 		topBox.getChildren().setAll(titleText);
 		setAlignment(topBox, Pos.CENTER);
 		setTop(topBox);

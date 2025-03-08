@@ -127,7 +127,9 @@ public class FightLogic {
 	public void playerTurn() {
 		if (Player.getInstance().getHp() != 0) {
 			isPTurn = true;
-			for (Effect ef : Player.getInstance().getAllEffect()) {
+			ArrayList<Effect> effects = new ArrayList<>(Player.getInstance().getAllEffect());
+			
+			for (Effect ef : effects) {
 				activateEffect(ef, Player.getInstance());
 				Player.getInstance().render();
 				if (Player.getInstance().getHp() == 0) {
@@ -135,6 +137,7 @@ public class FightLogic {
 					return;
 				}
 			}
+			Player.getInstance().setAllEffect(effects);
 			Player.getInstance().activatePerTurn();
 		}
 	}

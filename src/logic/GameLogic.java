@@ -144,7 +144,7 @@ public class GameLogic {
 				fadeOut.setOnFinished(_ -> {
 					PauseTransition pause = new PauseTransition(Duration.seconds(2));
 					pause.setOnFinished(_ -> {
-						root.getChildren().remove(blackScreen);
+						//root.getChildren().remove(blackScreen);
 						GameOverPopup.getInstance().show();
 						root.getChildren().remove(blackout);
 						root.getChildren().add(blackout);
@@ -167,6 +167,7 @@ public class GameLogic {
 	}
 
 	public void endFight() {
+		if(Player.getInstance().getHp() == 0) gameOver();
 		Iterator<Entity> iterator = FightLogic.getInstance().getEntities().iterator();
 		while (iterator.hasNext()) {
 			if (iterator.next().getHp() == 0) {
