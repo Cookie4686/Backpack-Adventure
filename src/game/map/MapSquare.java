@@ -3,6 +3,7 @@ package game.map;
 import game.backpack.Slot;
 import game.util.Position;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Background;
@@ -17,9 +18,9 @@ import javafx.scene.paint.Color;
 import logic.handler.MapHandler;
 
 public class MapSquare extends Pane {
-	public final static int SIZE = (Slot.getSize()*7)/10;
+	public final static int SIZE = (Slot.getSize() * 7) / 10;
 	private MapMarker marker;
-	private Position position; 
+	private Position position;
 
 	public MapSquare() {
 		this(null);
@@ -38,8 +39,10 @@ public class MapSquare extends Pane {
 				ImageView imageView = new ImageView(MarkerLoader.getImage(marker));
 				imageView.setFitWidth(SIZE);
 				imageView.setFitHeight(SIZE);
+				imageView.setCursor(Cursor.HAND);
 				imageView.setOnMouseClicked(event -> {
-					if(event.getButton() == MouseButton.PRIMARY) MapHandler.handleMouseClicked(this);
+					if (event.getButton() == MouseButton.PRIMARY)
+						MapHandler.handleMouseClicked(this);
 				});
 				getChildren().setAll(imageView);
 			}
