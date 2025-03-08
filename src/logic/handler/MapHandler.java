@@ -31,13 +31,13 @@ public class MapHandler {
 
 		switch (square.getMarker()) {
 		case FINAL		-> {
-			GameLogic.getInstance().setDoctor(false);
 			Player.getInstance().moveLeftAndBack();
 			Fader.fadeOutAndIn();
 			GameLogic.getInstance().setBoss(true);
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
 			pause.setOnFinished(_ -> {
 				Map.getInstance().removePlayerMark();
+				GameLogic.getInstance().setDoctor(false);
 				square.getChildren().clear();
 				square.setMarker(MapMarker.PLAYER);
 				Map.getInstance().render();
@@ -47,12 +47,12 @@ public class MapHandler {
 			pause.play();
 		}
 		case MONSTER	-> {
-			GameLogic.getInstance().setDoctor(false);
 			Player.getInstance().moveLeftAndBack();
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
 			pause.setOnFinished(_ -> {
 				Map.getInstance().removePlayerMark();
+				GameLogic.getInstance().setDoctor(false);
 				square.getChildren().clear();
 				square.setMarker(MapMarker.PLAYER);
 				Map.getInstance().render();
@@ -104,12 +104,12 @@ public class MapHandler {
 		case DOCTOR		-> {
 			if (GameLogic.getInstance().isDoctor())
 				break;
-			GameLogic.getInstance().setDoctor(true);
 			Player.getInstance().moveLeftAndBack();
 			Fader.fadeOutAndIn();
 			PauseTransition pause = new PauseTransition(Duration.seconds(1));
 			pause.setOnFinished(_ -> {
 				Map.getInstance().removePlayerMark();
+				GameLogic.getInstance().setDoctor(true);
 				square.setMarker(MapMarker.PLAYER);
 				Map.getInstance().render();
 				Game.getInstance().initializeFight();

@@ -209,7 +209,7 @@ public class Map extends GridPane {
 		for (int x = 0; x < Map.getInstance().getMapWidth(); x++) {
 			for (int y = 0; y < Map.getInstance().getMapHeight(); y++) {
 				if (squares[x][y].getMarker() == MapMarker.PLAYER) {
-					if (!GameLogic.getInstance().isDoctor() && !noHeal) {
+					if (GameLogic.getInstance().isDoctor() && !noHeal) {
 						squares[x][y].setMarker(MapMarker.DOCTOR);
 						return;
 					}
