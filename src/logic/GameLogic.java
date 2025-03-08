@@ -237,7 +237,7 @@ public class GameLogic {
 			GameHeader.getInstance().render();
 			Backpack.getInstance().render();
 			FightLogic.getInstance().setInFight(false);
-
+			
 			if (Backpack.getInstance().isLevelup()) {
 				levelupSfx.stop();
 				Main.root.getChildren().add(announce);
