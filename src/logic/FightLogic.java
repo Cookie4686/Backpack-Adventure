@@ -79,16 +79,23 @@ public class FightLogic {
 			return;
 		}
 		System.out.println("enemy turn");
+		boolean stunned = false;
 		ArrayList<Effect> effects = new ArrayList<>(e.getAllEffect());
 		for (Effect ef : effects) {
 			activateEffect(ef, e);
+		}
+		for (Effect ef : e.getAllEffect()) {
+			if(ef.getType().equals(EffectType.STUNNED)) stunned = true;
+		}
+		if(stunned) {
+			findEffectAndDecrease(e.getAllEffect(),EffectType.STUNNED,1);
+			return;
 		}
 		if (e.getHp() == 0) {
 			System.out.println("checkAlive");
 			e.checkAlive();
 			return;
 		}
-		e.setAllEffect(effects);
 		e.activatePerTurn();
 		if (!e.isStunned()) {
 			Random rand = new Random();
