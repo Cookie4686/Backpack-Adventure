@@ -40,6 +40,8 @@ public class VolumeSlider extends HBox {
 			}
 
 		});
+		slider.setPickOnBounds(false);
+		slider.setCursor(Cursor.HAND);
 		slider.valueProperty().addListener((_, _, newValue) -> {
 			calcIcon(imageView, newValue.doubleValue());
 		});

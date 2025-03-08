@@ -6,6 +6,7 @@ import interfaces.ReRenderable;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -48,6 +49,8 @@ public class Slot extends StackPane implements ReRenderable {
 		upgrade.setCycleCount(Timeline.INDEFINITE);
 		upgradeAnimation.setFitHeight(SIZE);
 		upgradeAnimation.setFitWidth(SIZE);
+		upgradeAnimation.setPickOnBounds(true);
+		upgradeAnimation.setCursor(Cursor.HAND);
 
 		slotBackground = new ImageView();
 		slotBackground.setFitHeight(SIZE);
