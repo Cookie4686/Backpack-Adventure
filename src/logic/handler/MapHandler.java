@@ -128,7 +128,7 @@ public class MapHandler {
 				});
 				dialog.addOption("Yes. (add 5 maxHealth)", _ -> {
 					Map.getInstance().setNoHeal(true);
-					Player.getInstance().setMaxHp(Player.getInstance().getMaxHp() + 5);
+					Player.getInstance().setFixedMaxHp(Player.getInstance().getFixedMaxHp() + 5);
 					SfxPlayer.play(Sfx.VAMPIRIC);
 					dialog.hide();
 				});

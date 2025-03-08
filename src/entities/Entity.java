@@ -164,15 +164,7 @@ public class Entity extends Being implements TurnActivable {
 
 	@Override
 	public void activatePerTurn() {
-		// TODO Auto-generated method stub
 		shield = 0;
-	}
-
-	public void activatePerClick() {
-		// TODO Auto-generated method stub
-		Platform.runLater(() -> {
-			// add target frame on top
-		});
 	}
 
 	public ImageView getImageView() {
@@ -215,7 +207,7 @@ public class Entity extends Being implements TurnActivable {
 		TranslateTransition transition = new TranslateTransition(Duration.seconds(MOVE_DURATION), this);
 		transition.setToX(newX);
 
-		transition.setOnFinished(event -> {
+		transition.setOnFinished(_ -> {
 			isMoving = false;
 		});
 
@@ -247,7 +239,6 @@ public class Entity extends Being implements TurnActivable {
 		double currentTranslateX = imageView.getTranslateX();
 		Timeline moveTimeline = new Timeline();
 		double moveDistance = -20;
-		double targetX = currentTranslateX + moveDistance;
 
 		moveTimeline.getKeyFrames().addAll(
 				new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX)),

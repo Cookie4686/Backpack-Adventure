@@ -15,10 +15,8 @@ import interfaces.TurnActivable;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import logic.FightLogic;
 import logic.GameLogic;
@@ -31,7 +29,6 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	// private ArrayList<String> pic;
 	private CharacterState currentState = CharacterState.IDLE;
 	// private ArrayList<String> idlePaths;
-	private Point2D initialPosition;
 	private ArrayList<Image> idleframes;
 	private Timeline idleTimeline;
 	private ArrayList<Image> attackframes;
@@ -41,7 +38,6 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	private ArrayList<Image> dieframes;
 	private Timeline dieTimeline;
 	private ImageView imageView;
-	private Text text;
 	private EnergyOrb energyOrb;
 
 	public Player() {
@@ -62,7 +58,6 @@ public class Player extends Being implements TurnActivable, ReStatable {
 
 		initialize(null);
 
-		text = new Text();
 		idleframes = new ArrayList<Image>(
 				Arrays.asList(new Image(ClassLoader.getSystemResource("frames/player_Idle1.png").toString()),
 						new Image(ClassLoader.getSystemResource("frames/player_Idle2.png").toString()),
@@ -124,7 +119,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		for (int i = 0; i < images.size(); i++) {
 			final int frameIndex = i;
 			KeyFrame keyFrame = new KeyFrame(Duration.seconds(frameDuration * i),
-					event -> imageView.setImage(images.get(frameIndex)));
+					_ -> imageView.setImage(images.get(frameIndex)));
 			timeline.getKeyFrames().add(keyFrame);
 		}
 		imageView.setImage(images.get(0));
@@ -141,7 +136,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	}
 
 	private void startAttackAnimation() {
-		attackTimeline.setOnFinished(event -> {
+		attackTimeline.setOnFinished(_ -> {
 			currentState = CharacterState.IDLE;
 			playAnimation("idle");
 		});
@@ -189,36 +184,36 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		playAnimation("die");
 	}
 
-    public void moveLeftAndBack() {
-    	if(GameLogic.getInstance().isBoss()) return;
-        double currentTranslateX = imageView.getTranslateX();
-        Timeline moveTimeline = new Timeline();
-        Timeline moveTimeline2 = new Timeline();
-        double moveDistance = 200;
-        double targetX = currentTranslateX + moveDistance;
-        
-        moveTimeline.getKeyFrames().addAll(
-                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX)),
-                new KeyFrame(Duration.millis(1000), new KeyValue(imageView.translateXProperty(), currentTranslateX + moveDistance))
-        );
-        moveTimeline.setCycleCount(1);
-        
-        moveTimeline2.getKeyFrames().addAll(
-                new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX - moveDistance)),
-                new KeyFrame(Duration.millis(1000), new KeyValue(imageView.translateXProperty(), currentTranslateX))
-        );
-        moveTimeline2.setCycleCount(1);
-        
-        moveTimeline.setOnFinished(event -> {
-        	moveTimeline2.play();
-        });
-        runTimeline.setOnFinished(event -> {
-        	playAnimation("idle");
-        });
-        playAnimation("run");
-        moveTimeline.play();
-    }
-    
+	public void moveLeftAndBack() {
+		if (GameLogic.getInstance().isBoss())
+			return;
+		double currentTranslateX = imageView.getTranslateX();
+		Timeline moveTimeline = new Timeline();
+		Timeline moveTimeline2 = new Timeline();
+		double moveDistance = 200;
+
+		moveTimeline.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO, new KeyValue(imageView.translateXProperty(), currentTranslateX)),
+				new KeyFrame(Duration.millis(1000),
+						new KeyValue(imageView.translateXProperty(), currentTranslateX + moveDistance)));
+		moveTimeline.setCycleCount(1);
+
+		moveTimeline2.getKeyFrames().addAll(
+				new KeyFrame(Duration.ZERO,
+						new KeyValue(imageView.translateXProperty(), currentTranslateX - moveDistance)),
+				new KeyFrame(Duration.millis(1000), new KeyValue(imageView.translateXProperty(), currentTranslateX)));
+		moveTimeline2.setCycleCount(1);
+
+		moveTimeline.setOnFinished(_ -> {
+			moveTimeline2.play();
+		});
+		runTimeline.setOnFinished(_ -> {
+			playAnimation("idle");
+		});
+		playAnimation("run");
+		moveTimeline.play();
+	}
+
 	public int takeDamage(int damaged) {
 		if (damaged == 0)
 			return 0;
@@ -386,6 +381,13 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	public void setEnergyOrb(EnergyOrb energyOrb) {
 		this.energyOrb = energyOrb;
 	}
-	
-}
 
+	public int getFixedMaxHp() {
+		return fixedMaxHp;
+	}
+
+	public void setFixedMaxHp(int fixedMaxHp) {
+		setMaxHp(getMaxHp() + fixedMaxHp - this.fixedMaxHp);
+		this.fixedMaxHp = fixedMaxHp;
+	}
+}

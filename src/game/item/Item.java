@@ -167,6 +167,10 @@ public abstract class Item extends Pane {
 		return tier == null ? "" : tier.toString();
 	}
 
+	public String getDetail() {
+		return detail;
+	}
+
 	public ImageView getImageView() {
 		return imageView;
 	}
@@ -184,7 +188,6 @@ public abstract class Item extends Pane {
 		if (currentTranslateY == 0)
 			currentTranslateY = imageView.getTranslateY();
 		double moveDistance = 10;
-		double targetY = currentTranslateY + moveDistance;
 		Random rand = new Random();
 		int dUb = 1500;
 		int dLb = 1000;
