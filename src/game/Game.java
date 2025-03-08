@@ -6,6 +6,7 @@ import java.util.Iterator;
 import application.Main;
 import game.backpack.Slot;
 import game.item.Item;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -45,7 +46,9 @@ public class Game extends StackPane {
 	}
 
 	public void addItemsToGame(Item... items) {
-		getChildren().addAll(items);
+		Platform.runLater(() -> {			
+			getChildren().addAll(items);
+		});
 		for (Item item : items) {
 			item.getFadeIn().play();
 			item.moveUpAndDown();
