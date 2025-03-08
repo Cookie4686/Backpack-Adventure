@@ -144,7 +144,7 @@ public class GameLogic {
 				fadeOut.setOnFinished(_ -> {
 					PauseTransition pause = new PauseTransition(Duration.seconds(2));
 					pause.setOnFinished(_ -> {
-						root.getChildren().remove(blackScreen);
+						//root.getChildren().remove(blackScreen);
 						GameOverPopup.getInstance().show();
 						root.getChildren().remove(blackout);
 						root.getChildren().add(blackout);
@@ -240,7 +240,9 @@ public class GameLogic {
 
 			if (Backpack.getInstance().isLevelup()) {
 				levelupSfx.stop();
-				Main.root.getChildren().add(announce);
+				Platform.runLater(() -> {					
+					Main.root.getChildren().add(announce);
+				});
 				levelupSfx.play();
 			}
 		}

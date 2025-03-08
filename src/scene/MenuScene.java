@@ -32,7 +32,7 @@ public class MenuScene {
 		root.setSpacing(40);
 		root.setAlignment(Pos.CENTER);
 
-		Text titleText = new Text("Cool Game");
+		Text titleText = new Text("Meth Maxxing");
 		titleText.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 64));
 		VBox buttonBox = new VBox();
 		buttonBox.setSpacing(20);
