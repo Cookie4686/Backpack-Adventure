@@ -93,7 +93,7 @@ public class GameLogic {
 		int enUb = 3 + currentFloor;
 		int enLb = 1 + currentFloor;
 		int amount = rand.nextInt((enUb - enLb) + 1) + enLb;
-		if (boss) {
+		if (!boss) {
 			for (int i = 0; i < amount; i++) {
 				FightLogic.getInstance().getEntities()
 						.add(EntityLoader.newEntity(EntitySpawner.getNameFromTier(EntitySpawner.getTier())));
