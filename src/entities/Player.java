@@ -257,6 +257,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	public void activatePerTurn() {
 		this.energy = maxEnergy;
 		this.shield = 0;
+		this.maxMana = 0;
 		setHp(getHp()); // reset if overheal
 		// getAllEffect().clear();
 		for (Effect ef : allEffect) {

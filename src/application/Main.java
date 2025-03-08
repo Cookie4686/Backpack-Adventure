@@ -35,7 +35,7 @@ public class Main extends Application {
 		scene.setOnKeyPressed(event -> ItemHandler.handleSceneKeyPress(event));
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Backpack");
-		primaryStage.initStyle(StageStyle.UNDECORATED);
+//		primaryStage.initStyle(StageStyle.UNDECORATED);
 		// primaryStage.setMaximized(true);
 		primaryStage.setResizable(false);
 		primaryStage.show();

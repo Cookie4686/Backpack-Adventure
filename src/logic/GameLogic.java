@@ -93,7 +93,7 @@ public class GameLogic {
 		int enUb = 3 + currentFloor;
 		int enLb = 1 + currentFloor;
 		int amount = rand.nextInt((enUb - enLb) + 1) + enLb;
-		if (!boss) {
+		if (boss) {
 			for (int i = 0; i < amount; i++) {
 				FightLogic.getInstance().getEntities()
 						.add(EntityLoader.newEntity(EntitySpawner.getNameFromTier(EntitySpawner.getTier())));
@@ -168,6 +168,7 @@ public class GameLogic {
 
 	public void endFight() {
 		if(Player.getInstance().getHp() == 0) gameOver();
+		Player.getInstance().setMana(Player.getInstance().getMaxMana());
 		Iterator<Entity> iterator = FightLogic.getInstance().getEntities().iterator();
 		while (iterator.hasNext()) {
 			if (iterator.next().getHp() == 0) {
@@ -241,7 +242,12 @@ public class GameLogic {
 			
 			if (Backpack.getInstance().isLevelup()) {
 				levelupSfx.stop();
-				Main.root.getChildren().add(announce);
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						Main.root.getChildren().add(announce);
+					}
+				});
 				levelupSfx.play();
 			}
 		}

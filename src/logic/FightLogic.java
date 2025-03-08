@@ -132,6 +132,7 @@ public class FightLogic {
 	}
 
 	public void playerTurn() {
+		System.out.println("max Mana : "+Player.getInstance().getMaxMana());
 		if (Player.getInstance().getHp() != 0) {
 			isPTurn = true;
 			ArrayList<Effect> effects = new ArrayList<>(Player.getInstance().getAllEffect());
