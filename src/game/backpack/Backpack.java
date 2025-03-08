@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import component.GameButton;
 import component.GameButtonType;
+import entities.Player;
 import game.Game;
 import game.item.Item;
 import game.item.consumable.Potion;
@@ -131,14 +132,27 @@ public class Backpack extends VBox implements ReRenderable {
 	}
 
 	public void levelUp() {
-		levelup = true;
+		int remainingSlot = 0;
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
-				if (isAdjacent(x, y) && !slots[y][x].isUnlocked()) {
-					slots[y][x].highlightUpgrade();
+				if (!slots[y][x].isUnlocked()) {
+					slots[y][x].removeUpgradeAnimation();
+					remainingSlot++;
 				}
 			}
 		}
+		if (Player.getInstance().getMaxXp()!=200) unlockedLeft += remainingSlot-unlockedLeft < 3 ? remainingSlot-unlockedLeft : 3;
+		System.out.println("unlock left "+ unlockedLeft);
+		if (!levelup) {
+			for (int y = 0; y < HEIGHT; y++) {
+				for (int x = 0; x < WIDTH; x++) {
+					if (isAdjacent(x, y) && !slots[y][x].isUnlocked()) {
+						slots[y][x].highlightUpgrade();
+					}
+				}
+			}
+		}
+		levelup = true;
 	}
 
 	private boolean isAdjacent(int x, int y) {
@@ -155,16 +169,13 @@ public class Backpack extends VBox implements ReRenderable {
 
 	public void finishUpgrade() {
 		levelup = false;
-		int remainingSlot = 0;
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				if (!slots[y][x].isUnlocked()) {
 					slots[y][x].removeUpgradeAnimation();
-					remainingSlot++;
 				}
 			}
 		}
-		unlockedLeft = remainingSlot < 3 ? remainingSlot : 3;
 	}
 
 	public boolean placeItem(int gridX, int gridY, Item item) {

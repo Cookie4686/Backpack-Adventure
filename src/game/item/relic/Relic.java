@@ -51,6 +51,7 @@ public abstract class Relic extends Item {
 		for (Item item : items) {
 			if (item instanceof Weapon) {
 				((Weapon) item).addDamage(effect.getAmount());
+				((Weapon) item).updateTooltip();
 			}
 		}
 	}

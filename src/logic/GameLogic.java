@@ -142,10 +142,9 @@ public class GameLogic {
 				fadeIn.setToValue(0.0);
 
 				fadeOut.setOnFinished(_ -> {
-					BackgroundSongPlayer.floor(3);
-					PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
+					PauseTransition pause = new PauseTransition(Duration.seconds(2));
 					pause.setOnFinished(_ -> {
-						root.getChildren().remove(blackScreen);
+						//root.getChildren().remove(blackScreen);
 						GameOverPopup.getInstance().show();
 						root.getChildren().remove(blackout);
 						root.getChildren().add(blackout);
@@ -168,6 +167,7 @@ public class GameLogic {
 	}
 
 	public void endFight() {
+		if(Player.getInstance().getHp() == 0) gameOver();
 		Iterator<Entity> iterator = FightLogic.getInstance().getEntities().iterator();
 		while (iterator.hasNext()) {
 			if (iterator.next().getHp() == 0) {
@@ -193,9 +193,9 @@ public class GameLogic {
 				fadeIn.setToValue(0.0);
 
 				fadeOut.setOnFinished(_ -> {
-					BackgroundSongPlayer.floor(3);
-					PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
+					PauseTransition pause = new PauseTransition(Duration.seconds(4));
 					pause.setOnFinished(_ -> {
+						BackgroundSongPlayer.floor(3);
 						root.getChildren().remove(blackScreen);
 						EndingPopup.getInstance().show();
 						root.getChildren().remove(blackout);
@@ -235,10 +235,10 @@ public class GameLogic {
 			System.out.println(Player.getInstance().getHp());
 			Player.getInstance().setShield(0);
 			Player.getInstance().setHp(Player.getInstance().getHp());
-			FightLogic.getInstance().setInFight(false);
 			GameHeader.getInstance().render();
 			Backpack.getInstance().render();
-
+			FightLogic.getInstance().setInFight(false);
+			
 			if (Backpack.getInstance().isLevelup()) {
 				levelupSfx.stop();
 				Main.root.getChildren().add(announce);

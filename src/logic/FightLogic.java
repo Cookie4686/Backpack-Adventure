@@ -79,16 +79,23 @@ public class FightLogic {
 			return;
 		}
 		System.out.println("enemy turn");
+		boolean stunned = false;
 		ArrayList<Effect> effects = new ArrayList<>(e.getAllEffect());
 		for (Effect ef : effects) {
 			activateEffect(ef, e);
+		}
+		for (Effect ef : e.getAllEffect()) {
+			if(ef.getType().equals(EffectType.STUNNED)) stunned = true;
+		}
+		if(stunned) {
+			findEffectAndDecrease(e.getAllEffect(),EffectType.STUNNED,1);
+			return;
 		}
 		if (e.getHp() == 0) {
 			System.out.println("checkAlive");
 			e.checkAlive();
 			return;
 		}
-		e.setAllEffect(effects);
 		e.activatePerTurn();
 		if (!e.isStunned()) {
 			Random rand = new Random();
@@ -102,10 +109,11 @@ public class FightLogic {
 				GameLogic.getInstance().gameOver();
 			} else {
 				e.setNextTurn(e.getAllAttributes().get(rand.nextInt(e.getAllAttributes().size())));
+				System.out.println((FightLogic.getInstance().getEntities().size() + FightLogic.getInstance().getEntitiesFromSummon().size()) > 3);
 				if ((e.getNextTurn().getType().equals(EffectType.HEAL) && e.getHp() > e.getMaxHp() * 0.6)
 						|| (e.getNextTurn().getType().equals(EffectType.SUMMONER)
-								&& FightLogic.getInstance().getEntities().size()
-										+ FightLogic.getInstance().getEntitiesFromSummon().size() > 3)) {
+								&& ((FightLogic.getInstance().getEntities().size()
+										+ FightLogic.getInstance().getEntitiesFromSummon().size()) > 4))) {
 					e.setNextTurn(e.getAllAttributes().get(0));
 				}
 				if (!"demon".equals(e.getName())) {
@@ -126,7 +134,9 @@ public class FightLogic {
 	public void playerTurn() {
 		if (Player.getInstance().getHp() != 0) {
 			isPTurn = true;
-			for (Effect ef : Player.getInstance().getAllEffect()) {
+			ArrayList<Effect> effects = new ArrayList<>(Player.getInstance().getAllEffect());
+			
+			for (Effect ef : effects) {
 				activateEffect(ef, Player.getInstance());
 				Player.getInstance().render();
 				if (Player.getInstance().getHp() == 0) {
@@ -134,6 +144,7 @@ public class FightLogic {
 					return;
 				}
 			}
+			Player.getInstance().setAllEffect(effects);
 			Player.getInstance().activatePerTurn();
 		}
 	}
@@ -144,7 +155,7 @@ public class FightLogic {
 			being.takeDamage((effect.getAmount()));
 			being.setMaxHp(being.getMaxHp() - 10);
 		}
-		case POISON	-> { being.takeDamage((effect.getAmount() + 10)); }
+		case POISON	-> { being.takeDamage((effect.getAmount())); }
 		case REGEN	-> {
 			SfxPlayer.play(Sfx.HEAL);
 			being.setHp(being.getHp() + effect.getAmount());

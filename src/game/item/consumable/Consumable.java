@@ -39,7 +39,7 @@ public class Consumable extends ItemWithCost {
 				effect.getType(), effect.getAmount(), Player.getInstance());
 		default						-> {}
 		}
-
+		updateTooltip();
 		if (getDurability() == 0) {
 			if (this instanceof FoodWithContainer) {
 				System.out.println("reset to " + ((FoodWithContainer) this).getContainer());
