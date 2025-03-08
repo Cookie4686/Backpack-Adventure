@@ -47,7 +47,7 @@ public class Player extends Being implements TurnActivable, ReStatable {
 	public Player() {
 		super();
 		this.name = "Player";
-		this.hp = this.maxHp = this.fixedMaxHp = 500000;
+		this.hp = this.maxHp = this.fixedMaxHp = 100;
 		this.shield = 0;
 		this.xp = 0;
 		this.maxXp = 100;
