@@ -13,13 +13,12 @@ public abstract class Being extends VBox implements ReRenderable {
 	protected int hp, maxHp, shield;
 	protected ArrayList<Effect> allEffect;
 	protected HpBar hpBar;
-	private static boolean isUpdating;
 
 	public Being() {
 		super();
 		allEffect = new ArrayList<Effect>();
 		setAlignment(Pos.BOTTOM_CENTER);
-		
+
 	}
 
 	@Override
@@ -41,7 +40,7 @@ public abstract class Being extends VBox implements ReRenderable {
 
 	public void setHp(int hp) {
 		this.hp = hp < 0 ? 0 : (hp > maxHp ? maxHp : hp);
-		if (!isUpdating) hpBar.setHpBar();
+		hpBar.setHpBar();
 	}
 
 	public int getMaxHp() {
@@ -50,7 +49,7 @@ public abstract class Being extends VBox implements ReRenderable {
 
 	public void setMaxHp(int maxHp) {
 		this.maxHp = maxHp < 0 ? 0 : maxHp;
-		if (!isUpdating) setHp(hp);
+		setHp(hp);
 	}
 
 	public int getShield() {
@@ -75,13 +74,5 @@ public abstract class Being extends VBox implements ReRenderable {
 
 	public void setHpBar(HpBar hpBar) {
 		this.hpBar = hpBar;
-	}
-
-	public static boolean isUpdating() {
-		return isUpdating;
-	}
-
-	public static void setUpdating(boolean isUpdating) {
-		Being.isUpdating = isUpdating;
 	}
 }

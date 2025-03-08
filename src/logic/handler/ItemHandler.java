@@ -2,7 +2,6 @@ package logic.handler;
 
 import java.util.Random;
 
-import entities.Being;
 import entities.Player;
 import game.Game;
 import game.GameHeader;
@@ -95,11 +94,9 @@ public class ItemHandler {
 		if (Backpack.getInstance().placeItem(gridX, gridY, currentItem)) {
 			setPlaceItemPostion();
 		}
-		
-		Being.setUpdating(true);
+
 		Player.getInstance().reStatBeforeUpdate();
 		GameLogic.updateBackpackItems();
-		Being.setUpdating(false);
 		Player.getInstance().render();
 	}
 
