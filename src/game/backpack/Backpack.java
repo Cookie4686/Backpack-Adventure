@@ -132,6 +132,17 @@ public class Backpack extends VBox implements ReRenderable {
 
 	public void levelUp() {
 		levelup = true;
+		int remainingSlot = 0;
+		for (int y = 0; y < HEIGHT; y++) {
+			for (int x = 0; x < WIDTH; x++) {
+				if (!slots[y][x].isUnlocked()) {
+					slots[y][x].removeUpgradeAnimation();
+					remainingSlot++;
+				}
+			}
+		}
+		unlockedLeft += remainingSlot-unlockedLeft < 3 ? remainingSlot-unlockedLeft : 3;
+		
 		for (int y = 0; y < HEIGHT; y++) {
 			for (int x = 0; x < WIDTH; x++) {
 				if (isAdjacent(x, y) && !slots[y][x].isUnlocked()) {
@@ -155,16 +166,6 @@ public class Backpack extends VBox implements ReRenderable {
 
 	public void finishUpgrade() {
 		levelup = false;
-		int remainingSlot = 0;
-		for (int y = 0; y < HEIGHT; y++) {
-			for (int x = 0; x < WIDTH; x++) {
-				if (!slots[y][x].isUnlocked()) {
-					slots[y][x].removeUpgradeAnimation();
-					remainingSlot++;
-				}
-			}
-		}
-		unlockedLeft = remainingSlot < 3 ? remainingSlot : 3;
 	}
 
 	public boolean placeItem(int gridX, int gridY, Item item) {

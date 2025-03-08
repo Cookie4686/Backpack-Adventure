@@ -40,7 +40,7 @@ public class ActiveRelic extends Relic implements Clickable, TurnActivable {
 			return;
 		}
 		System.out.println("Use " + getName());
-
+		SfxPlayer.play(Sfx.SELECT);
 		isUsed = true;
 		Player.getInstance().setEnergy(Player.getInstance().getEnergy() - costActivate);
 
