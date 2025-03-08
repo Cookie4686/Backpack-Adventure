@@ -120,18 +120,24 @@ public class MapHandler {
 
 				GameDialog dialog = new GameDialog("Healer");
 				dialog.setText("Greetingss traveller, would you like some healing <3");
-				dialog.addOption("Sure thing (heal 20 health)", _ -> {
-					Map.getInstance().setNoHeal(true);
-					Player.getInstance().setHp(Player.getInstance().getHp() + 20);
-					SfxPlayer.play(Sfx.HEAL);
-					dialog.hide();
-				});
-				dialog.addOption("Yes. (add 5 maxHealth)", _ -> {
-					Map.getInstance().setNoHeal(true);
-					Player.getInstance().setFixedMaxHp(Player.getInstance().getFixedMaxHp() + 5);
-					SfxPlayer.play(Sfx.VAMPIRIC);
-					dialog.hide();
-				});
+				dialog.addOption(
+						String.format("Sure thing (heal %s health)", (int) (Player.getInstance().getMaxHp() * 0.2)),
+						_ -> {
+							Map.getInstance().setNoHeal(true);
+							Player.getInstance().setHp(
+									Player.getInstance().getHp() + (int) (Player.getInstance().getMaxHp() * 0.2));
+							SfxPlayer.play(Sfx.HEAL);
+							dialog.hide();
+						});
+				dialog.addOption(
+						String.format("Yes. (add %s maxHealth)", (int) (Player.getInstance().getFixedMaxHp() * 0.05)),
+						_ -> {
+							Map.getInstance().setNoHeal(true);
+							Player.getInstance().setFixedMaxHp(Player.getInstance().getFixedMaxHp()
+									+ (int) (Player.getInstance().getFixedMaxHp() * 0.05));
+							SfxPlayer.play(Sfx.VAMPIRIC);
+							dialog.hide();
+						});
 				dialog.addOption("Nah I'm good", _ -> {
 					SfxPlayer.play(Sfx.SELECT);
 					Map.getInstance().setNoHeal(false);
