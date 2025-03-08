@@ -43,7 +43,6 @@ public class HpBar extends StackPane implements ReRenderable {
 		hpBar = new ProgressBar((double) being.getHp() / being.getMaxHp());
 		hpBar.setStyle("-fx-accent: #EF2929;");
 		hpBar.setMaxWidth(Double.MAX_VALUE);
-		realProgress = hpBar.getProgress();
 
 		hpBarText = new Text();
 		hpBarText.setFont(Font.font("Courier New", FontWeight.BOLD, SIZE));
