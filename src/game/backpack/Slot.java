@@ -77,14 +77,10 @@ public class Slot extends StackPane implements ReRenderable {
 	public void highlightUpgrade() {
 		upgrade.stop();
 		if (!getChildren().contains(upgradeAnimation)) {
-			isUnlockable = true;
-			PauseTransition pause = new PauseTransition(Duration.seconds(0.3));
-			pause.setOnFinished(_ -> {				
-				Platform.runLater(() -> {				
-					getChildren().add(upgradeAnimation);
-				});
+			isUnlockable = true;		
+			Platform.runLater(() -> {				
+				getChildren().add(upgradeAnimation);
 			});
-			pause.play();
 		}
 		upgrade.play();
 	}
