@@ -32,7 +32,7 @@ public class MenuScene {
 		root.setSpacing(40);
 		root.setAlignment(Pos.CENTER);
 
-		Text titleText = new Text("Backpack Adventure");
+		Text titleText = new Text("Orgaknight");
 		titleText.setFont(Font.loadFont(ClassLoader.getSystemResource("ModernDOS8x16.ttf").toString(), 64));
 		VBox buttonBox = new VBox();
 		buttonBox.setSpacing(20);

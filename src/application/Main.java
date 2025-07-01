@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import logic.handler.ItemHandler;
 import scene.MenuScene;
 
@@ -34,7 +33,7 @@ public class Main extends Application {
 		scene.getStylesheets().add(ClassLoader.getSystemResource("test.css").toExternalForm());
 		scene.setOnKeyPressed(event -> ItemHandler.handleSceneKeyPress(event));
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Backpack");
+		primaryStage.setTitle("Orgaknight");
 //		primaryStage.initStyle(StageStyle.UNDECORATED);
 		// primaryStage.setMaximized(true);
 		primaryStage.setResizable(false);

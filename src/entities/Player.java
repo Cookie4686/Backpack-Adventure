@@ -287,10 +287,24 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		this.coins = 0;
 	}
 
-	public int getXp() {
-		return xp;
+	public void setEnergy(int energy) {
+		this.energy = energy < 0 ? 0 : energy;
+		energyOrb.render();
 	}
-
+	
+	public void setFixedMaxHp(int fixedMaxHp) {
+		setMaxHp(getMaxHp() + fixedMaxHp - this.fixedMaxHp);
+		this.fixedMaxHp = fixedMaxHp;
+	}
+	
+	public void setMaxEnergy(int maxEnergy) {
+		this.maxEnergy = maxEnergy < 0 ? 0 : maxEnergy;
+	}
+	
+	public void setMana(int mana) {
+		this.mana = mana < 0 ? 0 : (mana > maxMana ? maxMana : mana);
+	}
+	
 	public void setXp(int xp) {
 		while (xp > maxXp) {
 			xp -= maxXp;
@@ -302,6 +316,11 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		this.xp = xp < 0 ? 0 : xp;
 		GameHeader.getInstance().render();
 	}
+	
+	public int getXp() {
+		return xp;
+	}
+
 
 	public int getMaxXp() {
 		return maxXp;
@@ -315,17 +334,9 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		return energy;
 	}
 
-	public void setEnergy(int energy) {
-		this.energy = energy < 0 ? 0 : energy;
-		energyOrb.render();
-	}
-
+	
 	public int getMaxEnergy() {
 		return maxEnergy;
-	}
-
-	public void setMaxEnergy(int maxEnergy) {
-		this.maxEnergy = maxEnergy < 0 ? 0 : maxEnergy;
 	}
 
 	public int getMaxMana() {
@@ -340,9 +351,6 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		return mana;
 	}
 
-	public void setMana(int mana) {
-		this.mana = mana < 0 ? 0 : (mana > maxMana ? maxMana : mana);
-	}
 
 	public int getCoins() {
 		return coins;
@@ -387,8 +395,4 @@ public class Player extends Being implements TurnActivable, ReStatable {
 		return fixedMaxHp;
 	}
 
-	public void setFixedMaxHp(int fixedMaxHp) {
-		setMaxHp(getMaxHp() + fixedMaxHp - this.fixedMaxHp);
-		this.fixedMaxHp = fixedMaxHp;
-	}
 }

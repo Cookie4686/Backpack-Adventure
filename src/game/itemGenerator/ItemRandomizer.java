@@ -43,8 +43,8 @@ public class ItemRandomizer {
 					"Hellfire Calibur", "Holy Calibur", "Shield Relic IV" };
 
 	private static ItemTier getTier() {
-		// TODO: Connect luck and floor system
-		int luckNumber = new Random().nextInt(Player.getInstance().getLuck()*20 + (200*GameLogic.getInstance().getCurrentFloor()), 1001);
+		int begin = Player.getInstance().getLuck()*20 + (200*GameLogic.getInstance().getCurrentFloor());
+		int luckNumber = new Random().nextInt(begin > 1000 ? 1000 : begin, 1001);
 		if (luckNumber <= 666)
 			return ItemTier.COMMON;// 66.6%
 		if (luckNumber <= 790)
