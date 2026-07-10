@@ -1,12 +1,12 @@
 # Backpack Adventure
 
-## [Demo](https://www.youtube.com/watch?v=PGsi5I9AjT8)
-
-[![Video](VideoThumbnail.png)](https://www.youtube.com/watch?v=PGsi5I9AjT8)
-
 **A Project for Programming Methodology course**, made with love ♥ by the best and coolest engineer in the uni.
 
 This Game is inspired by The game "[Backpack Hero](https://store.steampowered.com/app/1970580/Backpack_Hero/)" developed by Jaspel.
+
+## [Demo](https://www.youtube.com/watch?v=PGsi5I9AjT8)
+
+[![Video](VideoThumbnail.png)](https://www.youtube.com/watch?v=PGsi5I9AjT8)
 
 ## Rules
 The game starts with some initial items each having their unique type and effects, the player will be able to take said items into their backpack, otherwise the items will disappear after changing scenes.
